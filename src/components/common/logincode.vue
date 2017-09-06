@@ -130,6 +130,7 @@
     }
 </style>
 <template>
+    <div>
 	<div id="login_code">
     <x-header class="logincode_header"   @on-click-back="routerback" :left-options="{backText:'取消',showBack: true,preventGoBack:true}">
         验证码登录
@@ -152,6 +153,7 @@
     <router-link to="/forget  " class="logincode_lforget">忘记密码</router-link>
     <toast v-model="toast" type="warn">{{text}}</toast>
 	</div>
+  </div>
 </template>
 <script>
 import {XInput, Group, XButton,XHeader,Toast } from 'vux'

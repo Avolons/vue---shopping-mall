@@ -119,6 +119,7 @@
     }
 </style>
 <template>
+    <div>
 	<div id="forget_main">
     <x-header class="forget_header"   @on-click-back="routerback" :left-options="{backText:'取消',showBack: true,preventGoBack:true}">
         忘记密码
@@ -140,6 +141,7 @@
     
     <toast v-model="toast" type="warn">{{text}}</toast>
 	</div>
+  </div>
 </template>
 <script>
 import {XInput, Group, XButton,XHeader,Toast } from 'vux'

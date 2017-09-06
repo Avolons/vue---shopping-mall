@@ -130,8 +130,9 @@
     }
 </style>
 <template>
-	<div id="register_main">
-    <x-header class="register_header"   @on-click-back="routerback" :left-options="{backText:'取消',showBack: true,preventGoBack:true}">
+    <div>
+  	<div id="register_main">
+     <x-header class="register_header"   @on-click-back="routerback" :left-options="{backText:'取消',showBack: true,preventGoBack:true}">
         注册
     </x-header>
     <group class="register_group">
@@ -151,7 +152,8 @@
     </group>
     
     <toast v-model="toast" type="warn">{{text}}</toast>
-	</div>
+  	</div>
+  </div>
 </template>
 <script>
 import {XInput, Group, XButton,XHeader,Toast } from 'vux'

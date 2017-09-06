@@ -1,4 +1,8 @@
 <style  lang="scss">
+#router-container{
+  height: 100%;
+  background-color: #fff;
+}
   #login_main{
       width: 100%;
        .vux-header-right{
@@ -131,6 +135,7 @@
     }
 </style>
 <template>
+<div>
 	<div id="login_main">
     <x-header class="login_header"  @on-click-back="routerback" :left-options="{backText:'取消',showBack: true,preventGoBack:true}">
         密码登录
@@ -152,6 +157,7 @@
     <router-link to="/forget" class="login_lforget">忘记密码</router-link>
     <toast v-model="toast" type="warn">{{text}}</toast>
 	</div>
+</div>
 </template>
 <script>
 import {XInput, Group, XButton,XHeader,Toast } from 'vux'
