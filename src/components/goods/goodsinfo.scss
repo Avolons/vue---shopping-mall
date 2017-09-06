@@ -1,0 +1,390 @@
+.vux-popup-picker-header-menu-right{
+    color: #2196f3;
+}
+.goodsinfo{
+    /* 头部区域样式 */
+    &_header{
+        background-color: #fff;
+        overflow: hidden;
+    }
+    &_title{
+        color: #272727;
+        font-size: 14px;
+        line-height: 20px;
+        box-sizing: border-box;
+        padding: 10px 15px;
+        font-weight: 400;
+        background-color: #fff;
+    }
+    &_box{
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        height: 40px;
+        align-items: center;
+        box-sizing: border-box;
+        background-color: #fff;
+        padding: 0 15px;
+    }
+    &_price{
+        flex-grow: 1;
+    }
+    &_newprice{
+        color: #f80000;
+        font-size: 17px;
+    }
+    &_oldprice{
+        color: #272727;
+        font-size: 12px;
+    }
+    &_datetime{
+        flex-grow: 0;
+        display: flex;
+        align-items: center;
+        &_single{
+            font-size: 17px;
+            height: 30px;
+            width: 30px;
+            border-radius: 5px;
+            margin-left: 10px;
+            color: #272727;
+            background-color: #dedede;
+            text-align: center;
+            line-height: 30px;
+            &--select{
+                color: #fff;
+                background-color: #2196f3;
+            }
+        }
+        
+    }
+    &_allprice{
+        font-size: 14px;
+        color: #272727;
+        >span{
+            font-size: 14px;
+            color: #2196f3;
+        }
+    }
+    &_rentTime{
+        font-size: 12px;
+        color: #272727;
+        display: flex;
+        align-items: center;
+        &_num{
+            margin-left: 15px;
+            height: 30px;
+            width: 107px;
+            border:1px solid #dddddd;
+            display: flex;
+            >span{
+                height: 30px;
+                width: 30px;
+                display: block;
+                font-size: 16px;
+                line-height: 30px;
+                text-align: center;
+            }
+            >input{
+                display: block;
+                width: 45px;
+                height: 30px;
+                line-height: 30px;
+                box-sizing: border-box;
+                border: none;
+                border-left: 1px solid #ddd;
+                border-right: 1px solid #ddd;
+                text-align: center
+            }
+        }
+    }
+    /* 内容主体区域数据 */
+    &_typelist{
+        border-bottom: 1px solid #f3f3f3;
+        background-color: #fff;
+        margin-top: 10px;
+        line-height: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
+        padding: 0 30px 0 15px;
+        box-sizing: border-box;
+        &_single{
+            line-height: 30px;
+            font-size: 15px;
+            color: #272727;
+            display: flex;
+            margin-right: 10px;
+            >i{
+                margin-right: 3px !important;
+                font-size: 15px !important;
+                color: #2196f3;
+            }
+        }
+        >i{
+            position: absolute;
+            right: 15px;
+            color: #989898;
+        }
+        >label{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            z-index: 500;
+        }
+        &_content{
+            background: #fff !important;
+            h3{
+                font-size: 14px;
+                line-height: 40px;
+                text-align: center;
+                font-weight: 400;
+                color: #272727;
+            }
+            ul{
+                box-sizing: border-box;
+                padding: 0 15px;
+                >li{
+                    color: #272727;
+                    font-size: 15px;
+                    >i{
+                        display: inline-block;
+                        font-size: 20px;
+                        color: #2196f3;
+                    }
+                    >p{
+                        line-height: 20px;
+                        box-sizing: border-box;
+                        padding: 0 25px;
+                        font-size: 14px;
+                        margin: 10px 0;
+                    }
+                }
+            }
+        }
+    }
+    &_content{
+        padding-bottom: 50px;
+        &_alltime{
+            box-sizing: border-box;
+            padding: 0 15px;
+            background-color: #fff;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            height: 40px;
+            align-items: center;
+            font-size: 13px;
+            color: #272727;
+            border-bottom: 1px solid #f3f3f3;
+            >span{
+                flex-grow: 1;
+                text-align: right;
+            }
+        }
+        &_time{
+          
+        }
+        &_price{
+            height: 60px; 
+            font-size: 15px;
+            color: #272727;
+            line-height: 60px;
+            box-sizing: border-box;
+            padding: 0 15px;
+            background-color: #fff;
+            border-bottom: 1px solid #f3f3f3;
+            display: flex;
+            justify-content: space-between;
+            >span{
+                color: #f80000;
+            }
+        }
+        &_despoite{
+            @extend .goodsinfo_content_price;
+        }
+        &_address{
+            @extend .goodsinfo_content_price;
+            >div{
+                flex: 1;
+                display: flex;
+                align-items: center;
+            }
+            .weui-cells{
+                flex: 1;
+                margin:0;
+                font-size: 15px;
+                &:after{
+                    display: none;
+                }
+                &:before{
+                    display: none;
+                }
+            }
+            .vux-cell-box:before{
+                display: none;
+                
+            }
+            .weui-cell{
+                width: 100%;
+                padding: 0;
+            }
+            .vux-popup-picker-value{
+                text-align: right;
+                float: right;
+                padding-right: 10px;
+            }
+        }
+        &_size{
+            >label{
+                @extend .goodsinfo_content_price;
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                >i{
+                    color: #cbc8cd;
+                    text-align: right;
+                    margin-right: -3px;
+                }
+                >span{
+                    flex-grow: 1;
+                    text-align: right;
+                    padding-right: 10px;
+                    font-size: 14px;
+                    color: #272727;
+                }
+            } 
+            
+        }
+    }
+    /* 选择颜色规格页面 */
+    &_sizeSelect{
+        &_content{
+            padding: 15px;
+            box-sizing: border-box;
+            padding-bottom: 0;
+            background-color: #fff !important;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        &_img{
+            display: block;
+            height: 100px;
+            width: 100px;  
+            margin-right: 20px; 
+        }
+        &_message{
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+        }
+        &_title{
+            font-size: 14px;
+            color: #f80000;
+        }
+        &_color{
+            font-size: 14px;
+            color: #272727;
+        }
+        &_number{
+            font-size: 14px;
+            color: #272727;
+            display: flex;
+            align-items: center;
+        }
+        &_typelist{
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            >h3{
+                font-size: 14px;
+                color: #272727;
+                width: 100%;
+                line-height: 35px;
+            }
+            >li{
+                height: 30px;
+                min-width: 35px;
+                line-height: 30px;
+                color: #272727;
+                font-weight: 400;
+                background-color: #f3f3f3;
+                border-radius: 5px;
+                margin: 0 10px 10px 0;
+                text-align: center;
+                padding: 0 15px;
+                position: relative;
+                z-index: 9999;
+            }
+            >.goodsinfo_sizeSelect_typelist--selected{
+                background-color: #2196f3;
+                color: #fff;
+            }
+        }
+        &_btn{
+            width:calc(100% + 30px);
+            height: 50px;
+            text-align: center;
+            font-size: 18px;
+            color: #fff;
+            line-height: 50px;
+            margin: 0 -15px;
+            margin-top: 25px;
+            display: block;
+            background-color: #2196f3;
+        }
+    }
+    /* 底部样式 */
+    &_footer{
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 50px;
+    }
+    &_funlist{
+        flex-grow: 1;
+        display: flex;
+        &_single{
+            flex: 1;
+            text-align: center;
+            box-sizing: border-box;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            >i{
+                margin: 0 !important;
+            }
+            >span{
+                font-size: 13px;
+                color: #272727;
+            }
+            &:nth-of-type(2){
+                border-left: 1px solid #f3f3f3;
+                border-right: 1px solid #f3f3f3;
+            }
+        }
+    }
+    &_btnlist{
+        display: flex;
+        &_car{
+            width: 110px;
+            height: 50px;
+            color: #fff;
+            font-size: 17px;
+            line-height: 50px;
+            text-align: center;
+            background-color: #21b5f3;
+        }
+        &_buy{
+            @extend .goodsinfo_btnlist_car;
+            background-color: #2196f3;
+        }
+    }
+}

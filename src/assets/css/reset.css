@@ -1,0 +1,82 @@
+/**
+ * 引入cssreset文件
+ */
+/* @import 'normalize-css'; */
+ body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form,
+ fieldset, legend, button, input, textarea, th, td { margin:0; padding:0;font-family: '微软雅黑'}
+ body, button, input, select, textarea { font:12px/1.5tahoma, arial, \5b8b\4f53; }
+ h1, h2, h3, h4, h5, h6{ font-size:100%; }
+ address, cite, dfn, em, var { font-style:normal; }
+ code, kbd, pre, samp { font-family:couriernew, courier, monospace; }
+ small{ font-size:12px; }
+ ul, ol { list-style:none; }
+ li{list-style: none}
+ a { text-decoration:none; }
+ a:hover { text-decoration:underline;}
+ sup { vertical-align:text-top; }
+ sub{ vertical-align:text-bottom; }
+ legend { color:#000; }
+ input{outline: none;}
+ fieldset, img { border:0; }
+ button, input, select, textarea { font-size:100%; font-family: '微软雅黑'}
+ table { border-collapse:collapse; border-spacing:0; }
+ button{border:none;outline: none;background-color: transparent}
+ figure{margin:0}
+ html,body{height: 100%;width: 100%;overflow-x: hidden;margin:0;padding: 0}
+
+ [v-cloak] {
+   display: none;
+ }
+
+ @font-face {
+  font-family: 'iconfont';  /* project id 400924 */
+  src: url('//at.alicdn.com/t/font_400924_28b8o4f9i00pmn29.eot');
+  src: url('//at.alicdn.com/t/font_400924_28b8o4f9i00pmn29.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_400924_28b8o4f9i00pmn29.woff') format('woff'),
+  url('//at.alicdn.com/t/font_400924_28b8o4f9i00pmn29.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_400924_28b8o4f9i00pmn29.svg#iconfont') format('svg');
+}
+
+/* 两行超过出现点点点 */
+.twonowarp{
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+
+ /*预定义css属性*/
+ .iconfont{
+  font-family:"iconfont";
+  display:block;
+  font-size: 15px;
+  font-style:normal;
+ }
+ [data-dpr="3"] .iconfont{
+   font-size: 45px;
+ }
+ [data-dpr="2"] .iconfont{
+   font-size: 30px;
+ }
+ .cfloat:after{
+     content: "";
+     display: block;
+     clear: both;
+   }
+
+ .nowarp{
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+ }
+ .trans1{
+   transition:all 0.1s ease-in;
+ }
+ .trans15{
+   transition:all 0.15s ease-in;
+ }
+ .trans2{
+   transition:all 0.2s ease-in;
+ }

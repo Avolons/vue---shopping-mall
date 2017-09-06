@@ -1,0 +1,183 @@
+{"data":{
+    "goodsId": 1,
+    "goods_sales_count": 100,
+    "goods_merchant_id": 23,
+    "goods_leasing_rules": 57,
+    "goodsName": "短袖衣服",
+    "goods_is_free_deposit": 2,
+    "goods_is_free_shipping": 1,
+    "goods_is_deductible": 1,
+    "goods_is_door": 2,
+    "goods_is_since": 1,
+    "goods_is_follow_lease": 2,
+    "goods_is_off_restitution": 2,
+    "goods_is_verify_real_name": 2,
+    "goods_max_count":50,
+    "goods_store_id": 14,
+    "goods_revert_id": "0",
+    "rentPrice": "20.00",
+    "rent_period_old_rent_price": "40.00",
+    "goodsFace": "http://106.14.135.243:8085/img/goods/193515005929958583.jpg",
+    "goods_deposit": "100.00",
+    "market_price": "200.00",
+    "store_name": "店铺3",
+    "share_url":"www.baidu.com",
+    "share_content":"租借是个好平台",  
+    "goodsAttrList": [
+        {
+            "content_id": 2,
+            "content_var_attr_id": "78,1",
+            "goods_deposit": "100.00", 
+            "goods_id": 1,
+            "market_price": "200.00",
+            "attr_content": [
+                {
+                    "content_id": 78,
+                    "key": "颜色",
+                    "value": "红色",
+                    "goods_id": 1
+                },
+                {
+                    "content_id": 1,
+                    "key": "规格",
+                    "value": "16G",
+                    "goods_id": 1
+                }
+            ],
+            "img": "http://106.14.135.243:8085/img/branner/6f4922f45568161a8cdf4ad2299f6d23_18.jpg",
+            "rent_period": [
+                {
+                    "rent_period_id": 1,
+                    "rent_period_type": 1,
+                    "rent_period_min_rent": 5,
+                    "rent_period_max_rent": 12,
+                    "rent_period_old_rent_price": "40.00",
+                    "rent_period_now_rent_price": "20.00",
+                    "rent_period_min_advance": 5,
+                    "rent_period_max_advance": 3,
+                    "rent_period_goods_attr_id": 2,
+                    "rent_period_goods_id": 1,
+                    "rent_period_create_time": 0
+                },
+                {
+                    "rent_period_id": 10,
+                    "rent_period_type": 2,
+                    "rent_period_min_rent": 0,
+                    "rent_period_max_rent": 0,
+                    "rent_period_old_rent_price": "200.00",
+                    "rent_period_now_rent_price": "100.00",
+                    "rent_period_min_advance": 5,
+                    "rent_period_max_advance": 3,
+                    "rent_period_goods_attr_id": 2,
+                    "rent_period_goods_id": 1,
+                    "rent_period_create_time": 0
+                }
+            ]
+        },
+        {
+            "content_id": 8,
+            "content_var_attr_id": "79,1",
+            "goods_deposit": "300.00",
+            "goods_id": 1,
+            "market_price": "500.00",
+            "attr_content": [
+                {
+                    "content_id": 79,
+                    "key": "颜色",
+                    "value": "蓝色",
+                    "goods_id": 1
+                },
+                {
+                    "content_id": 1,
+                    "key": "规格",
+                    "value": "16G",
+                    "goods_id": 1
+                }
+            ],
+            "img": "http://106.14.135.243:8085/img/branner/6f4922f45568161a8cdf4ad2299f6d23_18.jpg",
+            "rent_period": [
+                {
+                    "rent_period_id": 2,
+                    "rent_period_type": 1,
+                    "rent_period_min_rent": 7,
+                    "rent_period_max_rent": 11,
+                    "rent_period_old_rent_price": "100.00",
+                    "rent_period_now_rent_price": "50.00",
+                    "rent_period_min_advance": 5,
+                    "rent_period_max_advance": 3,
+                    "rent_period_goods_attr_id": 8,
+                    "rent_period_goods_id": 1,
+                    "rent_period_create_time": 0
+                },
+                {
+                    "rent_period_id": 19,
+                    "rent_period_type": 2,
+                    "rent_period_min_rent": 2,
+                    "rent_period_max_rent": 3,
+                    "rent_period_old_rent_price": "100.00",
+                    "rent_period_now_rent_price": "70.00",
+                    "rent_period_min_advance": 2,
+                    "rent_period_max_advance": 3,
+                    "rent_period_goods_attr_id": 8,
+                    "rent_period_goods_id": 1,
+                    "rent_period_create_time": 0
+                }
+            ]
+        }
+    ],
+    "shopBanner": [
+        {
+            "goodsFace": "http://106.14.135.243:8085/goods/193515005929958583.jpg",
+            "goods_is_main_pic": 1
+        }
+    ],
+    "goodsTpl": [
+        {
+            "goods_shipping_tpl_type": 1
+        },
+        {
+            "goods_shipping_tpl_type": 2
+        },
+        {
+            "goods_shipping_tpl_type": 3
+        }
+    ],
+    "goodsattrcontent": {
+        "ys": [
+            {
+                "content_id": 78,
+                "key": "颜色",
+                "value": "红色",
+                "goods_id": 1
+            },
+            {
+                "content_id": 79,
+                "key": "颜色",
+                "value": "蓝色",
+                "goods_id": 1
+            }
+        ],
+        "gg": [
+            {
+                "content_id": 1,
+                "key": "规格",
+                "value": "16G",
+                "goods_id": 1
+            }
+        ]
+    },
+    "isCollect": "1",
+    "rentlist": [
+        {
+            "goodsFace": "c74d97b01eae257e44aa9d5bade97baf16.jpg",
+            "goods_rentlist_name": "哈哈哈"
+        },
+        {
+            "goodsFace": "aab3238922bcc25a6f606eb525ffdc5614.jpg",
+            "goods_rentlist_name": "哇哇哇"
+        }
+    ]
+},
+"code": 200,
+"msg": "获取数据成功"
+}
