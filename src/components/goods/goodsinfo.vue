@@ -24,8 +24,8 @@
                 </div>
                 <!-- 日期选择框 -->
                 <ul class="goodsinfo_datetime">
-                    <template v-for="item in currentTypedata.rent_period">
-                        <li class="goodsinfo_datetime_single" :class='{"goodsinfo_datetime_single--select":item.sel==1}'>{{timeMap[item.rent_period_type]}}</li>
+                    <template v-for="(item,index) in currentTypedata.rent_period">
+                        <li class="goodsinfo_datetime_single" :class='{"goodsinfo_datetime_single--select":item.sel==1}' @click="timeClick(item,index)">{{timeMap[item.rent_period_type]}}</li>
                     </template>
                 </ul>
             </div>
@@ -171,7 +171,7 @@
                 <div v-transfer-dom>
                     <!-- 规格选择区域 -->
                     <popup class="goodsinfo_sizeSelect_content" v-model="colorSize" position="bottom" max-height="50%">
-                        <img src="https://static.vux.li/demo/1.jpg" alt="img" class="goodsinfo_sizeSelect_img">
+                        <img :src="returnImg" alt="img" class="goodsinfo_sizeSelect_img">
                         <div class="goodsinfo_sizeSelect_message">
                             <h3 class="goodsinfo_sizeSelect_title">
                                 ￥{{currentGoodsData.rent_period_now_rent_price}}/{{timeText}}
@@ -203,7 +203,21 @@
             </div>
             <div class="goodsinfo_content_text">
                 <img src="../../assets/img//goods/goodsrules.png" width="100%" alt="">
-                <img src="../../assets/img//goods/goodsinfo.png" width="100%" alt="">
+                <!-- 租赁清单图片 -->
+                <template v-if="staticdata.rentlist[0]">
+                        <h3 class="goodsinfo_content_rentTitle">租赁清单</h3>
+                    <ul class="goodsinfo_content_rentlist">
+                        <li v-for="item in staticdata.rentlist" class="goodsinfo_content_rentsingle">
+                            <img :src="item.goodsFace" alt="goodsFace">
+                            <span class="nowarp">{{item.goods_rentlist_name}}</span>
+                        </li>
+                    </ul>   
+                </template>
+                <img src="../../assets/img//goods/goodsinfo.png" style="height:50px;margin:0 auto;display:block" alt="">
+                <!-- 商品详情图片渲染 -->
+                <template v-for="item in staticdata.goods_details_content">
+                        <img  :src="item.image"  alt="mainImg">
+                </template>
             </div>
         </article>
         <!-- 底部区域 -->
@@ -282,8 +296,6 @@ export default {
             /* 轮播图数据集合 */
             bannerlist: [
                 'https://static.vux.li/demo/1.jpg',
-                'https://static.vux.li/demo/1.jpg',
-                'https://static.vux.li/demo/1.jpg',
             ],
             /* 具体逻辑数据 */
             /* 现租价和原租价 */
@@ -300,6 +312,8 @@ export default {
                 goods_is_verify_real_name: 2,
                 goods_max_count: 50,//最大购买量
                 store_name: "店铺3",//店铺名称
+                rentlist:[],//租赁清单数组
+                goods_details_content:[],//商品详情数组
             },
             /* 颜色列表 */
             colorlist: [{ sel: 1, value: "", content_id: 1 }],
@@ -323,7 +337,6 @@ export default {
             currentGoodsData: {
                 goodsnum: 1,//商品的数量
                 rentTime:3,//当前的租用周期
-                type: ['红色,大号'],//颜色规格
                 rent_period_type: 1,//1 2 3 4 5 日 周 月 季 年
                 rent_period_min_rent: 5,//最小租期,按类型换算
                 rent_period_max_rent: 12,//最大租期,按类型换算
@@ -332,6 +345,7 @@ export default {
                 rent_period_min_advance: 6,//最少提前
                 rent_period_max_advance: 1,//最大提前
             },
+            currentTimeIndex:0//当前被选中的日渐周期index
         }
     },
     mounted() {
@@ -370,7 +384,11 @@ export default {
             goods_is_verify_real_name: goodsData.goods_is_verify_real_name,
             goods_max_count: goodsData.goods_max_count,
             store_name: goodsData.store_name,
+            rentlist:goodsData.rentlist,//租赁清单数组
+            goods_details_content:goodsData.goods_details_content,//商品详情数组
         };
+        /* 商品主图赋值 */
+        this.bannerlist[0]=goodsData.goodsFace;
         /* 列表数据赋值 */
         this.datalist=goodsData.goodsAttrList;
         /* 初始化当前数据的最终赋值 ,默认使用第一个颜色的第一个规格*/
@@ -393,6 +411,19 @@ export default {
     },
     /* 计算属性 */
     computed: {
+        /* 返回商品主图，数据列表存在时使用列表图片，不存在时使用商品主图 */
+        returnImg(){
+            let id=this.afterSelectData.id
+            for(let item of this.datalist) {
+                if(item.content_var_attr_id===id){
+                    if(item.img!=""){
+                        return item.img;
+                    }
+                }
+            }
+            return this.bannerlist[0];
+            
+        },
         /* 返回当前周期文字 */
         timeText(){
             return this.timeMap[this.currentGoodsData.rent_period_type];
@@ -433,7 +464,7 @@ export default {
                 };
             } else {
                 return {
-                    id: 0,
+                    id: -1,
                     val: ""
                 };
             }
@@ -513,6 +544,7 @@ export default {
         /* 商品选择,判断是否有未完成的选择状态 */
         selectType() {
             /* 先做选中状态判断 */
+            /* 首先判断颜色，没有颜色存在时，此时flag为-1 */
             let flag = 0;
             if(this.colorlist[0]) {
                 for (let item of this.colorlist) {
@@ -534,6 +566,7 @@ export default {
             };
             if (flag == -2 || flag == 0 || flag == 2) {
                 this.colorSize = false;
+                this.typeDataChange(this.afterSelectData.id);
             } else {
                 alert("请选择规格");
             };
@@ -554,8 +587,45 @@ export default {
             
         },
         /* 时间周期切换数据变化 */
-        timeClick(time){
-
+        timeClick(time,index){
+            console.log(1);
+            /* 当前日期不为选中状态时 */
+            if(time.sel!==1){
+                time.sel=1;
+                this.currentTypedata.rent_period[this.currentTimeIndex].sel=0;
+                this.currentTimeIndex=index;
+                /* 开始进行数据替换 */
+                this.timeDataChange(this.currentTypedata.rent_period[index]);
+            }
+        },
+        /* 时间周期变化数据更换具体操作 */
+        timeDataChange(temporary){
+            this.currentGoodsData.goodsnum=1;
+            this.currentGoodsData.rentTime=temporary.rent_period_min_rent;
+            this.currentGoodsData.rent_period_type=temporary.rent_period_type;
+            this.currentGoodsData.rent_period_min_rent=temporary.rent_period_min_rent;
+            this.currentGoodsData.rent_period_max_rent=temporary.rent_period_max_rent;
+            this.currentGoodsData.rent_period_old_rent_price=temporary.rent_period_old_rent_price;
+            this.currentGoodsData.rent_period_now_rent_price=temporary.rent_period_now_rent_price;
+            this.currentGoodsData.rent_period_min_advance=temporary.rent_period_min_advance;
+            this.currentGoodsData.rent_period_max_advance=temporary.rent_period_max_advance;
+            /* 初始被选中时间 */
+            this.timeValue=this.timerange.startTime;
+             /* 初始周期被选中 */
+        },
+        /* 颜色规格变化数据重置 */
+        typeDataChange(id){
+            let self=this;
+            /* 获取对应规格的id */
+            for(let item of this.datalist) {
+                if(item.content_var_attr_id===id){
+                    self.currentTypedata=item;
+                    break;
+                }
+            }
+            this.timeDataChange(self.currentTypedata.rent_period[0]);
+            self.currentTypedata.rent_period[0].sel=1;
+            
         },
         /* 时间选择变化 */
         changeTime(){

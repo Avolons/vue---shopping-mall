@@ -23,6 +23,20 @@
     "store_name": "店铺3",
     "share_url":"www.baidu.com",
     "share_content":"租借是个好平台",  
+    "goods_details_content":[
+        {
+            "image":"https://static.vux.li/demo/1.jpg",
+            "text":""
+        },
+        {
+            "image":"https://static.vux.li/demo/1.jpg",
+            "text":""
+        },
+        {
+            "image":"https://static.vux.li/demo/1.jpg",
+            "text":""
+        }
+    ],
     "goodsAttrList": [
         {
             "content_id": 2,
@@ -62,8 +76,8 @@
                 {
                     "rent_period_id": 10,
                     "rent_period_type": 2,
-                    "rent_period_min_rent": 0,
-                    "rent_period_max_rent": 0,
+                    "rent_period_min_rent": 3,
+                    "rent_period_max_rent": 16,
                     "rent_period_old_rent_price": "200.00",
                     "rent_period_now_rent_price": "100.00",
                     "rent_period_min_advance": 5,

@@ -5,6 +5,7 @@ import VueResource from 'vue-resource';
 import Router from 'vue-router';
 import router from './router';
 
+/* 路由全局函数 */
 Router.prototype.goBack = function () { 
 　　this.isBack = true;
 　　window.history.go(-1);
@@ -24,7 +25,7 @@ window.Vue = Vue;
 /* eslint-disable no-new */
 new Vue({
   	template: '<App/>',
- 	  router,
+	router,
   	store,
   	components: { App }
 }).$mount('#app');

@@ -61,6 +61,10 @@ body{
       </cell>
     </group>
     <group style="margin-top:0.6rem">
+      <cell  title="实名认证" is-link link="/">
+          <span style="font-size:12px;padding-right:20px">未认证</span>
+          <i slot="icon" class="iconfont">&#xe60a;</i>
+      </cell>
       <cell  title="芝麻信用" is-link link="/">
           <i slot="icon" class="iconfont">&#xe60a;</i>
       </cell>
