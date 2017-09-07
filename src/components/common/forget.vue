@@ -1,5 +1,8 @@
 <style  lang="scss">
     #forget_main{
+      .left-arrow{
+        display: none;
+    }
       width: 100%;
        .vux-header-right{
           right: 20px;
@@ -114,9 +117,7 @@
         }
        
     }
-    .left-arrow{
-        display: none;
-    }
+    
 </style>
 <template>
     <div>

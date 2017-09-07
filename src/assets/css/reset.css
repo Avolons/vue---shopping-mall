@@ -30,11 +30,11 @@
 
  @font-face {
   font-family: 'iconfont';  /* project id 400924 */
-  src: url('//at.alicdn.com/t/font_400924_28b8o4f9i00pmn29.eot');
-  src: url('//at.alicdn.com/t/font_400924_28b8o4f9i00pmn29.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_400924_28b8o4f9i00pmn29.woff') format('woff'),
-  url('//at.alicdn.com/t/font_400924_28b8o4f9i00pmn29.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_400924_28b8o4f9i00pmn29.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_400924_xou0wfco9246ajor.eot');
+  src: url('//at.alicdn.com/t/font_400924_xou0wfco9246ajor.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_400924_xou0wfco9246ajor.woff') format('woff'),
+  url('//at.alicdn.com/t/font_400924_xou0wfco9246ajor.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_400924_xou0wfco9246ajor.svg#iconfont') format('svg');
 }
 
 /* 两行超过出现点点点 */

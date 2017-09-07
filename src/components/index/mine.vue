@@ -59,22 +59,26 @@ body{
       <cell  title="我的收藏" is-link>
           <i slot="icon" class="iconfont">&#xe605;</i>
       </cell>
+      <cell  title="我的地址" is-link link="/editAddress">
+          <i slot="icon" class="iconfont">&#xe71d;</i>
+      </cell>
     </group>
     <group style="margin-top:0.6rem">
-      <cell  title="实名认证" is-link link="/">
+      
+      <cell  title="实名认证" is-link link="/authentication">
           <span style="font-size:12px;padding-right:20px">未认证</span>
-          <i slot="icon" class="iconfont">&#xe60a;</i>
+          <i slot="icon" class="iconfont">&#xe63c;</i>
       </cell>
       <cell  title="芝麻信用" is-link link="/">
           <i slot="icon" class="iconfont">&#xe60a;</i>
       </cell>
-      <cell  title="设置" is-link link="/care">
+      <cell  title="设置" is-link link="/setting">
             <i slot="icon" class="iconfont">&#xe63b;</i>
       </cell>
-       <cell  title="帮助与客服" is-link link="/adress">
+       <cell  title="帮助与客服" is-link link="/help">
             <i slot="icon" class="iconfont">&#xe602;</i>
       </cell>
-      <cell  title="意见反馈" is-link link="/adress">
+      <cell  title="意见反馈" is-link link="/opinion">
         <i slot="icon" class="iconfont">&#xe64a;</i>  
       </cell>
       
