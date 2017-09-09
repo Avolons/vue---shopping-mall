@@ -1,5 +1,8 @@
 <style  lang="scss">
  #login_code{
+     .left-arrow{
+        display: none;
+    }
       width: 100%;
        .vux-header-right{
           right: 20px;
@@ -125,9 +128,7 @@
         }
        
     }
-    .left-arrow{
-        display: none;
-    }
+  
 </style>
 <template>
     <div>

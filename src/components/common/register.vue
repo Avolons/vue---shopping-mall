@@ -1,6 +1,9 @@
 <style  lang="scss">
     #register_main{
       width: 100%;
+       .left-arrow{
+        display: none;
+    }
        .vux-header-right{
           right: 20px;
         }
@@ -125,9 +128,7 @@
         
        
     }
-    .left-arrow{
-        display: none;
-    }
+   
 </style>
 <template>
     <div>
