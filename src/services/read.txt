@@ -118,3 +118,10 @@
                 refundDeal();
             }
         }
+
+1，确认订单页面支付流程：
+OrderApi里面的orderPay ————>  返回的order_big_sn，total_price。使用order_big_sn，再次请求
+payApi里面的支付接口（待确定是哪个接口）
+2，我的订单列表和订单详情里面的支付流程：
+OrderApi里面的orderShipPay ————> 返回的order_big_sn，total_price。使用order_big_sn，再次请求
+payApi里面的支付接口（待确定是哪个接口）
