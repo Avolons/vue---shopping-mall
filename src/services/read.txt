@@ -1,0 +1,120 @@
+我的订单列表的各个状态：
+            if (bean.getOrder_is_delect() == 0) {
+                if (bean.getOrder_refund_goods_status() == 0) {
+                    if (bean.getOrder_status() == 1) {
+                        if(bean.getOrder_shipping_status() == 8){
+                            orderClose(bean);
+                        }else{
+                            waitForPay(bean);
+                        }
+                    } else if (bean.getOrder_status() == 2) {
+                        switch (bean.getOrder_shipping_status()) {
+                            case 1:
+                                waitForDeliver(bean);
+                                break;
+                            case 2:
+                                waitForGetGoods(bean);
+                                break;
+                            case 3:
+                                waitForReturn(bean);
+                                break;
+                            case 4:
+                                waitForSettle(bean);
+                                break;
+                            case 5:
+                                waitForSureSettle(bean);
+                                break;
+                            case 6:
+                                waitForParise(bean);
+                                break;
+                            case 7:
+                                orderComplete(bean);
+                                break;
+                        }
+                    }
+                } else if (bean.getOrder_refund_goods_status() == 1) {
+                    refundOk(bean);
+                } else if (bean.getOrder_refund_goods_status() == 2) {
+                    if (bean.getOrder_status() == 2) {//退款退货
+                        if (bean.getOrder_shipping_status() == 2) {
+                            refundWaitRefund(bean);
+                        } else if (bean.getOrder_shipping_status() == 3) {
+                            refundWaitRefund(bean);
+                        } else if (bean.getOrder_shipping_status() == 5) {
+                            refundForSureSettle(bean);
+                        } else if (bean.getOrder_shipping_status() == 6) {
+                            refundGoodsOk(bean);
+                        }
+                    }
+                } else if (bean.getOrder_refund_goods_status() == 4) {
+                    if (bean.getOrder_shipping_status() == 6) {
+                        refundGoodsOk(bean);
+                    }
+                }else if(bean.getOrder_refund_goods_status() == 3){
+                    refundDeal(bean);
+                }
+            }
+
+
+订单详情的各个状态：
+        if (bean.getOrder_is_delect() == 0) {
+            if (bean.getOrderRefundStatus() == 0) {
+                if (bean.getOrderStatus() == 1) {
+                    if(bean.getOrderShippingStatus() == 8){
+                        orderClose();
+                    }else{
+                        waitForPay();
+                    }
+                    mTvPayMoney.setText("0.00");
+                } else if (bean.getOrderStatus() == 2) {
+                    mTvPayMoney.setText(DataUtil.cs(bean.getTotalPrice()));
+                    switch (bean.getOrderShippingStatus()) {
+                        case 1:
+                            waitForDelivery();
+                            break;
+                        case 2:
+                            sureToGetGoods();
+                            break;
+                        case 3:
+                            waitToReback();
+                            break;
+                        case 4:
+                            remindSettle();
+                            break;
+                        case 5:
+                            sureToSettle();
+                            break;
+                        case 6:
+                            orderParise();
+                            break;
+                        case 7:
+                            overParise();
+                            break;
+                    }
+                }
+            } else if (bean.getOrderRefundStatus() == 1) {
+                mTvPayMoney.setText(DataUtil.cs(bean.getTotalPrice()));
+                refundOk();
+            } else if (bean.getOrderRefundStatus() == 2) {
+                mTvPayMoney.setText(DataUtil.cs(bean.getTotalPrice()));
+                if (bean.getOrderStatus() == 2) {
+                    if (bean.getOrderShippingStatus() == 2) {
+                        refundSettle();
+                    } else if (bean.getOrderShippingStatus() == 3) {
+                        refundSettle();
+                    } else if (bean.getOrderShippingStatus() == 5) {
+                        refundWaitSettle();
+                    } else if (bean.getOrderShippingStatus() == 6) {
+                        refund2ok();
+                    }
+                }
+            }else if(bean.getOrderRefundStatus() == 4){
+                if (bean.getOrderShippingStatus() == 6) {
+                    mTvPayMoney.setText(DataUtil.cs(bean.getTotalPrice()));
+                    refund2ok();
+                }
+            }else if(bean.getOrderRefundStatus() == 3){
+                mTvPayMoney.setText(DataUtil.cs(bean.getTotalPrice()));
+                refundDeal();
+            }
+        }

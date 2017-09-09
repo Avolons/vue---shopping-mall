@@ -13,7 +13,7 @@
         }
         .vux-header-right,.vux-header-left{
           height: 45px;
-            line-height:45px; 
+            line-height:45px;
             top: 0;
         }
         .vux-no-group-title{
@@ -54,7 +54,7 @@
             font-size: 16px;
             &>a{
               color: #333;
-              
+
             }
         }
         .vux-x-input{
@@ -84,7 +84,7 @@
         }
         .login{
         &_header{
-            background-color: #fff;  
+            background-color: #fff;
             height: 45px;
             color: #333;
             border-bottom:1px solid #dddddd;
@@ -127,8 +127,8 @@
             }
         }
         }
-        
-       
+
+
     }
     .left-arrow{
         display: none;
@@ -145,14 +145,14 @@
     <group class="login_group">
       <x-input  placeholder="请输入账号"  v-model="form.userName">
           <i class="iconfont" slot="label">&#xe666;</i>
-        
+
       </x-input>
       <x-input  placeholder="请输入密码"  type="password"  v-model="form.password">
         <i class="iconfont" slot="label">&#xe600;</i>
       </x-input>
       <x-button class="login_btn"  @click.native="login">登录</x-button>
     </group>
-    
+
     <router-link to="/logincode" class="login_link">验证码登录</router-link>
     <router-link to="/forget" class="login_lforget">忘记密码</router-link>
     <toast v-model="toast" type="warn">{{text}}</toast>
@@ -161,7 +161,7 @@
 </template>
 <script>
 import {XInput, Group, XButton,XHeader,Toast } from 'vux'
-/* import {API,getQuery} from '../services' */
+import {API,getQuery} from '../../services'
   export default {
       data() {
         return {
@@ -169,8 +169,8 @@ import {XInput, Group, XButton,XHeader,Toast } from 'vux'
            toast:false,
            state:true,
            form:{
-            userName:"",
-            password:""
+             user_phone:"",
+             user_password:""
            }
         }
       },
@@ -200,14 +200,15 @@ import {XInput, Group, XButton,XHeader,Toast } from 'vux'
                 }else{
                   window.location.href="/index"
                 }
-                
+
               }else{
                 this.toast = !this.toast
                 this.text=resp.body.errmsg
-              }         
+              }
             }
           )
         } */
+
       },
       regist(){
         window.location.href="/regist"

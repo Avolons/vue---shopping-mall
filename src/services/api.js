@@ -1,7 +1,7 @@
 
 import Vue from 'vue';
 
-var API_ROOT = "/api"
+var API_ROOT = "http://106.14.135.243:8082/"
 export const goods = {
 
   listGoodsType(data){
@@ -23,6 +23,10 @@ export const goods = {
 }
 
 export const user = {
+  login(data){
+    return Vue.http.post(API_ROOT +'user/app_login', data)
+  },
+
   order(data){
     return Vue.http.post(API_ROOT + '/mall/listMyOrder',data)
   },
@@ -42,9 +46,6 @@ export const user = {
   },
    regist(data){
     return Vue.http.post(API_ROOT +'/member/memberRegister', data)
-  },
-  login(data){
-    return Vue.http.post(API_ROOT +'/member/memberLogin', data)
   },
   adresslist(data){
     return Vue.http.get(API_ROOT + '/member/memberAddressList', {params:data})
