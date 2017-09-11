@@ -42,19 +42,19 @@
           <router-view class="router-view Router"></router-view>
     </transition>
    <tabbar class="index_tabbar"  style="position:fixed;bottom:0;left:0">
-      <tabbar-item :link="{path:'/index/main'}" >
+      <tabbar-item :selected="this.$route.fullPath=='/index/main'" :link="{path:'/index/main'}" >
          <i @click="routerchange(0)" class="iconfont" slot="icon">&#xe608;</i>
         <span slot="label" >首页</span>
       </tabbar-item>
-       <tabbar-item :link="{path:'/index/main/shop'}">
+       <tabbar-item :selected="this.$route.fullPath=='/index/main/car'" :link="{path:'/index/main/car'}">
       <i  @click="routerchange(1)" class="iconfont" slot="icon">&#xe604;</i>
         <span slot="label">购物车</span>
       </tabbar-item>
-      <tabbar-item :link="{path:'/index/main/order'}" >
+      <tabbar-item :selected="this.$route.fullPath=='/index/main/order'" :link="{path:'/index/main/order'}" >
          <i @click="routerchange(2)" class="iconfont" slot="icon">&#xe603;</i>
         <span slot="label">订单</span>
       </tabbar-item>
-      <tabbar-item :link="{path:'/index/main/mine'}" >
+      <tabbar-item :selected="this.$route.fullPath=='/index/main/mine'" :link="{path:'/index/main/mine'}" >
         <i @click="routerchange(3)" class="iconfont" slot="icon">&#xe612;</i>
         <span slot="label">个人</span>
       </tabbar-item>
@@ -146,6 +146,7 @@
     methods :{
         /* 路由切换函数 */
         routerchange(index){
+            console.log(this.$route.fullPath);
             if(index<this.currentindex){
                 this.transitionName = 'slide-right'
             }else{

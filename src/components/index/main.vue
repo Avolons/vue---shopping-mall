@@ -52,7 +52,7 @@ body {
         width: 100%;
         height: calc(100% - 144px);
         overflow-y: auto;
-        background-color: #dadada;
+        background-color: #f3f3f3;
     }
     &_typelist {
         margin-top: 50px;
@@ -253,22 +253,13 @@ body {
                     </div>
                 </li>
             </ul>
-            <ul class="main_recommend_list" >
-                <li v-for="i in 6" class="main_recommend_single">
-                    <div class="main_recommend_img">
-                        <img src="https://static.vux.li/demo/1.jpg" alt="">
-                    </div>
-                    <div class="main_recommend_text">
-                        <h2 class="main_recommend_title">小萝卜健身器材</h2>
-                        <h2 class="main_recommend_price">￥500.00/月</h2>
-                    </div>
-                </li>
-            </ul>
+           <list-compent :commonGoodsList="typeList"></list-compent>
         </div>
     </div>
 </template>
 
 <script>
+import ListCompent from '../list/listCompent.vue';
 import { Scroller, Swiper, SwiperItem, Spinner, XButton, Group, Cell, LoadMore } from 'vux'
 
 export default {
@@ -280,7 +271,8 @@ export default {
         Cell,
         LoadMore,
         Swiper,
-        SwiperItem
+        SwiperItem,
+        ListCompent
     },
     data() {
         return {

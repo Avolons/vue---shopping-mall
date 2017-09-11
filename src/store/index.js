@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -12,58 +13,47 @@ const store = new Vuex.Store({
 			loginname: '',
 			avatar: '',
 			id: '',
-			accesstoken: ''
+			token: ''
 		},
+
 		/* 引发登录跳转的源头，如果没有，默认跳到首页*/
 		fromUrl:"/index",
-		// alert框提示内容
-		tipContent : '',
-		// alert框显示状态
-		tipShow : false,
-		// 用户未读消息条数
-		message_count : 0,
-		// 文章评论
-		replies : []
+		/* 全局订单数据 */
+		orderInfo:{
+			allPrice:0,//总金额
+		},
+		addressData:{
+			name:"万朱浩",
+			phone: 1358745622,
+			detail:"北京市市辖区西城区朝阳门大厦",
+		}
 	},
 	actions: {
-		isLogin({commit}) {
-			commit('ISLOGIN');
+		/*  */
+		Login({commit}) {
+			commit('LOGIN');
 		},
-		signOut({commit}) {
-			commit('SIGNOUT');
-		},
-		setUserInfo({commit}, userInfo) {
-			commit('SETUSERINFO', userInfo);
-		},
-		setTipContent({commit}, content) {
-			commit('SETTIPCONTENT', content);
-		},
-		setTipShow({commit}, status) {
-			commit('SETTIPSHOW', status);
-		},
-		setNotMessageCount({commit}, count) {
-			commit('SETNOTMESSAGECOUNT', count);
-		},
-		setReplies({commit}, replies) {
-			commit('SETREPLIES', replies);
+		/* 设置用户登录信息 */
+		SetUserInfo({commit,state},userInfo){
+			commit('SETUSERINFO',userInfo);
 		}
 	},
 	mutations: {
+		// 设置登录用户信息
+		SETUSERINFO (state, userInfo) {
+			state.userInfo.loginname = userInfo.loginname;
+			state.userInfo.avatar = userInfo.avatar;
+			state.userInfo.id = userInfo.id;
+			state.userInfo.token = userInfo.token;
+		},
 		// 设置登录
-		ISLOGIN (state) {
-			state.isLogin = true;
+		LOGIN (state) {
 		},
 		// 退出登录
 		SIGNOUT (state) {
-			state.isLogin = false;
+			state.user=[];
 		},
-		// 设置登录用户信息
-		SETUSERINFO (state, userInfo) {
-			state.userInfo.loginname = userInfo.name;
-			state.userInfo.avatar = userInfo.avatar;
-			state.userInfo.id = userInfo.id;
-			state.userInfo.accesstoken = userInfo.accesstoken;
-		},
+		
 		// 设置tips弹窗的提示信息
 		SETTIPCONTENT (state, content) {
 			state.tipContent = content;
@@ -85,6 +75,7 @@ const store = new Vuex.Store({
 		getLoginState (state) {
 			return state.isLogin;
 		},
+		/* 返回用户信息 */
 		getUserInfo (state) {
 			return state.userInfo;
 		},

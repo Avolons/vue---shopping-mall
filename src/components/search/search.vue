@@ -1,8 +1,10 @@
 <style lang="scss">
-body{
-    background-color: #f3f3f3;
-}
+
 .search{
+    &_main{
+        background-color: #f3f3f3;
+        height: 100%;
+    }
       &_header {
         box-sizing: border-box;
         padding: 10px 20px;
@@ -92,6 +94,7 @@ body{
 </style>
 
 <template>
+<div>
     <div class="search_main">
         <header class="search_header">
             <div class="search_search">
@@ -111,6 +114,7 @@ body{
                 <li v-for="item in history" @click="historySearch(item)">{{item}}</li>
             </ul>
         </div>
+    </div>
     </div>
 </template>
 
@@ -144,13 +148,15 @@ body{
                    }
                }
                this.history.push(this.searchValue);
-                this.searchValue="";         
                localStorage.setItem("zj_history",JSON.stringify(this.history));
+               window.location.href="/#/goodslist/"+this.searchValue;
+               this.searchValue="";         
            },
            /* 历史记录搜索 */
            historySearch(item){
                this.searchValue=item;
-               this.submit();
+               window.location.href="/#/goodslist/"+this.searchValue;
+               this.searchValue="";  
            },
            /* 清空历史记录 */
            cleanHistory(){

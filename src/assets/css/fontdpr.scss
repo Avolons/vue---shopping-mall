@@ -1,9 +1,0 @@
-@mixin font_dpr($sixe) {
-    font-size:$sixe + px;
-    [data-dpr="2"] &{
-     font-size:$sixe*2 + px;
-     }
-     [data-dpr="3"] &{
-       font-size:$sixe*3 + px;
-     }
-  }

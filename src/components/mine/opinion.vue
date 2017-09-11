@@ -1,8 +1,14 @@
 <style lang="scss">
     .help_common_title{
+        padding-top: 47px; 
         .vux-header{
             background-color:#fff;
             border-bottom: 1px solid #dadada;
+            position: fixed;
+            top:0;
+            left: 0;
+            width: 100%;
+            z-index: 9999;
             .vux-header-title{
                 color: #272727; 
             }
@@ -56,7 +62,7 @@
             font-size: 15px;
             color: #fff;
             background-color:#2196f3;
-            border-radius: 10px;
+            border-radius: 5px;
             display: block;
             margin: 0 auto;
             margin-top: 20px;

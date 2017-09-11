@@ -6,6 +6,17 @@
     &_header{
         background-color: #fff;
         overflow: hidden;
+        &_back{
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            color: #dadada;
+            z-index: 999;
+            >i{
+                font-size: 30px;
+            }
+        }
     }
     &_title{
         color: #272727;
@@ -168,6 +179,9 @@
     }
     &_content{
         padding-bottom: 50px;
+        &_mainimg{
+          width: 100%;  
+        }
         &_alltime{
             box-sizing: border-box;
             padding: 0 15px;
@@ -390,6 +404,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            
             >i{
                 margin: 0 !important;
             }
@@ -400,6 +415,11 @@
             &:nth-of-type(2){
                 border-left: 1px solid #f3f3f3;
                 border-right: 1px solid #f3f3f3;
+            }
+            &--collect{
+                >i,span{
+                color: #f80000;
+                }
             }
         }
     }

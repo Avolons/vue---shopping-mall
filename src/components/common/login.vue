@@ -65,7 +65,7 @@
           margin-top: 7.5px;
           height: 45px;
           line-height: 45px;
-          color: #c1c1c1;
+          .weui-cell__hd {color: #c1c1c1};
           border: 1px solid #dddddd;
           box-sizing: border-box;
          font-size: 14px;
@@ -144,11 +144,11 @@
     </x-header>
     <img src="../../assets/img/common/logo.png" class="login_img"  alt="logo">
     <group class="login_group">
-      <x-input  placeholder="请输入账号"  v-model="form.userName">
+      <x-input  placeholder="请输入账号" type="text"  v-model="form.user_phone" required>
           <i class="iconfont" slot="label">&#xe666;</i>
 
       </x-input>
-      <x-input  placeholder="请输入密码"  type="password"  v-model="form.password">
+      <x-input  placeholder="请输入密码"  type="password"  v-model="form.user_password" required>
         <i class="iconfont" slot="label">&#xe600;</i>
       </x-input>
       <x-button class="login_btn"  @click.native="login">登录</x-button>
@@ -156,22 +156,24 @@
 
     <router-link to="/logincode" class="login_link">验证码登录</router-link>
     <router-link to="/forget" class="login_lforget">忘记密码</router-link>
-    <toast v-model="toast" type="warn">{{text}}</toast>
+    <toast v-model="toast"  type="cancel">{{confrim}}</toast>
 	</div>
 </div>
 </template>
 <script>
 import {XInput, Group, XButton,XHeader,Toast } from 'vux'
-import {API,getQuery} from '../../services'
+import {API,getQuery} from '../../services';
+console.log(API);
+
   export default {
       data() {
         return {
-           text:"",
+           confrim:"",
            toast:false,
            state:true,
            form:{
-             user_phone:"",
-             user_password:""
+             user_phone:"15967654063",
+             user_password:"f2957675e64f40902bbdc0462774db23"
            }
         }
       },
@@ -183,36 +185,42 @@ import {API,getQuery} from '../../services'
      Toast
     },
     mounted : function() {
-        document.title="登陆"
+
     },
     methods :{
       routerback(){
         this.$router.goBack();
       },
       login(){
-        /* if(this.state){
-           API.user.login(this.form).then(
-              (resp) => {
-              if(resp.body.errmsg=="登录成功"){
-                localStorage.setItem("login", JSON.stringify(resp.body.result))
-                this.state = false
-                if( localStorage.getItem("jump")){
-                  window.location.href="/"+localStorage.getItem("jump")
-                }else{
-                  window.location.href="/index"
-                }
+        var self=this;
+        /* 用户名格式检验 */
+        if(this.form.user_phone==''){
+           this.confrim="请输入正确的用户名";
+            this.toast=true;
+        }
+        /* 用户密码格式校验 */
+        if(this.form.user_password==''){
+            this.confrim="请输入正确的用户密码";
+            this.toast=true;
+        }
 
-              }else{
-                this.toast = !this.toast
-                this.text=resp.body.errmsg
-              }
-            }
-          )
-        } */
+        /* 进行接口登录 */
+        API.login.pwdLogin(this.form).then((Response)=>{
+          Response=Response.body.data;
+          /* 触发vuex登录状态更改操作 */
+          let token=this.md5(Response.user_id)+Response.user_id;
+          let userInfo={
+            loginname : Response.nickname,
+            avatar : Response.face,
+            id : Response.user_id,
+            token : token,
+          };
+          this.$store.dispatch('SetUserInfo',userInfo);
+        })
 
       },
       regist(){
-        window.location.href="/regist"
+        window.location.href="/regist";
       }
     }
   }

@@ -1,6 +1,8 @@
 <template>
   <transition :name="transitionName" class="router">
+      <keep-alive>
       <router-view  class="Router" id="router-container"></router-view>
+      </keep-alive>
   </transition>
 </template>
 
@@ -33,6 +35,7 @@ export default {
      width: 100%;
      transition: all .4s ease;
      top: 0;
+     height: 100%;
 }
 
 .slide-left-enter,

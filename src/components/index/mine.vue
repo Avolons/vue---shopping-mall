@@ -56,10 +56,10 @@ body{
         </header>
    
      <group style="margin-top:0.6rem;">
-      <cell  title="我的收藏" is-link>
+      <cell  title="我的收藏" is-link link="/collection">
           <i slot="icon" class="iconfont">&#xe605;</i>
       </cell>
-      <cell  title="我的地址" is-link link="/editAddress">
+      <cell  title="我的地址" is-link link="/addressList">
           <i slot="icon" class="iconfont">&#xe71d;</i>
       </cell>
     </group>

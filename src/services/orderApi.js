@@ -1,7 +1,8 @@
-import Vue from 'vue';
+/**
+ * 订单部分接口
+ */
 
-var port = false;
-var API_ROOT = port?"https//api.zujiekeji.cn/":"http://106.14.135.243:8082/index/";
+import Vue from 'vue';
 
 export const order = {
   orderConfirm(data) {

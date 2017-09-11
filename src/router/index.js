@@ -16,14 +16,17 @@ import register from '../components/common/register.vue';//注册页
 import forget from '../components/common/forget.vue';//忘记密码
 import index from '../components/index/index.vue';//首页父页面
 import main from '../components/index/main.vue';//首页主页面
-import shop from '../components/index/shop.vue';//首页购物车
+import car from '../components/index/car.vue';//首页购物车
 import order from '../components/index/order.vue';//首页订单页
 import mine from '../components/index/mine.vue';//首页个人中心页面
 import list from '../components/list/list.vue';//商品分类列表页面
 import search from '../components/search/search.vue';//商品搜索页面
+import goodsList from '../components/list/goodsList.vue';//商品具体列表页面
 import goodsinfo from '../components/goods/goodsinfo.vue';//商品详情页面
 import authentication from '../components/mine/authentication.vue';//实名认证
-import setting from '../components/mine/setting.vue';//实名认证
+import collection from '../components/mine/collection.vue';//我的收藏
+import setting from '../components/mine/setting.vue';//我的设置
+import about from '../components/mine/about.vue';//关于我们
 import help from '../components/mine/help.vue';//帮助与客服
 import opinion from '../components/mine/opinion.vue';//意见与反馈
 import logistics from '../components/help/logistics.vue';//物流服务
@@ -31,6 +34,14 @@ import service from '../components/help/service.vue';//售后服务
 import transaction from '../components/help/transaction.vue';//交易相关
 import addressList from '../components/address/addressList.vue';//新增地址
 import editAddress from '../components/address/editAddress.vue';//地址管理
+import orderInfo from '../components/order/orderInfo.vue';//订单详情
+import orderLogistics from '../components/order/orderLogistics.vue';//订单物流选择
+import shop from '../components/shop/shop.vue';//店铺主页
+import shopInfo from '../components/shop/shopInfo.vue';//店铺详情
+
+
+
+
 
 
 /* 项目调试完成后使用按需加载模块，分割js文件 */
@@ -105,9 +116,14 @@ const routes = [{
         component: index,
         children:[
             {path:"",component:main},
-            {path:"shop",component:shop},
-            {path:"order",component:order},
-            {path:"mine",component:mine},
+            {path:"car",component:car},
+            {path:"order", meta: {
+                 requireAuth: true,  
+                }, component:order},
+            {path:"mine", meta: {
+                // 添加该字段，表示进入这个路由是需要登录的
+                 requireAuth: true,  
+                }, component:mine},
         ]
     },{
         path: '/',
@@ -169,12 +185,61 @@ const routes = [{
     },{
         path: '/addressList',
         name: 'addressList',
+        meta: {
+            requireAuth: true,  
+           },
         component: addressList
     },{
-        path: '/editAddress',
+        path: '/editAddress/:id',
         name: 'editAddress',
+        meta: {
+            requireAuth: true,  
+           },
         component: editAddress
+    },{
+        path:'/editAddress',
+        meta: {
+            requireAuth: true,  
+           },
+        redirect:'/editAddress/add'
+    },{
+        path:'/orderInfo',
+        meta: {
+            requireAuth: true,  
+           },
+        name: 'orderInfo',
+        component: orderInfo
+    },{
+        path:'/orderLogistics',
+        name: 'orderLogistics',
+        component: orderLogistics
+    },{
+        path:'/goodsList/:id',
+        name: 'goodsList',
+        component: goodsList
+    },{
+        path:'/collection',
+        name: 'collection',
+        component: collection
+    },{
+        path:'/setting',
+        name: 'setting',
+        component: setting
+    },{
+        path:'/about',
+        name: 'about',
+        component: about
+    },{
+        path:'/shop/:id',
+        name: 'shop',
+        component: shop
+    },{
+        path:'/shopInfo/:id',
+        name: 'shopInfo',
+        component: shopInfo
     }];
+
+    
 
 export default new Router({
     mode: 'hash',

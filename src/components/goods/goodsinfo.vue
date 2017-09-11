@@ -7,8 +7,8 @@
         <!--头部区域，返回按钮 -->
         <header class="goodsinfo_header">
             <!-- 返回按钮 -->
-            <div class="goodsinfo_header_back">
-
+            <div class="goodsinfo_header_back" @click="routerBack()">
+                <i class="iconfont">&#xe7a7;</i>
             </div>
             <!-- 商品简介轮播图 -->
             <swiper class="main_swiper" dots-position="center" :aspect-ratio="300/800">
@@ -52,7 +52,6 @@
             </div>
             <div class="goodsinfo_content_time">
                 <inline-calendar class="inline-calendar-demo" 
-                @on-change="changeTime" 
                 :show.sync="timeconfig.show" 
                 v-model="timeValue" 
                 :start-date="timerange.startTime" 
@@ -216,8 +215,9 @@
                 <img src="../../assets/img//goods/goodsinfo.png" style="height:50px;margin:0 auto;display:block" alt="">
                 <!-- 商品详情图片渲染 -->
                 <template v-for="item in staticdata.goods_details_content">
-                        <img  :src="item.image"  alt="mainImg">
+                        <img  :src="item.image"  alt="mainImg" class="goodsinfo_content_mainimg">
                 </template>
+                 <divider>我是有底线的</divider>
             </div>
         </article>
         <!-- 底部区域 -->
@@ -225,34 +225,35 @@
         <footer class="goodsinfo_footer">
             <div class="goodsinfo_btnlist">
                 <ul class="goodsinfo_funlist">
-                    <li class="goodsinfo_funlist_single">
+                    <li class="goodsinfo_funlist_single" @click="goShop()">
                         <i class="iconfont">&#xe607;</i>
                         <span>店铺</span>
                     </li>
-                    <li class="goodsinfo_funlist_single">
+                    <li class="goodsinfo_funlist_single" @click="addCollection()" :class="{'goodsinfo_funlist_single--collect':isCollection}">
                         <i class="iconfont">&#xe605;</i>
                         <span>收藏</span>
                     </li>
-                    <li class="goodsinfo_funlist_single">
+                    <li class="goodsinfo_funlist_single" @click="goCar()">
                         <i class="iconfont">&#xe604;</i>
                         <span>购物车</span>
                     </li>
                 </ul>
                 <button type="button" class="goodsinfo_btnlist_car">加入购物车</button>
-                <button type="button" class="goodsinfo_btnlist_buy">立即租赁</button>
+                <button type="button" @click="buyGoods()" class="goodsinfo_btnlist_buy">立即租赁</button>
             </div>
         </footer>
     </div>
 </template>
 
 <script>
-import { Swiper, dateFormat, SwiperItem, InlineCalendar, XAddress, Group, ChinaAddressV3Data, TransferDom, Popup, Cell, XButton, XSwitch } from 'vux';
+import { Swiper,Divider, dateFormat, SwiperItem, InlineCalendar, XAddress, Group, ChinaAddressV3Data, TransferDom, Popup, Cell, XButton, XSwitch } from 'vux';
 import jsondata from './goods.json';
 export default {
     directives: {
         TransferDom
     },
     components: {
+        Divider,
         Swiper,
         SwiperItem,
         InlineCalendar,
@@ -265,6 +266,8 @@ export default {
     },
     data() {
         return {
+            /* 是否被收藏 */
+            isCollection:false,
             /* 日期控件配置参数 */
             timeconfig: {
                 show: false,
@@ -320,7 +323,7 @@ export default {
             /* 规格列表 */
             sizelist: [{ sel: 0, value: "", content_id: 1 }],
             /* 数据列表 */
-            datalist: null,
+            datalist: [],
             /* 当前地址 */
             goodsAddress: [],
             /* 颜色规格选择框显示隐藏 */
@@ -504,7 +507,7 @@ export default {
         /* 返回可选时间范围 */
         timerange() {
             let min_advance = this.currentGoodsData.rent_period_min_advance * 24 * 3600 * 1000;
-            let max_advance = this.currentGoodsData.rent_period_max_advance * 24 * 3600 * 30 * 1000;
+            let max_advance = this.currentGoodsData.rent_period_max_advance * 24 * 3600 * 1000;
             let currenttime = new Date().getTime();
             let startTime = dateFormat(new Date(currenttime + min_advance), 'YYYY-MM-DD')
             let endTime = dateFormat(new Date(currenttime + max_advance), 'YYYY-MM-DD')
@@ -530,6 +533,10 @@ export default {
        }
     },
     methods: {
+        /* 立即租赁按钮点击 */
+        buyGoods(){
+            window.location.href="/#/orderInfo";
+        },
         /* 商品规格选择函数 */
         selectSize(size, item) {
             if (item.sel === 1) {
@@ -580,6 +587,7 @@ export default {
                      this.currentGoodsData.goodsnum = this.goods_sales_count;
                  }
             }else{
+                /* 当前输入值大于最大租用周期且当前租用周期不为无限期的情况下 */
                 if(this.currentGoodsData.rentTime>this.currentGoodsData.rent_period_max_rent){
                         this.currentGoodsData.rentTime=this.currentGoodsData.rent_period_max_rent
                     }
@@ -624,13 +632,14 @@ export default {
                 }
             }
             this.timeDataChange(self.currentTypedata.rent_period[0]);
+            /* 第一个周期默认为选中状态 */
+            for(let item of self.currentTypedata.rent_period) {
+                item.sel=0;
+            }
             self.currentTypedata.rent_period[0].sel=1;
-            
+            this.currentTimeIndex=0;
         },
-        /* 时间选择变化 */
-        changeTime(){
-
-        },
+        
         /* 商品数量,日期加减计算 */
         /* size:需要操作的源数据 type:0，减法 1，加法 */
         numcouter(size, type) {
@@ -654,12 +663,29 @@ export default {
                         this.currentGoodsData.goodsnum++;
                     }
                 } else {
+                    /* 无限期情况下页可以增加 */
                     if(this.currentGoodsData.rentTime<this.currentGoodsData.rent_period_max_rent){
                         this.currentGoodsData.rentTime++;
                     }
                 }
             }
         },
+        /* 路由回退 */
+         routerBack(){
+          this.$router.goBack();
+          },
+          /* 进入店铺主页面 */
+          goShop(){
+              window.location.href="/#/shop/ss";
+          },
+          /* 进入购物车 */
+          goCar(){
+              window.location.href="/#/index/main/car";
+          },
+          /* 加入收藏 */
+          addCollection(){
+              this.isCollection=(this.isCollection==true?false:true);
+          }
     }
 }
 </script>

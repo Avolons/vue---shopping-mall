@@ -127,7 +127,7 @@ body {
 <template>
     <div class="list_container">
         <header class="list_header">
-            <div class="list_search">
+            <div class="list_search"  @click="gosearch">
                 <i class="iconfont">&#xe60c;</i> 请输入商品名
             </div>
             <span class="list_menu" @click="routerback()">
@@ -153,18 +153,11 @@ body {
 </template>
 
 <script>
-import { Scroller, Swiper, SwiperItem, Spinner, XButton, Group, Cell, LoadMore } from 'vux'
+import { Scroller } from 'vux'
 
 export default {
     components: {
         Scroller,
-        Spinner,
-        XButton,
-        Group,
-        Cell,
-        LoadMore,
-        Swiper,
-        SwiperItem
     },
     data() {
         return {
@@ -209,6 +202,10 @@ export default {
             var data = this.typeList;
             this.typeList = null;
             this.typeList = data;
+        },
+         /* 跳转到搜索页面 */
+        gosearch(){
+            window.location.href="/#/search";
         },
     }
 }
