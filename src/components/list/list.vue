@@ -82,11 +82,11 @@ body {
             padding: 10px;
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
         }
         &_single {
             background-color: #fff;
             width: 32%;
+            margin-right: 1%;
             height: 120px;
             box-sizing: border-box;
             padding: 20px 10px;
@@ -125,6 +125,7 @@ body {
 }
 </style>
 <template>
+<div>
     <div class="list_container">
         <header class="list_header">
             <div class="list_search"  @click="gosearch">
@@ -135,25 +136,34 @@ body {
             </span>
         </header>
         <ul class="list_typelist">
-            <li class="list_typelist_single" v-for="item in typeList"  :class="{'list_typelist_single--selected':item.click}" @click="typeselect(item.type)">{{item.name}}</li>
+            <li class="list_typelist_single" v-for="(item,index) in typeList"  :class="{'list_typelist_single--selected':item.click}" @click="typeselect(index)">{{item.name}}</li>
         </ul>
         <div class="list_listbox">
             <ul class="list_recommend_list" >
-                <li v-for="i in 7" class="list_recommend_single">
-                    <div class="list_recommend_img">
-                        <img src="https://static.vux.li/demo/1.jpg" alt="">
-                    </div>
-                    <div class="list_recommend_text">
-                        <h2 class="list_recommend_title">小萝卜健身器材</h2>
-                    </div>
-                </li>
+                <template v-if="typeList[0]">
+                    <template v-for="item in typeList[currentType].children" >
+                         <template v-for="ite in item.children">
+                            <li class="list_recommend_single" @click="goSearch(ite.id,ite.name)">
+                                <div class="list_recommend_img">
+                                <img :src="ite.img" alt="img">
+                                </div>
+                                <div class="list_recommend_text">
+                                    <h2 class="list_recommend_title">{{ite.name}}</h2>
+                                </div>
+                            </li>
+                        </template>
+                    </template>
+                </template>
             </ul>
         </div>
+    </div>
     </div>
 </template>
 
 <script>
 import { Scroller } from 'vux'
+import {API,getQuery} from '../../services';
+
 
 export default {
     components: {
@@ -164,27 +174,7 @@ export default {
             /* 当前被选中列表 */
             currentType: 0,
             /* 分类数据集合 */
-            typeList: [{
-                name: "精选",
-                type: 0,
-                click: true,
-            }, {
-                name: "玩具",
-                type: 1,
-                click: false,
-            }, {
-                name: "跑步机",
-                type: 2,
-                click: false,
-            }, {
-                name: "动感单车",
-                type: 3,
-                click: false,
-            }, {
-                name: "轮椅",
-                type: 4,
-                click: false,
-            },]
+            typeList: [],
         }
     },
     methods: {
@@ -207,6 +197,42 @@ export default {
         gosearch(){
             window.location.href="/#/search";
         },
-    }
+        /* 对象初始化前数据筛选 */
+        dataFormat(data){
+            for(let i= 0;i<data.length;i++){
+                if(data[i].count==0){
+                    data.splice(i,1);
+                    i--;
+                }else{
+                    for(let j= 0,twoData=data[i].children;j<twoData.length;j++){
+                        if(twoData[j].count==0){
+                            twoData.splice(j,1);
+                            j--;
+                        }else{
+                              for(let k= 0,threeData=twoData[j].children;k<threeData.length;k++){
+                                    if(threeData[k].count==0){
+                                        threeData.splice(k,1);
+                                        k--;
+                                    }
+                                }     
+                        }
+                    }     
+                }
+            }
+        },
+        /* 列表点击函数 */
+        goSearch(id,name){
+            window.location.href="/#/goodsList?categoryId="+id+"&name="+name;
+        }
+    },
+     mounted(){
+            /* 获取整体分类数据，三重结构，去除第二重 */
+            API.main.goodsCategory().then((Response)=>{
+                let typeList=Response.body.data;
+                this.dataFormat(typeList);
+                this.typeList=typeList;
+                this.typeList[0].click=true;
+            });
+        }
 }
 </script>

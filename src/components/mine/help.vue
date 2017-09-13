@@ -44,10 +44,6 @@ export default {
   },
   data () {
     return {
-      menus: {
-        menu1: 'Take Photo',
-        menu2: 'Choose from photos'
-      },
       showMenus: false
     }
   },

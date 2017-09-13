@@ -6,8 +6,8 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
 	state: {
-		// 页面打开默认设置登录状态为否
-		isLogin : false,
+		/* 认证状态 0 未认证 2 实名认证 4 芝麻信用授权 */
+		isCertify:0,
 		// 保存登录信息
 		userInfo : {
 			loginname: '',
@@ -15,7 +15,6 @@ const store = new Vuex.Store({
 			id: '',
 			token: ''
 		},
-
 		/* 引发登录跳转的源头，如果没有，默认跳到首页*/
 		fromUrl:"/index",
 		/* 全局订单数据 */
@@ -29,13 +28,17 @@ const store = new Vuex.Store({
 		}
 	},
 	actions: {
-		/*  */
-		Login({commit}) {
-			commit('LOGIN');
-		},
 		/* 设置用户登录信息 */
 		SetUserInfo({commit,state},userInfo){
 			commit('SETUSERINFO',userInfo);
+		},
+		/* 退出登录 */
+		SignOut({commit}){
+			commit('SIGNOUT');
+		},
+		/* 设置当前认证状态 */
+		IsCertify({commit}){
+			commit('ISCERTIFY');	
 		}
 	},
 	mutations: {
@@ -45,55 +48,40 @@ const store = new Vuex.Store({
 			state.userInfo.avatar = userInfo.avatar;
 			state.userInfo.id = userInfo.id;
 			state.userInfo.token = userInfo.token;
-		},
-		// 设置登录
-		LOGIN (state) {
+			window.location.href="/#/index/main";
 		},
 		// 退出登录
 		SIGNOUT (state) {
-			state.user=[];
+			/* 清空用户登录信息 */
+			state.userInfo.loginname = '';
+			state.userInfo.avatar = '';
+			state.userInfo.id = '';
+			state.userInfo.token = '';
+			window.location.href="/#/index/main";
 		},
-		
-		// 设置tips弹窗的提示信息
-		SETTIPCONTENT (state, content) {
-			state.tipContent = content;
-		},
-		// 设置tips弹窗的显示隐藏状态
-		SETTIPSHOW (state, status) {
-			state.tipShow = status;
-		},
-		// 设置未读消息条数
-		SETNOTMESSAGECOUNT (state, count) {
-			state.message_count = count;
-		},
-		// 设置当前文章评论
-		SETREPLIES (state, replies) {
-			state.replies = replies;
+		// 设置当前认证状态,
+		ISCERTIFY (state) {
+			state.isCertify=localStorage.getItem("isCertify")||0;
 		}
 	},
 	getters: {
-		getLoginState (state) {
-			return state.isLogin;
-		},
 		/* 返回用户信息 */
 		getUserInfo (state) {
 			return state.userInfo;
 		},
-		getUserInfoAccesstoken(state, getters) {
-			return getters.getUserInfo.accesstoken;
+		/* 返回用户id */
+		getUserInfoUserId(state, getters) {
+			return getters.getUserInfo.id;
 		},
-		getTipShow (state) {
-			return state.tipShow;
+		/* 返回用户token */
+		getUserInfoToken(state, getters) {
+			return getters.getUserInfo.token;
 		},
-		getTipContent (state) {
-			return state.tipContent;
-		},
-		getNotMessageCount (state) {
-			return state.message_count;
-		},
-		getReplies (state) {
-			return state.replies;
+		/* 返回用户认证状态 */
+		getIsCertify(state){
+			return state.isCertify;
 		}
+		
 	}
 })
 

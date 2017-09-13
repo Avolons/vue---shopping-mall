@@ -62,37 +62,76 @@
         <x-header @on-click-back="routerBack" :left-options="{backText: '',preventGoBack:true}">实名认证</x-header>
         <div class="authent_main">
             <group>
-                <x-input placeholder="请输入您的真实姓名" :required=true  title="真实姓名" v-model="data.name"></x-input>
-                <x-input placeholder="请输入您的身份证号码" :required=true  title="身份证号" v-model="data.code"></x-input>
+                <x-input placeholder="请输入您的真实姓名"  required  title="真实姓名" v-model="data.name"></x-input>
+                <x-input placeholder="请输入您的身份证号码"  required  title="身份证号" v-model="data.code"></x-input>
             </group>
             <p class="authent_main_confrim" >为了保障您的安全，请进行实名认证</p>
-            <button class="authent_main_btn" type="button">立即认证</button>
+            <button class="authent_main_btn" @click="check()"  type="button">立即认证</button>
+                <toast v-model="toast"  type="cancel">{{confrim}}</toast>
         </div>
     </div> 
 </template>
 
 <script>
-import { XHeader,Cell,Group,XInput } from 'vux'
+import { XHeader,Cell,Group,XInput,Toast } from 'vux'
+import { mapGetters } from 'vuex'
+import {API,getQuery} from '../../services'
 
 export default {
   components: {
     XHeader,
      Group,
     Cell,
-    XInput
+    XInput,
+    Toast
   },
   data () {
     return {
+        confrim:"",
+        toast:false,
       data: {
         name: '',
         code: ''
       },
     }
   },
-  
+   computed:{
+    ...mapGetters([
+      'getUserInfoUserId',
+      'getUserInfoToken',
+    ])
+  },
   methods:{
       routerBack(){
           this.$router.goBack();
+      },
+      /* 身份验证 */
+      check(){
+          if(!this.data.name){
+            this.confrim="请输入姓名";
+            this.toast=true;
+            return false;
+          }
+          if(!this.data.code){
+            this.confrim="请输入身份证号码";
+            this.toast=true;
+            return false;
+          }
+          API.person.userIdentify({
+            userId:this.getUserInfoUserId,
+            realName:this.data.name,
+            idCard:this.data.code,
+            token:this.getUserInfoToken
+          }).then((res)=>{
+              if(res.body.code==200){
+                   localStorage.setItem("isCertify","2");
+                    this.$store.dispatch('IsCertify');
+                     this.routerBack();
+              }else{
+                  this.confrim=res.body.msg;
+                  this.toast=true;
+              }
+          });
       }
   }
 }

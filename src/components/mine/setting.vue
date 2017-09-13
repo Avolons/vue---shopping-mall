@@ -38,7 +38,7 @@
             <group >
             <cell title="关于租介" is-link link="/about"></cell>
             </group>
-            <button class="seeting_main_btn" type="button">退出登录</button>
+            <button class="seeting_main_btn" @click="signOut" type="button">退出登录</button>
         </div>
     </div> 
 </template>
@@ -61,6 +61,16 @@ export default {
   methods:{
       routerBack(){
           this.$router.goBack();
+      },
+      signOut(){
+          let userInfo={
+            loginname : "",
+            avatar : "",
+            id : "",
+            token : "",
+          };
+          localStorage.setItem("userInfo",JSON.stringify(userInfo));
+          this.$store.dispatch('SignOut');
       }
   }
 }

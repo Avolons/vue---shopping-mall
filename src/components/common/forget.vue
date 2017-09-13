@@ -105,6 +105,9 @@
           margin-top:7.5px !important;
           background-color: #f3f3f3;
           color: #333;
+          &--disable{
+            background-color: transparent;
+          }
         }
         &_book{
             font-size: 13px;
@@ -126,37 +129,43 @@
         忘记密码
     </x-header>
     <group class="forget_group">
-      <x-input  placeholder="请输入账号"  v-model="form.userName">
+      <x-input  placeholder="请输入手机号" is-type="china-mobile"  required v-model="form.user_phone">
           <i class="iconfont" slot="label">&#xe666;</i>
         
       </x-input>
-      <x-input  class="forget_getcode" placeholder="请输入验证码"  type="password"  v-model="form.password">
+      <x-input  class="forget_getcode" placeholder="请输入验证码" required type="text"  v-model="form.code">
         <i class="iconfont" slot="label">&#xe601;</i>
       </x-input>
-      <x-button class="forget_code forget_btn"  @click.native="getcode">获取验证码</x-button>
-        <x-input style="margin-top:60px" placeholder="请输入密码"  type="password"  v-model="form.password">
+      <x-button class="forget_code forget_btn" :class="{'forget_code--disable':isDisable}"  @click.native="getcode">{{codeText}}</x-button>
+        <x-input style="margin-top:60px" placeholder="请输入密码" required  type="password"  v-model="form.user_password">
         <i class="iconfont" slot="label">&#xe600;</i>
       </x-input>
-      <x-button class="forget_btn"  @click.native="login">提交</x-button>
+      <x-button class="forget_btn"  @click.native="changePassword">提交</x-button>
     </group>
     
-    <toast v-model="toast" type="warn">{{text}}</toast>
+    <toast v-model="toast" type="cancel">{{confrim}}</toast>
 	</div>
   </div>
 </template>
 <script>
-import {XInput, Group, XButton,XHeader,Toast } from 'vux'
-/* import {API,getQuery} from '../services' */
+import {XInput, Group, XButton,XHeader,Toast } from 'vux';
+import {API,getQuery} from '../../services'
   export default {
       data() {
         return {
-           text:"",
+          /* 警告信息 */
+           confrim:"",
            toast:false,
            state:true,
+           /* 用户手机号，验证码，新密码 */
            form:{
-            userName:"",
-            password:""
-           }
+            user_phone:"",
+            code:"",
+            user_password:""
+           },
+           /* 验证码内容 */
+           codeText:"获取验证码",
+           isDisable:false,
         }
       },
     components: {
@@ -167,36 +176,70 @@ import {XInput, Group, XButton,XHeader,Toast } from 'vux'
      Toast
     },
     mounted : function() {
-        document.title="登陆"
+
     },
     methods :{
       routerback(){
         this.$router.goBack();
       },
-      login(){
-        /* if(this.state){
-           API.user.login(this.form).then(
-              (resp) => {
-              if(resp.body.errmsg=="登录成功"){
-                localStorage.setItem("login", JSON.stringify(resp.body.result))
-                this.state = false
-                if( localStorage.getItem("jump")){
-                  window.location.href="/"+localStorage.getItem("jump")
-                }else{
-                  window.location.href="/index"
+      /* 获取验证码 */
+      getcode(){
+        /* 判断手机号是否有值 */
+        if(!this.form.user_phone){
+            this.confrim="请输入手机号码";
+            this.toast=true;
+            return false;
+        }
+        if(!this.isDisable){
+          API.login.sendCode({
+            user_phone:this.form.user_phone,
+            type:"back"
+          }).then((res)=>{
+            if(res.body.code==200){
+              this.isDisable=true;
+            this.codeText=60;
+            let inter=setInterval(()=>{
+                this.codeText--;
+                if(this.codeText==1){
+                  clearInterval(inter);
+                  this.isDisable=false;
+                  this.codeText="获取验证码";
                 }
-                
-              }else{
-                this.toast = !this.toast
-                this.text=resp.body.errmsg
-              }         
+            },1000);
+            }else{
+              this.confrim=res.body.msg;
+            this.toast=true; 
             }
-          )
-        } */
+          });
+        }
       },
-      regist(){
-        window.location.href="/regist"
-      }
+      /* 密码修改 */
+      changePassword(){
+        /* 值判断 */
+        if(!this.form.user_phone){
+            this.confrim="请输入手机号码";
+            this.toast=true;
+            return false;
+        }
+        if(!this.form.code){
+            this.confrim="请输入验证码";
+            this.toast=true;
+            return false;
+        }
+        if(!this.form.user_password){
+            this.confrim="请输入新密码";
+            this.toast=true;
+            return false;
+        }
+        API.login.updatePwd(this.form).then((res)=>{
+          if(res.body.code==200){
+              window.location.href="/#/login";
+          }else{
+             this.confrim=res.body.msg;
+            this.toast=true; 
+          }
+        });
+      },
     }
   }
 </script>

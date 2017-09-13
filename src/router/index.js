@@ -14,6 +14,7 @@ import login from '../components/common/login.vue';//常规登录页
 import logincode from '../components/common/logincode.vue';//验证码登录页
 import register from '../components/common/register.vue';//注册页
 import forget from '../components/common/forget.vue';//忘记密码
+import agreement from '../components/common/agreement.vue';//注册协议
 import index from '../components/index/index.vue';//首页父页面
 import main from '../components/index/main.vue';//首页主页面
 import car from '../components/index/car.vue';//首页购物车
@@ -174,7 +175,13 @@ const routes = [{
         path: '/logistics',
         name: 'logistics',
         component: logistics
-    },{
+    },
+    {
+        path: '/agreement',
+        name: 'agreement',
+        component: agreement
+    },
+    {
         path: '/service',
         name: 'service',
         component: service
@@ -214,7 +221,7 @@ const routes = [{
         name: 'orderLogistics',
         component: orderLogistics
     },{
-        path:'/goodsList/:id',
+        path:'/goodsList/',
         name: 'goodsList',
         component: goodsList
     },{

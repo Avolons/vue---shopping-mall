@@ -170,10 +170,11 @@
     </div>
 </template>
 <script>
-    
-    
-    import { XHeader,Cell,Group,Confirm} from 'vux'
-    import addresslist from './addresslist.json';
+
+import { XHeader,Cell,Group,Confirm} from 'vux'
+import addresslist from './addresslist.json';
+import { mapGetters } from 'vuex'
+import {API,getQuery} from '../../services';
 
 export default {
   components: {
@@ -184,17 +185,21 @@ export default {
   },
   data () {
     return {
+    /* 默认选中index */
       currentIndex:0,
+      /* 当前列表index 集合 */
       valList:[],
+      /* 地址列表 */
       addressList:{
           data:[]
       },
-      showMenus: false
     }
   },
   computed:{
-      checkReturn(){
-      }
+    ...mapGetters([
+      'getUserInfoUserId',
+      'getUserInfoToken',
+    ])
   },
   methods:{
       routerBack(){
@@ -208,36 +213,48 @@ export default {
       },
       /* 地址编辑 */
       editAddress(id){
+          /* 进入地址编辑页面 */
           window.location.href="/#/editAddress/"+id;
       },
       /* 地址删除 */
       deletAddress(id){
-          console.log(this.$vux);
           this.$vux.confirm.show({
             /* title: 'Title', */
             content: '确定要删除该地址吗？',
             onConfirm () {
                 /* 点击确认时执行具体删除操作 */
-            console.log('plugin confirm')
+
             }
         })
-      }
+      },
+      /* 获取用户地址列表 */
+        getAddress(){
+            /* 获取默认地址数据 */
+            API.person.getAddressList({
+                    userId:this.getUserInfoUserId,  
+                    token:this.getUserInfoToken,
+            }).then((res)=>{
+                if(res.body.code==200){
+                    this.addressList=res.body.data.addressList;
+                    let checkValue=new Array(this.addressList.data.length);
+                    for(let i=0;i<this.addressList.data.length;i++) {
+                        let result=false;
+                        if(this.addressList.data[i].is_set_default===1){
+                            this.currentIndex=i;
+                            result=true;
+                        }
+                        checkValue[i]=result;
+                    }
+                    this.valList=checkValue;
+                }
+            });
+        }
   },
   mounted(){
-      
-      this.addressList=addresslist.data.addressList;
-      let checkValue=new Array(this.addressList.data.length);
-        for(let i=0;i<this.addressList.data.length;i++) {
-            let result=false;
-            if(this.addressList.data[i].is_set_default===1){
-                this.currentIndex=i;
-                result=true;
-            }
-            checkValue[i]=result;
-        }
-        this.valList=checkValue;
-      
-      
+        this.getAddress();
+  },
+  activated(){
+      this.getAddress();
   }
 }  
 </script>

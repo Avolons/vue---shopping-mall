@@ -115,6 +115,9 @@
           margin-top:7.5px!important;
           background-color: #f3f3f3;
           color: #333;
+           &--disable{
+            background-color: transparent;
+          }
         }
         &_book{
             font-size: 13px;
@@ -137,38 +140,42 @@
         注册
     </x-header>
     <group class="register_group">
-      <x-input  placeholder="请输入账号"  v-model="form.userName">
+      <x-input  placeholder="请输入账号" is-type="china-mobile" required v-model="form.user_phone">
           <i class="iconfont" slot="label">&#xe666;</i>
         
       </x-input>
-      <x-input  class="register_getcode" placeholder="请输入验证码"  type="password"  v-model="form.password">
+      <x-input  class="register_getcode" placeholder="请输入验证码"  required type="text"  v-model="form.code">
         <i class="iconfont" slot="label">&#xe601;</i>
       </x-input>
-      <x-button class="register_code register_btn"  @click.native="getcode">获取验证码</x-button>
-        <x-input style="margin-top:60px" placeholder="请输入密码"  type="password"  v-model="form.password">
+      <x-button class="register_code register_btn" :class="{'register_code--disable':isDisable}" required  @click.native="getcode">{{codeText}}</x-button>
+        <x-input style="margin-top:60px" placeholder="请输入密码"  type="password"  v-model="form.user_password">
         <i class="iconfont" slot="label">&#xe600;</i>
       </x-input>
         <p class="register_book">注册即同意 <a href="">《租介用户协议》</a></p> 
-      <x-button class="register_btn"  @click.native="login">立即注册</x-button>
+      <x-button class="register_btn"  @click.native="register">立即注册</x-button>
     </group>
     
-    <toast v-model="toast" type="warn">{{text}}</toast>
+    <toast v-model="toast" type="cancel">{{confrim}}</toast>
   	</div>
   </div>
 </template>
 <script>
 import {XInput, Group, XButton,XHeader,Toast } from 'vux'
-/* import {API,getQuery} from '../services' */
+import {API,getQuery} from '../../services'
   export default {
       data() {
         return {
-           text:"",
+           confrim:"",
            toast:false,
            state:true,
            form:{
-            userName:"",
-            password:""
-           }
+            user_phone:"",
+            code:"",
+            user_password:""
+           },
+           /* 验证码内容 */
+           codeText:"获取验证码",
+           isDisable:false,
         }
       },
     components: {
@@ -179,36 +186,80 @@ import {XInput, Group, XButton,XHeader,Toast } from 'vux'
      Toast
     },
     mounted : function() {
-        document.title="登陆"
     },
     methods :{
       routerback(){
         this.$router.goBack();
       },
-      login(){
-        /* if(this.state){
-           API.user.login(this.form).then(
-              (resp) => {
-              if(resp.body.errmsg=="登录成功"){
-                localStorage.setItem("login", JSON.stringify(resp.body.result))
-                this.state = false
-                if( localStorage.getItem("jump")){
-                  window.location.href="/"+localStorage.getItem("jump")
-                }else{
-                  window.location.href="/index"
+      /* 获取验证码 */
+      getcode(){
+        /* 判断手机号是否有值 */
+        if(!this.form.user_phone){
+            this.confrim="请输入手机号码";
+            this.toast=true;
+            return false;
+        }
+        if(!this.isDisable){
+          API.login.sendCode({
+            user_phone:this.form.user_phone,
+            type:"register"
+          }).then((res)=>{
+            if(res.body.code==200){
+              this.isDisable=true;
+                this.codeText=60;
+                let inter=setInterval(()=>{
+                this.codeText--;
+                if(this.codeText==1){
+                  clearInterval(inter);
+                  this.isDisable=false;
+                  this.codeText="获取验证码";
                 }
-                
-              }else{
-                this.toast = !this.toast
-                this.text=resp.body.errmsg
-              }         
+            },1000);
+            }else{
+                this.confrim=res.body.msg;
+            this.toast=true; 
             }
-          )
-        } */
+          });
+        }
       },
-      regist(){
-        window.location.href="/regist"
-      }
+      /* 密码修改 */
+      register(){
+        /* 值判断 */
+        if(!this.form.user_phone){
+            this.confrim="请输入手机号码";
+            this.toast=true;
+            return false;
+        }
+        if(!this.form.code){
+            this.confrim="请输入验证码";
+            this.toast=true;
+            return false;
+        }
+        if(!this.form.user_password){
+            this.confrim="请输入新密码";
+            this.toast=true;
+            return false;
+        }
+        API.login.register(this.form).then((Response)=>{
+          if(Response.body.code==200){
+            Response=Response.body.data;
+              /* 触发vuex登录状态更改操作 */
+            let token=this.md5(Response.user_id)+Response.user_id;
+            let userInfo={
+            loginname : Response.nickname,
+            avatar : Response.face,
+            id : Response.user_id,
+            token : token,
+          };
+          localStorage.setItem("userInfo",JSON.stringify(userInfo));
+          this.$store.dispatch('SetUserInfo',userInfo);   
+          }else{
+             this.confrim=Response.body.msg;
+            this.toast=true; 
+          }
+        });
+      },
+      
     }
   }
 </script>

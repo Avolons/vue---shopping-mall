@@ -94,11 +94,11 @@
 
 <template>
   <div class="help_common_title">
-    <x-header @on-click-back="routerBack" :left-options="{backText: '',preventGoBack:true}">地址编辑</x-header>
+    <x-header @on-click-back="routerBack" :left-options="{backText: '',preventGoBack:true}">{{title}}</x-header>
     <div class="editAddress_main">
       <group>
-        <x-input v-model="name" title="收货人" name="username"  is-type="china-name"></x-input>
-        <x-input v-model="phone" title="联系电话" name="mobile"  keyboard="number" is-type="china-mobile"></x-input>
+        <x-input v-model="name" title="收货人" name="username"  required is-type="china-name"></x-input>
+        <x-input v-model="phone" title="联系电话" name="mobile" required  keyboard="number" is-type="china-mobile"></x-input>
       <x-address 
       title="所在省市区" 
       v-model="address" 
@@ -113,11 +113,13 @@
     <check-icon   :value.sync="isDefault"></check-icon>
     </div>
     <button type="button" class="editAddress_main_btn">保存</button>
+                    <toast v-model="toast"  type="cancel">{{confrim}}</toast>
+
     </div>
   </div>
 </template>
 <script>
-import {CheckIcon, XHeader,Cell,Group,XButton,XInput,XAddress,XTextarea,ChinaAddressV3Data } from 'vux'
+import {CheckIcon,Toast, XHeader,Cell,Group,XButton,XInput,XAddress,XTextarea,ChinaAddressV3Data } from 'vux'
 
 export default {
   components: {
@@ -128,23 +130,51 @@ export default {
     XTextarea,
     XInput,
     XAddress,
-    CheckIcon
+    CheckIcon,
+    Toast
   },
   data () {
     return {
-    addressData:ChinaAddressV3Data,
-     name:"",
-     phone:"",
-     address:[],
-     addressDetils:"",
-     isDefault:false,
+         confrim:"",
+        toast:false,
+        title:"新增地址",
+        addressData:ChinaAddressV3Data,
+        name:"",
+        phone:"",
+        address:[],
+        /* 详细地址 */
+        addressDetils:"",
+        isDefault:false,
     }
   },
   
   methods:{
       routerBack(){
           this.$router.goBack();
+      },
+      /* 检查当前状态属于新增还是编辑状态，通过路由parmas参数 */
+      typeCheck(){
+          /* 当前属于新增状态 */
+            if(this.$route.params.id=="add"){
+                this.title="新增地址";
+            }else{
+                this.title="地址编辑";
+            }
+      },
+      /* 新增地址 */
+      addAddress(){
+          /* 地址校验 */
+        if(!this.name){
+
+        }
       }
+  },
+  mounted(){
+    this.typeCheck();
+  },
+  /* 非缓存插件 */
+  activated(){
+
   }
 }
 </script>

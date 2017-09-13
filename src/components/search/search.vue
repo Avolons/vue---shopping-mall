@@ -135,7 +135,7 @@
            routerback(){
                this.$router.goBack();
            },
-           /* 搜索函数，放入vuex中，保存本地记录，路由跳转 */
+           /* 搜索函数 */
            submit(){
                this.searchValue=this.searchValue.trim();
                if(!this.searchValue){
@@ -149,7 +149,7 @@
                }
                this.history.push(this.searchValue);
                localStorage.setItem("zj_history",JSON.stringify(this.history));
-               window.location.href="/#/goodslist/"+this.searchValue;
+               window.location.href="/#/goodslist?goods_name="+this.searchValue;
                this.searchValue="";         
            },
            /* 历史记录搜索 */

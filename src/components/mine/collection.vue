@@ -55,6 +55,8 @@
 <script>
 import ListCompent from '../list/listCompent.vue';
 import { XHeader } from 'vux'
+import { mapGetters } from 'vuex'
+import {API,getQuery} from '../../services'
 
 export default {
   components: {
@@ -66,7 +68,12 @@ export default {
       goodsList:[1,2,6,4],
     }
   },
-  
+  computed:{
+    ...mapGetters([
+      'getUserInfoUserId',
+      'getUserInfoToken',
+    ])
+  },
   methods:{
       routerBack(){
           this.$router.goBack();
@@ -75,6 +82,14 @@ export default {
         window.location.href="/#/index/main";
     },
 
+  },
+  mounted(){
+      API.person.shopCollectList({
+            userId:this.getUserInfoUserId,  
+            token:this.getUserInfoToken,
+      }).then((res)=>{
+          this.goodsList=res.body.data.shopList.data;
+      })
   }
 }
 </script>

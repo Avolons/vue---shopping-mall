@@ -75,40 +75,78 @@
     <x-header @on-click-back="routerBack" :left-options="{backText: '',preventGoBack:true}">意见反馈</x-header>
     <div class="opinion_main">
         <group>
-        <x-textarea class="opinion_main_textarea" :max="100"  ></x-textarea>
+        <x-textarea class="opinion_main_textarea" :max="100" v-model="content" ></x-textarea>
         </group>
         <h3 class="opinion_main_title">留下您的联系方式，方便我们与您联系</h3>
-        <input class="opinion_main_input" type="text" placeholder="手机号码/QQ/邮箱">
-        <button class="opinion_main_btn" type="button">提交</button>
+        <input class="opinion_main_input" v-model="contact" type="text" placeholder="手机号码/QQ/邮箱">
+        <button class="opinion_main_btn" @click="sendOption" type="button">提交</button>
+        <toast v-model="toast"  type="success">{{confrim}}</toast>
+
     </div>
   </div>
 </template>
 <script>
-import { XHeader,Cell,Group,XButton,XInput,XTextarea } from 'vux'
+import { XHeader,Group,XButton,XTextarea,Toast } from 'vux'
+import { mapGetters } from 'vuex'
+import {API,getQuery} from '../../services'
 
 export default {
   components: {
     XHeader,
      Group,
-    Cell,
     XButton,
     XTextarea,
-    XInput
+    Toast
   },
   data () {
     return {
-      menus: {
-        menu1: 'Take Photo',
-        menu2: 'Choose from photos'
-      },
-      showMenus: false
+        confrim:"",
+        toast:false,
+        content:"",
+        contact:""
     }
   },
-  
+   computed:{
+    ...mapGetters([
+      'getUserInfoUserId',
+      'getUserInfoToken',
+    ])
+  },
   methods:{
       routerBack(){
           this.$router.goBack();
-      }
+      },
+      /* 提交评价 */
+      sendOption(){
+          if(!this.content){
+              this.confrim="请输入您的评价";
+              this.toast=true;
+             return false;
+          }
+          if(!this.contact){
+               this.confrim="请输入您的联系方式";
+              this.toast=true;
+             return false;
+          }
+        API.person.feedback({
+            userId:this.getUserInfoUserId,
+            token:this.getUserInfoToken,
+            content:this.content,
+            contact:this.contact
+        }).then((res)=>{
+           if(res.body.code==200) {
+                this.confrim="感谢您的评价";
+                this.content="";
+                this.contact="";
+                this.toast=true;  
+                setTimeout(()=> {
+                    this.routerBack();
+                }, 1000);
+           }else{
+
+           }
+        })
+      } 
   }
 }
 </script>

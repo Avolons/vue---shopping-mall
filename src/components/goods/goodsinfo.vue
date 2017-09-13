@@ -11,7 +11,7 @@
                 <i class="iconfont">&#xe7a7;</i>
             </div>
             <!-- 商品简介轮播图 -->
-            <swiper class="main_swiper" dots-position="center" :aspect-ratio="300/800">
+            <swiper class="main_swiper" dots-position="center" width="100%" >
                 <swiper-item class="swiper-demo-img" v-for="(item, index) in bannerlist" :key="index">
                     <img :src="item">
                 </swiper-item>
@@ -246,8 +246,13 @@
 </template>
 
 <script>
-import { Swiper,Divider, dateFormat, SwiperItem, InlineCalendar, XAddress, Group, ChinaAddressV3Data, TransferDom, Popup, Cell, XButton, XSwitch } from 'vux';
+import { Swiper,Divider,querystring, dateFormat, SwiperItem, InlineCalendar, XAddress, Group, ChinaAddressV3Data, TransferDom, Popup, Cell, XButton, XSwitch } from 'vux';
+import {API,getQuery} from '../../services';
+
 import jsondata from './goods.json';
+
+
+
 export default {
     directives: {
         TransferDom
@@ -352,65 +357,23 @@ export default {
         }
     },
     mounted() {
+        API.main.goodsInfo({
+            goodsId:this.$route.params.id
+        }).then((Response)=>{
+            /* 初始数据赋值操作 */
+        let goodsData = Response.body.data;
+        this.Initialization(goodsData);
+        });
         /* 获取商品详情数据 */
-        /* 初始数据赋值操作 */
-        let goodsData = jsondata.data;
-
-        /* 颜色规格格式化，添加选中属性 */
-        for (let item of goodsData.goodsattrcontent.ys) {
-            item.sel = 0;
-        }
-        for (let item of goodsData.goodsattrcontent.gg) {
-            item.sel = 0;
-        }
-        if (goodsData.goodsattrcontent.ys[0]) {
-            goodsData.goodsattrcontent.ys[0].sel = 1;
-        }
-        if (goodsData.goodsattrcontent.gg[0]) {
-            goodsData.goodsattrcontent.gg[0].sel = 1;
-        }
-        this.colorlist = goodsData.goodsattrcontent.ys;
-        this.sizelist = goodsData.goodsattrcontent.gg;
-        /* 颜色规格格式化，添加选中属性*/
-
-        this.goods_sales_count = goodsData.goods_sales_count;
-        /* 静态数据赋值 */
-        this.staticdata = {
-            goodsName: goodsData.goodsName,
-            goods_is_free_deposit: goodsData.goods_is_free_deposit,
-            goods_is_free_shipping: goodsData.goods_is_free_shipping,
-            goods_is_deductible: goodsData.goods_is_deductible,
-            goods_is_door: goodsData.goods_is_door,
-            goods_is_since: goodsData.goods_is_since,
-            goods_is_follow_lease: goodsData.goods_is_follow_lease,
-            goods_is_off_restitution: goodsData.goods_is_off_restitution,
-            goods_is_verify_real_name: goodsData.goods_is_verify_real_name,
-            goods_max_count: goodsData.goods_max_count,
-            store_name: goodsData.store_name,
-            rentlist:goodsData.rentlist,//租赁清单数组
-            goods_details_content:goodsData.goods_details_content,//商品详情数组
-        };
-        /* 商品主图赋值 */
-        this.bannerlist[0]=goodsData.goodsFace;
-        /* 列表数据赋值 */
-        this.datalist=goodsData.goodsAttrList;
-        /* 初始化当前数据的最终赋值 ,默认使用第一个颜色的第一个规格*/
-        this.currentTypedata=this.datalist[0];
-        /* 部分数据赋值 */
-        let temporary=this.currentTypedata.rent_period[0];
-        this.currentGoodsData.goodsnum=1;
-        this.currentGoodsData.rentTime=temporary.rent_period_min_rent;
-        this.currentGoodsData.rent_period_type=temporary.rent_period_type;
-        this.currentGoodsData.rent_period_min_rent=temporary.rent_period_min_rent;
-        this.currentGoodsData.rent_period_max_rent=temporary.rent_period_max_rent;
-        this.currentGoodsData.rent_period_old_rent_price=temporary.rent_period_old_rent_price;
-        this.currentGoodsData.rent_period_now_rent_price=temporary.rent_period_now_rent_price;
-        this.currentGoodsData.rent_period_min_advance=temporary.rent_period_min_advance;
-        this.currentGoodsData.rent_period_max_advance=temporary.rent_period_max_advance;
-        /* 初始被选中时间 */
-        this.timeValue=this.timerange.startTime;
-       /* 初始周期被选中 */
-        this.currentTypedata.rent_period[0].sel=1;
+    },
+    activated(){
+        API.main.goodsInfo({
+            goodsId:this.$route.params.id
+        }).then((Response)=>{
+            /* 初始数据赋值操作 */
+        let goodsData = Response.body.data;
+        this.Initialization(goodsData);
+        });  
     },
     /* 计算属性 */
     computed: {
@@ -533,6 +496,65 @@ export default {
        }
     },
     methods: {
+        /* 数据初始化 */
+        Initialization(goodsData){
+            /* 颜色规格格式化，添加选中属性 */
+        for (let item of goodsData.goodsattrcontent.ys) {
+            item.sel = 0;
+        }
+        for (let item of goodsData.goodsattrcontent.gg) {
+            item.sel = 0;
+        }
+        if (goodsData.goodsattrcontent.ys[0]) {
+            goodsData.goodsattrcontent.ys[0].sel = 1;
+        }
+        if (goodsData.goodsattrcontent.gg[0]) {
+            goodsData.goodsattrcontent.gg[0].sel = 1;
+        }
+        this.colorlist = goodsData.goodsattrcontent.ys;
+        this.sizelist = goodsData.goodsattrcontent.gg;
+        /* 颜色规格格式化，添加选中属性*/
+
+        /* 最大商品库存量 */
+        this.goods_sales_count = goodsData.goods_max_count;
+        /* 静态数据赋值 */
+        this.staticdata = {
+            goodsName: goodsData.goodsName,
+            goods_is_free_deposit: goodsData.goods_is_free_deposit,
+            goods_is_free_shipping: goodsData.goods_is_free_shipping,
+            goods_is_deductible: goodsData.goods_is_deductible,
+            goods_is_door: goodsData.goods_is_door,
+            goods_is_since: goodsData.goods_is_since,
+            goods_is_follow_lease: goodsData.goods_is_follow_lease,
+            goods_is_off_restitution: goodsData.goods_is_off_restitution,
+            goods_is_verify_real_name: goodsData.goods_is_verify_real_name,
+            goods_max_count: goodsData.goods_max_count,
+            store_name: goodsData.store_name,
+            rentlist:goodsData.rentlist,//租赁清单数组
+            goods_details_content:goodsData.goods_details_content,//商品详情数组
+        };
+        /* 商品主图赋值 */
+        this.bannerlist[0]=goodsData.goodsFace;
+        /* 列表数据赋值 */
+        this.datalist=goodsData.goodsAttrList;
+        /* 初始化当前数据的最终赋值 ,默认使用第一个颜色的第一个规格*/
+        this.currentTypedata=this.datalist[0];
+        /* 部分数据赋值 */
+        let temporary=this.currentTypedata.rent_period[0];
+        this.currentGoodsData.goodsnum=1;
+        this.currentGoodsData.rentTime=temporary.rent_period_min_rent;
+        this.currentGoodsData.rent_period_type=temporary.rent_period_type;
+        this.currentGoodsData.rent_period_min_rent=temporary.rent_period_min_rent;
+        this.currentGoodsData.rent_period_max_rent=temporary.rent_period_max_rent;
+        this.currentGoodsData.rent_period_old_rent_price=temporary.rent_period_old_rent_price;
+        this.currentGoodsData.rent_period_now_rent_price=temporary.rent_period_now_rent_price;
+        this.currentGoodsData.rent_period_min_advance=temporary.rent_period_min_advance;
+        this.currentGoodsData.rent_period_max_advance=temporary.rent_period_max_advance;
+        /* 初始被选中时间 */
+        this.timeValue=this.timerange.startTime;
+       /* 初始周期被选中 */
+        this.currentTypedata.rent_period[0].sel=1;
+        },
         /* 立即租赁按钮点击 */
         buyGoods(){
             window.location.href="/#/orderInfo";

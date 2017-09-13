@@ -29,7 +29,14 @@ router.beforeEach((to, from, next) => {
 	else {
 		next();
 	}
-})
+});
+
+
+/* 取出本地数据，赋值到store的state中 */
+const userInfo=localStorage.getItem("userInfo");
+if(userInfo){
+	store.state.userInfo= JSON.parse(userInfo);
+}
 
 /* 全局注册md5函数 */
 import { md5 } from 'vux';
@@ -76,3 +83,5 @@ new Vue({
   	store,
   	components: { App }
 }).$mount('#app');
+
+

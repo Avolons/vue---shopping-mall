@@ -89,59 +89,7 @@
     watch: {
 　　　
 　  },
-  	mounted : function() {/* 
-        localStorage.removeItem("goodname")
-  			document.title="主页"
-        //openid丢失时获取openid
-        if(localStorage.getItem("openid")==null){
-          if(getQuery.getQueryString("code")==null){
-          let fromurl=location.href;
-          let url="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx066707bb3a2536a&redirect_uri="+fromurl+"&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect"
-            //window.location.href=url
-        }else{
-           API.user.getopenid({"code":getQuery.getQueryString("code")}).then(
-          (resp) => {
-              localStorage.setItem("openid",resp.body.result)
-          }
-        )
-        }
-      }
-
-      //获取openid
-      if(getQuery.getQueryString("openid")){
-        localStorage.setItem("openid",getQuery.getQueryString("openid"));
-        }
-
-      API.goods.listScrollPic({"shopGroupCode":"0","equipment":"equipment"}).then(
-          (resp) => {
-
-           for(let i=0;i<resp.body.result.length;i++){
-           	let item={
-           		"img":'http://oidluqi4c.bkt.clouddn.com/'+resp.body.result[i].picUrl,
-           		"url": '/index/goods?id='+resp.body.result[i].link,
-             	" title": ''
-           	}
-           	this.demo01_list.push(item)
-           }
-          }
-        )
-       API.goods.listGoods(this.form).then(
-          (resp)=>{
-           this.goods = resp.body.result.datas.slice(0,4)
-           this.load = false
-          }
-        )
-
-        API.goods.listGoodsType({"shopGroupCode":0}).then(
-          (resp)=>{
-           this.sort = resp.body.result
-           for(let i=0;i<resp.body.result.length;i++){
-            if(resp.body.result[i].parentId!="0"){
-              this.child.push(resp.body.result[i])
-            }
-           }
-          }
-        ) */
+  	mounted : function() {
   	},
     methods :{
         /* 路由切换函数 */

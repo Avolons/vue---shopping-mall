@@ -7,7 +7,9 @@ import Vue from 'vue';
 
 
 import {login} from './loginApi.js';
+import {main} from './main.js';
+import {person} from './PersonApi.js';
 
 
-export {login};
+export {login,main,person};
 

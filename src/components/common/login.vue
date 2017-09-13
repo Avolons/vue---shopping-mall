@@ -163,7 +163,6 @@
 <script>
 import {XInput, Group, XButton,XHeader,Toast } from 'vux'
 import {API,getQuery} from '../../services';
-console.log(API);
 
   export default {
       data() {
@@ -197,17 +196,20 @@ console.log(API);
         if(this.form.user_phone==''){
            this.confrim="请输入正确的用户名";
             this.toast=true;
+            return false;
         }
         /* 用户密码格式校验 */
         if(this.form.user_password==''){
             this.confrim="请输入正确的用户密码";
             this.toast=true;
+            return false;
         }
 
         /* 进行接口登录 */
         API.login.pwdLogin(this.form).then((Response)=>{
+          if(Response.body.code==200){
           Response=Response.body.data;
-          /* 触发vuex登录状态更改操作 */
+            /* 触发vuex登录状态更改操作 */
           let token=this.md5(Response.user_id)+Response.user_id;
           let userInfo={
             loginname : Response.nickname,
@@ -215,7 +217,15 @@ console.log(API);
             id : Response.user_id,
             token : token,
           };
+          localStorage.setItem("userInfo",JSON.stringify(userInfo));
+          /* 设置当前认证状态 */
+          localStorage.setItem("isCertify",Response.isCertify);
+          this.$store.dispatch('IsCertify');
           this.$store.dispatch('SetUserInfo',userInfo);
+          }else{
+              self.confrim=Response.body.msg;
+              this.toast=true;
+          }
         })
 
       },

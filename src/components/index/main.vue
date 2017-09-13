@@ -10,7 +10,7 @@ body {
 .main_container .main_typelist_box {
     height: 40px;
     position: relative;
-    width: 450px;
+    width: 630px;
     font-size: 0;
     border-bottom: 1px solid #f3f3f3;
     background-color: #fff;
@@ -45,7 +45,11 @@ body {
 }
 
 .main {
-    &_swiper {}
+    &_swiper {
+        .vux-swiper-item img{
+            width: 100%;
+        }
+    }
     &_listbox {
         position: fixed;
         top: 91px;
@@ -53,6 +57,9 @@ body {
         height: calc(100% - 144px);
         overflow-y: auto;
         background-color: #f3f3f3;
+        .vux-slider > .vux-indicator > a > .vux-icon-dot.active, .vux-slider .vux-indicator-right > a > .vux-icon-dot.active{
+            background-color:#2196f3;
+        }
     }
     &_typelist {
         margin-top: 50px;
@@ -139,7 +146,6 @@ body {
             font-size: 13px;
             overflow: hidden;
             text-overflow: ellipsis;
-            white-space: nowrap;
             font-weight: 400;
         }
         &_price {
@@ -208,17 +214,17 @@ body {
         </header>
         <scroller class="main_typelist" lock-y :scrollbar-x=false>
             <div class="main_typelist_box">
-                <div class="main_typelist_item" v-for="item in typeList" :class="{'main_typelist_item--selected':item.click}" @click="typeselect(item.type)">
-                    <span>{{item.name}}</span>
+                <div class="main_typelist_item" v-for="(item,index) in typeList" :class="{'main_typelist_item--selected':item.click}" @click="typeselect(index,item.goods_category_id)">
+                    <span>{{item.hot_label_name}}</span>
                 </div>
                 <div class="main_typelist_bottomline"></div>
             </div>
         </scroller>
         <div class="main_listbox">
             <!-- 轮播图组件 -->
-            <swiper v-show="currentType==0" class="main_swiper" dots-position="center" :aspect-ratio="300/800" @on-index-change="onSwiperItemIndexChange" v-model="swiperItemIndex">
+            <swiper v-show="currentType==0" class="main_swiper" dots-position="center"  height="200px"  @on-index-change="onSwiperItemIndexChange" v-model="swiperItemIndex">
                 <swiper-item class="swiper-demo-img" v-for="(item, index) in bannerlist" :key="index">
-                    <img :src="item">
+                    <img :src="item.imagePath">
                 </swiper-item>
             </swiper>
             <!-- 热门商品 -->
@@ -227,13 +233,13 @@ body {
                 <span></span>
             </div>
             <ul class="main_hot_list" v-show="currentType==0">
-                <li v-for="i in 4" class="main_hot_single">
+                <li v-for="item in hotGoodsList" class="main_hot_single" @click="goInfo(item.goodsId)">
                     <div class="main_hot_img">
-                        <img src="https://static.vux.li/demo/1.jpg" alt="">
+                        <img :src="item.goodsFace" alt="img">
                     </div>
                     <div class="main_hot_text">
-                        <h2 class="main_hot_title">小萝卜健身器材</h2>
-                        <h2 class="main_hot_price">￥500.00/月</h2>
+                        <h2 class="main_hot_title twonowarp">{{item.goodsName}}</h2>
+                        <h2 class="main_hot_price">￥{{item.rentPrice}}/{{timeMap[item.rent_period_type]}}</h2>
                     </div>
                 </li>
             </ul>
@@ -243,17 +249,17 @@ body {
                 <span></span>
             </div>
             <ul class="main_recommend_list" v-show="currentType==0">
-                <li v-for="i in 6" class="main_recommend_single">
+                <li v-for="item in recGoodsList" class="main_recommend_single" @click="goInfo(item.goodsId)">
                     <div class="main_recommend_img">
-                        <img src="https://static.vux.li/demo/1.jpg" alt="">
+                        <img :src="item.goodsFace" alt="img">
                     </div>
                     <div class="main_recommend_text">
-                        <h2 class="main_recommend_title">小萝卜健身器材</h2>
-                        <h2 class="main_recommend_price">￥500.00/月</h2>
+                        <h2 class="main_recommend_title">{{item.goodsName}}</h2>
+                        <h2 class="main_recommend_price">￥{{item.rentPrice}}/{{timeMap[item.rent_period_type]}}</h2>
                     </div>
                 </li>
             </ul>
-           <list-compent :commonGoodsList="typeList"></list-compent>
+                <list-compent v-show="currentType!=0" :commonGoodsList="currentGoods"></list-compent>
         </div>
     </div>
 </template>
@@ -261,6 +267,8 @@ body {
 <script>
 import ListCompent from '../list/listCompent.vue';
 import { Scroller, Swiper, SwiperItem, Spinner, XButton, Group, Cell, LoadMore } from 'vux'
+import {API,getQuery} from '../../services';
+
 
 export default {
     components: {
@@ -287,51 +295,61 @@ export default {
                 'https://static.vux.li/demo/1.jpg',
                 'https://static.vux.li/demo/1.jpg',
             ],
+            /* 时间周期对照表 */
+            timeMap:{1:"日",2:"周",3:"月",4:"季",5:"年"},
             /* 当前被选中列表 */
             currentType: 0,
             /* 分类数据集合 */
-            typeList: [{
-                name: "精选",
-                type: 0,
-                click: true,
-            }, {
-                name: "玩具",
-                type: 1,
-                click: false,
-            }, {
-                name: "跑步机",
-                type: 2,
-                click: false,
-            }, {
-                name: "动感单车",
-                type: 3,
-                click: false,
-            }, {
-                name: "轮椅",
-                type: 4,
-                click: false,
-            },]
+            typeList: [],
+            /* 首页热租商品 */
+            hotGoodsList:[],
+            /* 首页推荐商品 */
+            recGoodsList:[],
+            /* 根据首页商品标签页长度进行商品数据列表缓存，防止重复请求数据 */
+             goodsList:[],
+             /* 当前被选中状态的商品信息列表 */ 
+             currentGoods:[],
         }
     },
     methods: {
         onSwiperItemIndexChange() {
 
         },
+         /* 进入商品详情 */
+           goInfo(id){
+               window.location.href="/#/goodsInfo/"+id;
+           },
         /* 列表点击切换函数 */
-        typeselect(index) {
+        /* 根据焦点位置判断 */
+        typeselect(index,id) {
             for (let item of this.typeList) {
                 item.click = false;
             }
+            /* 传入对应的商品信息id */
             this.currentType=index;
             this.typeList[index].click = true;
             var data = this.typeList;
             this.typeList = null;
             this.typeList = data;
+            this.getData(id,index);
         },
         /* 列表滚动选择函数 */
         onScroll(pos) {
             this.scrollTop = pos.top
         },
+       /* 根据列表id获取当前列表对应数据 */
+       getData(id,index){
+           if(this.goodsList[index]||index==0){
+               this.currentGoods=this.goodsList[index];
+               return false;
+           }
+           API.main.searchGoodsCategory({
+                chooseId:id  
+           }).then((Response)=>{
+            this.goodsList[index]=Response.body.data.shopList.data;
+            this.currentGoods=this.goodsList[index];
+        });
+       },
         /* 列表页跳转 */
         golist(){
             window.location.href="/#/list";
@@ -349,6 +367,38 @@ export default {
             })
         }
 
+    },
+    mounted(){
+        /* 获取轮播图信息 */
+        API.main.getBanner().then((Response)=>{
+            this.bannerlist=Response.body.data.bannerList;
+        });
+        /* 获取首页标签 */
+        API.main.hotTagLabel().then((Response)=>{
+            let firstLabel={
+              hot_label_name: "精选",
+                clcik:true
+            }
+            let shopList=Response.body.data.shopList;
+            for(let item of shopList) {
+              item.clcik=false;
+            }
+            shopList.splice(0,0,firstLabel);
+            this.goodsList=new Array(shopList.length);
+            document.querySelector(".main_container .main_typelist_box").style.width=shopList.length*90+"px";
+            this.typeList=shopList;
+        });        
+        /* 获取热门商品 */
+        API.main.goodsHot({
+            recomandId:3,
+            page_number:4
+        }).then((Response)=>{
+            this.hotGoodsList=Response.body.data.shopList.data;
+        });
+        /* 获取推荐商品 */
+        API.main.goodsIndexRecom().then((Response)=>{
+            this.recGoodsList=Response.body.data.shopList.data;
+        });
     }
 }
 </script>

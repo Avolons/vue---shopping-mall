@@ -64,14 +64,34 @@ body{
       </cell>
     </group>
     <group style="margin-top:0.6rem">
-      
-      <cell  title="实名认证" is-link link="/authentication">
+      <!-- 两种状态，已经认证和未认证状态 -->
+      <template v-if="getIsCertify==2 || getIsCertify==4 ">
+        <cell  title="实名认证">
+            <span style="font-size:12px;">已认证</span>
+            <i slot="icon" class="iconfont">&#xe63c;</i>
+        </cell>
+      </template>
+      <template v-else>
+         <cell  title="实名认证" is-link link="/authentication">
           <span style="font-size:12px;padding-right:20px">未认证</span>
           <i slot="icon" class="iconfont">&#xe63c;</i>
-      </cell>
-      <cell  title="芝麻信用" is-link link="/">
-          <i slot="icon" class="iconfont">&#xe60a;</i>
-      </cell>
+         </cell>
+      </template>
+      
+      <!-- 两种状态，授权状态和未授权状态 -->
+      <template v-if="getIsCertify==4 ">
+          <cell  title="芝麻信用" >
+              <span style="font-size:12px;">已授权</span>
+              <i slot="icon" class="iconfont">&#xe60a;</i>
+          </cell>
+      </template>
+      <template v-else>
+          <cell  title="芝麻信用" is-link link="/">
+            <span style="font-size:12px;padding-right:20px">未授权</span>
+            <i slot="icon" class="iconfont">&#xe60a;</i>
+          </cell>
+      </template>
+      
       <cell  title="设置" is-link link="/setting">
             <i slot="icon" class="iconfont">&#xe63b;</i>
       </cell>
@@ -88,7 +108,8 @@ body{
 </template>
 <script>
 import {XHeader,Tabbar,TabbarItem,Cell,Group } from 'vux'
-/* import {API,getQuery} from '../services'; */
+import { mapGetters } from 'vuex'
+
   export default {
       data() {
           return {
@@ -96,14 +117,7 @@ import {XHeader,Tabbar,TabbarItem,Cell,Group } from 'vux'
                name:"网二",
                img:"../../assets//img//index//avatar.png"
            },
-            form:{
-              memberId:"",
-              offSet:0,
-              pageSize:5,
-              equipment:"original",
-              orderCondition:"createDatetime",
-              orderDirection:"desc"
-              },
+           
           }
       },
     components: {
@@ -113,56 +127,17 @@ import {XHeader,Tabbar,TabbarItem,Cell,Group } from 'vux'
       Cell,
       Group
     },
-    mounted : function() {
-       /*  document.title="用户中心"
-        if( localStorage.getItem("login")){
-          this.name= JSON.parse(localStorage.getItem("login")).username
-          this.form.memberId = JSON.parse(localStorage.getItem("login")).id
-          //检查是否关注公众号
-          if(localStorage.getItem("openid")){
-          API.user.checkIsSubScribe({"openid":localStorage.getItem("openid")})
-          .then(
-            (resp)=>{
-               this.head=resp.body.result.headImgUrl
-            }
-            )
-         }
-        }
-        let that = this
-        API.user.order(that.form).then(
-          (resp) => {
-           that.orders= resp.body.result.datas
-           for(let i=0;i<that.orders.length;i++){
-              if(that.orders[i].orderStatus=="1"){
-                that.orders[i].orderStatus="未支付" 
-                that.nopay.push(that.orders[i])
-                this.daifuk++
-              }
-              else if(that.orders[i].orderStatus=="2"){
-                that.orders[i].orderStatus="已取消" 
-                that.cansel.push(that.orders[i])
-              }
-              else{
-                that.orders[i].orderStatus="已完成 " 
-                that.finish.push(that.orders[i])
-                this.yiwancheng++
-              }
-           }
-          }
-        )
-        if(getQuery.getQueryString("state")=="yiwancheng"){
-          this.show_1=false
-          this.show_2=false
-          this.show_3=true
-          this.demo1="已完成"
-        }
- */
+    computed:{
+    ...mapGetters([
+      'getIsCertify',
+    ])
+  },
+    mounted(){
+      /* 获取当前的认证状态 */ 
+      this.$store.dispatch('IsCertify');
     },
     methods :{
-      loginot(){
-        localStorage.removeItem("login")
-        window.location.href="/login"
-      },
+      
     }
   }
 </script>
