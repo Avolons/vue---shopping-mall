@@ -86,7 +86,7 @@ body{
           </cell>
       </template>
       <template v-else>
-          <cell  title="芝麻信用" is-link link="/">
+          <cell  title="芝麻信用" is-link link="/download">
             <span style="font-size:12px;padding-right:20px">未授权</span>
             <i slot="icon" class="iconfont">&#xe60a;</i>
           </cell>

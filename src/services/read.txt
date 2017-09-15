@@ -3,55 +3,55 @@
                 if (bean.getOrder_refund_goods_status() == 0) {
                     if (bean.getOrder_status() == 1) {
                         if(bean.getOrder_shipping_status() == 8){
-                            orderClose(bean);
+                            orderClose(bean);订单关闭
                         }else{
-                            waitForPay(bean);
+                            waitForPay(bean);代付款
                         }
                     } else if (bean.getOrder_status() == 2) {
                         switch (bean.getOrder_shipping_status()) {
                             case 1:
-                                waitForDeliver(bean);
+                                waitForDeliver(bean);代发货
                                 break;
                             case 2:
-                                waitForGetGoods(bean);
+                                waitForGetGoods(bean);待收货
                                 break;
                             case 3:
-                                waitForReturn(bean);
+                                waitForReturn(bean);待归还
                                 break;
                             case 4:
-                                waitForSettle(bean);
+                                waitForSettle(bean);待结算
                                 break;
                             case 5:
-                                waitForSureSettle(bean);
+                                waitForSureSettle(bean);待确认结算
                                 break;
                             case 6:
-                                waitForParise(bean);
+                                waitForParise(bean);待评价
                                 break;
                             case 7:
-                                orderComplete(bean);
+                                orderComplete(bean);订单完成
                                 break;
                         }
                     }
                 } else if (bean.getOrder_refund_goods_status() == 1) {
-                    refundOk(bean);
+                    refundOk(bean);//退款结束
                 } else if (bean.getOrder_refund_goods_status() == 2) {
                     if (bean.getOrder_status() == 2) {//退款退货
                         if (bean.getOrder_shipping_status() == 2) {
-                            refundWaitRefund(bean);
+                            refundWaitRefund(bean);退货待结算
                         } else if (bean.getOrder_shipping_status() == 3) {
-                            refundWaitRefund(bean);
+                            refundWaitRefund(bean);退货待结算
                         } else if (bean.getOrder_shipping_status() == 5) {
-                            refundForSureSettle(bean);
+                            refundForSureSettle(bean);退货待确认结算
                         } else if (bean.getOrder_shipping_status() == 6) {
-                            refundGoodsOk(bean);
+                            refundGoodsOk(bean);退货完成
                         }
                     }
                 } else if (bean.getOrder_refund_goods_status() == 4) {
                     if (bean.getOrder_shipping_status() == 6) {
-                        refundGoodsOk(bean);
+                        refundGoodsOk(bean);退货完成
                     }
                 }else if(bean.getOrder_refund_goods_status() == 3){
-                    refundDeal(bean);
+                    refundDeal(bean);退款处理中
                 }
             }
 

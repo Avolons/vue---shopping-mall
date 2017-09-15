@@ -2,8 +2,16 @@
     color: #2196f3;
 }
 .goodsinfo{
+    &_container{
+        height: 100%;
+        position: fixed;
+        overflow-y: auto;
+    }
     /* 头部区域样式 */
     &_header{
+        .vux-slider > .vux-indicator > a > .vux-icon-dot.active, .vux-slider .vux-indicator-right > a > .vux-icon-dot.active{
+            background-color: #2196f3;
+        }
         background-color: #fff;
         overflow: hidden;
         &_back{
@@ -181,6 +189,7 @@
         padding-bottom: 50px;
         &_mainimg{
           width: 100%;  
+          display: block;
         }
         &_alltime{
             box-sizing: border-box;
@@ -200,7 +209,15 @@
             }
         }
         &_time{
-          
+            .inline-calendar td.current > span.vux-calendar-each-date{
+                background-color: #2196f3;
+            }
+            .vux-prev-icon, .vux-next-icon{
+                border-color: #2196f3;
+            }
+            .inline-calendar td.is-today, .inline-calendar td.is-today.is-disabled{
+                color: #2196f3
+            }
         }
         &_price{
             height: 60px; 

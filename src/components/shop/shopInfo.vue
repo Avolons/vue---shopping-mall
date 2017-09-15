@@ -58,23 +58,24 @@
              <x-header @on-click-back="routerBack" :left-options="{backText: '',preventGoBack:true}">店铺详情</x-header>
         </div> 
         <header class="shopInfo_main_header">
-            <img class="shopInfo_main_shopface" src="https://static.vux.li/demo/1.jpg" alt="shopface">
+            <img class="shopInfo_main_shopface" :src="storebgPic" alt="shopface">
             <div class="shopInfo_main_cell">
-                <img class="shopInfo_main_logo" src="https://static.vux.li/demo/1.jpg" alt="logo">
-                <h3 class="shopInfo_main_title">小萝卜</h3>
+                <img class="shopInfo_main_logo" :src="storeFace" alt="logo">
+                <h3 class="shopInfo_main_title">{{storeName}}</h3>
                 
             </div>
         </header>
         <group>
-            <cell title="开店时间" value="2017-08-29" ></cell>
-            <cell title="所在地" value="浙江省杭州市" ></cell>
+            <cell title="开店时间" :value="time" ></cell>
+            <cell title="所在地" :value="address" ></cell>
         </group>
     </div>
 </div>
 </template>
 
 <script>
-import { XHeader,Cell,Group } from 'vux'
+import { XHeader,Cell,Group,dateFormat } from 'vux';
+import {API,getQuery} from '../../services'
 
 export default {
   components: {
@@ -84,15 +85,40 @@ export default {
   },
   data () {
     return {
-      showMenus: false,
-      goodsList:[1,5,7,6,8],
+      storeName:null,
+        storeFace:null,
+        storebgPic:null,
+        address:null,
+        time:null,
+      storeId:null,
     }
   },
   
   methods:{
       routerBack(){
           this.$router.goBack();
+      },
+      /* 数据初始化 */
+      Initialization(){
+          this.storeId=this.$route.params.id;
+        API.main.storeInfo({
+            storeId:this.storeId
+        }).then((res)=>{
+            if(res.body.code==200){
+                 this.storeName=res.body.data.storeName;
+                this.storeFace=res.body.data.storeFace;
+                this.storebgPic=res.body.data.storebgPic;
+                this.address=res.body.data.enterprise_license_location;
+                this.time= dateFormat(res.body.data.store_open_time*1000);
+            }
+        });
+       
       }
+  },mounted(){
+      this.Initialization();
+  },
+  activated(){
+      this.Initialization();
   }
 }
 </script>

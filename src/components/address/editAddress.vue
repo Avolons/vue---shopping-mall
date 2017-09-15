@@ -101,25 +101,29 @@
         <x-input v-model="phone" title="联系电话" name="mobile" required  keyboard="number" is-type="china-mobile"></x-input>
       <x-address 
       title="所在省市区" 
+      raw-value
       v-model="address" 
       :list="addressData" 
       placeholder="请选择" 
       >
       </x-address>
-      <x-textarea :rows="6" :max="40" placeholder="请填写详细地址" ></x-textarea>  
+      <x-textarea :rows="6" :max="40" v-model="addressDetils" placeholder="请填写详细地址" ></x-textarea>  
     </group>
     <div class="editAddress_main_default">
         设为默认地址
     <check-icon   :value.sync="isDefault"></check-icon>
     </div>
-    <button type="button" class="editAddress_main_btn">保存</button>
-                    <toast v-model="toast"  type="cancel">{{confrim}}</toast>
+    <button type="button" @click="addAddress" class="editAddress_main_btn">保存</button>
+    <toast v-model="toast"  type="cancel">{{confrim}}</toast>
+    <toast v-model="success"  type="success">{{confrim}}</toast>
 
     </div>
   </div>
 </template>
 <script>
-import {CheckIcon,Toast, XHeader,Cell,Group,XButton,XInput,XAddress,XTextarea,ChinaAddressV3Data } from 'vux'
+import {CheckIcon,Toast,Value2nameFilter as value2name, XHeader,Cell,Group,XButton,XInput,XAddress,XTextarea,ChinaAddressV3Data } from 'vux'
+import { mapGetters } from 'vuex'
+import {API,getQuery} from '../../services'
 
 export default {
   components: {
@@ -135,8 +139,9 @@ export default {
   },
   data () {
     return {
-         confrim:"",
+        confrim:"",
         toast:false,
+        success:false,
         title:"新增地址",
         addressData:ChinaAddressV3Data,
         name:"",
@@ -145,13 +150,23 @@ export default {
         /* 详细地址 */
         addressDetils:"",
         isDefault:false,
+        /* 用户id */
+        id:"",
     }
   },
-  
+  computed:{
+    ...mapGetters([
+      'getUserInfoUserId',
+      'getUserInfoToken',
+    ])
+  },
   methods:{
       routerBack(){
           this.$router.goBack();
       },
+      getName (value) {
+        return value2name(value, ChinaAddressV3Data)
+     },
       /* 检查当前状态属于新增还是编辑状态，通过路由parmas参数 */
       typeCheck(){
           /* 当前属于新增状态 */
@@ -159,14 +174,113 @@ export default {
                 this.title="新增地址";
             }else{
                 this.title="地址编辑";
+                let id=this.$route.params.id;
+                this.id=id;
+                this.getAddress(id);
             }
+      },
+      /* 编辑时获取地址详情 */
+      getAddress(id){
+            API.person.addressInfo({
+                userId:this.getUserInfoUserId,
+                 token:this.getUserInfoToken,
+                 id:id,
+                 is_default:0
+            }).then((res)=>{
+                if(res.body.code==200){
+                let addressList= res.body.data.addressList;
+                this.name=addressList.address_name;
+                this.phone=addressList.mobile;
+                let address=[];
+                address[0]=addressList.province;
+                address[1]=addressList.city;
+                address[2]=addressList.district;
+                this.address=address;
+                this.addressDetils=addressList.address;
+                this.isDefault=addressList.is_set_default==1?true:false;
+                }
+            })       
       },
       /* 新增地址 */
       addAddress(){
           /* 地址校验 */
         if(!this.name){
-
+            this.confrim="请输入姓名";
+            this.toast=true;
+            return false; 
         }
+        if(!this.phone){
+            this.confrim="请输入联系电话";
+            this.toast=true;
+            return false; 
+        }
+        if(!this.address[0]){
+            this.confrim="请选择地区";
+            this.toast=true;
+            return false; 
+        }
+        if(!this.addressDetils){
+            this.confrim="请输入详细地址";
+            this.toast=true;
+            return false; 
+        }
+        let addresslist=(this.getName (this.address)).split(" ");
+        if(this.title=="地址编辑"){
+            /* 编辑地址 */
+            API.person.addressEdit({
+            id:this.id,
+            userId:this.getUserInfoUserId,
+            token:this.getUserInfoToken,
+            address_name:this.name,
+            mobile:this.phone,
+            province:addresslist[0],
+            city:addresslist[1],
+            district:addresslist[2],
+            address:this.addressDetils,
+            postcode:null,
+            is_set_default:this.isDefault==true?1:0,
+        }).then((res)=>{
+            if(res.body.code==200){
+                this.confrim="修改成功";
+                this.success=true;
+                /* 添加成功后路由回退 */
+                setTimeout(() =>{
+                    this.routerBack();
+                }, 1000);
+            }else{
+                this.confrim=res.body.msg;
+                this.toast=true;
+            }
+        });
+          }else{
+              
+        /* 添加地址 */
+        API.person.addressAdd({
+            userId:this.getUserInfoUserId,
+            token:this.getUserInfoToken,
+            address_name:this.name,
+            mobile:this.phone,
+            province:addresslist[0],
+            city:addresslist[1],
+            district:addresslist[2],
+            address:this.addressDetils,
+            postcode:null,
+            is_set_default:this.isDefault==true?1:0,
+        }).then((res)=>{
+            if(res.body.code==200){
+                this.confrim="添加成功";
+                this.success=true;
+                /* 添加成功后路由回退 */
+                setTimeout(() =>{
+                    this.routerBack();
+                }, 1000);
+            }else{
+                this.confrim=res.body.msg;
+                this.toast=true;
+            }
+        });
+          }
+        
       }
   },
   mounted(){
@@ -174,7 +288,7 @@ export default {
   },
   /* 非缓存插件 */
   activated(){
-
+      this.typeCheck();
   }
 }
 </script>

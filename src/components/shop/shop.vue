@@ -55,10 +55,10 @@
              <x-header @on-click-back="routerBack" :left-options="{backText: '',preventGoBack:true}">店铺名称</x-header>
         </div> 
         <header class="shop_main_header">
-            <img class="shop_main_shopface" src="https://static.vux.li/demo/1.jpg" alt="shopface">
+            <img class="shop_main_shopface" :src="storebgPic" alt="shopface">
             <div class="shop_main_cell" @click="goInfo()">
-                <img class="shop_main_logo" src="https://static.vux.li/demo/1.jpg" alt="logo">
-                <h3 class="shop_main_title">小萝卜</h3>
+                <img class="shop_main_logo" :src="storeFace" alt="logo">
+                <h3 class="shop_main_title">{{storeName}}</h3>
                 <i class="iconfont">&#xe6d7;</i>
             </div>
         </header>
@@ -70,6 +70,7 @@
 <script>
 import ListCompent from '../list/listCompent.vue';
 import { XHeader} from 'vux'
+import {API,getQuery} from '../../services'
 
 export default {
   components: {
@@ -78,7 +79,10 @@ export default {
   },
   data () {
     return {
-      showMenus: false,
+        storeName:null,
+        storeFace:null,
+        storebgPic:null,
+      storeId:null,
       goodsList:[1,5,7,6,8],
     }
   },
@@ -89,8 +93,33 @@ export default {
       },
       /* 跳到店铺详情页面 */
       goInfo(){
-          window.location.href="/#/shopInfo/ss";
+          window.location.href="/#/shopInfo/"+this.storeId;
+      },
+      /* 数据初始化 */
+      Initialization(){
+          this.storeId=this.$route.params.id;
+        API.main.storeInfo({
+            storeId:this.storeId
+        }).then((res)=>{
+            if(res.body.code==200){
+                 this.storeName=res.body.data.storeName;
+                this.storeFace=res.body.data.storeFace;
+                this.storebgPic=res.body.data.storebgPic;
+            }
+        });
+        API.main.storeGoods({
+            storeId:this.storeId
+        }).then((res)=>{
+            if(res.body.code==200){
+                this.goodsList=res.body.data.shopList.data;
+            }
+        }); 
       }
+  },mounted(){
+      this.Initialization();
+  },
+  activated(){
+      this.Initialization();
   }
 }
 </script>

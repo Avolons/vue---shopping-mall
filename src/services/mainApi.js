@@ -79,21 +79,41 @@ export const main = {
   goodsInfo(data) {
     return Vue.http.post(API_ROOT + 'index/goodslist',data);
   },
+  /**
+   * 店铺信息
+   * @param {any} data 
+   * storeId
+   * @returns 
+   */
   storeInfo(data) {
     return Vue.http.post(API_ROOT + 'index/storelist',data);
   },
+  /**
+   * 店铺商品列表
+   * @param {any} data 
+   * storeId
+   * @returns 
+   */
   storeGoods(data) {
     return Vue.http.get(API_ROOT + 'index/storegoodslist',{params:data});
   },
+  /**
+   * 商品评论列表
+   * @param {any} data 
+   * @returns 
+   */
   goodsComment(data) {
     return Vue.http.get(API_ROOT + 'index/goodscommentlist',{params:data});
   },
-  goodsSince(data) {
-    return Vue.http.get(API_ROOT + 'index/since_sel',{params:data});
-  },
-  goodsRevert(data) {
-    return Vue.http.get(API_ROOT + 'index/revert_sel',{params:data});
-  },
+  /**
+   * 判断商品是否支持该地址
+   * @param {any} data 
+   * province
+   * city
+   * region
+   * goodsId
+   * @returns 
+   */
   judgeAddress(data) {
     return Vue.http.post(API_ROOT + 'index/is_address',data);
   },
@@ -105,11 +125,36 @@ export const main = {
   goodsCategory(data) {
     return Vue.http.get(API_ROOT + 'index/getGoodsCategory',{params:data});
   },
+  /**
+   * 获取商品租赁规则
+   * @param {any} data 
+   * goodsId
+   * @returns 
+   */
   goodsRule(data) {
     return Vue.http.post(API_ROOT + 'index/goodsleasing',data);
   },
-  tplPrice(data) {
-    return Vue.http.post(API_ROOT + 'order/tpl_price',data);
-  }
+  /**
+   * 添加到购物车
+   * @param {any} data
+   * userId
+   * token 
+   * goodsid
+   * rent_prieod_id 
+   * province
+   * city
+   * region
+   * attr_id1 没有传0
+   * attr_id2 没有传0
+   * start_time 秒
+   * end_time 秒
+   * time_number
+   * cart_type 0 加入购物车 1 确认租赁
+   * @returns 
+   */
+  addCar(data) {
+    return Vue.http.post(API_ROOT + 'index/cartContentAdd',data);
+  },
+  
 }
 

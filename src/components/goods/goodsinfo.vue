@@ -3,7 +3,8 @@
 </style>
 
 <template>
-    <div class="goodsinfo_ciontaner">
+<div>
+    <div class="goodsinfo_container">
         <!--头部区域，返回按钮 -->
         <header class="goodsinfo_header">
             <!-- 返回按钮 -->
@@ -32,14 +33,14 @@
             <div class="goodsinfo_box">
                 <div class="goodsinfo_allprice">
                     总租金：
-                    <span>￥{{currentGoodsData.rent_period_now_rent_price*currentGoodsData.rentTime}}</span>
+                    <span>￥{{currentGoodsData.rent_period_now_rent_price*currentGoodsData.rentTime*currentGoodsData.goodsnum}}</span>
                 </div>
                 <div class="goodsinfo_rentTime">
                     租期
                     <div class="goodsinfo_rentTime_num">
-                        <span @click="numcouter(currentGoodsData.rentTime,0)">-</span>
+                        <span @click="numcouter(0,0)">-</span>
                         <input type="number" @input="goodsNumCheck(0)" v-model="currentGoodsData.rentTime">
-                        <span @click="numcouter(currentGoodsData.rentTime,1)">+</span>
+                        <span @click="numcouter(0,1)">+</span>
                     </div>
                 </div>
             </div>
@@ -153,7 +154,7 @@
                 <!-- 配送地址 -->
                 <div class="goodsinfo_content_address">
                     <group label-width="5em" label-align="left">
-                        <x-address title="配送至" v-model="goodsAddress" raw-value :list="ChinaAddressV3Data" value-text-align="left"></x-address>
+                        <x-address title="配送至" raw-value v-model="goodsAddress" raw-value :list="ChinaAddressV3Data" value-text-align="left"></x-address>
                     </group>
                 </div>
                 <!-- 规格和数量 -->
@@ -169,7 +170,7 @@
                 </group>
                 <div v-transfer-dom>
                     <!-- 规格选择区域 -->
-                    <popup class="goodsinfo_sizeSelect_content" v-model="colorSize" position="bottom" max-height="50%">
+                    <popup @on-show="sizeRember" class="goodsinfo_sizeSelect_content" v-model="colorSize" position="bottom" max-height="50%">
                         <img :src="returnImg" alt="img" class="goodsinfo_sizeSelect_img">
                         <div class="goodsinfo_sizeSelect_message">
                             <h3 class="goodsinfo_sizeSelect_title">
@@ -181,17 +182,17 @@
                             <div class="goodsinfo_sizeSelect_number">
                                 商品数量
                                 <div class="goodsinfo_rentTime_num">
-                                    <span @click="numcouter(currentGoodsData.goodsnum,0)">-</span>
+                                    <span @click="numcouter(1,0)">-</span>
                                     <input type="number" @input="goodsNumCheck(1)" v-model="currentGoodsData.goodsnum">
-                                    <span @click="numcouter(currentGoodsData.goodsnum,1)">+</span>
+                                    <span @click="numcouter(1,1)">+</span>
                                 </div>
                             </div>
                         </div>
-                        <ul class="goodsinfo_sizeSelect_typelist">
+                        <ul v-show="colorlist[0]" class="goodsinfo_sizeSelect_typelist">
                             <h3>颜色</h3>
                             <li v-for="(item,index) in colorlist" :class="{'goodsinfo_sizeSelect_typelist--selected':item.sel==1}" @click="selectSize(colorlist,item)">{{item.value}}</li>
                         </ul>
-                        <ul class="goodsinfo_sizeSelect_typelist">
+                        <ul v-show="sizelist[0]" class="goodsinfo_sizeSelect_typelist">
                             <h3>规格</h3>
                             <li v-for="(item,index) in sizelist" :class="{'goodsinfo_sizeSelect_typelist--selected':item.sel==1}" @click="selectSize(sizelist,item)">{{item.value}}</li>
                         </ul>
@@ -238,18 +239,20 @@
                         <span>购物车</span>
                     </li>
                 </ul>
-                <button type="button" class="goodsinfo_btnlist_car">加入购物车</button>
+                <button type="button" @click="addCar()" class="goodsinfo_btnlist_car">加入购物车</button>
                 <button type="button" @click="buyGoods()" class="goodsinfo_btnlist_buy">立即租赁</button>
             </div>
         </footer>
+        <toast v-model="toast"  type="success">{{confrim}}</toast>
+
+    </div>
     </div>
 </template>
 
 <script>
-import { Swiper,Divider,querystring, dateFormat, SwiperItem, InlineCalendar, XAddress, Group, ChinaAddressV3Data, TransferDom, Popup, Cell, XButton, XSwitch } from 'vux';
+import { Swiper,Divider,querystring,Toast,Value2nameFilter as value2name, dateFormat, SwiperItem, InlineCalendar, XAddress, Group, ChinaAddressV3Data, TransferDom, Popup, Cell, XButton, XSwitch } from 'vux';
 import {API,getQuery} from '../../services';
-
-import jsondata from './goods.json';
+import { mapGetters } from 'vuex';
 
 
 
@@ -267,10 +270,17 @@ export default {
         Popup,
         Cell,
         XButton,
-        XSwitch
+        XSwitch,
+        Toast
     },
     data() {
         return {
+             confrim:"",
+             toast:false,
+             storeId:null,//店铺信息
+            goodsId:null,//商品id
+            /* 规格选择触发时当前的规格id */
+            typeSizeChange:null,
             /* 是否被收藏 */
             isCollection:false,
             /* 日期控件配置参数 */
@@ -330,7 +340,7 @@ export default {
             /* 数据列表 */
             datalist: [],
             /* 当前地址 */
-            goodsAddress: [],
+            goodsAddress: ['天津市', '市辖区', '和平区'],
             /* 颜色规格选择框显示隐藏 */
             colorSize: false,
             /* 商品特性显示隐藏 */
@@ -377,6 +387,10 @@ export default {
     },
     /* 计算属性 */
     computed: {
+         ...mapGetters([
+            'getUserInfoUserId',
+            'getUserInfoToken',
+        ]),
         /* 返回商品主图，数据列表存在时使用列表图片，不存在时使用商品主图 */
         returnImg(){
             let id=this.afterSelectData.id
@@ -442,8 +456,9 @@ export default {
             let endtime;
             /* 当前租用周期数量 */
             let num=this.currentGoodsData.rentTime;
+            /* 获取日月季 */
             let year=new Date(self.timeValue).getFullYear(),
-                month=new Date(self.timeValue).getMonth(),
+                month=new Date(self.timeValue).getMonth()+1,
                 /* 当前天数 */
                 day=new Date(self.timeValue).getDate(),
                 time=new Date(self.timeValue).getTime();
@@ -457,10 +472,24 @@ export default {
                     return dateFormat(new Date(time+num*24*3600*1000*7-24*60*1000),'YYYY-MM-DD');
                 break;
                 case 3:
-                    return dateFormat(new Date(year+"-"+(month+num)+"-"+(day-1)),'YYYY-MM-DD');
+                    /* 月份相加超出一年的情况需要考虑 */
+                    let year_3=Math.floor((month+num)/12);
+                    let month_3=(month+num)%12;
+                    if(month_3==0){
+                        month_3=12;
+                        year_3--;
+                    }
+                    return dateFormat(new Date(year+year_3+"-"+month_3+"-"+(day-1)),'YYYY-MM-DD');
                 break; 
                 case 4:
-                    return dateFormat(new Date(year+"-"+(month+num*3)+"-"+(day-1)),'YYYY-MM-DD'); 
+                    /* 季度相加超出一年 */
+                    let year_4=Math.floor((month+num*3)/12);
+                    let month_4=(month+num*3)%12;
+                    if(month_4==0){
+                        month_4=12;
+                        year_4--;
+                    }
+                    return dateFormat(new Date(year+year_4+"-"+month_4+"-"+(day-1)),'YYYY-MM-DD'); 
                 break; 
                 case 5: 
                     return dateFormat(new Date((year+num)+"-"+month+"-"+(day-1)),'YYYY-MM-DD');
@@ -487,15 +516,45 @@ export default {
             if(this.currentTypedata.goods_deposit==0){
                 return 0;
             }
-            let despoite=this.currentTypedata.goods_deposit-this.currentGoodsData.rent_period_now_rent_price*this.currentGoodsData.rentTime;
+            let despoite=this.currentTypedata.goods_deposit-this.currentGoodsData.rent_period_now_rent_price*this.currentGoodsData.rentTime*this.currentGoodsData.goodsnum;
             if(despoite<=0){
                 return 0;
             }else{
-                return 0;
+                return despoite;
             }
+       },
+       /**
+        * 返回颜色规格id
+        */
+       typeArray(){
+           let arr=new Array(2);
+           if(this.colorlist[0]){
+               for(let item of this.colorlist) {
+                 if(item.sel==1){
+                     arr[0]=item.content_id;
+                 }
+               }
+               
+           }else{
+               arr[0]=0;
+           }
+           if(this.sizelist[0]){
+               for(let item of this.sizelist) {
+                 if(item.sel==1){
+                     arr[1]=item.content_id;
+                 }
+               }
+           }else{
+               arr[1]=0;
+           }
+           return arr;
        }
     },
     methods: {
+        /* 记录当前规格id组 */
+        sizeRember(){
+            this.typeSizeChange=this.afterSelectData;
+        },
         /* 数据初始化 */
         Initialization(goodsData){
             /* 颜色规格格式化，添加选中属性 */
@@ -513,8 +572,12 @@ export default {
         }
         this.colorlist = goodsData.goodsattrcontent.ys;
         this.sizelist = goodsData.goodsattrcontent.gg;
-        /* 颜色规格格式化，添加选中属性*/
-
+        /* 商品id */
+        this.goodsId=goodsData.goodsId;
+        /* 是否收藏 */
+        this.isCollection=goodsData.isCollect==1?true:false;
+        /* 店铺ID */
+        this.storeId=goodsData.goods_store_id;
         /* 最大商品库存量 */
         this.goods_sales_count = goodsData.goods_max_count;
         /* 静态数据赋值 */
@@ -555,10 +618,7 @@ export default {
        /* 初始周期被选中 */
         this.currentTypedata.rent_period[0].sel=1;
         },
-        /* 立即租赁按钮点击 */
-        buyGoods(){
-            window.location.href="/#/orderInfo";
-        },
+        
         /* 商品规格选择函数 */
         selectSize(size, item) {
             if (item.sel === 1) {
@@ -595,6 +655,9 @@ export default {
             };
             if (flag == -2 || flag == 0 || flag == 2) {
                 this.colorSize = false;
+                if(JSON.stringify(this.typeSizeChange)==JSON.stringify(this.afterSelectData)){
+                    return false;
+                }
                 this.typeDataChange(this.afterSelectData.id);
             } else {
                 alert("请选择规格");
@@ -618,7 +681,6 @@ export default {
         },
         /* 时间周期切换数据变化 */
         timeClick(time,index){
-            console.log(1);
             /* 当前日期不为选中状态时 */
             if(time.sel!==1){
                 time.sel=1;
@@ -630,7 +692,6 @@ export default {
         },
         /* 时间周期变化数据更换具体操作 */
         timeDataChange(temporary){
-            this.currentGoodsData.goodsnum=1;
             this.currentGoodsData.rentTime=temporary.rent_period_min_rent;
             this.currentGoodsData.rent_period_type=temporary.rent_period_type;
             this.currentGoodsData.rent_period_min_rent=temporary.rent_period_min_rent;
@@ -667,7 +728,7 @@ export default {
         numcouter(size, type) {
             if (type == 0) {
                 /* 租期选择情况下要考虑最小租期和最大租期 */
-                if (size == this.currentGoodsData.goodsnum) {
+                if (size == 1) {
                     if (this.currentGoodsData.goodsnum > 1) {
                         this.currentGoodsData.goodsnum--;
                     }
@@ -680,7 +741,7 @@ export default {
                 size--
             } else {
                 /* 租期选择情况下要考虑最小租期和最大租期 */
-                if (size == this.currentGoodsData.goodsnum) {
+                if (size == 1) {
                     if (this.currentGoodsData.goodsnum < this.goods_sales_count) {
                         this.currentGoodsData.goodsnum++;
                     }
@@ -692,21 +753,110 @@ export default {
                 }
             }
         },
+        getName (value) {
+        return value2name(value, ChinaAddressV3Data)
+     },
         /* 路由回退 */
          routerBack(){
           this.$router.goBack();
           },
           /* 进入店铺主页面 */
           goShop(){
-              window.location.href="/#/shop/ss";
+              window.location.href="/#/shop/"+this.storeId;
           },
           /* 进入购物车 */
           goCar(){
-              window.location.href="/#/index/main/car";
+              window.location.href="/#/download";
           },
+          /* 加入购物车 */
+          addCar(){
+              let addresslist=(this.getName (this.goodsAddress)).split(" ");
+              let perId;
+            for(let item of this.currentTypedata.rent_period) {
+                if(item.sel==1){
+                    perId=item.rent_period_id;
+                }
+            }
+              API.main.addCar({
+                    userId:this.getUserInfoUserId,
+                    token:this.getUserInfoToken,
+                    goodsId:this.goodsId, 
+                    province:addresslist[0],
+                    city:addresslist[1],
+                    attr_id1:this.typeArray[0],
+                    attr_id2:this.typeArray[1],
+                    district:addresslist[2], 
+                    amount:this.currentGoodsData.goodsnum,
+                    rent_prieod_id:perId,
+                    time_number:this.currentGoodsData.rentTime,
+                    start_time: (new Date(this.timeValue))/1000,
+                    end_time: (new Date(this.despoiteRange))/1000,
+                    cart_type:1,
+                    goods_content_id:this.currentTypedata.content_id
+                }).then((res)=>{
+                    if(res.body.code==200){
+                        this.confrim="添加成功";
+                        this.toast=true;
+                    }
+                });
+          },
+          /* 立即租赁按钮点击 */
+        buyGoods(){
+            let addresslist=(this.getName (this.goodsAddress)).split(" ");
+            let perId;
+            for(let item of this.currentTypedata.rent_period) {
+                if(item.sel==1){
+                    perId=item.rent_period_id;
+                }
+            }
+               API.main.addCar({
+                    userId:this.getUserInfoUserId,
+                    token:this.getUserInfoToken,
+                    goodsId:this.goodsId, 
+                    province:addresslist[0],
+                    city:addresslist[1],
+                    district:addresslist[2], 
+                    attr_id1:this.typeArray[0],
+                    attr_id2:this.typeArray[1],
+                    amount:this.currentGoodsData.goodsnum,
+                    rent_prieod_id:perId,
+                    time_number:this.currentGoodsData.rentTime,
+                    start_time: (new Date(this.timeValue))/1000,
+                    end_time: (new Date(this.despoiteRange))/1000,
+                    cart_type:2,
+                    goods_content_id:this.currentTypedata.content_id
+                }).then((res)=>{
+                    if(res.body.code==200){
+                        let cartId=res.body.data.cartId;
+                        this.$store.dispatch('SetOrder',cartId);
+                        window.location.href="/#/orderInfo/"+cartId;
+                    }
+                });
+            
+        },
           /* 加入收藏 */
           addCollection(){
-              this.isCollection=(this.isCollection==true?false:true);
+              if(this.isCollection==false){
+                  API.person.collectShop({
+                     userId:this.getUserInfoUserId,
+                        token:this.getUserInfoToken,
+                        shopId:this.goodsId,
+                  }).then((res)=>{
+                      if(res.body.code==200){
+                          this.isCollection=true;
+                      }
+                  });
+              }else{
+                  API.person.unCollectShop({
+                     userId:this.getUserInfoUserId,
+                        token:this.getUserInfoToken,
+                        shopId:this.goodsId,
+                  }).then((res)=>{
+                      if(res.body.code==200){
+                          this.isCollection=false;
+                      }
+                  });
+              }
           }
     }
 }

@@ -43,7 +43,8 @@ import { md5 } from 'vux';
 Vue.prototype.md5=md5;
 import { ConfirmPlugin } from 'vux';
 Vue.use(ConfirmPlugin);
-
+import { dateFormat } from 'vux'
+Vue.prototype.dateFormat=dateFormat;
 
 /* 过滤器注册,直接抄的的1.0中的货币过滤器 */
 Vue.filter('currency', function(value, _currency, decimals) {  
@@ -60,7 +61,9 @@ Vue.filter('currency', function(value, _currency, decimals) {
     var digitsRE = /(\d{3})(?=\d)/g;  
     return sign + _currency + head + _int.slice(i).replace(digitsRE, '$1,') + _float;  
 }); 
-
+Vue.filter('dataform', function(value) {  
+	return dateFormat(value*1000, 'YYYY-MM-DD');
+});
 
 
 //引入css重置文件,基本的样式文件

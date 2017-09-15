@@ -100,9 +100,23 @@ export const person = {
   shopCollectList(data) {
     return Vue.http.get(API_ROOT + 'user/usercollect',{params:data});
   },
+  /**
+   * userId
+   * token
+   * shopId
+   * @param {any} data 
+   * @returns 
+   */
   collectShop(data) {
     return Vue.http.post(API_ROOT + 'user/usercollectadd',data);
   },
+  /**
+   * userId
+   * token
+   * shopId
+   * @param {any} data 
+   * @returns 
+   */
   unCollectShop(data) {
     return Vue.http.post(API_ROOT + 'user/usercollectdel',data);
   },

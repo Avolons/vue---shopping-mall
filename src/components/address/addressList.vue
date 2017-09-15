@@ -41,7 +41,7 @@
            color: #fff;
        }
        &_list{
-
+           margin-bottom: 70px;
        }
        &_single{
         display: flex;
@@ -140,7 +140,7 @@
         </div>
         <!-- 我的收获地址列表 -->
         <ul class="addressList_list">
-            <li v-for="(item,index) in addressList.data" class="addressList_single">
+            <li v-for="(item,index) in addressList.data" @click="chooseAddress(item)" class="addressList_single">
                 <span class="addressList_single_name">{{item.address_name}}</span>
                 <span class="addressList_single_phone">{{item.mobile}}</span>
                 <span class="addressList_single_address twonowarp">
@@ -148,13 +148,13 @@
                 </span>
                 <div class="addressList_single_action">
                 <span>
-                   <span @click="checkDefault(index)" :class="{'addressList_single_icon--default':item.is_set_default==1}" class="addressList_single_icon"><i class="iconfont">&#xe60d;</i></span>  默认地址      
+                   <span @click.stop="checkDefault(item.id,index)" :class="{'addressList_single_icon--default':item.is_set_default==1}" class="addressList_single_icon"><i class="iconfont">&#xe60d;</i></span>  默认地址      
                 </span> 
-                <span @click="editAddress(item.id)">
+                <span @click.stop="editAddress(item.id)">
                     <i class="iconfont">&#xe609;</i>
                     编辑
                     </span> 
-                <span @click="deletAddress(item.id)">
+                <span @click.stop="deletAddress(item.id,index)">
                     <i class="iconfont">&#xe618;</i>
                     删除
                     </span> 
@@ -166,12 +166,14 @@
             目前您还没有收货地址哦~
         </div>
         <a href="/#/editAddress" class="addressList_addBtn">新增收货地址</a>
+            <toast v-model="toast"  type="success">{{confrim}}</toast>
+
     </div>
     </div>
 </template>
 <script>
 
-import { XHeader,Cell,Group,Confirm} from 'vux'
+import { XHeader,Cell,Group,Confirm,Toast} from 'vux'
 import addresslist from './addresslist.json';
 import { mapGetters } from 'vuex'
 import {API,getQuery} from '../../services';
@@ -181,10 +183,13 @@ export default {
     XHeader,
     Group,
     Cell,
-    Confirm
+    Confirm,
+    Toast
   },
   data () {
     return {
+        confrim:"删除成功",
+        toast:false,
     /* 默认选中index */
       currentIndex:0,
       /* 当前列表index 集合 */
@@ -206,10 +211,18 @@ export default {
           this.$router.goBack();
       },
       /* 默认地址选中项更改 */
-      checkDefault(index){
-          this.addressList.data[this.currentIndex].is_set_default=0;
-          this.addressList.data[index].is_set_default==1 ? this.addressList.data[index].is_set_default=0:this.addressList.data[index].is_set_default=1;
-          this.currentIndex=index;  
+      checkDefault(id,index){
+          API.person.addressDefault({
+               userId:this.getUserInfoUserId,  
+                token:this.getUserInfoToken,
+                id:id
+          }).then((res)=>{
+              if(res.body.code==200){
+                  this.addressList.data[this.currentIndex].is_set_default=0;
+                this.addressList.data[index].is_set_default==1 ? this.addressList.data[index].is_set_default=0:this.addressList.data[index].is_set_default=1;
+                this.currentIndex=index;  
+              }
+          })
       },
       /* 地址编辑 */
       editAddress(id){
@@ -217,13 +230,24 @@ export default {
           window.location.href="/#/editAddress/"+id;
       },
       /* 地址删除 */
-      deletAddress(id){
+      deletAddress(id,index){
+          var self=this;
           this.$vux.confirm.show({
             /* title: 'Title', */
             content: '确定要删除该地址吗？',
             onConfirm () {
                 /* 点击确认时执行具体删除操作 */
-
+                API.person.addressDelete({
+                    userId:self.getUserInfoUserId,  
+                    token:self.getUserInfoToken,
+                    id:id
+                }).then((res)=>{
+                    if(res.body.code==200){
+                        self.confirm="删除成功";
+                        self.toast=true;
+                        self.addressList.data.splice(index,1);
+                    }
+                })
             }
         })
       },
@@ -248,10 +272,18 @@ export default {
                     this.valList=checkValue;
                 }
             });
+        },
+        /* 用户列表点击选择 */
+        chooseAddress(res){
+            if(this.$route.query.chose==1){
+                this.$store.dispatch('SetAddress',res);
+                /* 路由回退 */
+                this.routerBack();
+            }
         }
   },
   mounted(){
-        this.getAddress();
+      /*   this.getAddress(); */
   },
   activated(){
       this.getAddress();

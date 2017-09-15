@@ -47,14 +47,15 @@
     top: 87px;
     height: calc(100% - 140px);
     overflow-y: auto;
+    background-color: #f3f3f3;
     }
   &_single{
     background-color: #fff;
      &_shop{
        color:#272727;
        font-size: 16px;
-       height: 60px;
-       line-height: 60px;
+       height: 50px;
+       line-height: 50px;
        box-sizing: border-box;
        padding: 0 15px;
       display: flex;
@@ -66,6 +67,8 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
+        color: #272727;
+        font-weight: 400;
       }
     }
     &_type{
@@ -88,6 +91,7 @@
         height: 100px; 
         display: block;
         flex-grow: 0;
+        flex: 1;
     }
     &_text{
        flex-grow: 1;
@@ -103,6 +107,7 @@
         -webkit-line-clamp: 2;
         overflow: hidden;
         font-weight: 400;
+        font-size: 15px;
     }
     &_box{
       display: flex;
@@ -200,9 +205,9 @@
                       </div>
               </scroller>
         <ul class="order_list"><!-- 此处进行显示判断，当前选中类型等于当前item类型时候才显示 -->
-            <li class="order_single" v-for="item in orderList"  v-show="currentType==item.type || currentType==0">
+            <li class="order_single" v-for="item in orderList"  v-show="currentType==item.orderType || currentType==0 || (item.orderType==7 && currentType==0)  || (item.orderType==8 && currentType==0) || (item.orderType==9 && currentType==0) || (item.orderType==10 && currentType==0) ">
                 <div class="order_single_shop">
-                    <h2>{{item.shop}}</h2>
+                    <h2>{{item.store_name}}</h2>
                     <span v-if="item.type==1" class="order_single_type">待付款</span>
                     <span v-if="item.type==2" class="order_single_type">待发货</span>
                     <span v-if="item.type==3" class="order_single_type">待收货</span>
@@ -211,41 +216,54 @@
                     <span v-if="item.type==6" class="order_single_type">待评价</span>
                 </div> 
                 <div class="order_single_content">
-                    <img :src="item.imgurl" alt="img" class="order_single_img">
+                    <img :src="item.goods_main_pic" alt="img" class="order_single_img">
                     <div class="order_single_text">
                         <h3 class="order_single_title">
-                          {{item.title}}
+                          {{item.goods_name}}
                         </h3>
                         <p class="order_single_box">
-                           <span class="order_single_price">￥{{item.price}}/{{item.datetype}}</span>
-                           <span class="order_single_num">数量：{{item.num}}</span>
+                           <span class="order_single_price">￥{{item.rentPrice}}/{{timeMap[item.rentType]}}</span>
+                           <span class="order_single_num">数量：{{item.goods_amount}}</span>
                         </p>
                     </div> 
                 </div>
                 <div class="order_single_time">
-                        <span>{{item.time}}</span>
-                        <span>共1{{item.datetype}}</span>
+                        <span>{{item.order_goods_rent_time | dataform}}  至  {{item.order_goods_return_time | dataform }}</span>
+                        <span>共1{{timeMap[item.rentType]}}</span>
                     </div>
                     <div class="order_single_despoite">
                         <span>押金</span>
-                        <span>￥{{item.desposite}}</span>
+                        <span>￥{{item.order_deposit}}</span>
                     </div>
                     <div class="order_single_allprice">
-                       总计{{item.num}} 件商品   合计 <b>￥{{item.allprice}}</b>（含运费￥{{item.freight}}）
+                       总计{{item.goods_amount}}件商品   &nbsp;&nbsp;合计&nbsp;&nbsp; <b>￥{{item.order_total_price}}</b>&nbsp;&nbsp;(含运费￥{{item.order_freight}})
                     </div>
                     
                     <div class="order_single_btncoll">
                            <!-- 七种状态的button，对应其中操作 -->
-                           <button class="order_single_btn--confirm" v-if="item.type==1">删除订单</button>     
-                           <button v-if="item.type==1">付款</button>     
-                           <button v-if="item.type==2">提醒发货</button>     
-                           <button v-if="item.type==3">查看物流</button>     
-                           <button v-if="item.type==3">确认收货</button>     
-                           <button v-if="item.type==4">归还</button>     
-                           <button v-if="item.type==5">查看物流</button>     
-                           <button v-if="item.type==5">结算单</button>     
-                           <button v-if="item.type==6">结算单</button>     
-                           <button v-if="item.type==6">评价</button>     
+                           <!-- 订单关闭 评价完成 退款完成 退货完成 -->
+                           <button class="order_single_btn--confirm" v-if="item.orderType==1 || item.orderType==7 || item.orderType==8 || item.orderType==9 || item.orderType==10" >删除订单</button>     
+                           <!-- 代付款状态 -->
+                           <button v-if="item.orderType==1">付款</button>   
+                           <!-- 待发货状态 -->  
+                           <button v-if="item.orderType==2">提醒发货</button>  
+                           <!-- 待收货状态 退货待结算 退货结算待确认 -->   
+                           <button v-if="item.orderType==3 || item.srcorderType==0 || item.srcorderType==1">查看物流</button>
+                           <!-- 退货待结算 待结算-->
+                           <button v-if="item.orderType==5 || item.srcorderType==0">提醒结算</button>     
+                            <!-- 待收货状态 -->
+                           <button v-if="item.orderType==3">确认收货</button>   
+                           <!-- 待归还状态   -->
+                           <button v-if="item.orderType==4">归还</button>  
+                            <!-- 退货完成 结算完成  -->
+                           <button v-if="item.orderType==10 || (item.orderType==5 && item.srcorderType==2)">结算单</button>     
+                           <!-- 待评价 -->
+                           <button v-if="item.orderType==6">评价</button>
+                           <!-- 评价完成 -->     
+                           <button v-if="item.orderType==7">查看评论</button> 
+                           <!-- 退货结算待确认 结算待确认 -->    
+                           <button v-if="item.srcorderType==1 || (item.orderType==5 && item.srcorderType==2)">确认无误</button>     
+                                
                     </div>
             </li>
         </ul>
@@ -255,6 +273,8 @@
 
 <script>
 import { Scroller,  Spinner, XButton, Group, Cell, LoadMore } from 'vux';
+import { mapGetters } from 'vuex'
+import {API,getQuery} from '../../services';
 
 export default {
   components: {
@@ -295,133 +315,107 @@ export default {
           name:"待评价",
           type:6,
       },],
+       /* 时间对照表 */
+      timeMap:{1:"日",2:"周",3:"月",4:"季",5:"年"},
       /* 假数据模拟订单 */
-      orderList:[{
-          type:1,
-          shop:"小萝卜",
-          imgurl:"https://static.vux.li/demo/1.jpg",
-          title:"消防队救援",
-          price:"200",
-          num:"1",
-          desposite:"44",
-          allprice:"355",
-          time:"2017-8.17-2017-11.24",
-          datetype:"周",
-          date:"1",
-          freight:"12",
-      },{
-          type:2,
-          shop:"小萝卜",
-          imgurl:"https://static.vux.li/demo/1.jpg",
-          title:"消防队救援",
-          price:"200",
-          num:"1",
-          desposite:"44",
-          allprice:"355",
-          time:"2017-8.17-2017-11.24",
-          datetype:"周",
-          date:"1",
-          freight:"12",
-      },{
-          type:3,
-          shop:"小萝卜",
-          imgurl:"https://static.vux.li/demo/1.jpg",
-          title:"消防队救援",
-          price:"200",
-          num:"1",
-          desposite:"44",
-          allprice:"355",
-          time:"2017-8.17-2017-11.24",
-          datetype:"周",
-          date:"1",
-          freight:"12",
-      },{
-          type:4,
-          shop:"小萝卜",
-          imgurl:"https://static.vux.li/demo/1.jpg",
-          title:"消防队救援",
-          price:"200",
-          num:"1",
-          desposite:"44",
-          allprice:"355",
-          time:"2017-8.17-2017-11.24",
-          datetype:"周",
-          date:"1",
-          freight:"12",
-      },{
-          type:5,
-          shop:"小萝卜",
-          imgurl:"https://static.vux.li/demo/1.jpg",
-          title:"消防队救援",
-          price:"200",
-          num:"1",
-          desposite:"44",
-          allprice:"355",
-          time:"2017-8.17-2017-11.24",
-          datetype:"周",
-          date:"1",
-          freight:"12",
-      },{
-          type:6,
-          shop:"小萝卜",
-          imgurl:"https://static.vux.li/demo/1.jpg",
-          title:"消防队救援",
-          price:"200",
-          num:"1",
-          desposite:"44",
-          allprice:"355",
-          time:"2017-8.17-2017-11.24",
-          datetype:"周",
-          date:"1",
-          freight:"12",
-      }]
+      orderList:[]
     }
   },
+   computed:{
+    ...mapGetters([
+      'getUserInfoUserId',
+      'getUserInfoToken',
+    ]),
+    
+  },
   mounted () {
-    /* this.$nextTick(() => {
-      this.$refs.scrollerEvent.reset({top: 0})
-    })
-    this.$nextTick(() => {
-      this.$refs.scrollerBottom.reset({top: 0})
-    }) */
+    if(!this.orderList[0]){
+       this.getTypeData();
+    }
   },
   methods: {
     /* typelist点击选中函数 */
     typeselect(index){
       this.currentType=index;
     },
-    onScrollBottom () {
-      if (this.onFetching) {
-        // do nothing
-      } else {
-        this.onFetching = true
-        setTimeout(() => {
-          this.bottomCount += 10
-          this.$nextTick(() => {
-            this.$refs.scrollerBottom.reset()
-          })
-          this.onFetching = false
-        }, 2000)
-      }
+    confrimType(item){
+      if (item.order_is_delete == 0) {
+                if (item.order_refund_goods_status == 0) {
+                    if (item.order_status == 1) {
+                        if(item.order_shipping_status == 8){
+                            item.orderType=8;//订单关闭
+                        }else{
+                           item.orderType=1;//代付款
+                        }
+                    } else if (item.order_status == 2) {
+                        switch (item.order_shipping_status) {
+                            case 1:
+                                item.orderType=2;//代发货
+                                break;
+                            case 2:
+                                item.orderType=3;//待收货
+                                break;
+                            case 3:
+                               item.orderType=4;//待归还
+                                break;
+                            case 4:
+                                item.orderType=5;//待结算
+                                break;
+                            case 5:
+                                item.orderType=5;//待确认结算
+                                item.srcorderType=2;
+                                break;
+                            case 6:
+                                item.orderType=6;//待评价
+                                break;
+                            case 7:
+                                item.orderType=7;//评价完成
+                                break;
+                        }
+                    }
+                } else if (item.order_refund_goods_status == 1) {
+                    item.orderType=9;//退款结束
+                } else if (item.order_refund_goods_status == 2) {
+                    if (item.order_status == 2) {//退款退货
+                        if (item.order_shipping_status == 2) {
+                            item.srcorderType=0;//退货待结算
+                        } else if (item.order_shipping_status == 3) {
+                            item.srcorderType=0;//退货待结算
+                        } else if (item.order_shipping_status == 5) {
+                            item.srcorderType=1;//退货待确认结算
+                        } else if (item.order_shipping_status == 6) {
+                            item.orderType=10;//退货完成
+                        }
+                    }
+                } else if (item.order_refund_goods_status == 4) {
+                    if (item.order_shipping_status == 6) {
+                        item.orderType=10;//退货完成
+                    }
+                }else if(item.order_refund_goods_status == 3){
+                    item.srcOrderType=3;//退款处理中
+                }
+            }
     },
-    onScroll (pos) {
-      this.scrollTop = pos.top
-    },
-    onCellClick () {
-      window.alert('cell click')
-    },
-    onClickButton () {
-      window.alert('click')
-    },
-    changeList () {
-      this.showList1 = false
-      this.$nextTick(() => {
-        this.$refs.scroller.reset({
-          top: 0
-        })
-      })
+    /* 获取对应的数据 */
+    getTypeData(){
+          API.order.orderlist({
+              userId:this.getUserInfoUserId,  
+              token:this.getUserInfoToken,
+              orderStatus:0
+          }).then((res)=>{
+            if(res.body.code==200){
+              let list= res.body.data.orderList.data
+              for(let item of list) {
+                  this.confrimType(item);
+              }
+              this.orderList=list;
+            }
+          });
     }
   }
 }
+
+
+       
 </script>
 

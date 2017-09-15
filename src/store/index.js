@@ -21,11 +21,15 @@ const store = new Vuex.Store({
 		orderInfo:{
 			allPrice:0,//总金额
 		},
-		addressData:{
-			name:"万朱浩",
-			phone: 1358745622,
-			detail:"北京市市辖区西城区朝阳门大厦",
-		}
+		/* 当前提交订单id*/
+		currentOrder:0,
+		/* 用户地址数据 */
+		addressData:{},
+		/* 用户自提点数据 */
+		sinceData:{},
+		/* 用户物流方式 */
+		tplId:0,
+
 	},
 	actions: {
 		/* 设置用户登录信息 */
@@ -39,9 +43,33 @@ const store = new Vuex.Store({
 		/* 设置当前认证状态 */
 		IsCertify({commit}){
 			commit('ISCERTIFY');	
-		}
+		},
+		/* 设置用户地址 */
+		SetAddress({commit,state},addressData){
+			commit('SETADDRESS',addressData);
+		},
+		/* 更新当前订单id */
+		SetOrder({commit,state},id){
+			commit('SETORDER',id);
+		},
+		/* 更新自提点 */
+		SetSince({commit,state},since){
+			commit('SETSINCE',since);
+		},
+		/* 更新物流方式 */
+		CurrentTpl({commit,state},id){
+			commit('CURRENTTPL',id);
+		},
 	},
 	mutations: {
+		// 当前物流方式
+		CURRENTTPL(state, id){
+			state.tplId=id;
+		},
+		// 设置自提点
+		SETSINCE(state, since){
+			state.sinceData=since;
+		},
 		// 设置登录用户信息
 		SETUSERINFO (state, userInfo) {
 			state.userInfo.loginname = userInfo.loginname;
@@ -49,6 +77,14 @@ const store = new Vuex.Store({
 			state.userInfo.id = userInfo.id;
 			state.userInfo.token = userInfo.token;
 			window.location.href="/#/index/main";
+		},
+		//更新订单id，
+		SETORDER(state, id) {
+			state.currentOrder= id;
+		},
+		// 设置登录用户信息
+		SETADDRESS(state, addressData) {
+			state.addressData=addressData;
 		},
 		// 退出登录
 		SIGNOUT (state) {
@@ -80,6 +116,16 @@ const store = new Vuex.Store({
 		/* 返回用户认证状态 */
 		getIsCertify(state){
 			return state.isCertify;
+		},
+		/*  */
+		/* 返回用户地址 */
+		getAddress(state){
+			return state.addressData.province+state.addressData.city+state.addressData.district+state.addressData.address;
+		},
+		/*  */
+		/* 返回用户姓名 */
+		getNamePhone(state){
+			return state.addressData.address_name+" "+state.addressData.mobile;
 		}
 		
 	}
