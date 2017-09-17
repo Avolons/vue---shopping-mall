@@ -616,7 +616,13 @@ export default {
         /* 初始被选中时间 */
         this.timeValue=this.timerange.startTime;
        /* 初始周期被选中 */
-        this.currentTypedata.rent_period[0].sel=1;
+       for(let item of this.currentTypedata.rent_period) {
+           item.sel=0;
+       }
+         this.currentTypedata.rent_period[0].sel=1;
+         
+        document.querySelector(".vux-swiper").style.height=window.outerWidth+"px";
+        
         },
         
         /* 商品规格选择函数 */

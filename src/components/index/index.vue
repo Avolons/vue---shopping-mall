@@ -81,7 +81,7 @@
      Search,
      Tabbar,
      TabbarItem ,
-     Loading
+     Loading,
     },
     computed:{
         

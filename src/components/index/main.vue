@@ -109,10 +109,26 @@ body {
         background-color: #f6f6f6;
         height: 45px;
         border-bottom: 1px solid #dddddd;
+        position: relative;
         &>img {
             display: block;
             margin: 0 auto;
             height: 100%;
+        }
+        &_more{
+            position: absolute;
+            right: 15px;
+            display: block;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #2196f3;
+            border-radius: 50%;
+            font-size: 16px;
+            color: #fff;
+            width: 20px;
+            height: 20px;
+            line-height: 18px;
+            text-align: center;
         }
     }
     &_recommend {
@@ -230,7 +246,7 @@ body {
             <!-- 热门商品 -->
             <div class="main_hot" v-show="currentType==0">
                 <img src="../../assets/img/index/hot.png" alt="hot">
-                <span></span>
+                <span @click="getMoreHot" class="main_hot_more">></span>
             </div>
             <ul class="main_hot_list" v-show="currentType==0">
                 <li v-for="item in hotGoodsList" class="main_hot_single" @click="goInfo(item.goodsId)">
@@ -365,6 +381,9 @@ export default {
                     top: 0
                 })
             })
+        },
+        getMoreHot(){
+            window.location.href="/#/moreHot"
         }
 
     },

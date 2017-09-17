@@ -143,6 +143,7 @@
                }
                for(let item of this.history) {
                    if(item==this.searchValue){
+                        window.location.href="/#/goodslist?goods_name="+this.searchValue;
                         this.searchValue="";
                        return false;
                    }
@@ -155,7 +156,7 @@
            /* 历史记录搜索 */
            historySearch(item){
                this.searchValue=item;
-               window.location.href="/#/goodslist/"+this.searchValue;
+               window.location.href="/#/goodslist?goods_name="+this.searchValue;
                this.searchValue="";  
            },
            /* 清空历史记录 */
