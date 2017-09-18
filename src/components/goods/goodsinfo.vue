@@ -33,7 +33,7 @@
             <div class="goodsinfo_box">
                 <div class="goodsinfo_allprice">
                     总租金：
-                    <span>￥{{currentGoodsData.rent_period_now_rent_price*currentGoodsData.rentTime*currentGoodsData.goodsnum}}</span>
+                    <span>{{currentGoodsData.rent_period_now_rent_price*currentGoodsData.rentTime*currentGoodsData.goodsnum | currency('￥') }}</span>
                 </div>
                 <div class="goodsinfo_rentTime">
                     租期
@@ -381,13 +381,8 @@ export default {
         /* 获取商品详情数据 */
     },
     activated(){
-        API.main.goodsInfo({
-            goodsId:this.$route.params.id
-        }).then((Response)=>{
-            /* 初始数据赋值操作 */
-        let goodsData = Response.body.data;
-        this.Initialization(goodsData);
-        });  
+        this.getData();
+          
     },
     /* 计算属性 */
     computed: {
@@ -522,7 +517,7 @@ export default {
             if(this.currentTypedata.goods_deposit==0){
                 return 0;
             }
-            let despoite=this.currentTypedata.goods_deposit-this.currentGoodsData.rent_period_now_rent_price*this.currentGoodsData.rentTime*this.currentGoodsData.goodsnum;
+            let despoite=this.currentTypedata.goods_deposit*this.currentGoodsData.goodsnum-this.currentGoodsData.rent_period_now_rent_price*this.currentGoodsData.rentTime*this.currentGoodsData.goodsnum;
             if(despoite<=0){
                 return 0;
             }else{
@@ -558,6 +553,15 @@ export default {
        }
     },
     methods: {
+        getData(){
+            API.main.goodsInfo({
+            goodsId:this.$route.params.id
+            }).then((Response)=>{
+                /* 初始数据赋值操作 */
+            let goodsData = Response.body.data;
+            this.Initialization(goodsData);
+            });
+        },
         /* 记录当前规格id组 */
         sizeRember(){
             this.typeSizeChange=this.afterSelectData;
@@ -621,6 +625,8 @@ export default {
         this.currentGoodsData.rent_period_now_rent_price=temporary.rent_period_now_rent_price;
         this.currentGoodsData.rent_period_min_advance=temporary.rent_period_min_advance;
         this.currentGoodsData.rent_period_max_advance=temporary.rent_period_max_advance;
+            /* 是否需要认证 */
+            this.isCertify=goodsData.goods_is_verify_real_name;
         /* 初始被选中时间 */
         this.timeValue=this.timerange.startTime;
        /* 初始周期被选中 */
@@ -715,8 +721,10 @@ export default {
         timeClick(time,index){
             /* 当前日期不为选中状态时 */
             if(time.sel!==1){
+                for(let item of this.currentTypedata.rent_period){
+                    item.sel=0;
+                }
                 time.sel=1;
-                this.currentTypedata.rent_period[this.currentTimeIndex].sel=0;
                 this.currentTimeIndex=index;
                 /* 开始进行数据替换 */
                 this.timeDataChange(this.currentTypedata.rent_period[index]);
@@ -821,7 +829,7 @@ export default {
                window.location.href="/#/login?type=good";
                return false;     
             }
-            if(this.getIsCertify!=2 && this.getIsCertify!=4){
+                if(this.getIsCertify!=2 && this.getIsCertify!=4 && this.isCertify==1){
                 window.location.href="/#/authentication";
                     return false;
             }
