@@ -194,7 +194,7 @@
         </group>
         <footer  class="orderInfon_footer">
                 <div class="orderInfon_footer_price">
-                    合计： <span>{{goodsAllPrice | currency('￥')}}</span>
+                    合计： <span>{{goodsAllPrice+returnTplPrice+goodsDespoit | currency('￥')}}</span>
                 </div>
                 <button class="orderInfon_footer_btn" @click="buygoods" type="button">提交订单</button>
         </footer>
@@ -283,17 +283,18 @@ export default {
             }
         },
         /* 计算商品总租金 */
+        /* 租期*金额*数量+押金+运费 */
         goodsAllPrice(){
-            return this.infoData.rent_period_now_rent_price*this.infoData.cart_time_number*this.infoData.cart_content_good_amount;
+            return (this.infoData.rent_period_now_rent_price*this.infoData.cart_time_number*this.infoData.cart_content_good_amount);
         },
         /* 运费计算 */
         returnTplPrice(){
             let num=this.infoData.cart_content_good_amount;
             let second=num-1;
             if(this.$store.state.tplId==1){
-                return  this.tplRules.freight_first_price+this.tplRules.freight_continued_price*second;
+                return  this.tplRules.freight_first_price+this.tplRules.freight_continued_price*second-0;
             }else if(this.$store.state.tplId==2){
-                return this.tplRules.freight_door_cost*num;
+                return this.tplRules.freight_door_cost*num-0;
             }else if(this.$store.state.tplId==3){
                 this.tpl=this.$store.state.sinceData;
                 return 0;
@@ -355,6 +356,8 @@ export default {
             this.orderLogistics="/orderLogistics/"+this.infoData.cart_content_goods_id;
         });
         this.getDefaultAddress();
+        /* 清除之前的快递信息 */
+        this.$store.dispatch('ClearTpl');
       },
       /* 获取用户默认地址，并且出发vuex更新 */
       getDefaultAddress(){

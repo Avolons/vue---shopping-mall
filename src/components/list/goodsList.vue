@@ -40,6 +40,10 @@
         }
        }
        &_chenckList{
+           position: fixed;
+           top: 47px;
+           left: 0;
+           width: 100%;
            display: flex;
            box-sizing: border-box;
            padding: 0 35px;
@@ -82,9 +86,11 @@
             </x-header>
         </div> 
         <div class="goodsList_chenckList">
-                 <span v-for="(item,index) in typeList" :class="{'goodsList_chenckList--selected':item.select}" @click="typeCheck(index)">{{item.name}}</span>
+            <span v-for="(item,index) in typeList" :class="{'goodsList_chenckList--selected':item.select}" @click="typeCheck(index)">{{item.name}}</span>
         </div>
-        <list-compent :commonGoodsList="goodsList"></list-compent>
+            <div style="padding-top:50px"> 
+             <list-compent :commonGoodsList="goodsList"></list-compent>
+            </div>
         <div class="goodsList_noGoods" v-show="!goodsList[0]">
             <i class="iconfont">&#xe638;</i>
             <p>抱歉，没有搜索到您想要的商品</p>
@@ -96,13 +102,14 @@
 
 <script>
 import ListCompent from '../list/listCompent.vue';
-import { XHeader } from 'vux'
+import { XHeader ,Scroller} from 'vux'
 import {API,getQuery} from '../../services';
 
 export default {
   components: {
     XHeader,
-    ListCompent
+    Scroller,
+    ListCompent,
   },
   data () {
     return {
@@ -110,6 +117,15 @@ export default {
       /* 搜索栏目显示的名称 */
       goodsVal:"",
       categoryId:"",
+      haveData:false,//是否有未加载的数据
+      searchType:0,
+      page:1,
+      pullupConfig: {
+        content: '上拉加载更多',
+        downContent: '松开进行加载',
+        upContent: '上拉加载更多',
+        loadingContent: '加载中...'
+      },
       typeList:[
           {
               name:"默认排序",
@@ -127,6 +143,12 @@ export default {
       routerBack(){
           this.$router.goBack();
       },
+       load() {
+           console.log(1);
+        if (this.haveData) {
+            console.log(1);
+            } 
+        },
       /* 选项的切换，切换默认排序和销量优先 */
       typeCheck(index){
           if(this.typeList[index].select){
@@ -138,16 +160,26 @@ export default {
           if(this.categoryId){
               API.main.searchGoods({
               goods_category_id:this.categoryId,
-              goods_sort:index
+              goods_sort:index,
+              page_number:10,
+              page:this.page,
           }).then((Response)=>{
-            this.goodsList=Response.body.data.shopList.data;   
+            this.goodsList=Response.body.data.shopList.data;
+            if(this.goodsList.length==10){
+                this.haveData=true;
+            }
           });
           }else{
                API.main.searchGoods({
               goods_name:this.goodsVal,
-              goods_sort:index
+              goods_sort:index,
+              page_number:10,
+              page:this.page,
           }).then((Response)=>{
             this.goodsList=Response.body.data.shopList.data;   
+            if(this.goodsList.length==10){
+                this.haveData=true;
+            }
           });
           }
       },
@@ -160,16 +192,28 @@ export default {
           this.categoryId=this.$route.query.categoryId;
           API.main.searchGoods({
               goods_category_id:this.$route.query.categoryId,
+              goods_sort:this.searchType,
+              page_number:10,
+              page:this.page,
           }).then((Response)=>{
-            this.goodsList=Response.body.data.shopList.data;   
+            this.goodsList=Response.body.data.shopList.data;
+            if(this.goodsList.length==10){
+                this.haveData=true;
+            }   
           });
       }else{
           /* 来自搜索页面 */
         this.goodsVal=this.$route.query.goods_name;
         API.main.searchGoods({
               goods_name:this.goodsVal,
+              goods_sort:this.searchType,
+              page_number:10,
+              page:this.page,
           }).then((Response)=>{
             this.goodsList=Response.body.data.shopList.data;   
+            if(this.goodsList.length==10){
+                this.haveData=true;
+            }
           });
       }  
       }

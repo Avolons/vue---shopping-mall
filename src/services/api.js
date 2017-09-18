@@ -2,7 +2,7 @@
 import Vue from 'vue';
 
 
-
+var API_ROOT = "https://api.zujiekeji.cn/index/";
 /* 个人中心相关api */
 
 /**

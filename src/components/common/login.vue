@@ -154,7 +154,7 @@
       <x-button class="login_btn"  @click.native="login">登录</x-button>
     </group>
 
-    <router-link to="/logincode" class="login_link">验证码登录</router-link>
+    <router-link :to="logincode" class="login_link">验证码登录</router-link>
     <router-link to="/forget" class="login_lforget">忘记密码</router-link>
     <toast v-model="toast"  type="cancel">{{confrim}}</toast>
 	</div>
@@ -170,9 +170,11 @@ import {API,getQuery} from '../../services';
            confrim:"",
            toast:false,
            state:true,
+           logincode:"/logincode",
+           type:"",
            form:{
-             user_phone:"15967654063",
-             user_password:"f2957675e64f40902bbdc0462774db23"
+             user_phone:"",
+             user_password:""
            }
         }
       },
@@ -222,6 +224,11 @@ import {API,getQuery} from '../../services';
           localStorage.setItem("isCertify",Response.isCertify);
           this.$store.dispatch('IsCertify');
           this.$store.dispatch('SetUserInfo',userInfo);
+          if(!this.type){
+              window.location.href="/#/index/main";
+            }else{
+              this.routerback();
+            }
           }else{
               self.confrim=Response.body.msg;
               this.toast=true;
@@ -232,6 +239,12 @@ import {API,getQuery} from '../../services';
       regist(){
         window.location.href="/regist";
       }
+    },
+    activated(){
+        this.type=this.$route.query.type;
+        if(this.type){
+            this.logincode="/logincode?type="+this.type;
+        }
     }
   }
 </script>

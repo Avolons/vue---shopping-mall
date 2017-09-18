@@ -388,8 +388,6 @@ const routes = [{
         name: 'moreHot',
         component: moreHot
     }
-    
-    
 ];
 
     

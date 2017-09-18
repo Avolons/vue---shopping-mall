@@ -63,14 +63,23 @@ export default {
           this.$router.goBack();
       },
       signOut(){
-          let userInfo={
-            loginname : "",
-            avatar : "",
-            id : "",
-            token : "",
-          };
-          localStorage.setItem("userInfo",JSON.stringify(userInfo));
-          this.$store.dispatch('SignOut');
+          let self=this;
+          this.$vux.confirm.show({
+            /* title: 'Title', */
+            content: '确定要退出吗',
+            onConfirm () {
+                /* 点击确认时执行具体删除操作 */
+                let userInfo={
+                    loginname : "",
+                    avatar : "",
+                    id : "",
+                    token : "",
+                };
+            localStorage.setItem("userInfo",JSON.stringify(userInfo));
+            self.$store.dispatch('SignOut');
+            }
+        })
+         
       }
   }
 }

@@ -252,7 +252,8 @@ import {API,getQuery} from '../../services'
             token : token,
           };
           localStorage.setItem("userInfo",JSON.stringify(userInfo));
-          this.$store.dispatch('SetUserInfo',userInfo);   
+          this.$store.dispatch('SetUserInfo',userInfo);  
+          window.location.href="/#/index/main"; 
           }else{
              this.confrim=Response.body.msg;
             this.toast=true; 

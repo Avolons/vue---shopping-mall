@@ -168,6 +168,7 @@ import {API,getQuery} from '../../services'
            confrim:"",
            toast:false,
            state:true,
+           type:"",
            form:{
             user_phone:"",
             code:"",
@@ -248,7 +249,12 @@ import {API,getQuery} from '../../services'
           localStorage.setItem("userInfo",JSON.stringify(userInfo));
           localStorage.setItem("isCertify",Response.isCertify);
           this.$store.dispatch('IsCertify');
-          this.$store.dispatch('SetUserInfo',userInfo);   
+          this.$store.dispatch('SetUserInfo',userInfo); 
+           if(!this.type){
+              window.location.href="/#/index/main";
+            }else{
+              window.history.go(-2)
+            }  
           }else{
              this.confrim=Response.body.msg;
             this.toast=true; 
@@ -258,6 +264,9 @@ import {API,getQuery} from '../../services'
       regist(){
         window.location.href="/#/regist"
       }
+    },
+    activated(){
+      this.type=this.$route.query.type;
     }
   }
 </script>

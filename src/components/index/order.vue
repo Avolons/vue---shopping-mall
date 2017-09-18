@@ -51,6 +51,7 @@
     }
   &_single{
     background-color: #fff;
+    margin-bottom: 10px;
      &_shop{
        color:#272727;
        font-size: 16px;
@@ -159,7 +160,7 @@
       font-size: 13px;
       border-bottom: 1px solid #f3f3f3;
       >b{
-        font-size: 15px;
+        font-size: 16px;
         color: #f80000;
       }
     }
@@ -170,7 +171,6 @@
         padding: 0 15px;
         height: 45px;
         line-height: 45px;
-        margin-bottom: 10px;
         &>button{
             height: 30px;
             width: 75px;
@@ -205,7 +205,7 @@
                       </div>
               </scroller>
         <ul class="order_list"><!-- 此处进行显示判断，当前选中类型等于当前item类型时候才显示 -->
-            <li class="order_single" v-for="item in orderList"  v-show="currentType==item.orderType || currentType==0 || (item.orderType==7 && currentType==0)  || (item.orderType==8 && currentType==0) || (item.orderType==9 && currentType==0) || (item.orderType==10 && currentType==0) ">
+            <li @click="getInfo(item.order_id)" class="order_single" v-for="item in orderList"  v-show="currentType==item.orderType || currentType==0 || (item.orderType==7 && currentType==0)  || (item.orderType==8 && currentType==0) || (item.orderType==9 && currentType==0) || (item.orderType==10 && currentType==0) ">
                 <div class="order_single_shop">
                     <h2>{{item.store_name}}</h2>
                     <span v-if="item.orderType==1" class="order_single_type">待付款</span>
@@ -221,7 +221,7 @@
                     <span v-if="item.orderType==8" class="order_single_type">订单关闭</span>
                     <span v-if="item.orderType==9" class="order_single_type">退款成功</span>
                     <span v-if="item.orderType==10" class="order_single_type">退货完成</span>
-                    <span v-if="item.srcorderType==3" class="order_single_type">退款中</span>
+                    <span v-if="item.srcOrderType==3" class="order_single_type">退款中</span>
                 </div> 
                 <div class="order_single_content">
                     <img :src="item.goods_main_pic" alt="img" class="order_single_img">
@@ -244,13 +244,13 @@
                         <span>￥{{item.order_deposit}}</span>
                     </div>
                     <div class="order_single_allprice">
-                       总计{{item.goods_amount}}件商品   &nbsp;&nbsp;合计&nbsp;&nbsp; <b>￥{{item.order_total_price}}</b>&nbsp;&nbsp;(含运费￥{{item.order_freight}})
+                       总计{{item.goods_amount}}件商品   &nbsp;&nbsp;合计&nbsp; <b>￥{{item.order_total_price}}</b>&nbsp;&nbsp;(含运费￥{{item.order_freight}})
                     </div>
                     
-                    <div class="order_single_btncoll">
+                    <div class="order_single_btncoll" v-show="item.srcOrderType!=3">
                            <!-- 七种状态的button，对应其中操作 -->
                            <!-- 订单关闭 评价完成 退款完成 退货完成 -->
-                           <button @click="deletOrder(item.order_id)" class="order_single_btn--confirm" v-if="item.orderType==1 || item.orderType==7 || item.orderType==8 || item.orderType==9 || item.orderType==10" >删除订单</button>     
+                           <button @click.stop="deletOrder(item.order_id)" class="order_single_btn--confirm" v-if="item.orderType==1 || item.orderType==7 || item.orderType==8 || item.orderType==9 || item.orderType==10" >删除订单</button>     
                            <!-- 代付款状态 -->
                            <button v-if="item.orderType==1">付款</button>   
                            <!-- 待发货状态 -->  
@@ -264,7 +264,7 @@
                            <!-- 待归还状态   -->
                            <button v-if="item.orderType==4">归还</button>  
                             <!-- 退货完成 结算完成 评价完成 -->
-                           <button class="order_single_btn--confirm"  v-if="item.orderType==7">结算单</button>     
+                           <button @click.stop="seeSettlement(item.order_id)" class="order_single_btn--confirm"  v-if="item.orderType==7" >结算单</button>     
                            <!-- 待评价 -->
                            <button v-if="item.orderType==6">评价</button>
                            <!-- 评价完成 -->     
@@ -350,6 +350,10 @@ export default {
     typeselect(index){
       this.currentType=index;
     },
+    /* 进入订单详情 */
+    getInfo(id){
+        window.location.href="/#/orderAction/"+id;
+    },
     /* 确认订单状态 */
     confrimType(item){
       if (item.order_is_delete == 0) {
@@ -430,17 +434,18 @@ export default {
       let self=this;
       this.$vux.confirm.show({
             /* title: 'Title', */
-            content: '确定要删除改地址吗',
+            content: '确定要删除该订单吗',
             onConfirm () {
                 /* 点击确认时执行具体删除操作 */
                 API.order.orderDel({
                     userId:self.getUserInfoUserId,  
                     token:self.getUserInfoToken,
-                    iorderId:id,
+                    orderId:id,
                   }).then((res)=>{
                     if(res.body.code==200){
                         self.confrim="删除成功";
                         self.toast=true;
+                        self.getTypeData();
                     }
                 });
             }
@@ -453,10 +458,10 @@ export default {
         API.order.orderDel({
               userId:self.getUserInfoUserId,  
               token:self.getUserInfoToken,
-              iorderId:id,
+              orderId:id,
             }).then((res)=>{
               if(res.body.code==200){
-                  self.confrim="删除成功";
+                  self.confrim="";
                   self.toast=true;
               }
           });
@@ -472,10 +477,11 @@ export default {
                 API.order.orderReceipt({
                     userId:self.getUserInfoUserId,  
                     token:self.getUserInfoToken,
-                    iorderId:id,
+                    orderId:id,
                   }).then((res)=>{
                     if(res.body.code==200){
-                        self.confrim="确认成功";
+                        self.confrim="确认收货成功";
+                        self.getTypeData();
                         self.toast=true;
                     }
                 });
@@ -493,10 +499,11 @@ export default {
                 API.order.orderSettle({
                     userId:self.getUserInfoUserId,  
                     token:self.getUserInfoToken,
-                    iorderId:id,
+                    orderId:id,
                   }).then((res)=>{
                     if(res.body.code==200){
                         self.confrim="结算成功";
+                        self.getTypeData();
                         self.toast=true;
                     }
                 });
@@ -505,7 +512,7 @@ export default {
     },
     /* 查看结算单 */
     seeSettlement(id){
-        window.location.href=""
+        window.location.href="/#/settlement?id="+id;
     },
     /* 提醒发货 */
     remind(id){

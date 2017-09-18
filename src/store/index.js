@@ -60,8 +60,17 @@ const store = new Vuex.Store({
 		CurrentTpl({commit,state},id){
 			commit('CURRENTTPL',id);
 		},
+		/* 清除自提点信息 */
+		ClearTpl({commit,state}){
+			commit('CLEARTPL');
+		},
 	},
 	mutations: {
+		// 清除当前物流方式
+		CLEARTPL(state){
+			state.sinceData={};
+			state.tplId=0;
+		},
 		// 当前物流方式
 		CURRENTTPL(state, id){
 			state.tplId=id;
@@ -76,7 +85,6 @@ const store = new Vuex.Store({
 			state.userInfo.avatar = userInfo.avatar;
 			state.userInfo.id = userInfo.id;
 			state.userInfo.token = userInfo.token;
-			window.location.href="/#/index/main";
 		},
 		//更新订单id，
 		SETORDER(state, id) {

@@ -17,7 +17,7 @@
                     <img :src="item">
                 </swiper-item>
             </swiper>
-            <h2 class="goodsinfo_title twonowarp">这是商品名称这是商品名称这是商品名称不超过两行不超过两行不超过两行</h2>
+            <h2 class="goodsinfo_title twonowarp">{{goodsTitle}}</h2>
             <div class="goodsinfo_box">
                 <div class="goodsinfo_price">
                     <span class="goodsinfo_newprice">￥{{currentGoodsData.rent_period_now_rent_price}}/{{timeText}}</span>
@@ -166,11 +166,11 @@
                     </label>
                 </div>
                 <group>
-                    <input style="display:none" id="colorSize" type="checkbox" v-model="colorSize"></input>
+                    <input style="display:none" id="colorSize" type="checkbox" v-model="colorSizeShow"></input>
                 </group>
                 <div v-transfer-dom>
                     <!-- 规格选择区域 -->
-                    <popup @on-show="sizeRember" class="goodsinfo_sizeSelect_content" v-model="colorSize" position="bottom" max-height="50%">
+                    <popup @on-show="sizeRember" class="goodsinfo_sizeSelect_content" v-model="colorSizeShow" position="bottom" max-height="50%">
                         <img :src="returnImg" alt="img" class="goodsinfo_sizeSelect_img">
                         <div class="goodsinfo_sizeSelect_message">
                             <h3 class="goodsinfo_sizeSelect_title">
@@ -244,6 +244,7 @@
             </div>
         </footer>
         <toast v-model="toast"  type="success">{{confrim}}</toast>
+        <toast v-model="toasts"  type="cancel">{{confrim}}</toast>
 
     </div>
     </div>
@@ -276,9 +277,12 @@ export default {
     data() {
         return {
              confrim:"",
+             toasts:false,
              toast:false,
+              isCertify:1,//是否需要实名认证 1是需要 2是不需要
              storeId:null,//店铺信息
             goodsId:null,//商品id
+            goodsTitle:"",//商品名称
             /* 规格选择触发时当前的规格id */
             typeSizeChange:null,
             /* 是否被收藏 */
@@ -342,7 +346,7 @@ export default {
             /* 当前地址 */
             goodsAddress: ['天津市', '市辖区', '和平区'],
             /* 颜色规格选择框显示隐藏 */
-            colorSize: false,
+            colorSizeShow: false,
             /* 商品特性显示隐藏 */
             goodstypelist: false,
             /* 最大数量限制 */
@@ -390,6 +394,8 @@ export default {
          ...mapGetters([
             'getUserInfoUserId',
             'getUserInfoToken',
+            'getIsCertify',
+            'getUserInfoUserId'
         ]),
         /* 返回商品主图，数据列表存在时使用列表图片，不存在时使用商品主图 */
         returnImg(){
@@ -547,6 +553,7 @@ export default {
            }else{
                arr[1]=0;
            }
+           
            return arr;
        }
     },
@@ -555,6 +562,7 @@ export default {
         sizeRember(){
             this.typeSizeChange=this.afterSelectData;
         },
+        
         /* 数据初始化 */
         Initialization(goodsData){
             /* 颜色规格格式化，添加选中属性 */
@@ -620,8 +628,9 @@ export default {
            item.sel=0;
        }
          this.currentTypedata.rent_period[0].sel=1;
-         
-        document.querySelector(".vux-swiper").style.height=window.outerWidth+"px";
+         /* 商品名称对应 */
+        this.goodsTitle=goodsData.goodsName;
+        document.querySelector(".goodsinfo_header .vux-swiper").style.height=window.outerWidth+"px";
         
         },
         
@@ -635,6 +644,26 @@ export default {
                     item.sel = 1;
                 }
             }
+
+            let self=this;
+            if(!this.afterSelectData.id){
+                    return false;
+            }
+            /* 获取对应规格的id */
+            for(let item of this.datalist) {
+                if(item.content_var_attr_id==this.afterSelectData.id){
+                    console.log(item);
+                    self.currentTypedata=item;
+                    break;
+                }
+            }
+            this.timeDataChange(self.currentTypedata.rent_period[0]);
+            /* 第一个周期默认为选中状态 */
+            for(let item of self.currentTypedata.rent_period) {
+                item.sel=0;
+            }
+            self.currentTypedata.rent_period[0].sel=1;
+            this.currentTimeIndex=0;
         },
         /* 商品选择,判断是否有未完成的选择状态 */
         selectType() {
@@ -660,11 +689,8 @@ export default {
                 flag--;
             };
             if (flag == -2 || flag == 0 || flag == 2) {
-                this.colorSize = false;
-                if(JSON.stringify(this.typeSizeChange)==JSON.stringify(this.afterSelectData)){
-                    return false;
-                }
-                this.typeDataChange(this.afterSelectData.id);
+                this.colorSizeShow = false;
+              /*   this.typeDataChange(this.afterSelectData.id); */
             } else {
                 alert("请选择规格");
             };
@@ -710,24 +736,7 @@ export default {
             this.timeValue=this.timerange.startTime;
              /* 初始周期被选中 */
         },
-        /* 颜色规格变化数据重置 */
-        typeDataChange(id){
-            let self=this;
-            /* 获取对应规格的id */
-            for(let item of this.datalist) {
-                if(item.content_var_attr_id===id){
-                    self.currentTypedata=item;
-                    break;
-                }
-            }
-            this.timeDataChange(self.currentTypedata.rent_period[0]);
-            /* 第一个周期默认为选中状态 */
-            for(let item of self.currentTypedata.rent_period) {
-                item.sel=0;
-            }
-            self.currentTypedata.rent_period[0].sel=1;
-            this.currentTimeIndex=0;
-        },
+        
         
         /* 商品数量,日期加减计算 */
         /* size:需要操作的源数据 type:0，减法 1，加法 */
@@ -808,6 +817,14 @@ export default {
           },
           /* 立即租赁按钮点击 */
         buyGoods(){
+            if(!this.getUserInfoUserId){
+               window.location.href="/#/login?type=good";
+               return false;     
+            }
+            if(this.getIsCertify!=2 && this.getIsCertify!=4){
+                window.location.href="/#/authentication";
+                    return false;
+            }
             let addresslist=(this.getName (this.goodsAddress)).split(" ");
             let perId;
             for(let item of this.currentTypedata.rent_period) {
@@ -844,22 +861,34 @@ export default {
           addCollection(){
               if(this.isCollection==false){
                   API.person.collectShop({
-                     userId:this.getUserInfoUserId,
+                        userId:this.getUserInfoUserId,
                         token:this.getUserInfoToken,
                         shopId:this.goodsId,
                   }).then((res)=>{
                       if(res.body.code==200){
                           this.isCollection=true;
+                      }else{
+                          this.confrim="请登录后收藏";
+                          this.toasts=true;
+                          setTimeout(()=>{
+                              window.location.href="/#/login?type=good";
+                          },500);
                       }
                   });
               }else{
                   API.person.unCollectShop({
-                     userId:this.getUserInfoUserId,
+                        userId:this.getUserInfoUserId,
                         token:this.getUserInfoToken,
                         shopId:this.goodsId,
                   }).then((res)=>{
                       if(res.body.code==200){
                           this.isCollection=false;
+                      }else{
+                          this.confrim="请登录后收藏";
+                          this.toasts=true;
+                          setTimeout(()=>{
+                              window.location.href="/#/login?type=good";
+                          },500);
                       }
                   });
               }
