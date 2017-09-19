@@ -235,6 +235,7 @@ export default {
         tplRules:{},
         /* 买家留言 */
         option:"",
+        paydata
     }
   },
     computed:{
@@ -304,6 +305,18 @@ export default {
         }
     },
   methods:{
+      onBridgeReady(){
+          let self=this;
+            WeixinJSBridge.invoke(
+                'getBrandWCPayRequest',self.paydata,
+                function(res){     
+                    if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                          self.confrim="支付成功";
+                          self.toast=true;
+                    }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
+                }
+            ); 
+        },
       routerBack(){
           this.$router.goBack();
       },
@@ -340,7 +353,25 @@ export default {
                 }]
           }).then((res)=>{
               if(res.body.code==200){
-                  console.log(res.body);
+                  let self=this;
+                  API.order.OrderWechat({
+                       userId:this.getUserInfoUserId,  
+                        token:this.getUserInfoToken,
+                       orderSn:res.body.data.order_big_sn,
+                       payMethod:2,
+                  }).then((resopndy)=>{
+                      this.paydata=resopndy.body;
+                      if (typeof WeixinJSBridge == "undefined"){
+                    if( document.addEventListener ){
+                        document.addEventListener('WeixinJSBridgeReady', self.onBridgeReady, false);
+                    }else if (document.attachEvent){
+                        document.attachEvent('WeixinJSBridgeReady', self.onBridgeReady); 
+                        document.attachEvent('onWeixinJSBridgeReady', self.onBridgeReady);
+                    }
+                    }else{
+                      self.onBridgeReady();
+                    }
+                  });
               }
           });
       },

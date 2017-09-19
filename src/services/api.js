@@ -604,4 +604,12 @@ export const order = {
   myOrderComment(data) {
     return Vue.http.post(API_ROOT + 'order/mycomment',data);
   },
+  /* 微信支付 */
+  /* userId
+  token
+  orderSn  生成支付订单接口返回的订单编号
+  payMethod   2 */
+  OrderWechat(data) {
+    return Vue.http.post("https://api.zujiekeji.cn/pay/jsapi/index",data);
+  },
 }

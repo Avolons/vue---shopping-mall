@@ -74,6 +74,7 @@
         </x-header>
         <h3 class="order_type_title">物流方式</h3>
         <checker class="order_type_list" v-model="val" default-item-class="order_type_single" selected-item-class="order_type_single--selected">
+        <span v-show="noTpl" style="display: block;;text-indent:15px;font-size:15px;color:#f80000">暂不支持地区</span>
         <checker-item  v-show="tplobj[1]" value="1">快递</checker-item>
         <checker-item v-show="tplobj[2]" value="2">上门</checker-item>
         <checker-item v-show="tplobj[3]" value="3">自提</checker-item>
@@ -107,6 +108,7 @@ export default {
         confrim:"请选择物流方式",
         toast:false,
         val:"",
+        noTpl:false,
         tplobj:{},
         sinceList:[],//获取自提点列表
     }
@@ -133,6 +135,11 @@ export default {
           goodsId:this.$route.params.id
       }).then((res)=>{
           if(res.body.code==200){
+              if(!res.body.data.tpl[0]){
+                  this.noTpl=true;
+              }else{
+                  this.noTpl=false ;
+              }
               let tpl={};
           for(let item of res.body.data.tpl) {
               tpl[item.goods_shipping_tpl_type]=1;
@@ -180,7 +187,7 @@ export default {
 
   },
   activated(){
-        this.dataForm();
+    this.dataForm();
   }
 }
 </script>

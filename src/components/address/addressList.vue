@@ -276,6 +276,7 @@ export default {
         /* 用户列表点击选择 */
         chooseAddress(res){
             if(this.$route.query.chose==1){
+                this.$store.dispatch('CurrentTpl',0);
                 this.$store.dispatch('SetAddress',res);
                 /* 路由回退 */
                 this.routerBack();

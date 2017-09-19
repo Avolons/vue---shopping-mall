@@ -30,6 +30,7 @@
             font-weight: 400;
         }
         &_price {
+            font-weight: 400;
             color: #f80000;
             font-size: 15px;
         }

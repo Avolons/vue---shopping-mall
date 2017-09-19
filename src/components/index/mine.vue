@@ -63,7 +63,7 @@ body{
           <i slot="icon" class="iconfont">&#xe71d;</i>
       </cell>
     </group>
-    <group style="margin-top:0.6rem">
+    <group style="margin-top:0.6rem;margin-bottom:100px">
       <!-- 两种状态，已经认证和未认证状态 -->
       <template v-if="getIsCertify==2 || getIsCertify==4 ">
         <cell  title="实名认证">

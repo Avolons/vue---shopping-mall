@@ -41,7 +41,7 @@
     <transition  :name="transitionName" class="router">
           <router-view class="router-view Router"></router-view>
     </transition>
-   <tabbar class="index_tabbar"  style="position:fixed;bottom:0;left:0">
+   <tabbar class="index_tabbar"  style="position:fixed;bottom:0;left:0;overflow:hidden">
       <tabbar-item :selected="this.$route.fullPath=='/index/main'" :link="{path:'/index/main'}" >
          <i @click="routerchange(0)" class="iconfont" slot="icon">&#xe608;</i>
         <span slot="label" >首页</span>

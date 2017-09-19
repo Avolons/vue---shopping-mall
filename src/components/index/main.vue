@@ -10,7 +10,7 @@ body {
 .main_container .main_typelist_box {
     height: 40px;
     position: relative;
-    width: 630px;
+    width: 810px;
     font-size: 0;
     border-bottom: 1px solid #f3f3f3;
     background-color: #fff;
@@ -238,7 +238,7 @@ body {
         </scroller>
         <div class="main_listbox">
             <!-- 轮播图组件 -->
-            <swiper v-show="currentType==0" class="main_swiper" dots-position="center"  height="200px"  @on-index-change="onSwiperItemIndexChange" v-model="swiperItemIndex">
+            <swiper v-show="currentType==0" loop class="main_swiper" dots-position="center"  height="200px"  @on-index-change="onSwiperItemIndexChange" v-model="swiperItemIndex">
                 <swiper-item class="swiper-demo-img" v-for="(item, index) in bannerlist" :key="index">
                     <img :src="item.imagePath">
                 </swiper-item>
@@ -404,7 +404,7 @@ export default {
             }
             shopList.splice(0,0,firstLabel);
             this.goodsList=new Array(shopList.length);
-            document.querySelector(".main_container .main_typelist_box").style.width=shopList.length*90+"px";
+            document.querySelector(".main_container .main_typelist_box").style.width=(shopList.length+1)*90+"px";
             this.typeList=shopList;
         });        
         /* 获取热门商品 */

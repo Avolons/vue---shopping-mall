@@ -55,6 +55,7 @@
     &_oldprice{
         color: #272727;
         font-size: 12px;
+        text-decoration: line-through;
     }
     &_datetime{
         flex-grow: 0;
@@ -348,6 +349,7 @@
         }
         &_title{
             font-size: 14px;
+            font-weight: 400;
             color: #f80000;
         }
         &_color{

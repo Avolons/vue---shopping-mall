@@ -237,7 +237,7 @@
                 </div>
                 <div class="order_single_time">
                         <span>{{item.order_goods_rent_time | dataform}}  至  {{item.order_goods_return_time | dataform }}</span>
-                        <span>共1{{timeMap[item.rentType]}}</span>
+                        <span>共{{item.order_time_number}}{{timeMap[item.rentType]}}</span>
                     </div>
                     <div class="order_single_despoite">
                         <span>押金</span>
