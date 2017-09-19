@@ -24,13 +24,17 @@ var access_code = getQueryString('code');
 	 var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe67019703f582d76&redirect_uri=' + encodeURIComponent("http://wap.zujiekeji.cn") + '&response_type=code&scope=snsapi_base&state=0#wechat_redirect';  
 	 location.href = url; 
 }else{
-	 API.order.getOpenId({
+    alert(access_code);
+    if(!openId){
+         API.order.getOpenId({
 		code:access_code,
 	}).then((res)=>{
 		let openid=res.body.data.openId;
 		localStorage.setItem("openId",openid);
 		 alert(openid);
     })
+    }
+	
     alert(openid);
 }
 
