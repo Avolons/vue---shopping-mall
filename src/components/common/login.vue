@@ -206,7 +206,7 @@ import {API,getQuery} from '../../services';
             this.toast=true;
             return false;
         }
-
+        self.form.user_password=self.md5(self.md5(self.md5(self.form.user_password))+"boxiang");
         /* 进行接口登录 */
         API.login.pwdLogin(this.form).then((Response)=>{
           if(Response.body.code==200){

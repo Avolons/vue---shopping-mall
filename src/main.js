@@ -37,6 +37,10 @@ const userInfo=localStorage.getItem("userInfo");
 if(userInfo){
 	store.state.userInfo= JSON.parse(userInfo);
 }
+const isCertify=localStorage.getItem("isCertify");
+if(isCertify){
+	store.state.isCertify= isCertify;
+}
 
 /* 全局注册md5函数 */
 import { md5 } from 'vux';
