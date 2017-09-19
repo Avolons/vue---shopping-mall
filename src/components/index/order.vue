@@ -95,7 +95,8 @@
         flex: 1;
     }
     &_text{
-       flex-grow: 1;
+       flex-grow: 0;
+       width: calc(100% - 100px);
        box-sizing: border-box;
        padding-left: 20px;
        display: flex;

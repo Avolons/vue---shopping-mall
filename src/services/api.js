@@ -3,6 +3,7 @@ import Vue from 'vue';
 
 
 var API_ROOT = "https://api.zujiekeji.cn/index/";
+/* var API_ROOT = "http://106.14.135.243:8082/index/"; */
 /* 个人中心相关api */
 
 /**

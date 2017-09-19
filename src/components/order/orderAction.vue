@@ -171,6 +171,24 @@
                     font-weight: 400;
                 }
             }
+            &_confrim{
+                display: flex;
+                justify-content: space-between;
+                box-sizing: border-box;
+                padding:10px 15px;
+                padding-right: 0;
+                flex-direction: column;
+                >h2{
+                    font-size: 15px;
+                    color: #272727;
+                    font-weight: 400;
+                }
+                 >p{
+                    font-size: 14px;
+                    color: #272727;
+                    font-weight: 400;
+                }
+            }
             &_type{
                 display: flex;
                 justify-content: center;
@@ -205,27 +223,34 @@
             left: 0;
             width: 100%;
             background-color: #fff;
-          display: flex;
+            display: flex;
             box-sizing:border-box;
+            border-top: 1px solid #eee;
             padding:0 15px;
             justify-content: flex-end;
             align-items: center;
             &>button{
-            height: 30px;
-            width: 75px;
-            text-align: center;
-            line-height: 28px;
-            font-size: 12px;
-            color: #fff;
-            background-color: #2196f3;
-            border-radius: 5px;
-            margin-left: 10px;
-        }
+                height: 30px;
+                width: 75px;
+                text-align: center;
+                line-height: 28px;
+                font-size: 12px;
+                color: #fff;
+                background-color: #2196f3;
+                border-radius: 5px;
+                margin-left: 10px;
+                border: 1px solid #2196f3;
+            }
        .order_single_btn--confirm{
                 color: #666;
                 border-color: #666;
                 background-color: #fff;
             }
+        }
+    }
+    .orderAction_main_truePrice{
+        .weui-cell__ft{
+            color: #f80000;
         }
     }
     
@@ -235,7 +260,7 @@
   <div>
       <div class="orderAction_main">
           <div class="help_common_title">
-             <x-header @on-click-back="routerBack" :left-options="{backText: '',preventGoBack:true}">订单结算</x-header>
+             <x-header @on-click-back="routerBack" :left-options="{backText: '',preventGoBack:true}">订单详情</x-header>
          </div>
          <div class="orderAction_main_type">
              <!-- 订单完成 评价完成 退款成功 退货成功-->
@@ -258,9 +283,10 @@
              <i v-show="infoData.orderType==1" class="iconfont">&#xe624;</i>
              <!-- 退款处理中 -->
              <i v-show="infoData.orderType==13" class="iconfont">&#xe624;</i>
-
+            
              <div class="orderAction_main_confrim">
-
+                 <h2>{{currentConfrim.title}}</h2>
+                 <p>{{currentConfrim.message}}</p>
              </div>
          </div>
          <group class="orderAction_main_address">
@@ -308,8 +334,8 @@
             <cell title="合计租金"  :value="infoData.shopRent  | currency('￥')"></cell>
             <cell title="合计押金" :value="infoData.deposit | currency('￥')"  ></cell>
             <cell title="运费"  :value="infoData.deposit | currency('￥')" ></cell>
-            <cell title="实付款" :value="infoData.totalPrice | currency('￥')"  ></cell>
-            <cell title="支付方式" :value="pay_type"></cell>
+            <cell class="orderAction_main_truePrice" title="实付款" :value="infoData.totalPrice | currency('￥')"  ></cell>
+            <cell  title="支付方式" :value="pay_type"></cell>
             <x-textarea :max="20" readonly v-model="infoData.message" placeholder="买家留言"  ></x-textarea>
         </group>
         <footer  class="orderAction_footer">
@@ -372,7 +398,68 @@ export default {
         /* 时间对照表 */
         timeMap:{1:"日",2:"周",3:"月",4:"季",5:"年"},
         /* 提示文字 */
-       
+        currentConfrim:{
+             title:"等待买家付款",
+            message:"还有1小时33分自动关闭"
+        },
+        titleArray:[
+            {
+                title:"等待买家付款",//待付款
+                message:"还有1小时33分自动关闭"
+            },
+            {
+                title:"等待商家发货",//待发货
+                message:""
+            },
+            {
+                title:"商家已发货",//待收货
+                message:"请及时确认收货"
+            },
+            {
+                title:"等待买家付款",//待归还
+                message:"还有1小时33分自动关闭"
+            },
+            {
+                title:"等待买家付款",//待结算
+                message:"还有1小时33分自动关闭"
+            },
+            {
+                title:"等待买家付款",//待评价
+                message:"还有1小时33分自动关闭"
+            },
+            {
+                title:"订单已完成",//评价完成
+                message:"还有1小时33分自动关闭"
+            },
+            {
+                title:"等待买家付款",//订单关闭
+                message:"还有1小时33分自动关闭"
+            },
+            {
+                title:"退款处理成功",//退款结束
+                message:"退款金额将及时返还至您的付款账户"
+            },
+            {
+                title:"等待买家付款",//退货完成
+                message:"还有1小时33分自动关闭"
+            },
+            {
+                title:"等待买家付款",//退货待结算
+                message:"还有1小时33分自动关闭"
+            },
+            {
+                title:"等待买家付款",//退货结算待确认
+                message:"还有1小时33分自动关闭"
+            },
+            {
+                title:"等待买家付款",//退款处理中
+                message:"还有1小时33分自动关闭"
+            },
+            {
+                title:"等待买家付款",//结算待确认
+                message:"还有1小时33分自动关闭"
+            },
+        ]
     }
   },
     computed:{
@@ -483,6 +570,7 @@ export default {
                     if(res.body.code==200){
                         this.infoData=res.body.data; 
                         this.getOrderType(this.infoData);
+                        this.currentConfrim=this.titleArray[this.infoData.orderType];
                     }
                 });
       },

@@ -236,7 +236,7 @@ export default {
         /* 买家留言 */
         option:"",
         paydata:{
-            "appId":"wxe67019703f582d76","nonceStr":"x5i9q24oww735dnw84au04i5cgwc4dwh","package":"prepay_id=wx20170919134856e38a557c4c0212702782","signType":"MD5","timeStamp":"1505800151","paySign":"E25EA74FDE981117EED2BE8F385C9F6D"
+            "appId":"wxe67019703f582d76","nonceStr":"yvkm9dysv6yhuoi11y5kzvoilbtquqfj","package":"prepay_id=wx201709191523494e9beba0830435312232","signType":"MD5","timeStamp":"1505805843","paySign":"10730F7C4048F697A421E0C53886ACEA"
         },
     }
   },
