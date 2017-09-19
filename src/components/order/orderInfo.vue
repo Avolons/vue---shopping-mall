@@ -236,12 +236,7 @@ export default {
         /* 买家留言 */
         option:"",
         paydata:{
-            "appId":"wxe67019703f582d76",
-            "nonceStr":"yvkm9dysv6yhuoi11y5kzvoilbtquqfj",
-            "package":"prepay_id=wx201709191523494e9beba0830435312232",
-            "signType":"MD5",
-            "timeStamp":"1505805843",
-            "paySign":"10730F7C4048F697A421E0C53886ACEA"
+            
         },
     }
   },
@@ -316,7 +311,11 @@ export default {
           let self=this;
             WeixinJSBridge.invoke(
                 'getBrandWCPayRequest',self.paydata,
-                function(res){     
+                function(res){  
+                    if(res.err_msg =="get_brand_wcpay_request:fail")  {
+                        alert(JSON.stringify(self.paydata));
+                        
+                    } 
                     if(res.err_msg == "get_brand_wcpay_request:ok" ) {
                           self.confrim="支付成功";
                           self.toast=true;
@@ -362,7 +361,6 @@ export default {
               if(res.body.code==200){
                   let self=this;
                   let openId=localStorage.getItem("openId");
-                  
                   API.order.OrderWechat({
                        userId:this.getUserInfoUserId,  
                        token:this.getUserInfoToken,
@@ -371,6 +369,7 @@ export default {
                        openId:openId,
                   }).then((resopndy)=>{
                       this.paydata=resopndy.body;
+                      console.log(resopndy.body);
                       if (typeof WeixinJSBridge == "undefined"){
                     if( document.addEventListener ){
                         document.addEventListener('WeixinJSBridgeReady', self.onBridgeReady, false);
