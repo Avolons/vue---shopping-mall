@@ -361,18 +361,14 @@ export default {
           }).then((res)=>{
               if(res.body.code==200){
                   let self=this;
-                  let access_code=localStorage.getItem("access_code");
-                   API.order.getOpenId({
-                       code:access_code,
-                   }).then((res)=>{
-                        console.log(res.body);
-                        alert(res.body);
-                   })
+                  let openId=localStorage.getItem("openId");
+                  
                   API.order.OrderWechat({
                        userId:this.getUserInfoUserId,  
                        token:this.getUserInfoToken,
                        orderSn:res.body.data.order_big_sn,
                        payMethod:2,
+                       openId:openId,
                   }).then((resopndy)=>{
                       this.paydata=resopndy.body;
                       if (typeof WeixinJSBridge == "undefined"){

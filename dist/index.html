@@ -1,15 +1,1 @@
-<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,user-scalable=0"><meta name=apple-mobile-web-app-capable content=yes><meta name=screen-orientation content=portrait><meta name=x5-orientation content=portrait><meta name=x5-fullscreen content=true><meta name=x5-page-mode content=app><meta http-equiv=X-UA-Compatible content="ie=edge"><title>租介科技</title><script>function getQueryString(name) {  
-           var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");  
-           var r = location.search.substr(1).match(reg);  
-           if (r != null)  
-               return unescape(decodeURI(r[2]));  
-           return null;  
-       } 
-       var access_code = getQueryString('code'); 
-          if(access_code == null){
-            var fromurl = location.href;//获取授权code的回调地址，获取到code，直接返回到当前页  
-            var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe67019703f582d76&redirect_uri=' + encodeURIComponent("http://wap.zujiekeji.cn") + '&response_type=code&scope=snsapi_base&state=0#wechat_redirect';  
-            /* location.href = url;  */
-       }else{
-            localStorage.setItem("access_code",access_code);
-       }</script><link href=/static/css/app.fed229fabca8e48a94045639a89e42e2.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=/static/js/manifest.aa2bfcfe269a344d1c9c.js></script><script type=text/javascript src=/static/js/vendor.22dd2317aaa1662ea884.js></script><script type=text/javascript src=/static/js/app.1a51150e98f655f46010.js></script></body></html>
+<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,user-scalable=0"><meta name=apple-mobile-web-app-capable content=yes><meta name=screen-orientation content=portrait><meta name=x5-orientation content=portrait><meta name=x5-fullscreen content=true><meta name=x5-page-mode content=app><meta http-equiv=X-UA-Compatible content="ie=edge"><title>租介科技</title><script></script><link href=/static/css/app.fed229fabca8e48a94045639a89e42e2.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=/static/js/manifest.599edd522b13f8efd0b6.js></script><script type=text/javascript src=/static/js/vendor.22dd2317aaa1662ea884.js></script><script type=text/javascript src=/static/js/app.c34cc445cb3be7fd00a8.js></script></body></html>
