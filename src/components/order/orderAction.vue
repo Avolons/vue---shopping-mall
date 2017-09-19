@@ -173,7 +173,7 @@
             }
             &_confrim{
                 display: flex;
-                justify-content: space-between;
+                justify-content: center;
                 box-sizing: border-box;
                 padding:10px 15px;
                 padding-right: 0;
@@ -184,9 +184,10 @@
                     font-weight: 400;
                 }
                  >p{
-                    font-size: 14px;
+                    font-size: 12px;
                     color: #272727;
                     font-weight: 400;
+                    margin-top: 10px;
                 }
             }
             &_type{
@@ -286,7 +287,7 @@
             
              <div class="orderAction_main_confrim">
                  <h2>{{currentConfrim.title}}</h2>
-                 <p>{{currentConfrim.message}}</p>
+                 <p v-show="currentConfrim.message">{{currentConfrim.message}}</p>
              </div>
          </div>
          <group class="orderAction_main_address">
@@ -357,7 +358,7 @@
             <button v-if="infoData.orderType==4">归还</button>  
             <button class="order_single_btn--confirm" v-if="infoData.orderType==4">申请退货</button>  
             <!-- 退货完成 结算完成 评价完成 待评价-->
-            <button @click.stop="seeSettlement(infoData.order_id)" class="order_single_btn--confirm"  v-if="infoData.orderType==6 ||infoData.orderType==7 || infoData.orderType==10 || infoData.orderType==12 " >结算单</button>     
+            <button @click.stop="seeSettlement(infoData.order_id)" class="order_single_btn--confirm"  v-if="infoData.orderType==6 ||infoData.orderType==7 || infoData.orderType==10 || infoData.orderType==12 ||infoData.orderType==14" >结算单</button>     
             <!-- 待评价 -->
             <button v-if="infoData.orderType==6">评价</button>
             <!-- 评价完成 -->     
@@ -429,7 +430,7 @@ export default {
             },
             {
                 title:"订单已完成",//评价完成
-                message:"还有1小时33分自动关闭"
+                message:""
             },
             {
                 title:"等待买家付款",//订单关闭
@@ -456,8 +457,8 @@ export default {
                 message:"还有1小时33分自动关闭"
             },
             {
-                title:"等待买家付款",//结算待确认
-                message:"还有1小时33分自动关闭"
+                title:"结算单已出",//结算待确认
+                message:"请及时确认结算单，还有71小时41分自动结算"
             },
         ]
     }
@@ -570,7 +571,7 @@ export default {
                     if(res.body.code==200){
                         this.infoData=res.body.data; 
                         this.getOrderType(this.infoData);
-                        this.currentConfrim=this.titleArray[this.infoData.orderType];
+                        this.currentConfrim=this.titleArray[this.infoData.orderType-1];
                     }
                 });
       },

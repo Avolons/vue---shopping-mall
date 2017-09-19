@@ -2,8 +2,8 @@
 import Vue from 'vue';
 
 
-var API_ROOT = "https://api.zujiekeji.cn/index/";
-/* var API_ROOT = "http://106.14.135.243:8082/index/"; */
+/* var API_ROOT = "https://api.zujiekeji.cn/index/"; */
+var API_ROOT = "http://106.14.135.243:8082/index/";
 /* 个人中心相关api */
 
 /**
@@ -613,4 +613,8 @@ export const order = {
   OrderWechat(data) {
     return Vue.http.post("https://api.zujiekeji.cn/pay/jsapi/index",data);
   },
+  /* 获取openid */
+  getOpenId(data){
+    return Vue.http.get('pay/jsapi/getWxOpenid',{params:data});
+  }
 }
