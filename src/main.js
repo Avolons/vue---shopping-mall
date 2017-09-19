@@ -4,7 +4,7 @@ import App from './App';
 import VueResource from 'vue-resource';
 import Router from 'vue-router';
 import router from './router';
-import {API,getQuery} from './services/';
+
 
 /* 路由全局函数 */
 Router.prototype.goBack = function () { 
@@ -32,29 +32,7 @@ router.beforeEach((to, from, next) => {
 	}
 });
 
-function getQueryString(name) {  
-	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");  
-	var r = location.search.substr(1).match(reg);  
-	if (r != null)  
-		return unescape(decodeURI(r[2]));  
-	return null;  
-} 
-let openId=localStorage.getItem("openId");
 
-var access_code = getQueryString('code'); 
-   if(access_code == null && !openId){
-	 var fromurl = location.href;//获取授权code的回调地址，获取到code，直接返回到当前页  
-	 var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe67019703f582d76&redirect_uri=' + encodeURIComponent("http://wap.zujiekeji.cn") + '&response_type=code&scope=snsapi_base&state=0#wechat_redirect';  
-	 location.href = url; 
-}else{
-	 API.order.getOpenId({
-		code:access_code,
-	}).then((res)=>{
-		let openid=res.body.data.openId;
-		localStorage.setItem("openId",openid);
-		 alert(openid);
-	})
-}
 
 /* 取出本地数据，赋值到store的state中 */
 const userInfo=localStorage.getItem("userInfo");
