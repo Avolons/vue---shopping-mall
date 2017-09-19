@@ -28,6 +28,9 @@ export default {
 　　}
 　  },
     mounted(){
+
+        
+            
             function getQueryString(name) {  
 	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");  
 	var r = location.search.substr(1).match(reg);  
@@ -49,10 +52,9 @@ if(!openId){
             API.order.getOpenId({
                 code:access_code,
             }).then((res)=>{
-                let openid=res.body.data.openId;
+                let openid=res.body.data;
                 localStorage.setItem("openId",openid);
                 alert(JSON.stringify(openid));
-                location.href ="http://wap.zujiekeji.cn";
             },(res)=>{
                 alert(JSON.stringify(res));
             });
