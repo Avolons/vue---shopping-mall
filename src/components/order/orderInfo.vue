@@ -314,6 +314,7 @@ export default {
                 function(res){  
                     if(res.err_msg =="get_brand_wcpay_request:fail")  {
                         alert(JSON.stringify(self.paydata));
+                        alert(JSON.stringify(res));
                         
                     } 
                     if(res.err_msg == "get_brand_wcpay_request:ok" ) {
