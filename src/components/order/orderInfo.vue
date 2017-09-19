@@ -357,9 +357,9 @@ export default {
               if(res.body.code==200){
                   let self=this;
                   self.onBridgeReady()
-                  /* API.order.OrderWechat({
+                  API.order.OrderWechat({
                        userId:this.getUserInfoUserId,  
-                        token:this.getUserInfoToken,
+                       token:this.getUserInfoToken,
                        orderSn:res.body.data.order_big_sn,
                        payMethod:2,
                   }).then((resopndy)=>{
@@ -374,7 +374,7 @@ export default {
                     }else{
                       self.onBridgeReady();
                     }
-                  }); */
+                  });
               }
           });
       },
