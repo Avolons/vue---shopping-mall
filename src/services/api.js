@@ -368,7 +368,7 @@ export const person = {
   feedback(data) {
     return Vue.http.post(API_ROOT + 'user/opinionAdd',data);
   }
-}
+};
 
 
 
@@ -467,6 +467,10 @@ export const order = {
    * page
    * @returns 
    */
+  /* 获取openid */
+  getOpenId(data){
+    return Vue.http.get('http://api.zujiekeji.cn/pay/jsapi/getWxOpenid',{params:data});
+  },
   orderlist(data) {
     return Vue.http.get(API_ROOT + 'order/orderlist',{params:data});
   },
@@ -613,8 +617,5 @@ export const order = {
   OrderWechat(data) {
     return Vue.http.post("https://api.zujiekeji.cn/pay/jsapi/index",data);
   },
-  /* 获取openid */
-  getOpenId(data){
-    return Vue.http.get('https://api.zujiekeji.cn/pay/jsapi/getWxOpenid',{params:data});
-  }
+  
 }
