@@ -220,8 +220,9 @@
                             <i class="iconfont">&#xe607;</i>
                             <span>店铺</span>
                         </li>
-                        <li class="goodsinfo_funlist_single" @click="addCollection()" :class="{'goodsinfo_funlist_single--collect':isCollection}">
-                            <i class="iconfont">&#xe605;</i>
+                        <li class="goodsinfo_funlist_single" @click="addCollection()">
+                            <i v-show="!isCollection" class="iconfont">&#xe605;</i>
+                            <i v-show="isCollection" style="color:#f80000" class="iconfont">&#xe64d;</i>
                             <span>收藏</span>
                         </li>
                         <li class="goodsinfo_funlist_single" @click="goCar()">

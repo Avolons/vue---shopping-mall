@@ -28,13 +28,13 @@
    display: none;
  }
 
-@font-face {
+ @font-face {
   font-family: 'iconfont';  /* project id 400924 */
-  src: url('//at.alicdn.com/t/font_400924_z4da8peit6luwhfr.eot');
-  src: url('//at.alicdn.com/t/font_400924_z4da8peit6luwhfr.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_400924_z4da8peit6luwhfr.woff') format('woff'),
-  url('//at.alicdn.com/t/font_400924_z4da8peit6luwhfr.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_400924_z4da8peit6luwhfr.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_400924_tc963k6dykxu5wmi.eot');
+  src: url('//at.alicdn.com/t/font_400924_tc963k6dykxu5wmi.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_400924_tc963k6dykxu5wmi.woff') format('woff'),
+  url('//at.alicdn.com/t/font_400924_tc963k6dykxu5wmi.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_400924_tc963k6dykxu5wmi.svg#iconfont') format('svg');
 }
 
 /* 两行超过出现点点点 */

@@ -361,12 +361,14 @@ export default {
           }).then((res)=>{
               if(res.body.code==200){
                   let self=this;
+                  console.log(1);
                   API.order.OrderWechat({
                        userId:this.getUserInfoUserId,  
                        token:this.getUserInfoToken,
                        orderSn:res.body.data.order_big_sn,
                        payMethod:2,
                   }).then((resopndy)=>{
+                      alert(1);
                       alert(resopndy.body);
                       this.paydata=resopndy.body;
                       if (typeof WeixinJSBridge == "undefined"){
@@ -379,6 +381,8 @@ export default {
                     }else{
                       self.onBridgeReady();
                     }
+                  },(err)=>{
+                      alert(JSON.stringify(err));
                   });
               }
           });
