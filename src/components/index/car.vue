@@ -36,7 +36,7 @@
         <i class="iconfont">&#xe60e;</i>
         抱歉，功能正在开发中，请下载APP获取完整功能
 
-       <a class="shop_nofunction_download" href="">点击下载APP</a>
+       <a class="shop_nofunction_download" href="http://a.app.qq.com/o/simple.jsp?pkgname=com.zujie">点击下载APP</a>
       </div>
     </div>
 </template>

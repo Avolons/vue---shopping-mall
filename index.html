@@ -19,6 +19,31 @@
   <meta name="x5-page-mode" content="app">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>租介科技</title>
+  <script>
+    function getcookie(objname){//获取指定名称的cookie的值
+    var arrstr = document.cookie.split("; ");
+    for(var i = 0;i < arrstr.length;i ++){
+    var temp = arrstr[i].split("=");
+    if(temp[0] == objname) return unescape(temp[1]);
+    }
+    }
+    var wxopenid=getcookie('wxopenid'); 
+    var key=getcookie('key');
+    if (key==''){  
+        var access_code=GetQueryString('code');  
+        if (wxopenid==""){  
+            if (access_code==null)  
+            {     
+                var fromurl=location.href;  
+                var url='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe67019703f582d76&redirect_uri=http://wap.zujiekeji.cn&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';  
+                location.href=url;  
+            } else{
+              alert(access_code);
+              location.setItem("access_code",access_code);
+            } 
+          }
+        }
+  </script>
 </head>
 
 <body>

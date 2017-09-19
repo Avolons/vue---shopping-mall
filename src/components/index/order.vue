@@ -456,7 +456,7 @@ export default {
     /* 订单付款 */
     payOrder(id){
         let self=this;
-        API.order.orderDel({
+        /* API.order.orderDel({
               userId:self.getUserInfoUserId,  
               token:self.getUserInfoToken,
               orderId:id,
@@ -465,7 +465,7 @@ export default {
                   self.confrim="";
                   self.toast=true;
               }
-          });
+          }); */
     },
     /* 确认收货 */
     confrimOrder(id){
@@ -488,6 +488,33 @@ export default {
                 });
             }
         });
+    },
+    /* 确认归还 */
+    confirmReturn(item){
+        /* * sinceId 自提点编号
+        * expressId 物流单号
+        * logisticsName 物流公司简拼
+        * revertId 归还地址编号
+        * company 物流公司名 */
+        let self=this;
+        this.$vux.confirm.show({
+                /* title: 'Title', */
+                content: '是否确认归还',
+                onConfirm () {
+                    /* 点击确认时执行具体删除操作 */
+                    API.order.orderReceipt({
+                        userId:self.getUserInfoUserId,  
+                        token:self.getUserInfoToken,
+                        orderId:id,
+                    }).then((res)=>{
+                        if(res.body.code==200){
+                            self.confrim="确认归还成功";
+                            self.getTypeData();
+                            self.toast=true;
+                        }
+                    });
+                }
+            });
     },
     /* 确认结算 */
     confrimSettlement(id){
@@ -517,6 +544,14 @@ export default {
     },
     /* 提醒发货 */
     remind(id){
+
+    },
+    /* 提醒结算 */
+    remindSettl(id){
+
+    },
+    /* 查看物流,评价, */
+    download(){
 
     }
   }
