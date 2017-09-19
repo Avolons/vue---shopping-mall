@@ -615,6 +615,6 @@ export const order = {
   },
   /* 获取openid */
   getOpenId(data){
-    return Vue.http.get('pay/jsapi/getWxOpenid',{params:data});
+    return Vue.http.get('https://api.zujiekeji.cn/pay/jsapi/getWxOpenid',{params:data});
   }
 }

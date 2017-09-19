@@ -8,6 +8,7 @@
 
 <script>
 import {API,getQuery} from './services/';
+
 function getQueryString(name) {  
 	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");  
 	var r = location.search.substr(1).match(reg);  
@@ -29,7 +30,8 @@ var access_code = getQueryString('code');
 		let openid=res.body.data.openId;
 		localStorage.setItem("openId",openid);
 		 alert(openid);
-	})
+    })
+    alert(openid);
 }
 
 export default {
