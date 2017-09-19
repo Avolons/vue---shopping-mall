@@ -418,6 +418,49 @@ export default {
         API.main.goodsIndexRecom().then((Response)=>{
             this.recGoodsList=Response.body.data.shopList.data;
         });
+        let self = this;
+        let mainbox=document.querySelector(".main_listbox");
+        function getScrollTop() {
+            　　var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
+            　　if (mainbox) {
+                　　　　bodyScrollTop = mainbox.scrollTop;
+            　　}
+            　　if (document.documentElement) {
+                　　　　documentScrollTop = document.documentElement.scrollTop;
+            　　}
+            　　scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
+            　　return scrollTop;
+        }
+        //文档的总高度
+        function getScrollHeight() {
+            　　var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
+            　　if (mainbox) {
+                　　　　bodyScrollHeight = mainbox.scrollHeight;
+            　　}
+            　　if (document.documentElement) {
+                　　　　documentScrollHeight = document.documentElement.scrollHeight;
+            　　}
+            　　scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
+            　　return scrollHeight;
+        }
+        //浏览器视口的高度
+        function getWindowHeight() {
+            　　var windowHeight = 0;
+            　　if (document.compatMode == "CSS1Compat") {
+                　　　　windowHeight = document.documentElement.clientHeight;
+            　　} else {
+                　　　　windowHeight = document.body.clientHeight;
+            　　}
+            　　return windowHeight-144;
+        }
+        document.querySelector(".main_listbox").onscroll = function() {
+            console.log(getScrollTop());
+            console.log(getWindowHeight());
+            console.log(getScrollHeight());
+            　　if (getScrollTop() + getWindowHeight() == getScrollHeight()) {
+                    alert("到达底部");
+            　　}
+        };
     }
 }
 </script>

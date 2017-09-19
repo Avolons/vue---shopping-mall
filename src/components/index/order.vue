@@ -200,7 +200,7 @@
         </h1>
             <scroller class="order_typelist" lock-y :scrollbar-x=false>
                       <div class="order_typelist_box">
-                          <div @click="typeselect(item.type)" class="order_typelist_item"  v-for="item in typeList">
+                        <div @click="typeselect(item.type)" class="order_typelist_item"  v-for="item in typeList">
                               <span :class='{"order_typelist_item--selected":item.type==currentType}'>{{item.name}}</span>
                           </div>
                       </div>
@@ -331,7 +331,8 @@ export default {
        /* 时间对照表 */
       timeMap:{1:"日",2:"周",3:"月",4:"季",5:"年"},
       /* 假数据模拟订单 */
-      orderList:[]
+      orderList:[],
+      currentPage:1,
     }
   },
    computed:{
@@ -419,14 +420,24 @@ export default {
           API.order.orderlist({
               userId:this.getUserInfoUserId,  
               token:this.getUserInfoToken,
-              orderStatus:0
+              orderStatus:0,
+              page_number:10,
+              page:this.currentPage,
           }).then((res)=>{
             if(res.body.code==200){
               let list= res.body.data.orderList.data
               for(let item of list) {
                   this.confrimType(item);
+                  this.orderList.push(item);
               }
-              this.orderList=list;
+              if(list.length==10){
+                  console.log(1);
+                  this.currentPage++;
+                  this.getTypeData();
+              }else{
+                  return false;
+              }
+              /* this.orderList=list; */
             }
           });
     },
@@ -453,19 +464,50 @@ export default {
         });
        
     },
-    /* 订单付款 */
+    /* 支付接口 */
+      onBridgeReady(){
+          let self=this;
+            WeixinJSBridge.invoke(
+                'getBrandWCPayRequest',self.paydata,
+                function(res){  
+                    if(res.err_msg =="get_brand_wcpay_request:fail")  {
+                        alert(JSON.stringify(self.paydata));
+                        alert(JSON.stringify(res));
+                    } 
+                    if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                          self.confrim="支付成功";
+                          self.toast=true;
+                          location.href="/#/index/main/order";
+                    }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
+                }
+            ); 
+        },
+   /* 订单付款 */
     payOrder(id){
         let self=this;
-        /* API.order.orderDel({
-              userId:self.getUserInfoUserId,  
-              token:self.getUserInfoToken,
-              orderId:id,
-            }).then((res)=>{
-              if(res.body.code==200){
-                  self.confrim="";
-                  self.toast=true;
-              }
-          }); */
+                  let openId=localStorage.getItem("openId");
+                  API.order.OrderWechat({
+                       userId:this.getUserInfoUserId,  
+                       token:this.getUserInfoToken,
+                       orderSn:id,
+                       payMethod:2,
+                       openId:openId,
+                  }).then((resopndy)=>{
+                      this.paydata=resopndy.body;
+                      console.log(resopndy.body);
+                      if (typeof WeixinJSBridge == "undefined"){
+                    if( document.addEventListener ){
+                        document.addEventListener('WeixinJSBridgeReady', self.onBridgeReady, false);
+                    }else if (document.attachEvent){
+                        document.attachEvent('WeixinJSBridgeReady', self.onBridgeReady); 
+                        document.attachEvent('onWeixinJSBridgeReady', self.onBridgeReady);
+                    }
+                    }else{
+                      self.onBridgeReady();
+                    }
+                  },(err)=>{
+                      alert(JSON.stringify(err));
+                  });
     },
     /* 确认收货 */
     confrimOrder(id){
@@ -506,6 +548,11 @@ export default {
                         userId:self.getUserInfoUserId,  
                         token:self.getUserInfoToken,
                         orderId:id,
+                        sinceId:"",
+                        expressId:"",
+                        logisticsName:"",
+                        revertId:"",
+                        company:"",
                     }).then((res)=>{
                         if(res.body.code==200){
                             self.confrim="确认归还成功";
@@ -548,11 +595,11 @@ export default {
     },
     /* 提醒结算 */
     remindSettl(id){
-
+        
     },
     /* 查看物流,评价, */
-    download(){
-
+    download(id){
+        window.location.href='/#/download';
     }
   }
 }

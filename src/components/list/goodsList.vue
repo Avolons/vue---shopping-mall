@@ -89,7 +89,7 @@
             <span v-for="(item,index) in typeList" :class="{'goodsList_chenckList--selected':item.select}" @click="typeCheck(index)">{{item.name}}</span>
         </div>
             <div style="padding-top:50px"> 
-             <list-compent :commonGoodsList="goodsList"></list-compent>
+             <list-compent  :commonGoodsList="goodsList"></list-compent>
             </div>
         <div class="goodsList_noGoods" v-show="!goodsList[0]">
             <i class="iconfont">&#xe638;</i>
@@ -156,6 +156,7 @@ export default {
           }else{
               this.typeList[index].select=true;
               this.typeList[1-index].select=false;
+              this.page=1;
           }
           if(this.categoryId){
               API.main.searchGoods({
@@ -167,6 +168,7 @@ export default {
             this.goodsList=Response.body.data.shopList.data;
             if(this.goodsList.length==10){
                 this.haveData=true;
+                this.page++;
             }
           });
           }else{
@@ -179,6 +181,8 @@ export default {
             this.goodsList=Response.body.data.shopList.data;   
             if(this.goodsList.length==10){
                 this.haveData=true;
+                this.page++;
+                
             }
           });
           }
@@ -199,6 +203,7 @@ export default {
             this.goodsList=Response.body.data.shopList.data;
             if(this.goodsList.length==10){
                 this.haveData=true;
+                this.page++;
             }   
           });
       }else{
@@ -213,13 +218,56 @@ export default {
             this.goodsList=Response.body.data.shopList.data;   
             if(this.goodsList.length==10){
                 this.haveData=true;
+                this.page++;
             }
           });
       }  
+      },
+      getData(){
+          console.log(1);
       }
   }
   ,mounted(){
         this.Initialization();
+        let self = this;
+        function getScrollTop() {
+            　　var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
+            　　if (document.body) {
+                　　　　bodyScrollTop = document.body.scrollTop;
+            　　}
+            　　if (document.documentElement) {
+                　　　　documentScrollTop = document.documentElement.scrollTop;
+            　　}
+            　　scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
+            　　return scrollTop;
+        }
+        //文档的总高度
+        function getScrollHeight() {
+            　　var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
+            　　if (document.body) {
+                　　　　bodyScrollHeight = document.body.scrollHeight;
+            　　}
+            　　if (document.documentElement) {
+                　　　　documentScrollHeight = document.documentElement.scrollHeight;
+            　　}
+            　　scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
+            　　return scrollHeight;
+        }
+        //浏览器视口的高度
+        function getWindowHeight() {
+            　　var windowHeight = 0;
+            　　if (document.compatMode == "CSS1Compat") {
+                　　　　windowHeight = document.documentElement.clientHeight;
+            　　} else {
+                　　　　windowHeight = document.body.clientHeight;
+            　　}
+            　　return windowHeight;
+        }
+        window.onscroll = function() {
+            　　if (getScrollTop() + getWindowHeight() == getScrollHeight()) {
+                    alert("到达底部");
+            　　}
+        };
   }
   ,activated(){
         this.Initialization();

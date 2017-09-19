@@ -501,6 +501,24 @@ export default {
         }
     },
   methods:{
+      /* 支付接口 */
+      onBridgeReady(){
+          let self=this;
+            WeixinJSBridge.invoke(
+                'getBrandWCPayRequest',self.paydata,
+                function(res){  
+                    if(res.err_msg =="get_brand_wcpay_request:fail")  {
+                        alert(JSON.stringify(self.paydata));
+                        alert(JSON.stringify(res));
+                    } 
+                    if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                          self.confrim="支付成功";
+                          self.toast=true;
+                          location.href="/#/index/main/order";
+                    }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
+                }
+            ); 
+        },
       routerBack(){
           this.$router.goBack();
       },
@@ -601,16 +619,29 @@ export default {
     /* 订单付款 */
     payOrder(id){
         let self=this;
-        API.order.orderDel({
-              userId:self.getUserInfoUserId,  
-              token:self.getUserInfoToken,
-              orderId:id,
-            }).then((res)=>{
-              if(res.body.code==200){
-                  self.confrim="";
-                  self.toast=true;
-              }
-          });
+                  let openId=localStorage.getItem("openId");
+                  API.order.OrderWechat({
+                       userId:this.getUserInfoUserId,  
+                       token:this.getUserInfoToken,
+                       orderSn:id,
+                       payMethod:2,
+                       openId:openId,
+                  }).then((resopndy)=>{
+                      this.paydata=resopndy.body;
+                      console.log(resopndy.body);
+                      if (typeof WeixinJSBridge == "undefined"){
+                    if( document.addEventListener ){
+                        document.addEventListener('WeixinJSBridgeReady', self.onBridgeReady, false);
+                    }else if (document.attachEvent){
+                        document.attachEvent('WeixinJSBridgeReady', self.onBridgeReady); 
+                        document.attachEvent('onWeixinJSBridgeReady', self.onBridgeReady);
+                    }
+                    }else{
+                      self.onBridgeReady();
+                    }
+                  },(err)=>{
+                      alert(JSON.stringify(err));
+                  });
     },
     /* 确认收货 */
     confrimOrder(id){

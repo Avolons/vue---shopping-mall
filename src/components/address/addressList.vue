@@ -198,6 +198,7 @@ export default {
       addressList:{
           data:[]
       },
+      currentPage:1,
     }
   },
   computed:{
@@ -257,9 +258,22 @@ export default {
             API.person.getAddressList({
                     userId:this.getUserInfoUserId,  
                     token:this.getUserInfoToken,
+                    page_number:10,
+                    page:this.currentPage,
             }).then((res)=>{
                 if(res.body.code==200){
+                    if(this.currentPage==1){
                     this.addressList=res.body.data.addressList;
+                          
+                    }
+                    if(this.currentPage>1){
+                        console.log(res.body.data.addressList.data);
+                    this.addressList.data=this.addressList.data.concat(res.body.data.addressList.data);
+
+                    }
+                    if(this.addressList.data.length==10){
+                        this.currentPage++;
+                    }
                     let checkValue=new Array(this.addressList.data.length);
                     for(let i=0;i<this.addressList.data.length;i++) {
                         let result=false;
@@ -268,8 +282,8 @@ export default {
                             result=true;
                         }
                         checkValue[i]=result;
+                        this.valList.push(result);
                     }
-                    this.valList=checkValue;
                 }
             });
         },
@@ -284,10 +298,51 @@ export default {
         }
   },
   mounted(){
-      /*   this.getAddress(); */
+      let self=this;
+      function getScrollTop(){
+　　var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
+　　if(document.body){
+　　　　bodyScrollTop = document.body.scrollTop;
+　　}
+　　if(document.documentElement){
+　　　　documentScrollTop = document.documentElement.scrollTop;
+　　}
+　　scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
+　　return scrollTop;
+}
+//文档的总高度
+function getScrollHeight(){
+　　var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
+　　if(document.body){
+　　　　bodyScrollHeight = document.body.scrollHeight;
+　　}
+　　if(document.documentElement){
+　　　　documentScrollHeight = document.documentElement.scrollHeight;
+　　}
+　　scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
+　　return scrollHeight;
+}
+//浏览器视口的高度
+function getWindowHeight(){
+　　var windowHeight = 0;
+　　if(document.compatMode == "CSS1Compat"){
+　　　　windowHeight = document.documentElement.clientHeight;
+　　}else{
+　　　　windowHeight = document.body.clientHeight;
+　　}
+　　return windowHeight;
+}
+window.onscroll = function(){
+　　if(getScrollTop() + getWindowHeight() == getScrollHeight()){
+      if(self.currentPage>1){
+          self.getAddress();
+      }
+　　}
+};
+      this.getAddress();
   },
   activated(){
-      this.getAddress();
+    
   }
 }  
 </script>
