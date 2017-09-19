@@ -235,7 +235,9 @@ export default {
         tplRules:{},
         /* 买家留言 */
         option:"",
-        paydata
+        paydata:{
+            "appId":"wxe67019703f582d76","nonceStr":"x5i9q24oww735dnw84au04i5cgwc4dwh","package":"prepay_id=wx20170919134856e38a557c4c0212702782","signType":"MD5","timeStamp":"1505800151","paySign":"E25EA74FDE981117EED2BE8F385C9F6D"
+        },
     }
   },
     computed:{
@@ -354,7 +356,8 @@ export default {
           }).then((res)=>{
               if(res.body.code==200){
                   let self=this;
-                  API.order.OrderWechat({
+                  self.onBridgeReady()
+                  /* API.order.OrderWechat({
                        userId:this.getUserInfoUserId,  
                         token:this.getUserInfoToken,
                        orderSn:res.body.data.order_big_sn,
@@ -371,7 +374,7 @@ export default {
                     }else{
                       self.onBridgeReady();
                     }
-                  });
+                  }); */
               }
           });
       },
