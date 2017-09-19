@@ -236,7 +236,12 @@ export default {
         /* 买家留言 */
         option:"",
         paydata:{
-            "appId":"wxe67019703f582d76","nonceStr":"yvkm9dysv6yhuoi11y5kzvoilbtquqfj","package":"prepay_id=wx201709191523494e9beba0830435312232","signType":"MD5","timeStamp":"1505805843","paySign":"10730F7C4048F697A421E0C53886ACEA"
+            "appId":"wxe67019703f582d76",
+            "nonceStr":"yvkm9dysv6yhuoi11y5kzvoilbtquqfj",
+            "package":"prepay_id=wx201709191523494e9beba0830435312232",
+            "signType":"MD5",
+            "timeStamp":"1505805843",
+            "paySign":"10730F7C4048F697A421E0C53886ACEA"
         },
     }
   },
@@ -356,13 +361,13 @@ export default {
           }).then((res)=>{
               if(res.body.code==200){
                   let self=this;
-                  self.onBridgeReady()
                   API.order.OrderWechat({
                        userId:this.getUserInfoUserId,  
                        token:this.getUserInfoToken,
                        orderSn:res.body.data.order_big_sn,
                        payMethod:2,
                   }).then((resopndy)=>{
+                      alert(resopndy.body);
                       this.paydata=resopndy.body;
                       if (typeof WeixinJSBridge == "undefined"){
                     if( document.addEventListener ){
