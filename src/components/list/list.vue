@@ -233,6 +233,8 @@ export default {
                 this.typeList=typeList;
                 this.typeList[0].click=true;
             });
-        }
+        },
+        
+    
 }
 </script>

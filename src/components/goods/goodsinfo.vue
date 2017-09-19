@@ -14,7 +14,7 @@
             <!-- 商品简介轮播图 -->
             <swiper class="main_swiper" dots-position="center" width="100%" >
                 <swiper-item class="swiper-demo-img" v-for="(item, index) in bannerlist" :key="index">
-                    <img :src="item">
+                    <img :src="item.goodsFace">
                 </swiper-item>
             </swiper>
             <h2 class="goodsinfo_title twonowarp">{{goodsTitle}}</h2>
@@ -394,15 +394,15 @@ export default {
         ]),
         /* 返回商品主图，数据列表存在时使用列表图片，不存在时使用商品主图 */
         returnImg(){
-            let id=this.afterSelectData.id
+            let id=this.afterSelectData.id;
             for(let item of this.datalist) {
-                if(item.content_var_attr_id===id){
+                if(item.content_var_attr_id==id){
                     if(item.img!=""){
                         return item.img;
                     }
                 }
             }
-            return this.bannerlist[0];
+            return this.bannerlist[0].goodsFace;
             
         },
         /* 返回当前周期文字 */
@@ -470,7 +470,7 @@ export default {
                     return dateFormat(new Date(time+(num-1)*24*3600*1000),'YYYY-MM-DD');
                 break;
                 case 2: 
-                    return dateFormat(new Date(time+num*24*3600*1000*7-24*60*1000),'YYYY-MM-DD');
+                    return dateFormat(new Date(time+num*24*3600*1000*7-24*3600*1000),'YYYY-MM-DD');
                 break;
                 case 3:
                     /* 月份相加超出一年的情况需要考虑 */
@@ -555,7 +555,8 @@ export default {
     methods: {
         getData(){
             API.main.goodsInfo({
-            goodsId:this.$route.params.id
+            goodsId:this.$route.params.id,
+            userId:this.getUserInfoUserId
             }).then((Response)=>{
                 /* 初始数据赋值操作 */
             let goodsData = Response.body.data;
@@ -609,7 +610,7 @@ export default {
             goods_details_content:goodsData.goods_details_content,//商品详情数组
         };
         /* 商品主图赋值 */
-        this.bannerlist[0]=goodsData.goodsFace;
+        this.bannerlist=goodsData.shopBanner;
         /* 列表数据赋值 */
         this.datalist=goodsData.goodsAttrList;
         /* 初始化当前数据的最终赋值 ,默认使用第一个颜色的第一个规格*/
@@ -871,7 +872,7 @@ export default {
                   API.person.collectShop({
                         userId:this.getUserInfoUserId,
                         token:this.getUserInfoToken,
-                        shopId:this.goodsId,
+                        goods_list:[this.goodsId],
                   }).then((res)=>{
                       if(res.body.code==200){
                           this.isCollection=true;
@@ -887,7 +888,7 @@ export default {
                   API.person.unCollectShop({
                         userId:this.getUserInfoUserId,
                         token:this.getUserInfoToken,
-                        shopId:this.goodsId,
+                        goods_list:[this.goodsId],
                   }).then((res)=>{
                       if(res.body.code==200){
                           this.isCollection=false;

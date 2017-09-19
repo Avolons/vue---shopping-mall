@@ -275,7 +275,7 @@ export default {
             if(this.infoData.goods_deposit==0){
                 return 0;
             }
-            let despoite=this.infoData.goods_deposit-this.goodsAllPrice;
+            let despoite=this.infoData.goods_deposit*this.infoData.cart_content_good_amount-this.goodsAllPrice;
             if(despoite<=0){
                 return 0;
             }else{
