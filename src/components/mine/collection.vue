@@ -2,13 +2,13 @@
 <style lang="scss">
     .collention{
         &_main{
-            height: 100%;
-            background-color: #f3f3f3;
+            background-color: #fff;
+            overflow: hidden;
             &--haveGoods{
                 background-color: #fff;
             }
             .weui-loadmore_line .weui-loadmore__tips{
-                background-color: #f3f3f3 !important;
+                background-color: #fff !important;
             }
         }
         &_nocoll{
@@ -16,6 +16,7 @@
            align-items: center;
            display: flex;
            justify-content: center;
+           margin-top: 40px;
             flex-direction: column;
            >i{
                font-size: 150px;
@@ -42,19 +43,19 @@
 
 <template>
 <div>
-<div class="collention_main" :class="{'collention_main--haveGoods':goodsList[0]}">
     <div class="help_common_title">
-     <x-header @on-click-back="routerBack" :left-options="{backText: '',preventGoBack:true}">我的收藏</x-header>
-    </div>
-    <list-compent :commonGoodsList="goodsList"></list-compent>
-    <div class="collention_nocoll" v-show="!goodsList[0]">
-        <i class="iconfont">&#xe643;</i>
-        <p>您还没有收藏宝贝哦</p>
-        <router-link class="collention_nocoll_link" to="/index/main">去首页逛逛</router-link>
-    </div>
-    <load-more v-show="loadshow" tip="加载更多"></load-more>
-    <load-more v-show="!loadshow" :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
-</div>
+            <x-header @on-click-back="routerBack" :left-options="{backText: '',preventGoBack:true}">我的收藏</x-header>
+            </div>
+        <div class="collention_main" :class="{'collention_main--haveGoods':goodsList[0]}">
+            <list-compent :commonGoodsList="goodsList"></list-compent>
+            <div class="collention_nocoll" v-show="!goodsList[0]">
+                <i class="iconfont">&#xe643;</i>
+                <p>您还没有收藏宝贝哦</p>
+                <router-link class="collention_nocoll_link" to="/index/main">去首页逛逛</router-link>
+            </div>
+            <load-more v-show="loadshow" tip="加载更多"></load-more>
+            <load-more v-show="!loadshow && goodsList[0]" :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
+        </div>
 </div>
 </template>
 <script>

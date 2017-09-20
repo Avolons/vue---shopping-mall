@@ -99,7 +99,7 @@
             <p>抱歉，没有搜索到您想要的商品</p>
         </div>
         <load-more v-show="loadshow" tip="加载更多"></load-more>
-        <load-more v-show="!loadshow" :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
+        <load-more v-show="!loadshow && goodsList[0]" :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
     </div>
 </div>
    

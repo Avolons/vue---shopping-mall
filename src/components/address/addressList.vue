@@ -174,7 +174,7 @@
             <a href="/#/editAddress" class="addressList_addBtn">新增收货地址</a>
             <toast v-model="toast" type="success">{{confrim}}</toast>
             <load-more style="margin-bottom:70px;" v-show="loadshow" tip="加载更多"></load-more>
-            <load-more style="margin-bottom:70px;" v-show="!loadshow" :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
+            <load-more style="margin-bottom:70px;" v-show="!loadshow && addressList.data[0]" :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
         </div>
     </div>
 </template>
@@ -277,11 +277,16 @@ export default {
                     if (res.body.code == 200) {
                         if (this.currentPage == 1) {
                             this.addressList = res.body.data.addressList;
+                             if (res.body.data.addressList.data.length == 10) {
+                                    this.haveData = true;
+                                    this.currentPage++;
+                                } else {
+                                    this.haveData = false;
+                                }
                             this.canBottom = true;
                             this.loadshow = false;
                         } else {
-                            setTimeout(() => {
-                                this.addressList.data = this.addressList.data.concat(res.body.data.addressList.data);
+                                 this.addressList.data = this.addressList.data.concat(res.body.data.addressList.data);
                                 let checkValue = new Array(this.addressList.data.length);
                                 for (let i = 0; i < this.addressList.data.length; i++) {
                                     let result = false;
@@ -294,18 +299,18 @@ export default {
                                 }
                                 this.canBottom = true;
                                 this.loadshow = false;
-                            }, 500);
+                            if (res.body.data.addressList.data.length == 10) {
+                                    this.haveData = true;
+                                    this.currentPage++;
+                                } else {
+                                    this.haveData = false;
+                                }
                         }
-                        if (this.addressList.data.length == 10) {
-                            this.haveData = true;
-                            this.currentPage++;
-                        } else {
-                            this.haveData = false;
-                        }
+                        
                     }
                 });
             } else {
-                this.canBottom = true;
+                this.canBottom = false;
             }
 
         },
