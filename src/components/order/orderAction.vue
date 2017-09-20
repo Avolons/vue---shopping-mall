@@ -386,7 +386,7 @@
             <button @click.stop="confrimOrder(infoData.orderId)"  v-if="infoData.orderType==3">确认收货</button>   
             <!-- 待归还状态   -->
             <button @click.stop="download()" v-if="infoData.orderType==4">归还</button>  
-            <button class="order_single_btn--confirm" v-if="infoData.orderType==4">申请退货</button>  
+            <button  @click.stop="download()" class="order_single_btn--confirm" v-if="infoData.orderType==4">申请退货</button>  
             <!-- 退货完成 结算完成 评价完成 待评价-->
             <button @click.stop="seeSettlement(infoData.orderId)" class="order_single_btn--confirm"  v-if="infoData.orderType==6 ||infoData.orderType==7 || infoData.orderType==10 || infoData.orderType==12 ||infoData.orderType==14" >结算单</button>     
             <!-- 待评价 -->
@@ -809,7 +809,7 @@ export default {
         }); 
     },
     /* 查看物流,评价, */
-    download(id){
+    download(){
         window.location.href='/#/download';
     }
   },mounted(){
