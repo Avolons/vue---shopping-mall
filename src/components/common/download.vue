@@ -5,9 +5,12 @@
              <x-header @on-click-back="routerBack" :left-options="{backText: '',preventGoBack:true}">开发中</x-header>
         </div>
       <div class="shop_nofunction">
-        <i class="iconfont">&#xe60e;</i>
-        抱歉，功能正在开发中，请下载APP获取完整功能
-
+        <i class="iconfont">&#xe638;</i>
+        <p>
+         抱歉，功能正在开发中
+        <br>
+         请下载APP获取完整功能
+        </p>
        <a class="shop_nofunction_download" href="http://a.app.qq.com/o/simple.jsp?pkgname=com.zujie">点击下载APP</a>
       </div>
     </div>

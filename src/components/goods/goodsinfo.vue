@@ -155,6 +155,11 @@
                             <i class="iconfont">&#xe6d7;</i>
                         </label>
                     </div>
+
+                     <group v-show="haveRules!=0">
+                        <cell style="height:44px;" title="租赁规则/合约" :link="'/goodslease/'+goodsId"></cell>
+                    </group>
+
                     <group>
                         <input style="display:none" id="colorSize" type="checkbox" v-model="colorSizeShow"></input>
                     </group>
@@ -267,6 +272,7 @@ export default {
     },
     data() {
         return {
+            haveRules:false,
             confrim: "",
             toasts: false,
             toast: false,
@@ -617,6 +623,8 @@ export default {
             this.sizelist = goodsData.goodsattrcontent.gg;
             /* 商品id */
             this.goodsId = goodsData.goodsId;
+            /* 是否有规则 */
+            this.haveRules=goodsData.goods_leasing_rules;
             /* 是否收藏 */
             this.isCollection = goodsData.isCollect == 1 ? true : false;
             /* 店铺ID */

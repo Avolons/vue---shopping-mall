@@ -214,6 +214,7 @@ import list from '../components/list/list.vue';//商品分类列表页面
 import search from '../components/search/search.vue';//商品搜索页面
 import goodsList from '../components/list/goodsList.vue';//商品具体列表页面
 import goodsinfo from '../components/goods/goodsinfo.vue';//商品详情页面
+import goodslease from '../components/goods/goodslease.vue';//商品规则
 import authentication from '../components/mine/authentication.vue';//实名认证
 import collection from '../components/mine/collection.vue';//我的收藏
 import setting from '../components/mine/setting.vue';//我的设置
@@ -283,6 +284,11 @@ const routes = [{
         name: 'goodsinfo',
         component: goodsinfo
     },{
+        path: '/goodslease/:id',
+        name: 'goodslease',
+        component: goodslease
+    },
+    {
         path: '/authentication',
         name: 'authentication',
         component: authentication
