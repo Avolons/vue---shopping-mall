@@ -13,6 +13,10 @@
         margin-top: 20px;
     }
 }
+.rules_main{
+    height: 100%;;
+    background-color: #fff;
+}
 .rules_main>pre{
     white-space: pre-line;
     font-size: 14px;

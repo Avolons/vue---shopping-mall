@@ -22,6 +22,9 @@
              flex-grow: 1;
              margin-left: 40px;
          }
+         .weui-loadmore_line .weui-loadmore__tips{
+             background-color: #f3f3f3 !important;
+         }
        }
        &_search{
         border-radius: 5px;
@@ -96,6 +99,7 @@
             <p>抱歉，没有搜索到您想要的商品</p>
         </div>
         <load-more v-show="loadshow" tip="加载更多"></load-more>
+        <load-more v-show="!loadshow" :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
     </div>
 </div>
    

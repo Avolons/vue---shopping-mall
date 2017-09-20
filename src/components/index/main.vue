@@ -60,6 +60,17 @@ body {
         .vux-slider > .vux-indicator > a > .vux-icon-dot.active, .vux-slider .vux-indicator-right > a > .vux-icon-dot.active{
             background-color:#2196f3;
         }
+        .list_compent_list_box{
+         height:calc(100% - 144px);
+         position:fixed;
+         top:91px;
+         width:100%;
+         overflow-y: auto;
+         padding-bottom: 40px;
+         .weui-loadmore_line .weui-loadmore__tips{
+             background-color: #fff !important;
+         }
+        }
     }
     &_typelist {
         margin-top: 50px;
@@ -275,8 +286,11 @@ body {
                     </div>
                 </li>
             </ul>
-                <list-compent v-show="currentType!=0" :commonGoodsList="currentGoods"></list-compent>
-                <load-more v-show="loadshow" tip="加载更多"></load-more>
+            <div v-show="currentType!=0" class="list_compent_list_box">
+                <list-compent style=""  :commonGoodsList="currentGoods"></list-compent>
+                <load-more  v-show="loadshow" tip="加载更多"></load-more>
+                <load-more v-show="!loadshow" :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
+            </div>
         </div>
     </div>
 </template>
@@ -441,7 +455,7 @@ export default {
         /* 获取首页标签 */
         API.main.hotTagLabel().then((Response)=>{
             let firstLabel={
-              hot_label_name: "精选",
+                 hot_label_name: "精选",
                 click:true
             }
             let shopList=Response.body.data.shopList;
@@ -450,7 +464,6 @@ export default {
             }
             shopList.splice(0,0,firstLabel);
             this.goodsList=new Array(shopList.length);
-            document.querySelector(".main_container .main_typelist_box").style.width=(shopList.length+1)*90+"px";
             this.typeList=shopList;
         });        
         /* 获取热门商品 */
@@ -461,11 +474,13 @@ export default {
             this.hotGoodsList=Response.body.data.shopList.data;
         });
         /* 获取推荐商品 */
-        API.main.goodsIndexRecom().then((Response)=>{
+        API.main.goodsIndexRecom({
+            page_number:30,
+        }).then((Response)=>{
             this.recGoodsList=Response.body.data.shopList.data;
         });
         let self = this;
-        let mainbox=document.querySelector(".main_listbox");
+        let mainbox=document.querySelector(".list_compent_list_box");
         function getScrollTop() {
             　　var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
             　　if (mainbox) {
@@ -497,9 +512,14 @@ export default {
             　　} else {
                 　　　　windowHeight = document.body.clientHeight;
             　　}
-            　　return windowHeight-144;
+            　　return windowHeight-104;
         }
-        document.querySelector(".main_listbox").onscroll = function() {
+                document.querySelector(".list_compent_list_box").onscroll = function() {
+                    console.log(getScrollTop());
+
+                    console.log(getWindowHeight());
+
+                    console.log(getScrollHeight());
             　　if (getScrollTop() + getWindowHeight() == getScrollHeight()) {
                 if(self.canBottom==true){
                     self.canBottom=false;

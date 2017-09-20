@@ -14,6 +14,9 @@
         .weui-dialog__btn_primary {
             color: #2196f3;
         }
+        .weui-loadmore_line .weui-loadmore__tips{
+            background-color: #f3f3f3 !important;
+        }
     }
     &_confrim {
         height: 70%;
@@ -42,7 +45,6 @@
         color: #fff;
     }
     &_list {
-        margin-bottom: 70px;
     }
     &_single {
         display: flex;
@@ -170,7 +172,8 @@
             </div>
             <a href="/#/editAddress" class="addressList_addBtn">新增收货地址</a>
             <toast v-model="toast" type="success">{{confrim}}</toast>
-            <load-more v-show="loadshow" tip="加载更多"></load-more>
+            <load-more style="margin-bottom:70px;" v-show="loadshow" tip="加载更多"></load-more>
+            <load-more style="margin-bottom:70px;" v-show="!loadshow" :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
         </div>
     </div>
 </template>

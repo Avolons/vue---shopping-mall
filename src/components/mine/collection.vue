@@ -7,6 +7,9 @@
             &--haveGoods{
                 background-color: #fff;
             }
+            .weui-loadmore_line .weui-loadmore__tips{
+                background-color: #f3f3f3 !important;
+            }
         }
         &_nocoll{
            height: 60%;
@@ -50,6 +53,7 @@
         <router-link class="collention_nocoll_link" to="/index/main">去首页逛逛</router-link>
     </div>
     <load-more v-show="loadshow" tip="加载更多"></load-more>
+    <load-more v-show="!loadshow" :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
 </div>
 </div>
 </template>

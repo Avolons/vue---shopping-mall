@@ -6,6 +6,9 @@
         font-size: 18px;
         color: #272727;
     }
+    .weui-loadmore_line .weui-loadmore__tips{
+        background-color: #f3f3f3;
+    }
 }
 
 .order_type {
@@ -81,6 +84,7 @@
             <since-compent style="margin-bottom:30px" v-show="val==3" :commonSinceList="sinceList"></since-compent>
             <toast v-model="toast" type="cancel">{{confrim}}</toast>
             <load-more v-show="loadshow" tip="加载更多"></load-more>
+            <load-more v-show="!loadshow  && val==3" :show-loading="false" tip="到底了" ></load-more>
         </div>
     </div>
 </template>

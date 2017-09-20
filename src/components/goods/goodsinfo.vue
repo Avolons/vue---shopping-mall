@@ -47,13 +47,26 @@
             </header>
             <article class="goodsinfo_content">
                 <!-- 日期选择 -->
-                <div class="goodsinfo_content_alltime">
-                    您将租用 &nbsp;&nbsp; {{timeValue}}&nbsp;至&nbsp;{{despoiteRange}}
-                    <span>{{currentGoodsData.rentTime}}{{timeText}}</span>
+                <div @click="haveSelect()" class="goodsinfo_content_alltime" v-show="havestart">
+                    选择起租时间
+                    <span><i  style="color: #989898;" class="iconfont">&#xe6d7;</i></span>
                 </div>
+                <div @click="haveSelect()" v-show="!havestart" class="goodsinfo_content_alltime">
+                    您将租用 &nbsp;&nbsp; {{timeValue}}&nbsp;至&nbsp;{{despoiteRange}}&nbsp;({{currentGoodsData.rentTime}}{{timeText}})
+                    <span><i  style="color: #989898;" class="iconfont">&#xe6d7;</i></span>
+                </div>
+
+                <div v-transfer-dom>
+                        <!-- 规格选择区域 -->
+                        <popup  style="padding-top:20px;border-top:1px solid #eee;background:#fff"  v-model="timeselectshow" position="bottom" max-height="100%">
+                            <div @click="timehaveSelect" >
+                                 <inline-calendar  @on-change="timehaveSelect" class="inline-calendar-demo" :show.sync="timeconfig.show" v-model="timeValue" :start-date="timerange.startTime" :end-date="timerange.endTime" :range="timeconfig.range" :render-on-value-change="timeconfig.changerender" :show-last-month="timeconfig.showLastMonth" :show-next-month="timeconfig.showNextMonth" :highlight-weekend="timeconfig.highlightWeekend" :return-six-rows="timeconfig.return6Rows" :hide-header="timeconfig.hideHeader" :hide-week-list="timeconfig.hideWeekList" :replace-text-list="timeconfig.replaceTextList" :weeks-list="timeconfig.weeksList" :render-function="timeconfig.buildSlotFn" :disable-past="timeconfig.disablePast" :disable-future="timeconfig.disableFuture">
+                             </inline-calendar>  
+                            </div>
+                        </popup>
+                    </div>
                 <div class="goodsinfo_content_time">
-                    <inline-calendar class="inline-calendar-demo" :show.sync="timeconfig.show" v-model="timeValue" :start-date="timerange.startTime" :end-date="timerange.endTime" :range="timeconfig.range" :render-on-value-change="timeconfig.changerender" :show-last-month="timeconfig.showLastMonth" :show-next-month="timeconfig.showNextMonth" :highlight-weekend="timeconfig.highlightWeekend" :return-six-rows="timeconfig.return6Rows" :hide-header="timeconfig.hideHeader" :hide-week-list="timeconfig.hideWeekList" :replace-text-list="timeconfig.replaceTextList" :weeks-list="timeconfig.weeksList" :render-function="timeconfig.buildSlotFn" :disable-past="timeconfig.disablePast" :disable-future="timeconfig.disableFuture">
-                    </inline-calendar>
+                    
                     <!-- 商品特性 -->
                     <ul class="goodsinfo_typelist">
                         <li class="goodsinfo_typelist_single" v-show="staticdata.goods_is_free_deposit==1">
@@ -272,6 +285,8 @@ export default {
     },
     data() {
         return {
+            havestart:true,
+            timeselectshow:false,
             haveRules:false,
             confrim: "",
             toasts: false,
@@ -380,6 +395,7 @@ export default {
         /* 获取商品详情数据 */
     },
     activated() {
+        this.havestart=true;
         this.getData();
 
     },
@@ -552,6 +568,13 @@ export default {
         }
     },
     methods: {
+        timehaveSelect(){
+            this.havestart=false;
+            this.timeselectshow=false;
+        },
+        haveSelect(){
+            this.timeselectshow=true;
+        },
         /* 检查是否支持该地址 */
         checkAddress() {
             console.log(1);

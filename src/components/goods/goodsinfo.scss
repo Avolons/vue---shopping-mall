@@ -6,6 +6,13 @@
         height: 100%;
         position: fixed;
         overflow-y: auto;
+        .vux-divider{
+            background-color: #fff;
+        }
+    }
+    &_content{
+        background-color: #f3f3f3;
+        overflow: hidden;
     }
     /* 头部区域样式 */
     &_header{
@@ -123,14 +130,15 @@
         border-bottom: 1px solid #f3f3f3;
         background-color: #fff;
         margin-top: 10px;
-        line-height: 30px;
+        line-height: 40px;
+        height: 40px;
         display: flex;
         flex-wrap: wrap;
         position: relative;
         padding: 0 30px 0 15px;
         box-sizing: border-box;
         &_single{
-            line-height: 30px;
+            line-height: 40px;
             font-size: 15px;
             color: #272727;
             display: flex;
@@ -156,6 +164,10 @@
             z-index: 500;
         }
         &_content{
+                
+            &_time{
+                background-color: #f3f3f3;
+            }
             background: #fff !important;
             h3{
                 font-size: 14px;
@@ -199,7 +211,7 @@
             margin-top: 10px;
             display: flex;
             justify-content: space-between;
-            height: 40px;
+            height: 50px;
             align-items: center;
             font-size: 13px;
             color: #272727;

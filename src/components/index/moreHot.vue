@@ -30,6 +30,7 @@ import {API,getQuery} from '../../services';
   mounted(){
     API.main.goodsHot({
         recomandId:3,
+        page_number:30,
     }).then((Response)=>{
             this.goodsList=Response.body.data.shopList.data;
         });
