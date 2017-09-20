@@ -285,7 +285,7 @@
          </div>
          <div class="orderAction_main_type">
              <!-- 订单完成 评价完成 退款成功 退货成功-->
-             <i v-show="infoData.orderType==7 || infoData.orderType==8 || infoData.orderType==9 || infoData.orderType==10" class="iconfont">&#xe613;</i>
+             <i v-show="infoData.orderType==7 || infoData.orderType==9 || infoData.orderType==10" class="iconfont">&#xe613;</i>
              <!-- 订单关闭 -->
              <i v-show="infoData.orderType==8" class="iconfont">&#xe635;</i>
              <!-- 待收货 -->
@@ -803,7 +803,6 @@ export default {
                     self.confrim="提醒结算成功";    
                 }
                 self.currentPage=1;
-                self.Initialization();
                 self.toast=true;
                 localStorage.setItem("reload","1"); 
             }

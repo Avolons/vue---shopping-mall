@@ -630,7 +630,6 @@ export default {
                     self.confrim="提醒结算成功";    
                 }
                 self.currentPage=1;
-                self.getTypeData();
                 self.toast=true;
             }
         }); 
