@@ -43,6 +43,7 @@
         bottom: 0;
         left: 0;
         color: #fff;
+        z-index:99999;
     }
     &_list {
     }

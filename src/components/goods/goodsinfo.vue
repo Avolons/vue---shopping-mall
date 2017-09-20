@@ -39,7 +39,7 @@
                         租期
                         <div class="goodsinfo_rentTime_num">
                             <span @click="numcouter(0,0)">-</span>
-                            <input type="number" @input="goodsNumCheck(0)" v-model="currentGoodsData.rentTime">
+                            <input type="number" style="font-size:14px" @input="goodsNumCheck(0)" v-model="currentGoodsData.rentTime">
                             <span @click="numcouter(0,1)">+</span>
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                 <div v-transfer-dom>
                         <!-- 规格选择区域 -->
                         <popup  style="padding-top:20px;border-top:1px solid #eee;background:#fff"  v-model="timeselectshow" position="bottom" max-height="100%">
-                            <div @click="timehaveSelect" >
+                            <div>
                                  <inline-calendar  @on-change="timehaveSelect" class="inline-calendar-demo" :show.sync="timeconfig.show" v-model="timeValue" :start-date="timerange.startTime" :end-date="timerange.endTime" :range="timeconfig.range" :render-on-value-change="timeconfig.changerender" :show-last-month="timeconfig.showLastMonth" :show-next-month="timeconfig.showNextMonth" :highlight-weekend="timeconfig.highlightWeekend" :return-six-rows="timeconfig.return6Rows" :hide-header="timeconfig.hideHeader" :hide-week-list="timeconfig.hideWeekList" :replace-text-list="timeconfig.replaceTextList" :weeks-list="timeconfig.weeksList" :render-function="timeconfig.buildSlotFn" :disable-past="timeconfig.disablePast" :disable-future="timeconfig.disableFuture">
                              </inline-calendar>  
                             </div>

@@ -10,14 +10,14 @@ body {
 .main_container .main_typelist_box {
     height: 40px;
     position: relative;
-    width: 810px;
+    width: 560px;
     font-size: 0;
     border-bottom: 1px solid #f3f3f3;
     background-color: #fff;
 }
 
 .main_typelist_item {
-    width: 90px;
+    width: 70px;
     height: 40px;
     display: inline-block;
     text-align: center;
@@ -27,7 +27,7 @@ body {
 
 .main_typelist_bottomline {
     height: 2px;
-    width: 90px;
+    width: 70px;
     position: absolute;
     background-color: #2196f3;
     left: 0;
@@ -40,7 +40,7 @@ body {
 
 @for $i from 1 through 10 {
     .main_typelist_item:nth-of-type(#{$i})[class*="main_typelist_item--selected"]~.main_typelist_bottomline {
-        left: (90px * $i) - 90px;
+        left: (70px * $i) - 70px;
     }
 }
 
@@ -520,7 +520,7 @@ export default {
                     console.log(getWindowHeight());
 
                     console.log(getScrollHeight());
-            　　if (getScrollTop() + getWindowHeight() == getScrollHeight()) {
+            　　if ((getScrollHeight()-10) <= (getScrollTop() + getWindowHeight()) <= getScrollHeight()) {
                 if(self.canBottom==true){
                     self.canBottom=false;
                     self.getMoreData();
