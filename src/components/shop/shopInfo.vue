@@ -55,7 +55,7 @@
 <div>
     <div class="shopInfo_main">
         <div class="help_common_title">
-             <x-header @on-click-back="routerBack" :left-options="{backText: '',preventGoBack:true}">店铺详情</x-header>
+             <x-header @on-click-back="routerBack" :left-options="{backText: '',preventGoBack:true}">{{storeName}}</x-header>
         </div> 
         <header class="shopInfo_main_header">
             <img class="shopInfo_main_shopface" :src="storebgPic" alt="shopface">

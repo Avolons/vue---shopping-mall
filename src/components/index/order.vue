@@ -253,25 +253,25 @@
                            <!-- 订单关闭 评价完成 退款完成 退货完成 -->
                            <button @click.stop="deletOrder(item.order_id)" class="order_single_btn--confirm" v-if="item.orderType==1 || item.orderType==7 || item.orderType==8 || item.orderType==9 || item.orderType==10" >删除订单</button>     
                            <!-- 代付款状态 -->
-                           <button v-if="item.orderType==1">付款</button>   
+                           <button @click.stop="payOrder(item.order_id)" v-if="item.orderType==1">付款</button>   
                            <!-- 待发货状态 -->  
-                           <button v-if="item.orderType==2">提醒发货</button>  
+                           <button @click.stop="remind(item.order_id,1)" v-if="item.orderType==2">提醒发货</button>  
                            <!-- 待收货状态 退货待结算 退货结算待确认 -->   
-                           <button v-if="item.orderType==3 || item.srcorderType==0">查看物流</button>
+                           <button @click.stop="download()" v-if="item.orderType==3 || item.srcorderType==0">查看物流</button>
                            <!-- 退货待结算 待结算-->
-                           <button v-if="(item.orderType==5 && !item.srcorderType) || item.srcorderType==0">提醒结算</button>     
+                           <button @click.stop="remind(item.order_id,2)" v-if="(item.orderType==5 && !item.srcorderType) || item.srcorderType==0">提醒结算</button>     
                             <!-- 待收货状态 -->
-                           <button v-if="item.orderType==3">确认收货</button>   
+                           <button @click.stop="confrimOrder(item.order_id)" v-if="item.orderType==3">确认收货</button>   
                            <!-- 待归还状态   -->
                            <button v-if="item.orderType==4">归还</button>  
                             <!-- 退货完成 结算完成 评价完成 -->
                            <button @click.stop="seeSettlement(item.order_id)" class="order_single_btn--confirm"  v-if="item.orderType==7" >结算单</button>     
                            <!-- 待评价 -->
-                           <button v-if="item.orderType==6">评价</button>
+                           <button @click.stop="download()" v-if="item.orderType==6">评价</button>
                            <!-- 评价完成 -->     
-                           <button v-if="item.orderType==7">查看评论</button> 
+                           <button @click.stop="download()" v-if="item.orderType==7">查看评论</button> 
                            <!-- 退货结算待确认 结算待确认 -->    
-                           <button v-if="item.srcorderType==1 || (item.orderType==5 && item.srcorderType==2)">确认结算</button>     
+                           <button @click.stop="confrimSettlement(item.order_id)" v-if="item.srcorderType==1 || (item.orderType==5 && item.srcorderType==2)">确认结算</button>     
                                 
                     </div>
             </li>
@@ -298,6 +298,7 @@ export default {
   },
   data () {
     return {
+        paydata:{},
       confrim:"",
       toast:false,
       showList1: true,
@@ -343,9 +344,18 @@ export default {
     
   },
   mounted () {
-    if(!this.orderList[0]){
-       this.getTypeData();
-    }
+        this.currentPage=1;
+        this.getTypeData();
+        setInterval(()=>{
+            if(localStorage.getItem("reload")){
+                this.currentPage=1;
+                this.getTypeData();
+                localStorage.setItem("reload","");     
+            }
+        },1000);
+  },
+  activated(){
+      
   },
   methods: {
     /* typelist点击选中函数 */
@@ -417,6 +427,9 @@ export default {
     },
     /* 获取对应的数据 */
     getTypeData(){
+            if(this.currentPage==1){
+                this.orderList=[];
+            }
           API.order.orderlist({
               userId:this.getUserInfoUserId,  
               token:this.getUserInfoToken,
@@ -457,6 +470,7 @@ export default {
                     if(res.body.code==200){
                         self.confrim="删除成功";
                         self.toast=true;
+                        self.currentPage=1;
                         self.getTypeData();
                     }
                 });
@@ -477,20 +491,27 @@ export default {
                     if(res.err_msg == "get_brand_wcpay_request:ok" ) {
                           self.confrim="支付成功";
                           self.toast=true;
-                          location.href="/#/index/main/order";
+                          self.currentPage=1;
+                          self.getTypeData();
                     }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
                 }
             ); 
         },
    /* 订单付款 */
     payOrder(id){
+        /* 待付款订单生成支付订单 */
         let self=this;
-                  let openId=localStorage.getItem("openId");
+        API.order.orderShipPay({
+             userId:this.getUserInfoUserId,  
+             token:this.getUserInfoToken,
+             orderId:id,
+        }).then((res)=>{
+            let openId=localStorage.getItem("openId");
                   API.order.OrderWechat({
                        userId:this.getUserInfoUserId,  
                        token:this.getUserInfoToken,
-                       orderSn:id,
-                       payMethod:2,
+                       orderSn:res.body.data.order_big_sn,
+                       payMethod:3,
                        openId:openId,
                   }).then((resopndy)=>{
                       this.paydata=resopndy.body;
@@ -508,6 +529,8 @@ export default {
                   },(err)=>{
                       alert(JSON.stringify(err));
                   });
+        })
+                  
     },
     /* 确认收货 */
     confrimOrder(id){
@@ -524,6 +547,7 @@ export default {
                   }).then((res)=>{
                     if(res.body.code==200){
                         self.confrim="确认收货成功";
+                        self.currentPage=1;
                         self.getTypeData();
                         self.toast=true;
                     }
@@ -556,6 +580,7 @@ export default {
                     }).then((res)=>{
                         if(res.body.code==200){
                             self.confrim="确认归还成功";
+                            self.currentPage=1;
                             self.getTypeData();
                             self.toast=true;
                         }
@@ -570,7 +595,6 @@ export default {
             /* title: 'Title', */
             content: '是否确认结算',
             onConfirm () {
-                /* 点击确认时执行具体删除操作 */
                 API.order.orderSettle({
                     userId:self.getUserInfoUserId,  
                     token:self.getUserInfoToken,
@@ -578,6 +602,7 @@ export default {
                   }).then((res)=>{
                     if(res.body.code==200){
                         self.confrim="结算成功";
+                        self.currentPage=1;
                         self.getTypeData();
                         self.toast=true;
                     }
@@ -589,13 +614,26 @@ export default {
     seeSettlement(id){
         window.location.href="/#/settlement?id="+id;
     },
-    /* 提醒发货 */
-    remind(id){
-
-    },
-    /* 提醒结算 */
-    remindSettl(id){
-        
+    /* 提醒发货 ,结算 1-提醒发货2-提醒结算*/
+    remind(id,type){
+        let self=this;
+        API.order.orderRemind({
+                    userId:self.getUserInfoUserId,  
+                    token:self.getUserInfoToken,
+                    orderId:id,
+                    type:type,
+            }).then((res)=>{
+            if(res.body.code==200){
+                if(type==1){
+                    self.confrim="提醒发货成功";
+                }else{
+                    self.confrim="提醒结算成功";    
+                }
+                self.currentPage=1;
+                self.getTypeData();
+                self.toast=true;
+            }
+        }); 
     },
     /* 查看物流,评价, */
     download(id){

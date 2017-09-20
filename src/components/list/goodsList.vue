@@ -95,6 +95,7 @@
             <i class="iconfont">&#xe638;</i>
             <p>抱歉，没有搜索到您想要的商品</p>
         </div>
+        <load-more v-show="loadshow" tip="加载更多"></load-more>
     </div>
 </div>
    
@@ -102,7 +103,7 @@
 
 <script>
 import ListCompent from '../list/listCompent.vue';
-import { XHeader ,Scroller} from 'vux'
+import { XHeader ,Scroller,LoadMore} from 'vux'
 import {API,getQuery} from '../../services';
 
 export default {
@@ -110,17 +111,20 @@ export default {
     XHeader,
     Scroller,
     ListCompent,
+    LoadMore
   },
   data () {
     return {
-      goodsList:[],
+        canBottom:true,
+        loadshow:false,
+        goodsList:[],
       /* 搜索栏目显示的名称 */
-      goodsVal:"",
-      categoryId:"",
-      haveData:false,//是否有未加载的数据
-      searchType:0,
-      page:1,
-      pullupConfig: {
+        goodsVal:"",
+        categoryId:"",
+        haveData:true,//是否有未加载的数据
+        searchType:0,
+        page:1,
+        pullupConfig: {
         content: '上拉加载更多',
         downContent: '松开进行加载',
         upContent: '上拉加载更多',
@@ -143,12 +147,6 @@ export default {
       routerBack(){
           this.$router.goBack();
       },
-       load() {
-           console.log(1);
-        if (this.haveData) {
-            console.log(1);
-            } 
-        },
       /* 选项的切换，切换默认排序和销量优先 */
       typeCheck(index){
           if(this.typeList[index].select){
@@ -156,7 +154,9 @@ export default {
           }else{
               this.typeList[index].select=true;
               this.typeList[1-index].select=false;
+              /* 分页重置 */
               this.page=1;
+              this.canBottom=true; 
           }
           if(this.categoryId){
               API.main.searchGoods({
@@ -166,25 +166,28 @@ export default {
               page:this.page,
           }).then((Response)=>{
             this.goodsList=Response.body.data.shopList.data;
-            if(this.goodsList.length==10){
+            if(Response.body.data.shopList.data.length==10){
                 this.haveData=true;
                 this.page++;
+            }else{
+                this.haveData=false;
             }
           });
           }else{
-               API.main.searchGoods({
+              API.main.searchGoods({
               goods_name:this.goodsVal,
               goods_sort:index,
               page_number:10,
               page:this.page,
           }).then((Response)=>{
-            this.goodsList=Response.body.data.shopList.data;   
-            if(this.goodsList.length==10){
-                this.haveData=true;
-                this.page++;
-                
-            }
-          });
+                this.goodsList=Response.body.data.shopList.data;   
+                if(Response.body.data.shopList.data.length==10){
+                    this.haveData=true;
+                    this.page++;
+                }else{
+                    this.haveData=false;
+                }
+             });
           }
       },
       /* 数据初始化 */
@@ -201,9 +204,11 @@ export default {
               page:this.page,
           }).then((Response)=>{
             this.goodsList=Response.body.data.shopList.data;
-            if(this.goodsList.length==10){
+            if(Response.body.data.shopList.data.length==10){
                 this.haveData=true;
                 this.page++;
+            }else{
+                this.haveData=false;
             }   
           });
       }else{
@@ -216,19 +221,44 @@ export default {
               page:this.page,
           }).then((Response)=>{
             this.goodsList=Response.body.data.shopList.data;   
-            if(this.goodsList.length==10){
+            if(Response.body.data.shopList.data.length==10){
                 this.haveData=true;
                 this.page++;
+            }else{
+                this.haveData=false;
             }
           });
       }  
       },
-      getData(){
-          console.log(1);
+      /* 加载更多 */
+      getMoreData(){
+            if(this.haveData){
+                this.loadshow=true;
+                API.main.searchGoods({
+                    goods_name:this.goodsVal,
+                    goods_sort:this.searchType,
+                    page_number:10,
+                    page:this.page,
+                }).then((Response)=>{
+                    setTimeout(()=>{
+                    this.goodsList=this.goodsList.concat(Response.body.data.shopList.data);   
+                    this.canBottom=true;
+                    this.loadshow=false;
+                    },500);
+                    if(Response.body.data.shopList.data.length==10){
+                        this.haveData=true;
+                        this.page++;
+                    }else{
+                        this.haveData=false;
+                    }
+                });
+            }else{
+                this.canBottom=true; 
+            }
       }
   }
   ,mounted(){
-        this.Initialization();
+        /* this.Initialization(); */
         let self = this;
         function getScrollTop() {
             　　var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
@@ -265,12 +295,18 @@ export default {
         }
         window.onscroll = function() {
             　　if (getScrollTop() + getWindowHeight() == getScrollHeight()) {
-                    alert("到达底部");
+                   if(self.canBottom==true){
+                        self.canBottom=false;
+                        self.getMoreData();
+                    }
             　　}
         };
   }
   ,activated(){
-        this.Initialization();
+      this.page=1;
+      this.canBottom=true;
+       this.haveData=true;
+      this.Initialization();
   }
 }
 </script>

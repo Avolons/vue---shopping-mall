@@ -71,6 +71,11 @@ Vue.filter('dataform', function(value) {
 	return dateFormat(value*1000, 'YYYY-MM-DD');
 });
 
+Vue.filter('orderdata', function(value) {  
+	if(value){
+		return dateFormat(value*1000, 'YYYY-MM-DD HH:mm:ss');
+	}
+});
 
 //引入css重置文件,基本的样式文件
 require('./assets/css/reset.css')

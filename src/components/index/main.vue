@@ -56,7 +56,7 @@ body {
         width: 100%;
         height: calc(100% - 144px);
         overflow-y: auto;
-        background-color: #f3f3f3;
+        /* background-color: #f3f3f3; */
         .vux-slider > .vux-indicator > a > .vux-icon-dot.active, .vux-slider .vux-indicator-right > a > .vux-icon-dot.active{
             background-color:#2196f3;
         }
@@ -239,8 +239,8 @@ body {
         <div class="main_listbox">
             <!-- 轮播图组件 -->
             <swiper v-show="currentType==0" loop class="main_swiper" dots-position="center"  height="200px"  @on-index-change="onSwiperItemIndexChange" v-model="swiperItemIndex">
-                <swiper-item class="swiper-demo-img" v-for="(item, index) in bannerlist" :key="index">
-                    <img :src="item.imagePath">
+                <swiper-item  class="swiper-demo-img" v-for="(item, index) in bannerlist" :key="index">
+                    <img @click="bannerClick(item.extras,item.bannerType)" :src="item.imagePath">
                 </swiper-item>
             </swiper>
             <!-- 热门商品 -->
@@ -276,6 +276,7 @@ body {
                 </li>
             </ul>
                 <list-compent v-show="currentType!=0" :commonGoodsList="currentGoods"></list-compent>
+                <load-more v-show="loadshow" tip="加载更多"></load-more>
         </div>
     </div>
 </template>
@@ -300,6 +301,8 @@ export default {
     },
     data() {
         return {
+            canBottom:true,
+            loadshow:false,
             swiperItemIndex: 0,
             showList1: true,
             scrollTop: 0,
@@ -355,16 +358,49 @@ export default {
         },
        /* 根据列表id获取当前列表对应数据 */
        getData(id,index){
+           document.querySelector(".main_listbox").scrollTop=0;
            if(this.goodsList[index]||index==0){
                this.currentGoods=this.goodsList[index];
                return false;
            }
            API.main.searchGoodsCategory({
-                chooseId:id  
+                chooseId:id ,
+                page:1, 
            }).then((Response)=>{
             this.goodsList[index]=Response.body.data.shopList.data;
+            if(Response.body.data.shopList.data.length==10){
+                this.typeList[index].havedata=true;
+            }else{
+               this.typeList[index].havedata=false; 
+            }
             this.currentGoods=this.goodsList[index];
         });
+       },
+       /* 分页获取更多数据 */
+       getMoreData(){
+           if(this.currentType==0 || !this.typeList[this.currentType].havedata){
+               this.canBottom=true;
+                return false;
+           }else{
+               this.loadshow=true;
+                   API.main.searchGoodsCategory({
+                    chooseId:this.typeList[this.currentType].goods_category_id,  
+                    page:this.goodsList[this.currentType].length/10+1
+                }).then((Response)=>{
+                    setTimeout(()=>{
+                    this.loadshow=false;
+                    this.goodsList[this.currentType]=this.goodsList[this.currentType].concat(Response.body.data.shopList.data);
+                    this.currentGoods=this.goodsList[this.currentType];
+                    this.canBottom=true;
+                    },500);
+                    if(Response.body.data.shopList.data.length==10){
+                        this.typeList[this.currentType].havedata=true;
+                    }else{
+                        this.typeList[this.currentType].havedata=false;  
+                    }
+                });
+           }
+           
        },
         /* 列表页跳转 */
         golist(){
@@ -384,8 +420,18 @@ export default {
         },
         getMoreHot(){
             window.location.href="/#/moreHot"
+        },
+        /* 轮播图点击函数 */
+        bannerClick(id,type){
+            /* 1：店铺 2：商品 3：url */
+            if(type==1){
+                window.location.href="/#/shop/"+id;
+            }else if(type==2){
+                window.location.href="/#/goodsInfo/"+id;
+            }else{
+                window.location.href="/#/";
+            }
         }
-
     },
     mounted(){
         /* 获取轮播图信息 */
@@ -396,11 +442,11 @@ export default {
         API.main.hotTagLabel().then((Response)=>{
             let firstLabel={
               hot_label_name: "精选",
-                clcik:true
+                click:true
             }
             let shopList=Response.body.data.shopList;
             for(let item of shopList) {
-              item.clcik=false;
+              item.click=false;
             }
             shopList.splice(0,0,firstLabel);
             this.goodsList=new Array(shopList.length);
@@ -454,11 +500,11 @@ export default {
             　　return windowHeight-144;
         }
         document.querySelector(".main_listbox").onscroll = function() {
-            console.log(getScrollTop());
-            console.log(getWindowHeight());
-            console.log(getScrollHeight());
             　　if (getScrollTop() + getWindowHeight() == getScrollHeight()) {
-                    alert("到达底部");
+                if(self.canBottom==true){
+                    self.canBottom=false;
+                    self.getMoreData();
+                }
             　　}
         };
     }

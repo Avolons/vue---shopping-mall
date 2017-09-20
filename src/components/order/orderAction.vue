@@ -254,6 +254,26 @@
             color: #f80000;
         }
     }
+    .order_number_collection{
+        margin-bottom: 70px;
+        margin-top: 10px;
+        box-sizing: border-box;
+        padding: 0 15px;
+        background: #fff;
+        >h3{
+        font-size: 15px;
+        height: 40px;
+        line-height: 40px;
+        font-weight: 400;
+        color: #272727;
+        }
+        >li{
+            height: 35px;
+            line-height: 35px;
+            font-size: 13px;
+            color: #272727;
+        }
+    }
     
 </style>
 
@@ -339,32 +359,42 @@
             <cell  title="支付方式" :value="pay_type"></cell>
             <x-textarea :max="20" readonly v-model="infoData.message" placeholder="买家留言"  ></x-textarea>
         </group>
+        <ul class="order_number_collection">
+            <h3>订单编号：{{infoData.orderCardId}}</h3>
+            <li v-show="infoData.order_generation_time">订单生成时间：{{infoData.order_generation_time | orderdata }}</li>
+            <li v-show="infoData.order_pay_time">订单支付时间：{{infoData.order_pay_time | orderdata }}</li>
+            <li v-show="infoData.order_shipping_time">订单发货时间：{{infoData.order_shipping_time | orderdata }}</li>
+            <li v-show="infoData.order_delivery_time">确认收货时间：{{infoData.order_delivery_time | orderdata }}</li>
+            <li v-show="infoData.order_goods_refund_time">订单归还时间：{{infoData.order_goods_refund_time | orderdata }}</li>
+            <li v-show="infoData.order_settlement_bill_generation_time">结算单生成时间：{{infoData.order_settlement_bill_generation_time | orderdata }}</li>
+            <li v-show="infoData.order_settlement_bill_confirm_time">结算单确认时间：{{infoData.order_settlement_bill_confirm_time | orderdata }}</li>
+        </ul>
         <footer  class="orderAction_footer">
              <!-- 待付款 订单关闭 评价完成 退款完成 退货完成 -->
-            <button @click.stop="deletOrder(infoData.order_id)" class="order_single_btn--confirm" v-if="infoData.orderType==1 || infoData.orderType==7 || infoData.orderType==8 || infoData.orderType==9 || infoData.orderType==10" >删除订单</button>     
+            <button @click.stop="deletOrder(infoData.orderId)" class="order_single_btn--confirm" v-if="infoData.orderType==1 || infoData.orderType==7 || infoData.orderType==8 || infoData.orderType==9 || infoData.orderType==10" >删除订单</button>     
             <!-- 代付款状态 -->
-            <button v-if="infoData.orderType==1">付款</button>   
+            <button @click.stop="payOrder(infoData.orderId)" v-if="infoData.orderType==1">付款</button>   
             <!-- 待发货状态 -->  
-            <button class="order_single_btn--confirm" v-if="infoData.orderType==2">申请退款</button>  
-            <button v-if="infoData.orderType==2">提醒发货</button>  
+            <button @click.stop="download()" class="order_single_btn--confirm" v-if="infoData.orderType==2">申请退款</button>  
+            <button @click.stop="remind(infoData.orderId,1)" v-if="infoData.orderType==2">提醒发货</button>  
             <!-- 待收货状态 退货待结算 退货结算待确认 -->   
-            <button class="order_single_btn--confirm" v-if="infoData.orderType==3 || infoData.orderType==5">查看物流</button>
+            <button @click.stop="download()" class="order_single_btn--confirm" v-if="infoData.orderType==3 || infoData.orderType==5">查看物流</button>
             <!-- 退货待结算 待结算-->
-            <button v-if="infoData.orderType==5  || infoData.orderType==11">提醒结算</button>     
+            <button @click.stop="remind(infoData.orderId,2)" v-if="infoData.orderType==5  || infoData.orderType==11">提醒结算</button>     
             <!-- 待收货状态 -->
-            <button class="order_single_btn--confirm" v-if="infoData.orderType==3">申请退货</button>   
-            <button v-if="infoData.orderType==3">确认收货</button>   
+            <button @click.stop="download()" class="order_single_btn--confirm" v-if="infoData.orderType==3">申请退货</button>   
+            <button @click.stop="confrimOrder(infoData.orderId)"  v-if="infoData.orderType==3">确认收货</button>   
             <!-- 待归还状态   -->
-            <button v-if="infoData.orderType==4">归还</button>  
+            <button @click.stop="download()" v-if="infoData.orderType==4">归还</button>  
             <button class="order_single_btn--confirm" v-if="infoData.orderType==4">申请退货</button>  
             <!-- 退货完成 结算完成 评价完成 待评价-->
-            <button @click.stop="seeSettlement(infoData.order_id)" class="order_single_btn--confirm"  v-if="infoData.orderType==6 ||infoData.orderType==7 || infoData.orderType==10 || infoData.orderType==12 ||infoData.orderType==14" >结算单</button>     
+            <button @click.stop="seeSettlement(infoData.orderId)" class="order_single_btn--confirm"  v-if="infoData.orderType==6 ||infoData.orderType==7 || infoData.orderType==10 || infoData.orderType==12 ||infoData.orderType==14" >结算单</button>     
             <!-- 待评价 -->
-            <button v-if="infoData.orderType==6">评价</button>
+            <button @click.stop="download()" v-if="infoData.orderType==6">评价</button>
             <!-- 评价完成 -->     
-            <button v-if="infoData.orderType==7">查看评论</button> 
+            <button @click.stop="download()" v-if="infoData.orderType==7">查看评论</button> 
             <!-- 退货结算待确认 结算待确认 -->    
-            <button v-if="infoData.orderType==14 || infoData.orderType==12">确认结算</button> 
+            <button  @click.stop="confrimSettlement(infoData.orderId)" v-if="infoData.orderType==14 || infoData.orderType==12">确认结算</button> 
         </footer>
         <toast v-model="toast"  type="success">{{confrim}}</toast>
 
@@ -386,6 +416,8 @@ export default {
   },
   data () {
     return {
+        /* 页面定时器 */
+        inter:null,
         confrim:"请选择地址",
         toast:false,
         orderType:0,
@@ -417,44 +449,44 @@ export default {
                 message:"请及时确认收货"
             },
             {
-                title:"等待买家付款",//待归还
-                message:"还有1小时33分自动关闭"
+                title:"待归还",//待归还
+                message:""
             },
             {
-                title:"等待买家付款",//待结算
-                message:"还有1小时33分自动关闭"
+                title:"待结算中",//待结算
+                message:"等待商家确认收货并出具结算单"
             },
             {
-                title:"等待买家付款",//待评价
-                message:"还有1小时33分自动关闭"
+                title:"订单待评价",//待评价
+                message:""
             },
             {
                 title:"订单已完成",//评价完成
                 message:""
             },
             {
-                title:"等待买家付款",//订单关闭
-                message:"还有1小时33分自动关闭"
+                title:"订单已关闭",//订单关闭
+                message:""
             },
             {
                 title:"退款处理成功",//退款结束
                 message:"退款金额将及时返还至您的付款账户"
             },
             {
-                title:"等待买家付款",//退货完成
-                message:"还有1小时33分自动关闭"
+                title:"退货处理成功",//退货完成
+                message:"退款金额将及时返还至您的付款账户"
             },
             {
-                title:"等待买家付款",//退货待结算
-                message:"还有1小时33分自动关闭"
+                title:"待结算中",//退货待结算
+                message:"等待商家确认收货并出具结算单"
             },
             {
-                title:"等待买家付款",//退货结算待确认
-                message:"还有1小时33分自动关闭"
+                title:"结算单已出",//退货结算待确认
+                message:"请及时确认结算单,还有53小时17分自动结算"
             },
             {
-                title:"等待买家付款",//退款处理中
-                message:"还有1小时33分自动关闭"
+                title:"退款处理中",//退款处理中
+                message:""
             },
             {
                 title:"结算单已出",//结算待确认
@@ -501,7 +533,57 @@ export default {
         }
     },
   methods:{
-      /* 支付接口 */
+      /* 时间格式化 */
+      timeForm(){
+          let flag,start;
+          if(this.infoData.orderType==1){
+              /* 两小时倒计时 */
+              flag=2*3600*1000;
+              start=this.infoData.order_generation_time*1000;
+          }else if(this.infoData.orderType==12 || this.infoData.orderType==14){
+               /* 72小时倒计时 */
+               flag=72*3600*1000;
+               start=this.infoData.order_settlement_bill_generation_time*1000;
+          }
+           if(this.infoData.orderType==1 ||this.infoData.orderType==12 || this.infoData.orderType==14) {
+                let now = new Date(); 
+                    let leftTime=flag-(now.getTime()-start); 
+                    let leftsecond = parseInt(leftTime/1000); 
+                    let day=Math.floor(leftsecond/(60*60*24)); 
+                    let hour=Math.floor((leftsecond-day*24*60*60)/3600); 
+                    let minute=Math.floor((leftsecond-day*24*60*60-hour*3600)/60);
+                    if(leftsecond<=0) {
+                        day=0;
+                        hour=0;
+                        minute=0;
+                    }
+                    if(this.infoData.orderType==1){
+                        this.currentConfrim.message="还有"+(hour+day*24)+"小时"+minute+"分自动关闭";
+                    }else if(this.infoData.orderType==12 || this.infoData.orderType==14){
+                        this.currentConfrim.message="请及时确认结算单,还有"+(hour+day*24)+"小时"+minute+"分自动结算";
+                    }
+               this.inter=setInterval(()=>{
+                    let now = new Date(); 
+                    let leftTime=flag-(now.getTime()-start); 
+                    let leftsecond = parseInt(leftTime/1000); 
+                    let day=Math.floor(leftsecond/(60*60*24)); 
+                    let hour=Math.floor((leftsecond-day*24*60*60)/3600); 
+                    let minute=Math.floor((leftsecond-day*24*60*60-hour*3600)/60); 
+                    if(leftsecond<=0) {
+                        day=0;
+                        hour=0;
+                        minute=0;
+                    }
+                    if(this.infoData.orderType==1){
+                        this.currentConfrim.message="还有"+(hour+day*24)+"小时"+minute+"分自动关闭";
+                    }else if(this.infoData.orderType==12 || this.infoData.orderType==14){
+                        this.currentConfrim.message="请及时确认结算单,还有"+(hour+day*24)+"小时"+minute+"分自动结算";
+                    }
+               },60*1000);
+           }
+            
+      },
+     /* 支付接口 */
       onBridgeReady(){
           let self=this;
             WeixinJSBridge.invoke(
@@ -514,7 +596,9 @@ export default {
                     if(res.err_msg == "get_brand_wcpay_request:ok" ) {
                           self.confrim="支付成功";
                           self.toast=true;
-                          location.href="/#/index/main/order";
+                          self.currentPage=1;
+                          self.Initialization();
+                          localStorage.setItem("reload","1"); 
                     }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
                 }
             ); 
@@ -541,7 +625,7 @@ export default {
                                 item.orderType=3;//待收货
                                 break;
                             case 3:
-                               item.orderType=4;//待归还
+                                item.orderType=4;//待归还
                                 break;
                             case 4:
                                 item.orderType=5;//待结算
@@ -587,10 +671,11 @@ export default {
                     orderId:this.orderId,
                   }).then((res)=>{
                     if(res.body.code==200){
+                        this.getOrderType(res.body.data);
                         this.infoData=res.body.data; 
-                        this.getOrderType(this.infoData);
                         this.currentConfrim=this.titleArray[this.infoData.orderType-1];
-                    }
+                        this.timeForm();
+                   }
                 });
       },
          /* 删除订单 */
@@ -609,22 +694,29 @@ export default {
                     if(res.body.code==200){
                         self.confrim="删除成功";
                         self.toast=true;
-                        self.getTypeData();
+                        localStorage.setItem("reload","1"); 
+                        self.routerBack();
                     }
                 });
             }
         });
        
     },
-    /* 订单付款 */
+   /* 订单付款 */
     payOrder(id){
+        /* 待付款订单生成支付订单 */
         let self=this;
-                  let openId=localStorage.getItem("openId");
+        API.order.orderShipPay({
+             userId:this.getUserInfoUserId,  
+             token:this.getUserInfoToken,
+             orderId:id,
+        }).then((res)=>{
+            let openId=localStorage.getItem("openId");
                   API.order.OrderWechat({
                        userId:this.getUserInfoUserId,  
                        token:this.getUserInfoToken,
-                       orderSn:id,
-                       payMethod:2,
+                       orderSn:res.body.data.order_big_sn,
+                       payMethod:3,
                        openId:openId,
                   }).then((resopndy)=>{
                       this.paydata=resopndy.body;
@@ -642,6 +734,8 @@ export default {
                   },(err)=>{
                       alert(JSON.stringify(err));
                   });
+        })
+                  
     },
     /* 确认收货 */
     confrimOrder(id){
@@ -658,8 +752,9 @@ export default {
                   }).then((res)=>{
                     if(res.body.code==200){
                         self.confrim="确认收货成功";
-                        self.getTypeData();
+                        self.Initialization();
                         self.toast=true;
+                        localStorage.setItem("reload","1"); 
                     }
                 });
             }
@@ -680,8 +775,9 @@ export default {
                   }).then((res)=>{
                     if(res.body.code==200){
                         self.confrim="结算成功";
-                        self.getTypeData();
+                        self.Initialization();
                         self.toast=true;
+                        localStorage.setItem("reload","1"); 
                     }
                 });
             }
@@ -691,15 +787,37 @@ export default {
     seeSettlement(id){
         window.location.href="/#/settlement?id="+id;
     },
-    /* 提醒发货 */
-    remind(id){
-
+    /* 提醒发货 ,结算 1-提醒发货2-提醒结算*/
+    remind(id,type){
+        let self=this;
+        API.order.orderRemind({
+                    userId:self.getUserInfoUserId,  
+                    token:self.getUserInfoToken,
+                    orderId:id,
+                    type:type,
+            }).then((res)=>{
+            if(res.body.code==200){
+                if(type==1){
+                    self.confrim="提醒发货成功";
+                }else{
+                    self.confrim="提醒结算成功";    
+                }
+                self.currentPage=1;
+                self.Initialization();
+                self.toast=true;
+                localStorage.setItem("reload","1"); 
+            }
+        }); 
+    },
+    /* 查看物流,评价, */
+    download(id){
+        window.location.href='/#/download';
     }
-
   },mounted(){
       
   },
   activated(){
+       clearInterval(this.inter);
       this.orderId=this.$route.params.id;
       this.Initialization();
   }

@@ -123,7 +123,7 @@
             <cell title="损失赔偿金" :value="infoData.settlement_bill_damages | currency('￥')"  ></cell>
             <cell title="小计" :value="infoData.settlement_bill_total | currency('￥')"  ></cell>
             <cell title="实际退款金额" :value="infoData.refund_amount | currency('￥')"  ></cell>
-            <x-textarea  style="height:auto" :max="20" readonly v-model="infoData.settlement_bill_remarks" placeholder="买家留言"  ></x-textarea>
+            <x-textarea  style="height:auto" :max="20" readonly v-model="infoData.settlement_bill_remarks" placeholder="备注"  ></x-textarea>
         </group> 
     </div>
 </div>
