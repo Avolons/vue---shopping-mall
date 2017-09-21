@@ -299,10 +299,11 @@ body {
                     </div>
                 </li>
             </ul>
+            <load-more v-show="currentType==0" :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
             <div v-show="currentType!=0" class="list_compent_list_box">
                 <list-compent style=""  :commonGoodsList="currentGoods"></list-compent>
                 <load-more  v-show="loadshow" tip="加载更多"></load-more>
-                <load-more v-show="!loadshow" :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
+                <load-more v-show="!loadshow || currentType==0" :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
             </div>
         </div>
     </div>

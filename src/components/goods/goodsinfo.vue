@@ -911,6 +911,7 @@ export default {
             if(this.havestart){
                 this.confrim = "请选择起租日期";
                 this.toasts = true;
+                this.timeselectshow=true;
                 return false;   
             }
             let addresslist = (this.getName(this.goodsAddress)).split(" ");

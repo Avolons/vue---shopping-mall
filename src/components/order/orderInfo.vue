@@ -321,6 +321,9 @@ export default {
                         alert(JSON.stringify(self.paydata));
                         alert(JSON.stringify(res));
                     } 
+                    if(res.err_msg =="get_brand_wcpay_request:cancel")  {
+                            location.href="/#/index/main/order";
+                    } 
                     if(res.err_msg == "get_brand_wcpay_request:ok" ) {
                           self.confrim="支付成功";
                           self.toast=true;
