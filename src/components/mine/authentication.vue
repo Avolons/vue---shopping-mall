@@ -134,6 +134,9 @@ export default {
                         this.routerBack();
                   }
               }
+          },(err)=>{
+                this.confrim="实名认证未通过"; 
+                this.toast=true;
           });
       }
   }
