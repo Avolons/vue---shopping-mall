@@ -280,6 +280,7 @@ export default {
         };
     },
     activated() {
+        this.val=0,
         this.page=1;
         this.canBottom=true;
         this.haveData=true;

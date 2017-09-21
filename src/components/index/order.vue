@@ -269,7 +269,7 @@
                             <!-- 待收货状态 -->
                            <button @click.stop="confrimOrder(item.order_id)" v-if="item.orderType==3">确认收货</button>   
                            <!-- 待归还状态   -->
-                           <button v-if="item.orderType==4">归还</button>  
+                           <button @click.stop="confirmReturn(item)" v-if="item.orderType==4">归还</button>  
                             <!-- 退货完成 结算完成 评价完成 -->
                            <button @click.stop="seeSettlement(item.order_id)" class="order_single_btn--confirm"  v-if="item.orderType==7" >结算单</button>     
                            <!-- 待评价 -->
@@ -569,15 +569,16 @@ export default {
         * revertId 归还地址编号
         * company 物流公司名 */
         let self=this;
-        this.$vux.confirm.show({
+        if(item.order_express_type==2){
+            this.$vux.confirm.show({
                 /* title: 'Title', */
                 content: '是否确认归还',
                 onConfirm () {
                     /* 点击确认时执行具体删除操作 */
-                    API.order.orderReceipt({
+                    API.order.orderReturn({
                         userId:self.getUserInfoUserId,  
                         token:self.getUserInfoToken,
-                        orderId:id,
+                        orderId:item.order_id,
                         sinceId:"",
                         expressId:"",
                         logisticsName:"",
@@ -585,7 +586,7 @@ export default {
                         company:"",
                     }).then((res)=>{
                         if(res.body.code==200){
-                            self.confrim="确认归还成功";
+                            self.confrim="归还成功";
                             self.currentPage=1;
                             self.getTypeData();
                             self.toast=true;
@@ -593,6 +594,11 @@ export default {
                     });
                 }
             });
+        }else{
+            console.log(item);
+            this.$router.push({ path: '/orderReturn?type='+item.order_express_type+"&orderId="+item.order_id});    
+        }
+        
     },
     /* 确认结算 */
     confrimSettlement(id){

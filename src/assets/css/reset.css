@@ -37,6 +37,17 @@
   url('//at.alicdn.com/t/font_400924_tc963k6dykxu5wmi.svg#iconfont') format('svg');
 }
 
+
+body .weui-toast{
+  height: 30px !important;
+  min-height: 30px !important;
+  line-height: 30px;
+  top: 240px;
+}
+
+body .weui-icon_toast{
+  display: none;
+}
 body .weui-tabbar{
   border-top: 1px solid #eee;
   overflow: hidden;

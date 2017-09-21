@@ -227,6 +227,7 @@ import transaction from '../components/help/transaction.vue';//交易相关
 import addressList from '../components/address/addressList.vue';//新增地址
 import editAddress from '../components/address/editAddress.vue';//地址管理
 import orderInfo from '../components/order/orderInfo.vue';//订单详情
+import orderReturn from '../components/order/orderReturn.vue';//订单归还
 import settlement from '../components/order/settlement.vue';//确认单详情
 import orderSuccess from '../components/order/orderSuccess.vue';//支付成功
 import orderAction from '../components/order/orderAction.vue';//订单列表详情
@@ -350,6 +351,11 @@ const routes = [{
         name: 'orderLogistics',
         component: orderLogistics
     },{
+        path:'/orderReturn',
+        name: 'orderReturn',
+        component: orderReturn
+    },
+    {
         path:'/goodsList/',
         name: 'goodsList',
         component: goodsList
