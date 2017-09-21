@@ -174,7 +174,7 @@
             <a href="/#/editAddress" class="addressList_addBtn">新增收货地址</a>
             <toast v-model="toast" type="success">{{confrim}}</toast>
             <load-more style="margin-bottom:70px;" v-show="loadshow" tip="加载更多"></load-more>
-            <load-more style="margin-bottom:70px;" v-show="!loadshow && addressList.data[0]" :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
+            <load-more style="margin-bottom:70px;" v-show="!loadshow && addressList.data.length>8" :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
         </div>
     </div>
 </template>
@@ -360,7 +360,7 @@ export default {
             return windowHeight;
         }
         window.onscroll = function() {
-            if (getScrollTop() + getWindowHeight() == getScrollHeight()) {
+            if (getScrollTop() + getWindowHeight() >= (getScrollHeight()-10)) {
                 if (self.canBottom == true) {
                     self.canBottom = false;
                     self.getAddress();

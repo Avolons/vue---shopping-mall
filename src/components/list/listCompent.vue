@@ -85,7 +85,7 @@ export default {
     methods: {
         /* 进入商品详情 */
         goInfo(id) {
-            window.location.href = "/#/goodsInfo/" + id;
+            this.$router.push({ path: '/goodsInfo/'+id}); 
         },
         load() {
             console.log(1);

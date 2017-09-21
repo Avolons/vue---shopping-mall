@@ -48,9 +48,11 @@ body {
     &_swiper {
         .vux-swiper-item{
             position: relative;
+            width: 100%;
         }
         .vux-swiper-item img{
-           height: 100%;
+           width: 100%;
+           /* height: 100%; */
            position: absolute;
            top: 50%;
            left: 50%;

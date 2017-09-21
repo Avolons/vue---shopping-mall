@@ -172,7 +172,7 @@ export default {
             　　return windowHeight;
         }
         window.onscroll = function() {
-        　　if (getScrollTop() + getWindowHeight() == getScrollHeight()) {
+        　　if (getScrollTop() + getWindowHeight() >= (getScrollHeight()-10)) {
                 if(self.canBottom==true){
                     self.canBottom=false;
                     self.getMoreData();

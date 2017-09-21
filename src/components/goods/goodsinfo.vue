@@ -703,7 +703,7 @@ export default {
             this.currentTypedata.rent_period[0].sel = 1;
             /* 商品名称对应 */
             this.goodsTitle = goodsData.goodsName;
-            document.querySelector(".goodsinfo_header .vux-swiper").style.height = window.outerWidth/0.9 + "px";
+            document.querySelector(".goodsinfo_header .vux-swiper").style.height = Math.floor(window.innerWidth) + "px";
 
         },
 
@@ -907,6 +907,11 @@ export default {
                 this.confrim = "暂不支持改地址，请重新选择";
                 this.toasts = true;
                 return false;
+            }
+            if(this.havestart){
+                this.confrim = "请选择起租日期";
+                this.toasts = true;
+                return false;   
             }
             let addresslist = (this.getName(this.goodsAddress)).split(" ");
             let perId;

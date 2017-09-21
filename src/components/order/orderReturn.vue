@@ -422,7 +422,7 @@ export default {
                             self.confrim="归还成功";
                             localStorage.setItem("reload","1"); 
                              setTimeout(()=>{
-                             self.routerBack();
+                             self.$router.push({ path: '/index/main/order'});
                             },500);
                         }
                     });
@@ -453,7 +453,7 @@ export default {
                             self.confrim="归还成功";
                             localStorage.setItem("reload","1"); 
                             setTimeout(()=>{
-                             self.routerBack();
+                             self.$router.push({ path: '/index/main/order'});
                             },500);
                         }
                     });

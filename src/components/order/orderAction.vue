@@ -391,7 +391,7 @@
             <button @click.stop="download()" class="order_single_btn--confirm" v-if="infoData.orderType==3">申请退货</button>   
             <button @click.stop="confrimOrder(infoData.orderId)"  v-if="infoData.orderType==3">确认收货</button>   
             <!-- 待归还状态   -->
-            <button @click.stop="download()" v-if="infoData.orderType==4">归还</button>  
+            <button @click.stop="confirmReturn(infoData)" v-if="infoData.orderType==4">归还</button>  
             <button  @click.stop="download()" class="order_single_btn--confirm" v-if="infoData.orderType==4">申请退货</button>  
             <!-- 退货完成 结算完成 评价完成 待评价-->
             <button @click.stop="seeSettlement(infoData.orderId)" class="order_single_btn--confirm"  v-if="infoData.orderType==6 ||infoData.orderType==7 || infoData.orderType==10 || infoData.orderType==12 ||infoData.orderType==14" >结算单</button>     
@@ -707,6 +707,43 @@ export default {
             }
         });
        
+    },
+     /* 确认归还 */
+    confirmReturn(item){
+        /* * sinceId 自提点编号
+        * expressId 物流单号
+        * logisticsName 物流公司简拼
+        * revertId 归还地址编号
+        * company 物流公司名 */
+        let self=this;
+        if(item.order_express_type==2){
+            this.$vux.confirm.show({
+                /* title: 'Title', */
+                content: '是否确认归还',
+                onConfirm () {
+                    /* 点击确认时执行具体删除操作 */
+                    API.order.orderReturn({
+                        userId:self.getUserInfoUserId,  
+                        token:self.getUserInfoToken,
+                        orderId:self.orderId,
+                        sinceId:"",
+                        expressId:"",
+                        logisticsName:"",
+                        revertId:"",
+                        company:"",
+                    }).then((res)=>{
+                        if(res.body.code==200){
+                            self.confrim="归还成功";
+                            this.Initialization();
+                            self.toast=true;
+                        }
+                    });
+                }
+            });
+        }else{
+            this.$router.push({ path: '/orderReturn?type='+item.order_express_type+"&orderId="+self.orderId});    
+        }
+        
     },
    /* 订单付款 */
     payOrder(id){
