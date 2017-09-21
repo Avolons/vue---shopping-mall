@@ -130,6 +130,9 @@ export default {
               }else{
                   this.confrim=res.body.msg;
                   this.toast=true;
+                  if(res.body.msg=="身份认证已通过"){
+                        this.routerBack();
+                  }
               }
           });
       }

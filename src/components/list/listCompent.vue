@@ -6,6 +6,7 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        min-height: calc(100% + 10px);
     }
     &_single {
         width: 49%;

@@ -81,6 +81,10 @@ Vue.filter('orderdata', function(value) {
 require('./assets/css/reset.css')
 
 
+
+	
+
+
 // HTTP相关
 Vue.use(VueResource);
 Vue.http.options.emulateJSON = true;// = headers: {'Content-Type': 'application/x-www-form-urlencoded'}

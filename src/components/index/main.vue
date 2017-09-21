@@ -51,8 +51,7 @@ body {
             width: 100%;
         }
         .vux-swiper-item img{
-           width: 100%;
-           /* height: 100%; */
+           height: 100%;
            position: absolute;
            top: 50%;
            left: 50%;
@@ -60,8 +59,7 @@ body {
         }
     }
     &_listbox {
-        position: fixed;
-        top: 91px;
+        margin-top: 91px;
         width: 100%;
         height: calc(100% - 142px);
         overflow-y: auto;
@@ -82,7 +80,10 @@ body {
         }
     }
     &_typelist {
-        margin-top: 50px;
+        position: fixed;
+        top: 50px;
+        left: 0;
+        width: 100%;
     }
     &_header {
         box-sizing: border-box;
@@ -384,6 +385,7 @@ export default {
         },
        /* 根据列表id获取当前列表对应数据 */
        getData(id,index){
+           
            document.querySelector(".main_listbox").scrollTop=0;
            if(this.goodsList[index]||index==0){
                this.currentGoods=this.goodsList[index];
@@ -394,6 +396,8 @@ export default {
                 page:1, 
            }).then((Response)=>{
             this.goodsList[index]=Response.body.data.shopList.data;
+             document.querySelector(".list_compent_list_box").scrollTop=100;
+             document.querySelector(".list_compent_list_box").scrollTop=0;
             if(Response.body.data.shopList.data.length==10){
                 this.typeList[index].havedata=true;
             }else{
@@ -477,6 +481,8 @@ export default {
             shopList.splice(0,0,firstLabel);
             this.goodsList=new Array(shopList.length);
             this.typeList=shopList;
+            document.querySelectorAll(".main_typelist_item")[1].click();
+            document.querySelectorAll(".main_typelist_item")[0].click();
         });        
         /* 获取热门商品 */
         API.main.goodsHot({
@@ -527,11 +533,6 @@ export default {
             　　return windowHeight-104;
         }
                 document.querySelector(".list_compent_list_box").onscroll = function() {
-                    console.log(getScrollTop());
-
-                    console.log(getWindowHeight());
-
-                    console.log(getScrollHeight());
             　　if ( (getScrollTop() + getWindowHeight()) >= (getScrollHeight()-10)) {
                 if(self.canBottom==true){
                     self.canBottom=false;

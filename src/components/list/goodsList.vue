@@ -55,7 +55,7 @@
            line-height: 40px;
            background-color: #f1f1f1;
            >span{
-               margin-right: 80px;
+               margin-right: 100px;
            }
            &--selected{
                color: #2196f3;
