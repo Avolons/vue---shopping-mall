@@ -114,7 +114,7 @@
             </div>
         </div>  
         <group class="settlement_main_priceColl">
-            <cell title="实付款"  :value="infoData.order_count_money | currency('￥')" ></cell>
+            <cell title="实付款"  :value="infoData.order_total_price | currency('￥')" ></cell>
         </group> 
         <group class="settlement_main_priceColl">
             <cell title="实际租金"  :value="infoData.order_deposit | currency('￥')" ></cell>
