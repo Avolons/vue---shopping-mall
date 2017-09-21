@@ -69,8 +69,9 @@ body .weui-tabbar:before{
 .pdTop{
   padding-top: 47px;
 }
-
-
+body{
+  -webkit-overflow-scrolling : touch; 
+}
  /*预定义css属性*/
  .iconfont{
   font-family:"iconfont";

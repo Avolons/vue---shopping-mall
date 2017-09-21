@@ -2,8 +2,10 @@
 <style lang="scss">
     .orderInfon{
         &_main{
-            margin-bottom: 80px;
+            padding-bottom: 80px;
             height: 100%;
+            box-sizing: border-box;
+            overflow-y: auto;
             background-color: #f3f3f3;
             .weui-cells{
                 margin: 0;
@@ -105,6 +107,7 @@
         }
        
         &_footer{
+            z-index: 999;
             height: 60px;
             line-height: 60px;
             position: fixed;

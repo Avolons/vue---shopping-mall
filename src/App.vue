@@ -54,9 +54,7 @@ if(!openId){
             }).then((res)=>{
                 let openid=res.body.data;
                 localStorage.setItem("openId",openid);
-                alert(JSON.stringify(openid));
             },(res)=>{
-                alert(JSON.stringify(res));
             });
         }
         
