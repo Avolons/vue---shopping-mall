@@ -361,7 +361,8 @@ export default {
         },1000);
   },
   activated(){
-      
+      this.currentPage=1;
+      this.getTypeData();
   },
   methods: {
     /* typelist点击选中函数 */
