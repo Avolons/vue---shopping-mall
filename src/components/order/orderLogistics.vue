@@ -84,7 +84,7 @@
             <since-compent style="margin-bottom:30px" v-show="val==3" :commonSinceList="sinceList"></since-compent>
             <toast v-model="toast" type="cancel">{{confrim}}</toast>
             <load-more v-show="loadshow" tip="加载更多"></load-more>
-            <load-more v-show="!loadshow  && val==3" :show-loading="false" tip="到底了" ></load-more>
+            <load-more v-show="!loadshow  && val==3 && sinceList.length>8" :show-loading="false" tip="到底了" ></load-more>
         </div>
     </div>
 </template>
@@ -127,6 +127,11 @@ export default {
     methods: {
         /* 路由回退 */
         routerBack() {
+            if(this.val==3){
+                this.confrim = "请选择自提点";
+                this.toast = true;
+                return false; 
+            }
             this.$store.dispatch("CurrentTpl", this.val);
             this.$router.goBack();
         },
@@ -278,6 +283,7 @@ export default {
         this.page=1;
         this.canBottom=true;
         this.haveData=true;
+        this.sinceList=[];
         this.dataForm();
     }
 }

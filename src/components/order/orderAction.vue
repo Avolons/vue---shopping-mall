@@ -132,11 +132,15 @@
                       display: block;
                     }
                     &:nth-of-type(2){
+                        width: 100%;
+                      display: block;
+                    }
+                    &:nth-of-type(3){
                         color: #f80000;
                         width: 50%;
                        display: block;    
                     }
-                    &:nth-of-type(3){
+                    &:nth-of-type(4){
                         width: 50%;
                        display: block;   
                        text-align: right;
@@ -341,6 +345,8 @@
                     {{infoData.shopeName}}  
                 </span>
                 <!-- 单价租金 -->
+                <span class="order_single_colorsize">{{infoData.collour}}{{infoData.standard}} </span>
+               
                 <span class="orderAction_main_price">
                     ￥{{infoData.rentPrice}}/{{timeText}}
                 </span>
@@ -352,9 +358,9 @@
         <div class="orderAction_main_timeRange">{{rentRange.start}}&nbsp;至&nbsp;{{rentRange.end}} <span>共{{infoData.ordertimeNumber}}{{timeText}}</span></div>
          <!-- 收货地址和物流方式 -->
          <group class="orderAction_main_priceColl">
-            <cell title="合计租金"  :value="infoData.shopRent  | currency('￥')"></cell>
+            <cell title="合计租金"  :value="infoData.rentPrice*infoData.ordertimeNumber*infoData.shopNum  | currency('￥')"></cell>
             <cell title="合计押金" :value="infoData.deposit | currency('￥')"  ></cell>
-            <cell title="运费"  :value="infoData.deposit | currency('￥')" ></cell>
+            <cell title="运费"  :value="infoData.freight | currency('￥')" ></cell>
             <cell class="orderAction_main_truePrice" title="实付款" :value="infoData.totalPrice | currency('￥')"  ></cell>
             <cell  title="支付方式" :value="pay_type"></cell>
             <x-textarea :max="20" readonly v-model="infoData.message" placeholder="买家留言"  ></x-textarea>

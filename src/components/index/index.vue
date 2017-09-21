@@ -39,7 +39,9 @@
 <template>
 <div class="index_container">
     <transition  :name="transitionName" class="router">
-          <router-view class="router-view Router"></router-view>
+            <keep-alive>
+                 <router-view class="router-view Router"></router-view>
+            </keep-alive>
     </transition>
    <tabbar class="index_tabbar"  style="position:fixed;bottom:0;left:0;overflow:hidden">
       <tabbar-item :selected="this.$route.fullPath=='/index/main'" :link="{path:'/index/main'}" >

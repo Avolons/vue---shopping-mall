@@ -22,6 +22,7 @@
         }
     }
     &_title {
+        margin-top: 5px;
         color: #272727;
         font-size: 14px;
         overflow: hidden;

@@ -87,7 +87,6 @@ body {
             background-color: #fff;
             width: 32%;
             margin-right: 1%;
-            height: 120px;
             box-sizing: border-box;
             padding: 20px 10px;
             padding-bottom: 10px;

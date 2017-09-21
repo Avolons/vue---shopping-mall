@@ -57,10 +57,14 @@
                 </div>
 
                 <div v-transfer-dom>
-                        <!-- 规格选择区域 -->
-                        <popup  style="padding-top:20px;border-top:1px solid #eee;background:#fff"  v-model="timeselectshow" position="bottom" max-height="100%">
-                            <div>
-                                 <inline-calendar  @on-change="timehaveSelect" class="inline-calendar-demo" :show.sync="timeconfig.show" v-model="timeValue" :start-date="timerange.startTime" :end-date="timerange.endTime" :range="timeconfig.range" :render-on-value-change="timeconfig.changerender" :show-last-month="timeconfig.showLastMonth" :show-next-month="timeconfig.showNextMonth" :highlight-weekend="timeconfig.highlightWeekend" :return-six-rows="timeconfig.return6Rows" :hide-header="timeconfig.hideHeader" :hide-week-list="timeconfig.hideWeekList" :replace-text-list="timeconfig.replaceTextList" :weeks-list="timeconfig.weeksList" :render-function="timeconfig.buildSlotFn" :disable-past="timeconfig.disablePast" :disable-future="timeconfig.disableFuture">
+                        <!-- 时间选择 -->
+                        <popup  style="border-top:1px solid #eee;background:#fff"  v-model="timeselectshow" position="bottom" max-height="100%">
+                            <div class="goodsinfo_content_timeselect">
+                                <div class="goodsinfo_content_close">
+                                    <span>请选择起租日期</span>
+                                    <button @click="timehaveSelect()">完成</button>
+                                </div>
+                             <inline-calendar   class="inline-calendar-demo" :show.sync="timeconfig.show" v-model="timeValue" :start-date="timerange.startTime" :end-date="timerange.endTime" :range="timeconfig.range" :render-on-value-change="timeconfig.changerender" :show-last-month="timeconfig.showLastMonth" :show-next-month="timeconfig.showNextMonth" :highlight-weekend="timeconfig.highlightWeekend" :return-six-rows="timeconfig.return6Rows" :hide-header="timeconfig.hideHeader" :hide-week-list="timeconfig.hideWeekList" :replace-text-list="timeconfig.replaceTextList" :weeks-list="timeconfig.weeksList" :render-function="timeconfig.buildSlotFn" :disable-past="timeconfig.disablePast" :disable-future="timeconfig.disableFuture">
                              </inline-calendar>  
                             </div>
                         </popup>
@@ -395,9 +399,10 @@ export default {
         /* 获取商品详情数据 */
     },
     activated() {
-        this.havestart=true;
+        setTimeout(()=>{
+            this.havestart=true;
+        },500);
         this.getData();
-
     },
     /* 计算属性 */
     computed: {
@@ -698,7 +703,7 @@ export default {
             this.currentTypedata.rent_period[0].sel = 1;
             /* 商品名称对应 */
             this.goodsTitle = goodsData.goodsName;
-            document.querySelector(".goodsinfo_header .vux-swiper").style.height = window.outerWidth + "px";
+            document.querySelector(".goodsinfo_header .vux-swiper").style.height = window.outerWidth/0.9 + "px";
 
         },
 

@@ -45,7 +45,7 @@
     position: fixed;
     width: 100%;
     top: 87px;
-    height: calc(100% - 140px);
+    height: calc(100% - 138px);
     overflow-y: auto;
     background-color: #f3f3f3;
     }
@@ -119,6 +119,10 @@
     &_price{
         color: #f80000;
         font-size: 15px;
+    }
+    &_colorsize{
+        font-size: 14px;
+        color: #272727;
     }
     &_num{
       color: #666;
@@ -230,8 +234,10 @@
                         <h3 class="order_single_title">
                           {{item.goods_name}}
                         </h3>
+                        <span class="order_single_colorsize">{{item.collour}}{{item.standard}}</span>
                         <p class="order_single_box">
                            <span class="order_single_price">￥{{item.rentPrice}}/{{timeMap[item.rentType]}}</span>
+                           
                            <span class="order_single_num">数量：{{item.goods_amount}}</span>
                         </p>
                     </div> 

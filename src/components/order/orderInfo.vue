@@ -198,8 +198,8 @@
                 </div>
                 <button class="orderInfon_footer_btn" @click="buygoods" type="button">提交订单</button>
         </footer>
-                    <toast v-model="toast"  type="success">{{confrim}}</toast>
-
+            <toast v-model="toast"  type="success">{{confrim}}</toast>
+            <toast v-model="toasts"  type="cancel">{{confrim}}</toast>
       </div>
   </div>
 </template>
@@ -220,6 +220,7 @@ export default {
     return {
         confrim:"请选择地址",
         toast:false,
+        toasts:false,
         /* 自提点数据 */
         tpl:{},
        orderLogistics:'/orderLogistics/',
@@ -333,12 +334,12 @@ export default {
           /* 数值校验 */
           if(this.getAddress==""){
               this.confrim="请选择地址";
-              this.toast=true;
+              this.toasts=true;
               return false;
           }
           if(this.returnTpl=="请选择物流方式"){
               this.confrim="请选择物流方式";
-              this.toast=true;
+              this.toasts=true;
               return false;
           }
          

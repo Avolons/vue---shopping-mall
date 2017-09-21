@@ -46,22 +46,29 @@ body {
 
 .main {
     &_swiper {
+        .vux-swiper-item{
+            position: relative;
+        }
         .vux-swiper-item img{
-            width: 100%;
+           height: 100%;
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           transform: translate(-50%,-50%);
         }
     }
     &_listbox {
         position: fixed;
         top: 91px;
         width: 100%;
-        height: calc(100% - 144px);
+        height: calc(100% - 142px);
         overflow-y: auto;
         /* background-color: #f3f3f3; */
         .vux-slider > .vux-indicator > a > .vux-icon-dot.active, .vux-slider .vux-indicator-right > a > .vux-icon-dot.active{
             background-color:#2196f3;
         }
         .list_compent_list_box{
-         height:calc(100% - 144px);
+         height:calc(100% - 142px);
          position:fixed;
          top:91px;
          width:100%;
@@ -211,6 +218,8 @@ body {
             }
         }
         &_title {
+            margin-top: 5px;
+            
             color: #272727;
             font-size: 14px;
             overflow: hidden;
@@ -219,6 +228,7 @@ body {
             font-weight: 400;
         }
         &_price {
+            margin-top: 5px;
             color: #f80000;
             font-size: 15px;
         }
@@ -520,7 +530,7 @@ export default {
                     console.log(getWindowHeight());
 
                     console.log(getScrollHeight());
-            　　if ((getScrollHeight()-10) <= (getScrollTop() + getWindowHeight()) <= getScrollHeight()) {
+            　　if ( (getScrollTop() + getWindowHeight()) >= (getScrollHeight()-10)) {
                 if(self.canBottom==true){
                     self.canBottom=false;
                     self.getMoreData();

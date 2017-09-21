@@ -1,6 +1,36 @@
 .vux-popup-picker-header-menu-right{
     color: #2196f3;
 }
+.goodsinfo_content_timeselect{
+    >.goodsinfo_content_close{
+        display: flex;
+        justify-content: space-between;
+        box-sizing: border-box;
+        padding: 0 15px;
+        border-bottom: 1px solid #eee;
+        height: 44px;
+        align-items: center;
+        background-color: #fbf9fe;
+        span{
+            font-size: 15px;
+            color: #828282;
+        }
+        button{
+            font-size: 15px;
+            color: #2196f3;
+        }
+    }
+    box-sizing: border-box;
+    .inline-calendar td.current > span.vux-calendar-each-date{
+        background-color: #2196f3;
+    }
+    .vux-prev-icon, .vux-next-icon{
+        border-color: #2196f3;
+    }
+    .inline-calendar td.is-today, .inline-calendar td.is-today.is-disabled{
+        color: #2196f3
+    }
+}
 .goodsinfo{
     &_container{
         height: 100%;
@@ -9,6 +39,10 @@
         .vux-divider{
             background-color: #fff;
         }
+        .vux-slider > .vux-indicator > a > .vux-icon-dot.active, .vux-slider .vux-indicator-right > a > .vux-icon-dot.active{
+            background-color: #2196f3;
+        }
+       
     }
     &_content{
         background-color: #f3f3f3;
@@ -16,9 +50,7 @@
     }
     /* 头部区域样式 */
     &_header{
-        .vux-slider > .vux-indicator > a > .vux-icon-dot.active, .vux-slider .vux-indicator-right > a > .vux-icon-dot.active{
-            background-color: #2196f3;
-        }
+       
         background-color: #fff;
         overflow: hidden;
         &_back{
@@ -131,7 +163,7 @@
         background-color: #fff;
         margin-top: 10px;
         line-height: 40px;
-        height: 40px;
+        overflow: hidden;
         display: flex;
         flex-wrap: wrap;
         position: relative;
@@ -222,15 +254,7 @@
             }
         }
         &_time{
-            .inline-calendar td.current > span.vux-calendar-each-date{
-                background-color: #2196f3;
-            }
-            .vux-prev-icon, .vux-next-icon{
-                border-color: #2196f3;
-            }
-            .inline-calendar td.is-today, .inline-calendar td.is-today.is-disabled{
-                color: #2196f3
-            }
+            
         }
         &_price{
             height: 60px; 

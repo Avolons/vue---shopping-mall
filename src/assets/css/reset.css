@@ -5,7 +5,7 @@
  body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form,
  fieldset, legend, button, input, textarea, th, td { margin:0; padding:0;font-family: '微软雅黑'}
  body, button, input, select, textarea { font:12px/1.5tahoma, arial, \5b8b\4f53; }
- h1, h2, h3, h4, h5, h6{ font-size:100%; }
+ h1, h2, h3, h4, h5, h6{ font-size:100%;font-weight: 400 }
  address, cite, dfn, em, var { font-style:normal; }
  code, kbd, pre, samp { font-family:couriernew, courier, monospace; }
  small{ font-size:12px; }
@@ -35,6 +35,16 @@
   url('//at.alicdn.com/t/font_400924_tc963k6dykxu5wmi.woff') format('woff'),
   url('//at.alicdn.com/t/font_400924_tc963k6dykxu5wmi.ttf') format('truetype'),
   url('//at.alicdn.com/t/font_400924_tc963k6dykxu5wmi.svg#iconfont') format('svg');
+}
+
+body .weui-tabbar{
+  border-top: 1px solid #eee;
+  overflow: hidden;
+  height: 50px;
+}
+
+body .weui-tabbar:before{
+  display: none;
 }
 
 /* 两行超过出现点点点 */

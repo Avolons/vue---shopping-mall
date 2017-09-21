@@ -2,7 +2,7 @@
    .goodsList{
        &_main{
            height: 100%;
-           background-color: #f3f3f3;
+           background-color: #fff;
          .vux-header{
              display: flex;
              justify-content: center;
@@ -34,7 +34,7 @@
         color: #6d6d6d;
         height: 30px;
         line-height: 30px;
-        
+       
         >i {
             float: left;
             font-size: 20px;
@@ -51,9 +51,9 @@
            box-sizing: border-box;
            padding: 0 35px;
            justify-content: flex-start;
-           height: 50px;
-           line-height: 50px;
-           background-color: #fff;
+           height: 40px;
+           line-height: 40px;
+           background-color: #f1f1f1;
            >span{
                margin-right: 80px;
            }
@@ -91,7 +91,7 @@
         <div class="goodsList_chenckList">
             <span v-for="(item,index) in typeList" :class="{'goodsList_chenckList--selected':item.select}" @click="typeCheck(index)">{{item.name}}</span>
         </div>
-            <div style="padding-top:50px"> 
+            <div style="padding-top:40px"> 
              <list-compent  :commonGoodsList="goodsList"></list-compent>
             </div>
         <div class="goodsList_noGoods" v-show="!goodsList[0]">
@@ -99,7 +99,7 @@
             <p>抱歉，没有搜索到您想要的商品</p>
         </div>
         <load-more v-show="loadshow" tip="加载更多"></load-more>
-        <load-more v-show="!loadshow && goodsList[0]" :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
+        <load-more v-show="!loadshow && goodsList.length>8 " :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
     </div>
 </div>
    
@@ -298,7 +298,10 @@ export default {
             　　return windowHeight;
         }
         window.onscroll = function() {
-            　　if (getScrollTop() + getWindowHeight() == getScrollHeight()) {
+            console.log(getScrollTop());
+            console.log(getWindowHeight());
+            console.log(getScrollHeight());
+            　　if (getScrollTop() + getWindowHeight() >= (getScrollHeight()-10)) {
                    if(self.canBottom==true){
                         self.canBottom=false;
                         self.getMoreData();
