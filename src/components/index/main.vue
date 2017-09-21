@@ -45,6 +45,11 @@ body {
 }
 
 .main {
+    &_container{
+        .weui-loadmore_line .weui-loadmore__tips{
+            background-color: #f1f1f1 !important;
+        }
+    }
     &_swiper {
         .vux-swiper-item{
             position: relative;
@@ -63,6 +68,7 @@ body {
         width: 100%;
         height: calc(100% - 142px);
         overflow-y: auto;
+        background-color: #f1f1f1;
         /* background-color: #f3f3f3; */
         .vux-slider > .vux-indicator > a > .vux-icon-dot.active, .vux-slider .vux-indicator-right > a > .vux-icon-dot.active{
             background-color:#2196f3;
@@ -200,14 +206,16 @@ body {
     }
     &_recommend {
         &_list {
-            background-color: #fff;
+            background-color: #f1f1f1;
             margin-bottom: 20px;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
         }
         &_single {
-            width: 49%;
+            background-color: #fff;
+            width: 49.5%;
+            margin-bottom: 5px;
             box-sizing: border-box;
             padding: 10px;
         }

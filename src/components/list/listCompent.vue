@@ -2,16 +2,18 @@
  <style lang="scss">
 .list_compent {
     &_list {
-        background-color: #fff;
+        background-color: #f1f1f1;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
         min-height: calc(100% + 10px);
     }
     &_single {
-        width: 49%;
+        width: 49.5%;
         box-sizing: border-box;
         padding: 10px;
+        background-color: #fff;
+        margin-top: 5px;
     }
     &_img {
         display: block;

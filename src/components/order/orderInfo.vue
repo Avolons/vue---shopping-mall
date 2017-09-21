@@ -318,8 +318,10 @@ export default {
                 'getBrandWCPayRequest',self.paydata,
                 function(res){  
                     if(res.err_msg =="get_brand_wcpay_request:fail")  {
-                        alert(JSON.stringify(self.paydata));
-                        alert(JSON.stringify(res));
+                          self.confrim="支付异常";
+                          self.toast=true;
+                          location.href="/#/index/main/order";
+                          
                     } 
                     if(res.err_msg =="get_brand_wcpay_request:cancel")  {
                             location.href="/#/index/main/order";
