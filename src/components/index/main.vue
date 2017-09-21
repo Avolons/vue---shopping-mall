@@ -481,8 +481,10 @@ export default {
             shopList.splice(0,0,firstLabel);
             this.goodsList=new Array(shopList.length);
             this.typeList=shopList;
-            document.querySelectorAll(".main_typelist_item")[1].click();
-            document.querySelectorAll(".main_typelist_item")[0].click();
+            setTimeout((res)=>{
+                 document.querySelectorAll(".main_typelist_item")[1].click();
+                 document.querySelectorAll(".main_typelist_item")[0].click();
+            },500);
         });        
         /* 获取热门商品 */
         API.main.goodsHot({
