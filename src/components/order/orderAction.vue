@@ -853,7 +853,9 @@ export default {
     },
     /* 查看物流,评价, */
     download(){
-        window.location.href='/#/download';
+        this.$router.push({
+            path:'/download'
+        })
     }
   },mounted(){
       

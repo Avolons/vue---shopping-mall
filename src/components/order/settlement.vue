@@ -52,11 +52,15 @@
                       display: block;
                     }
                     &:nth-of-type(2){
+                        width: 100%;
+                      display: block;
+                    }
+                    &:nth-of-type(3){
                         color: #f80000;
                         width: 50%;
                        display: block;    
                     }
-                    &:nth-of-type(3){
+                    &:nth-of-type(4){
                         width: 50%;
                        display: block;   
                        text-align: right;
@@ -105,6 +109,7 @@
                 <span class="settlement_main_goodsTitle twonowarp">
                     {{infoData.goodsName}}  
                 </span>
+                <span class="settlement_main_colorsize">{{infoData.ys}}</span>
                 <!-- 单价租金 -->
                 <span class="settlement_main_price">
                     ￥{{infoData.order_rent_money}}/{{timeText}}
@@ -125,6 +130,9 @@
             <cell title="实际退款金额" :value="infoData.refund_amount | currency('￥')"  ></cell>
             <x-textarea  style="height:auto" :max="20" readonly v-model="infoData.settlement_bill_remarks" placeholder="备注"  ></x-textarea>
         </group> 
+        <footer v-show="type" class="orderAction_footer">
+             <button @click.stop="confrimSettlement()" >确认无误</button> 
+        </footer>
     </div>
 </div>
 </template>
@@ -145,6 +153,8 @@ export default {
              /* 时间对照表 */
         timeMap:{1:"日",2:"周",3:"月",4:"季",5:"年"},
           infoData:{},
+          type:"",
+          orderId:0,
         }
     },
      computed:{
@@ -171,10 +181,32 @@ export default {
                           this.infoData=res.body.data.bill; 
                 }
             })
-        }
+        },
+        /* 确认结算 */
+        confrimSettlement(){
+        let self=this;
+        this.$vux.confirm.show({
+                /* title: 'Title', */
+                content: '是否确认结算',
+                onConfirm () {
+                    API.order.orderSettle({
+                        userId:self.getUserInfoUserId,  
+                        token:self.getUserInfoToken,
+                        orderId:self.orderId,
+                    }).then((res)=>{
+                        if(res.body.code==200){
+                            self.confrim="结算成功";
+                            self.toast=true;
+                            self.routerBack();
+                        }
+                    });
+                }
+            });
+        },
     },
     activated(){
         this.orderId=this.$route.query.id;
+        this.type=this.$route.query.type;
         this.getdata();
     }
 }

@@ -603,25 +603,10 @@ export default {
     },
     /* 确认结算 */
     confrimSettlement(id){
-        let self=this;
-      this.$vux.confirm.show({
-            /* title: 'Title', */
-            content: '是否确认结算',
-            onConfirm () {
-                API.order.orderSettle({
-                    userId:self.getUserInfoUserId,  
-                    token:self.getUserInfoToken,
-                    orderId:id,
-                  }).then((res)=>{
-                    if(res.body.code==200){
-                        self.confrim="结算成功";
-                        self.currentPage=1;
-                        self.getTypeData();
-                        self.toast=true;
-                    }
-                });
-            }
-        });
+        this.$router.push({path:'/settlement',query:{
+                type:1,
+                id:id,
+        }});
     },
     /* 查看结算单 */
     seeSettlement(id){
