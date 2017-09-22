@@ -109,7 +109,7 @@
                 <span class="settlement_main_goodsTitle twonowarp">
                     {{infoData.goodsName}}  
                 </span>
-                <span class="settlement_main_colorsize">{{infoData.ys}}</span>
+                <span class="settlement_main_colorsize">{{infoData.ys}},{{infoData.gg}}</span>
                 <!-- 单价租金 -->
                 <span class="settlement_main_price">
                     ￥{{infoData.order_rent_money}}/{{timeText}}

@@ -88,6 +88,8 @@ export default {
     methods: {
         /* 进入商品详情 */
         goInfo(id) {
+            let scrollTop=document.querySelector(".list_compent_list_box").scrollTop;
+            localStorage.setItem("scrolltop",scrollTop);
             this.$router.push({ path: '/goodsInfo/'+id}); 
         },
         load() {

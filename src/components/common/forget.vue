@@ -233,11 +233,16 @@ import {API,getQuery} from '../../services'
         }
         API.login.updatePwd(this.form).then((res)=>{
           if(res.body.code==200){
-              window.location.href="/#/login";
+            this.$router.push({
+              path:'/login',
+            })
           }else{
              this.confrim=res.body.msg;
-            this.toast=true; 
+              this.toast=true; 
           }
+        },(res)=>{
+            this.confrim="操作失败";
+              this.toast=true; 
         });
       },
     }

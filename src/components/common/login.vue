@@ -225,7 +225,9 @@ import {API,getQuery} from '../../services';
           this.$store.dispatch('IsCertify');
           this.$store.dispatch('SetUserInfo',userInfo);
           if(!this.type){
-              window.location.href="/#/index/main";
+            this.$router.push({
+                path:'/index/main',
+              })
             }else{
               this.routerback();
             }
@@ -237,12 +239,15 @@ import {API,getQuery} from '../../services';
 
       },
       regist(){
-        window.location.href="/regist";
+        this.$router.push({
+          path:'/regist',
+        })
       }
     },
     activated(){
         this.type=this.$route.query.type;
         if(this.type){
+
             this.logincode="/logincode?type="+this.type;
         }
     }

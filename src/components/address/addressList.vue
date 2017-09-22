@@ -239,7 +239,12 @@ export default {
         /* 地址编辑 */
         editAddress(id) {
             /* 进入地址编辑页面 */
-            window.location.href = "/#/editAddress/" + id;
+            this.$router.push({
+                path:'/editAddress',
+                params:{
+                    id:id
+                }
+            })
         },
         /* 地址删除 */
         deletAddress(id, index) {

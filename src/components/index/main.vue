@@ -81,7 +81,7 @@ body {
          overflow-y: auto;
          padding-bottom: 40px;
          .weui-loadmore_line .weui-loadmore__tips{
-             background-color: #fff !important;
+             background-color: #f1f1f1 !important;
          }
         }
     }
@@ -365,6 +365,11 @@ export default {
              /* 当前被选中状态的商品信息列表 */ 
              currentGoods:[],
         }
+    },
+    activated(){
+        setTimeout(()=>{
+          document.querySelector(".list_compent_list_box").scrollTop=localStorage.getItem("scrolltop");  
+        },500);
     },
     methods: {
         onSwiperItemIndexChange() {
