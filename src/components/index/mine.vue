@@ -16,6 +16,13 @@ body{
     }
 }
 .mine{
+    &_container{
+        height: 100%;
+        background-color: #f1f1f1;
+        .weui-cells{
+            margin-top: 0;
+        }
+    }
  &_header{
      height: 200px;
      background-image: url("../../assets//img/index/minebc.png");
@@ -48,6 +55,8 @@ body{
 
 </style>
 <template>
+<div>
+
 	<div class="mine_container">
         <header class="mine_header">
             <!-- :src="user.img"  -->
@@ -55,13 +64,17 @@ body{
             <span class="mine_name">{{this.$store.state.userInfo.loginname}}</span>
         </header>
    
-     <group style="margin-top:0.6rem;">
+     <group>
       <cell  title="我的收藏" is-link link="/collection">
           <i slot="icon" class="iconfont">&#xe605;</i>
       </cell>
       <cell  title="我的地址" is-link link="/addressList">
           <i slot="icon" class="iconfont">&#xe71d;</i>
       </cell>
+     <!--   <cell  title="卡券包" is-link link="/card">
+          <i slot="icon" style="width:20px" class="iconfont">&#xe610;</i>
+      </cell> -->
+      
     </group>
     <group style="margin-top:0.6rem;margin-bottom:100px">
       <!-- 两种状态，已经认证和未认证状态 -->
@@ -105,6 +118,8 @@ body{
     </group>
    
 	</div>
+</div>
+    
 </template>
 <script>
 import {XHeader,Tabbar,TabbarItem,Cell,Group } from 'vux'

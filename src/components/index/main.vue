@@ -369,7 +369,7 @@ export default {
     activated(){
         setTimeout(()=>{
           document.querySelector(".list_compent_list_box").scrollTop=localStorage.getItem("scrolltop");  
-        },500);
+        },50);
     },
     methods: {
         onSwiperItemIndexChange() {

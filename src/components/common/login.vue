@@ -247,7 +247,6 @@ import {API,getQuery} from '../../services';
     activated(){
         this.type=this.$route.query.type;
         if(this.type){
-
             this.logincode="/logincode?type="+this.type;
         }
     }

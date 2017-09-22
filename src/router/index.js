@@ -220,6 +220,7 @@ import collection from '../components/mine/collection.vue';//我的收藏
 import setting from '../components/mine/setting.vue';//我的设置
 import about from '../components/mine/about.vue';//关于我们
 import help from '../components/mine/help.vue';//帮助与客服
+import card from '../components/mine/card.vue';//我的红包
 import opinion from '../components/mine/opinion.vue';//意见与反馈
 import logistics from '../components/help/logistics.vue';//物流服务
 import service from '../components/help/service.vue';//售后服务
@@ -297,7 +298,13 @@ const routes = [{
         path: '/help',
         name: 'help',
         component: help
-    },{
+    },
+    {
+        path: '/card',
+        name: 'card',
+        component: card
+    },
+    {
         path: '/opinion',
         name: 'opinion',
         component: opinion
