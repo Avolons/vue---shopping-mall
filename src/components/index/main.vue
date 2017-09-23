@@ -337,7 +337,7 @@ body {
         </scroller>
         <div class="main_listbox">
             <!-- 轮播图组件 -->
-            <swiper v-show="currentType==0" loop class="main_swiper" dots-position="center"  height="200px"  @on-index-change="onSwiperItemIndexChange" v-model="swiperItemIndex">
+            <swiper v-show="currentType==0" loop class="main_swiper" dots-position="center"   height="auto":aspect-ratio="250/750"  @on-index-change="onSwiperItemIndexChange" v-model="swiperItemIndex">
                 <swiper-item  class="swiper-demo-img" v-for="(item, index) in bannerlist" :key="index">
                     <img @click="bannerClick(item.extras,item.bannerType)" :src="item.imagePath">
                 </swiper-item>
@@ -610,7 +610,9 @@ export default {
     },
     mounted(){
         /* 获取轮播图信息 */
-        API.main.getBanner().then((Response)=>{
+        API.main.getBanner({
+            source:3
+        }).then((Response)=>{
             this.bannerlist=Response.body.data.bannerList;
         });
         /* 获取首页标签 */
