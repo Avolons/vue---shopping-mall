@@ -71,9 +71,9 @@ body{
       <cell  title="我的地址" is-link link="/addressList">
           <i slot="icon" class="iconfont">&#xe71d;</i>
       </cell>
-     <!--   <cell  title="卡券包" is-link link="/card">
+       <cell  title="卡券包" is-link link="/card">
           <i slot="icon" style="width:20px" class="iconfont">&#xe610;</i>
-      </cell> -->
+      </cell>
       
     </group>
     <group style="margin-top:0.6rem;margin-bottom:100px">

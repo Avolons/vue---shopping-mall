@@ -36,6 +36,12 @@
     }
     .orderAction{
         &_main{
+            &_card{
+                .weui-cell__ft{
+                    color: #f80000 !important;
+                    font-size: 15px;
+                }
+            }
             .help_common_title{
         padding-top: 47px; 
         .vux-header{
@@ -359,6 +365,7 @@
          <!-- 收货地址和物流方式 -->
          <group class="orderAction_main_priceColl">
             <cell title="合计租金"  :value="(infoData.rentPrice*infoData.ordertimeNumber*infoData.shopNum)  | currency('￥')"></cell>
+            <cell title="红包减免" class="orderAction_main_card" :value="-infoData.couponPrice | currency('￥')"  ></cell>
             <cell title="合计押金" :value="infoData.deposit | currency('￥')"  ></cell>
             <cell title="运费"  :value="infoData.freight | currency('￥')" ></cell>
             <cell class="orderAction_main_truePrice" title="实付款" :value="infoData.totalPrice | currency('￥')"  ></cell>

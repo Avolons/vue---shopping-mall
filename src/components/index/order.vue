@@ -350,6 +350,7 @@ export default {
     
   },
   mounted () {
+      localStorage.setItem("orderScroll",0);
         this.currentPage=1;
         this.getTypeData();
         setInterval(()=>{
@@ -361,8 +362,11 @@ export default {
         },1000);
   },
   activated(){
-      this.currentPage=1;
-      this.getTypeData();
+      setTimeout(()=>{
+            if(localStorage.getItem("orderScroll")){
+                document.querySelector(".order_list").scrollTop=localStorage.getItem("orderScroll");
+            }
+        },100);    
   },
   methods: {
     /* typelist点击选中函数 */
@@ -372,6 +376,7 @@ export default {
     /* 进入订单详情 */
     getInfo(id){
         window.location.href="/#/orderAction/"+id;
+        localStorage.setItem("orderScroll",document.querySelector(".order_list").scrollTop);
     },
     /* 确认订单状态 */
     confrimType(item){
@@ -455,6 +460,7 @@ export default {
                   this.currentPage++;
                   this.getTypeData();
               }else{
+                  
                   return false;
               }
               /* this.orderList=list; */
@@ -597,7 +603,8 @@ export default {
             });
         }else{
             console.log(item);
-            this.$router.push({ path: '/orderReturn?type='+item.order_express_type+"&orderId="+item.order_id});    
+            this.$router.push({ path: '/orderReturn?type='+item.order_express_type+"&orderId="+item.order_id});  
+            localStorage.setItem("orderScroll",document.querySelector(".order_list").scrollTop);  
         }
         
     },
@@ -607,10 +614,12 @@ export default {
                 type:1,
                 id:id,
         }});
+        localStorage.setItem("orderScroll",document.querySelector(".order_list").scrollTop);
     },
     /* 查看结算单 */
     seeSettlement(id){
         window.location.href="/#/settlement?id="+id;
+        localStorage.setItem("orderScroll",document.querySelector(".order_list").scrollTop);
     },
     /* 提醒发货 ,结算 1-提醒发货2-提醒结算*/
     remind(id,type){
@@ -635,6 +644,7 @@ export default {
     /* 查看物流,评价, */
     download(id){
         window.location.href='/#/download';
+        localStorage.setItem("orderScroll",document.querySelector(".order_list").scrollTop);
     }
   }
 }

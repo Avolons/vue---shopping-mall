@@ -17,6 +17,38 @@
                 margin: 0;
                 border-top: 1px solid #eee;
             }
+            &_card{
+                font-size: 15px;
+                color: #272727;
+                display: flex;
+                button{
+                    border: 1px  solid #2196f3;
+                    color: #2196f3;
+                    padding: 2px 10px;
+                    border-radius: 5px;
+                    margin-right: 10px;
+                }
+                span:last-of-type{
+                    color: #f80000;
+                    flex-grow: 1;
+                    text-align: right;
+                    box-sizing: border-box;
+                    padding-right: 20px;
+                }
+            }
+            &_cardclose{
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                height: 50px;
+                line-height: 50px;
+                background-color: #2196f3;
+                font-size: 15px;
+                color: #fff;
+                text-align: center;
+                display: block;
+                width: 100%;
+            }
             &_address{
                 background-color: #fff;
                 .weui-cell{
@@ -192,12 +224,48 @@
          <group class="orderInfon_main_priceColl">
             <cell title="运费"  :value="returnTplPrice | currency('￥')" ></cell>
             <cell title="商品租金"  :value="goodsAllPrice  | currency('￥')"></cell>
+            <cell-box  class="orderInfon_main_card" @click.native="cardshow" is-link>
+               <button>减免</button>  <span>优惠减免</span>  <span v-show="priceShow">{{currentPrice | currency('￥')}}</span>
+            </cell-box  >
+              <div v-transfer-dom>
+                <!-- 时间选择 -->
+                <popup  style="border-top:1px solid #eee;background:#fff;z-index:99999"  v-model="cardShow" position="bottom" max-height="70%" >
+                    <ul style="padding-bottom:60px;" class="card_main_list">
+                        <li class="card_main_single"  v-for="item in cardList" @click="goShop(item)">
+                                <img  src="../../assets/img/common/cardbg.png" alt="card">
+                                    <div class="card_main_single_box">
+                                        <div class="card_main_single_left">
+                                            <h3 class="card_main_single_price">￥<span>{{item.amount}}</span></h3>
+                                            <template v-if="item.use_range==1">
+                                                <h5 class="card_main_single_rules">全平台可用</h5>
+                                            </template>
+                                            <template v-else>
+                                                <h5 class="card_main_single_rules">指定店铺可用</h5>
+                                            </template>
+                                    </div>
+                                    <div class="card_main_single_right">
+                                        <template v-if="item.use_range==1">
+                                            <h3 class="card_main_single_title">租介红包</h3>
+                                        </template>
+                                        <template v-else>
+                                            <h3 class="card_main_single_title">店铺红包</h3>
+                                            <h3 class="card_main_single_store">{{item.store_name}}</h3>
+                                        </template>
+                                            <p class="card_main_single_time nowarp">使用期限：{{item.use_start_time | dataform}}-{{item.use_end_time | dataform}}</p>
+                                            <button  class="card_main_single_btn" type="button">去使用</button>
+                                    </div>
+                                </div>
+                        </li>
+                 </ul>
+                 <button  class="orderInfon_main_cardclose" type="button" @click="closeCard">取消</button>
+                </popup>
+                </div>
             <cell title="商品押金" :value="goodsDespoit | currency('￥')"  ></cell>
             <x-textarea :max="20" v-model="option" placeholder="买家留言"  ></x-textarea>
         </group>
         <footer  class="orderInfon_footer">
                 <div class="orderInfon_footer_price">
-                    合计： <span>{{goodsAllPrice+returnTplPrice+goodsDespoit | currency('￥')}}</span>
+                    合计： <span>{{goodsAllPrice+returnTplPrice+goodsDespoit+currentPrice | currency('￥')}}</span>
                 </div>
                 <button class="orderInfon_footer_btn" @click="buygoods" type="button">提交订单</button>
         </footer>
@@ -207,20 +275,33 @@
   </div>
 </template>
 <script>
-   import { XHeader,Cell,Group,XTextarea,dateFormat,Toast } from 'vux';
+   import { XHeader,Cell,Group,XTextarea,dateFormat,Toast,CellBox,TransferDom, Popup } from 'vux';
    import { mapGetters } from 'vuex'
     import {API,getQuery} from '../../services';
 
 export default {
+    directives: {
+        TransferDom
+    },
   components: {
     XHeader,
      Group,
     Cell,
     XTextarea,
-    Toast
+    Toast,
+    CellBox,
+    Popup 
   },
   data () {
     return {
+        cardstate:{
+            id:"",
+            storeId:"",
+        },
+        priceShow:false,
+        currentPrice:-10,
+        currentCard:0,
+        cardShow:false,
         confrim:"请选择地址",
         toast:false,
         toasts:false,
@@ -242,6 +323,7 @@ export default {
         paydata:{
             
         },
+        cardList:[],
     }
   },
     computed:{
@@ -311,12 +393,31 @@ export default {
         }
     },
   methods:{
+      goShop(item){
+          this.cardstate.id=item.coupon_no;
+          this.cardstate.storeId=item.store_id;
+          this.currentPrice=0-item.amount;
+          this.priceShow=true;
+          this.cardShow=false;
+      },
+      closeCard(){
+          this.cardShow=false;
+      },
       /* 支付接口 */
+      cardshow(){
+          if(this.cardList.length==0){
+              this.confrim="暂无可用红包";
+              this.toast=true;
+              return false;
+          }
+          this.cardShow=true;
+      },
       onBridgeReady(){
           let self=this;
             WeixinJSBridge.invoke(
                 'getBrandWCPayRequest',self.paydata,
                 function(res){  
+                    localStorage.setItem("reload","1"); 
                     if(res.err_msg =="get_brand_wcpay_request:fail")  {
                           self.confrim="支付异常";
                           self.toast=true;
@@ -329,6 +430,7 @@ export default {
                     if(res.err_msg == "get_brand_wcpay_request:ok" ) {
                           self.confrim="支付成功";
                           self.toast=true;
+
                           location.href="/#/index/main/order";
                     }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
                 }
@@ -366,7 +468,8 @@ export default {
                     rentTime: this.infoData.cart_start_time,//
                     rent_period_id: this.infoData.cart_content_rent_prieod_id,//
                     returnTime: this.infoData.cart_end_time,//
-                    sinceId: this.$store.state.tplId==3?this.$store.state.sinceData.since_id:""//自提点id
+                    sinceId: this.$store.state.tplId==3?this.$store.state.sinceData.since_id:"",//自提点id
+                    coupon_no:this.cardstate.id,
                 }]
           }).then((res)=>{
               if(res.body.code==200){
@@ -407,8 +510,19 @@ export default {
         }).then((res)=>{
             this.infoData=res.body.data.cart_list[0];
             this.orderLogistics="/orderLogistics/"+this.infoData.cart_content_goods_id;
+            API.card.storeCard({
+            userId:this.getUserInfoUserId,  
+            token:this.getUserInfoToken,
+            storeId:this.infoData.store_id,
+        }).then((res)=>{
+            if(res.body.code==200){
+                this.cardList=res.body.data;  
+            }
         });
+       });
         this.getDefaultAddress();
+          
+
         /* 清除之前的快递信息 */
         this.$store.dispatch('ClearTpl');
       },
@@ -453,6 +567,12 @@ export default {
       /* 新订单时触发更新 */
       if(this.$store.state.currentOrder!=this.cartId){
          this.Initialization();
+         this.cardstate={
+            id:"",
+            storeId:"",
+        };
+        this.priceShow=false;
+        this.currentPrice=0;
       }
   }
 } 

@@ -44,7 +44,74 @@ body {
     }
 }
 
+@keyframes hongbao {
+    0%{
+         transform: rotate(0deg);
+    }
+    25%{
+        transform: rotate(-30deg);
+       
+    }
+    50%{
+         transform: rotate(0deg);
+        
+    } 
+    75%{
+        transform: rotate(30deg);
+    } 
+    100%{
+        transform: rotate(0deg);
+    }
+}
 .main {
+    &_card{
+        &_fixed{
+            position: fixed;
+            top: 50%;
+            right:10px;
+            height: 50px;
+            animation: hongbao 0.5s ease-in 1s infinite;
+            &--select{
+                animation-name: nouu;
+            }
+        }
+        &_content{
+            position: absolute;
+            top: 43%;
+            width: 60%;
+            left: 50%;
+            color: #fff;
+            transform: translateX(-50%);
+            >h3{
+                font-size: 27px;
+                color: #fcec2b;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+            >p{
+                font-size: 12px;
+            }
+        }
+        &_mask{
+            height:50%;
+            width: 70%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            >img{
+                width: 100%;
+                
+            }
+        }
+        &_maskClose{
+            height: 30px;
+            width: 30px !important;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+    }
     &_container{
         .weui-loadmore_line .weui-loadmore__tips{
             background-color: #f1f1f1 !important;
@@ -313,18 +380,34 @@ body {
                 <load-more  v-show="loadshow" tip="加载更多"></load-more>
                 <load-more v-show="!loadshow || currentType==0" :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
             </div>
+            <!-- 红包 -->
+            <div class="main_card">
+                <img @click="cardClick" v-show="smallCard" class="main_card_fixed" src="../../assets/img/common/hongbao.png" alt="">
+                <masker v-show="cardShow" :fullscreen=true color="000" :opacity="0.5">
+                    <div class="main_card_mask" slot="content">
+                        <img src="../../assets/img/common/money.png" alt="">
+                        <img @click="closeCard" class="main_card_maskClose" src="../../assets/img/common/close.png" alt="">
+                        <div class="main_card_content">
+                             <h3>{{cardContent.price}}元</h3>  
+                            <p>{{cardContent.text}}</p>
+                        </div>
+                    </div>
+                </masker>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import ListCompent from '../list/listCompent.vue';
-import { Scroller, Swiper, SwiperItem, Spinner, XButton, Group, Cell, LoadMore } from 'vux'
+import { Scroller, Swiper, SwiperItem, Spinner, XButton, Group, Cell, LoadMore,Masker } from 'vux'
 import {API,getQuery} from '../../services';
+import { mapGetters } from 'vuex';
 
 
 export default {
     components: {
+        Masker,
         Scroller,
         Spinner,
         XButton,
@@ -337,6 +420,17 @@ export default {
     },
     data() {
         return {
+            cardUrl:"",
+            /* 小红包 */
+            smallCard:false,
+            /* 红包内容 */
+            cardContent:{
+                price:10,
+                text:"",
+            },
+            /* 新人红包是否显示 */
+            cardShow:false,
+            /*是否可以进行下拉加载 */
             canBottom:true,
             loadshow:false,
             swiperItemIndex: 0,
@@ -371,7 +465,44 @@ export default {
           document.querySelector(".list_compent_list_box").scrollTop=localStorage.getItem("scrolltop");  
         },50);
     },
+    computed:{
+         ...mapGetters([
+            'getUserInfoUserId',
+            'getUserInfoToken',
+            'getIsCertify',
+            'getUserInfoUserId'
+        ]),
+    },
     methods: {
+        /* 是否显示活动红包 */
+        isShowCard(){
+            API.card.getCouponActive().then((res)=>{
+                if(res.body.code==200){
+                    this.smallCard=true;
+                    this.cardUrl=res.body.data.url;
+                }
+            })
+        },
+        /* 获取红包 */
+        getCard(){
+            API.card.receiveNewerCoupon({
+                userId: this.getUserInfoUserId,
+                token: this.getUserInfoToken,
+            }).then((res)=>{
+                if(res.body.code==200){
+                    this.cardContent.price=res.body.data.amount;
+                    this.cardContent.title=res.body.data.intro;
+                    this.cardShow=true;
+                }
+            }) ;
+        },
+        /* 红包点击 */
+        cardClick(){
+            window.location.href=this.cardUrl;
+        },
+        closeCard(){
+            this.cardShow=false;
+        },
         onSwiperItemIndexChange() {
 
         },
@@ -507,6 +638,9 @@ export default {
         }).then((Response)=>{
             this.hotGoodsList=Response.body.data.shopList.data;
         });
+        /* 获取新人红包 */
+        this.isShowCard();
+        this.getCard();
         /* 获取推荐商品 */
         API.main.goodsIndexRecom({
             page_number:30,

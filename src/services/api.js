@@ -2,8 +2,8 @@
 import Vue from 'vue';
 
 
-var API_ROOT = "https://api.zujiekeji.cn/index/";
-/* var API_ROOT = "http://106.14.135.243:8082/index/"; */
+/* var API_ROOT = "https://api.zujiekeji.cn/index/"; */
+var API_ROOT = "http://106.14.135.243:8082/index/";
 /* 个人中心相关api */
 
 /**
@@ -471,6 +471,11 @@ export const order = {
   getOpenId(data){
     return Vue.http.get('https://api.zujiekeji.cn/pay/jsapi/getWxOpenid',{params:data});
   },
+  /**
+   * 订单列表
+   * @param {any} data 
+   * @returns 
+   */
   orderlist(data) {
     return Vue.http.get(API_ROOT + 'order/orderlist',{params:data});
   },
@@ -628,4 +633,62 @@ export const order = {
     return Vue.http.post(API_ROOT +"message/subOrderMsg",data);
   }
   
+}
+
+
+/**
+ * 红包接口
+ */
+export const card={
+    /**
+     * 我的红包列表
+     * userId
+     * token
+     * useType 0未使用 1已经使用 2已经过期
+     * page_number
+     * page
+     */
+    myCardList(data){
+      return Vue.http.get(API_ROOT + 'coupon/index',{params:data});
+      
+    },
+    /**
+     * 店铺红包列表
+     */
+    stordCardList(data){
+      return Vue.http.get(API_ROOT + 'coupon/storeCoupon',{params:data});
+    },
+    /**
+     * 
+     * 获取用户可用红包
+     * 
+     * @param {any} data 
+     * @returns 
+     */
+    storeCard(data){
+      return Vue.http.post(API_ROOT + 'coupon/userCoupon',data);
+    },
+    /**
+     * 领取店铺优惠券
+     */
+    receiveStoreCoupon(data){
+      return Vue.http.post(API_ROOT + 'coupon/receiveStoreCoupon',data);
+    },
+    /**
+     * 获取新人红包
+     * @param {any} data 
+     * @returns 
+     */
+    receiveNewerCoupon(data){
+      return Vue.http.post(API_ROOT + 'coupon/receiveNewerCoupon',data);
+    },
+    /**
+     * 是否有活动
+     * @param {any} data 
+     * @returns 
+     */
+    getCouponActive(data){
+      return Vue.http.get(API_ROOT + 'coupon/getCouponActive',{params:data});
+    },
+    
 }

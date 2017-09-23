@@ -49,6 +49,42 @@
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+        &_cardListbox{
+            padding: 10px 20px;
+            width: 100%;
+            overflow-x: auto;
+            background-color: #f1f1f1;
+            white-space: nowrap;
+        }
+        &_cardList{
+             height: 100%;
+        }
+        &_box{
+            display: flex;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            color: #fff;
+            align-items: center;
+            height: 100%;
+            width: 105px;
+            padding: 10px 0;
+            font-size: 13px;
+        }
+        &_cardSingle{
+            display: inline-block;
+            background-image: url("../../assets/img/common/storeCard.png");
+            background-size: cover;
+            height: 67.5px;
+            width: 135px;
+            margin-right: 50px; 
+        }
+        &_price{
+            >span{
+                font-size: 20px;
+            }
+        }
     }
 </style>
 
@@ -66,34 +102,80 @@
                 <i class="iconfont">&#xe6d7;</i>
             </div>
         </header>
+        <div class="shop_main_cardListbox">
+            <ul class="shop_main_cardList">
+                <li class="shop_main_cardSingle" v-for="item in cardList" @click="getCard(item.coupon_no)">
+                    <div class="shop_main_box">
+                        <h3 class="shop_main_price">￥<span>{{item.amount}}</span></h3>
+                        <h3 class="shop_main_allPrice">满{{item.use_minimal_amount}}元可用</h3>
+                    </div>
+                </li>
+            </ul>
+        </div>
         <list-compent :commonGoodsList="goodsList"></list-compent>
+        <toast v-model="toast"  type="success">{{confrim}}</toast>
     </div>
 </div>
 </template>
 
 <script>
 import ListCompent from '../list/listCompent.vue';
-import { XHeader} from 'vux'
+import { XHeader,Toast} from 'vux'
+import { mapGetters } from 'vuex'
 import {API,getQuery} from '../../services'
 
 export default {
   components: {
     XHeader,
+    Toast,
     ListCompent
   },
   data () {
     return {
+        confrim:"请选择地址",
+        toast:false,
         storeName:null,
         storeFace:null,
         storebgPic:null,
       storeId:null,
       goodsList:[1,5,7,6,8],
+      cardList:[]
     }
   },
-  
+  computed:{
+      ...mapGetters([
+        'getUserInfoUserId',
+        'getUserInfoToken',
+        'getAddress',
+        'getNamePhone'
+        ]),
+  },
   methods:{
       routerBack(){
           this.$router.goBack();
+      },
+      /* 领取店铺优惠券 */
+      getCard(id){
+          if(!this.getUserInfoUserId){
+             this.$router.push({
+                 path:"/login",
+             });
+             return false;
+          }
+          API.card.receiveStoreCoupon({
+             storeId:this.storeId,
+             userId:this.getUserInfoUserId,  
+            token:this.getUserInfoToken,
+            couponNo:id
+          }).then((res)=>{
+              if(res.body.code==200){
+                  this.confrim="领取成功";
+                  this.toast=true;
+              }else{
+                  this.confrim=res.body.msg;
+                  this.toast=true;
+              }
+          })
       },
       /* 跳到店铺详情页面 */
       goInfo(){
@@ -118,6 +200,13 @@ export default {
                 this.goodsList=res.body.data.shopList.data;
             }
         }); 
+        API.card.stordCardList({
+            storeId:this.storeId
+        }).then((res)=>{
+            if(res.body.code==200){
+                this.cardList=res.body.data;
+            }
+        })
       }
   },mounted(){
       this.Initialization();
