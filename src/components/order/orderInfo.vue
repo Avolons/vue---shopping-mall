@@ -470,6 +470,7 @@ export default {
                     returnTime: this.infoData.cart_end_time,//
                     sinceId: this.$store.state.tplId==3?this.$store.state.sinceData.since_id:"",//自提点id
                     coupon_no:this.cardstate.id,
+                    message:this.option,
                 }]
           }).then((res)=>{
               if(res.body.code==200){

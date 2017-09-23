@@ -39,6 +39,8 @@
 
 
 body .weui-toast{
+  width: auto !important;
+  padding: 0 5px;
   height: 30px !important;
   min-height: 30px !important;
   line-height: 30px;
