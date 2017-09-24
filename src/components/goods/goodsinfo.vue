@@ -39,7 +39,7 @@
                         租期
                         <div class="goodsinfo_rentTime_num">
                             <span @click="numcouter(0,0)">-</span>
-                            <input type="number" style="font-size:14px" @input="goodsNumCheck(0)" v-model="currentGoodsData.rentTime">
+                            <input type="number" style="font-size:14px" @blur="goodsNumCheck(0)" v-model="currentGoodsData.rentTime">
                             <span @click="numcouter(0,1)">+</span>
                         </div>
                     </div>
@@ -195,7 +195,7 @@
                                     商品数量
                                     <div class="goodsinfo_rentTime_num">
                                         <span @click="numcouter(1,0)">-</span>
-                                        <input type="number" @input="goodsNumCheck(1)" v-model="currentGoodsData.goodsnum">
+                                        <input type="number"  @blur="goodsNumCheck(1)" v-model="currentGoodsData.goodsnum">
                                         <span @click="numcouter(1,1)">+</span>
                                     </div>
                                 </div>
@@ -775,11 +775,15 @@ export default {
             if (type === 1) {
                 if (this.currentGoodsData.goodsnum > this.goods_sales_count) {
                     this.currentGoodsData.goodsnum = this.goods_sales_count;
+                }else if(this.currentGoodsData.goodsnum < 1){
+                    this.currentGoodsData.goodsnum=1;
                 }
             } else {
                 /* 当前输入值大于最大租用周期且当前租用周期不为无限期的情况下 */
                 if (this.currentGoodsData.rentTime > this.currentGoodsData.rent_period_max_rent) {
                     this.currentGoodsData.rentTime = this.currentGoodsData.rent_period_max_rent
+                }else if(this.currentGoodsData.rentTime<this.currentGoodsData.rent_period_min_rent){
+                        this.currentGoodsData.rentTime=this.currentGoodsData.rent_period_min_rent;
                 }
             }
 
