@@ -778,6 +778,7 @@ export default {
                 }else if(this.currentGoodsData.goodsnum < 1){
                     this.currentGoodsData.goodsnum=1;
                 }
+                this.currentGoodsData.goodsnum=Math.ceil(this.currentGoodsData.goodsnum);
             } else {
                 /* 当前输入值大于最大租用周期且当前租用周期不为无限期的情况下 */
                 if (this.currentGoodsData.rentTime > this.currentGoodsData.rent_period_max_rent) {
@@ -785,6 +786,7 @@ export default {
                 }else if(this.currentGoodsData.rentTime<this.currentGoodsData.rent_period_min_rent){
                         this.currentGoodsData.rentTime=this.currentGoodsData.rent_period_min_rent;
                 }
+                this.currentGoodsData.rentTime=Math.ceil(this.currentGoodsData.rentTime);
             }
 
         },
