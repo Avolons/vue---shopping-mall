@@ -711,7 +711,7 @@ export default {
 
             window.imgurl = goodsData.goodsFace;
             window.desc =goodsData.share_content;
-            window.link=window.location.href;
+            window.link=encodeURI(window.location.href);
             wx.ready(function(res) {
 		//分享给朋友
 		wx.onMenuShareAppMessage({
