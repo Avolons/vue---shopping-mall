@@ -708,48 +708,7 @@ export default {
             /* 商品名称对应 */
             this.goodsTitle = goodsData.goodsName;
             /* 分享数据重置 */
-            window.imgurl = goodsData.goodsFace;
-            window.desc =goodsData.share_content;
-            window.link=encodeURI(window.location.href);
-            API.card.wxShare({
-                url: link,
-            }).then((data) => {
-                wx.config({
-                    debug: false,
-                    appId: data.body.data.appId,
-                    timestamp: data.body.data.timestamp,
-                    nonceStr: data.body.data.nonceStr,
-                    signature: data.body.data.signature,
-                    jsApiList: [
-                        "onMenuShareTimeline",
-                        "onMenuShareAppMessage",
-                        "onMenuShareQQ"
-                    ]
-                });
-                wx.error(function(res) {
-                });
-            }, (res) => {
-            });
-            //分享给朋友
-            wx.onMenuShareAppMessage({
-                title: document.title,
-                desc: desc,
-                link: link,
-                imgUrl: imgurl,
-            });
-            //分享到朋友圈
-            wx.onMenuShareTimeline({
-                title: document.title,
-                link: link,
-                imgUrl: imgurl,
-            });
-            wx.onMenuShareQQ({
-                title: document.title,
-                desc: desc,
-                link: link,
-                imgUrl: imgurl,
-                
-            });
+           
         },
 
         /* 商品规格选择函数 */

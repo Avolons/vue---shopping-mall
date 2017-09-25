@@ -12,36 +12,9 @@ Router.prototype.goBack = function () {
 　　window.history.go(-1);
 };
 
-window.link = window.location.href;
-window.imgurl = "https://s.zujiekeji.cn/img/zuling.png";
-window.desc = "租介：让共享成为一种新的生活方式，让社会资源不再无序浪费";
+
 // 登录跳转判断
 router.beforeEach((to, from, next) => {
-	window.imgurl = "https://s.zujiekeji.cn/img/zuling.png";
-	window.desc = "租介：让共享成为一种新的生活方式，让社会资源不再无序浪费";
-	window.link=window.location.href;
-		//分享给朋友
-		wx.onMenuShareAppMessage({
-			title: document.title,
-			desc: desc,
-			link: link,
-			imgUrl: imgurl,
-			
-		});
-		//分享到朋友圈
-		wx.onMenuShareTimeline({
-			title: document.title,
-			link: link,
-			imgUrl: imgurl,
-			
-		});
-		wx.onMenuShareQQ({
-			title: document.title,
-			desc: desc,
-			link: link,
-			imgUrl: imgurl,
-		
-		});
 	// 判断该路由是否需要登录权限
 	if (to.meta.requireAuth) {
 		// 通过vuex state获取当前的token是否存在
