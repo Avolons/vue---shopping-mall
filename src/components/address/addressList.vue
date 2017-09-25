@@ -46,6 +46,7 @@
         z-index:99999;
     }
     &_list {
+        padding-bottom: 70px;
     }
     &_single {
         display: flex;

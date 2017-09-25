@@ -708,9 +708,38 @@ export default {
             /* 商品名称对应 */
             this.goodsTitle = goodsData.goodsName;
             /* 分享数据重置 */
+
             window.imgurl = goodsData.share_url;
             window.desc =goodsData.share_content;
-     
+            wx.ready(function(res) {
+		//分享给朋友
+		wx.onMenuShareAppMessage({
+			title: document.title,
+			desc: desc,
+			link: link,
+			imgUrl: imgurl,
+			trigger: function(res) { },
+			success: function(res) { },
+			cancel: function(res) { },
+			fail: function(res) { }
+		});
+		//分享到朋友圈
+		wx.onMenuShareTimeline({
+			title: document.title,
+			link: link,
+			imgUrl: imgurl,
+			success: function(res) { },
+			cancel: function(res) { },
+		});
+		wx.onMenuShareQQ({
+			title: document.title,
+			desc: desc,
+			link: link,
+			imgUrl: imgurl,
+			success: function(res) { },
+			cancel: function(res) { },
+		});
+	});
         },
 
         /* 商品规格选择函数 */
