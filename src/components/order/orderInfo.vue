@@ -492,7 +492,9 @@ export default {
                       self.onBridgeReady();
                     }
                   },(err)=>{
-                      alert(JSON.stringify(err));
+                      self.confrim="支付异常";
+                    self.toast=true;
+                    location.href="/#/index/main/order";
                   });
               }
           });
