@@ -71,7 +71,7 @@ export default {
             var imgurl = "https://s.zujiekeji.cn/img/zuling.png";
             var desc = "租介：让共享成为一种新的生活方式，让社会资源不再无序浪费";
             API.card.wxShare({
-                url: 'https://wap.zujiekeji.cn',
+                url: link,
             }).then((data) => {
                 console.log(data.body);
                 wx.config({
