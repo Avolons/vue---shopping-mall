@@ -20,35 +20,28 @@ router.beforeEach((to, from, next) => {
 	window.imgurl = "https://s.zujiekeji.cn/img/zuling.png";
 	window.desc = "租介：让共享成为一种新的生活方式，让社会资源不再无序浪费";
 	window.link=window.location.href;
-	wx.ready(function(res) {
 		//分享给朋友
 		wx.onMenuShareAppMessage({
 			title: document.title,
 			desc: desc,
 			link: link,
 			imgUrl: imgurl,
-			trigger: function(res) { },
-			success: function(res) { },
-			cancel: function(res) { },
-			fail: function(res) { }
+			
 		});
 		//分享到朋友圈
 		wx.onMenuShareTimeline({
 			title: document.title,
 			link: link,
 			imgUrl: imgurl,
-			success: function(res) { },
-			cancel: function(res) { },
+			
 		});
 		wx.onMenuShareQQ({
 			title: document.title,
 			desc: desc,
 			link: link,
 			imgUrl: imgurl,
-			success: function(res) { },
-			cancel: function(res) { },
+		
 		});
-	});
 	// 判断该路由是否需要登录权限
 	if (to.meta.requireAuth) {
 		// 通过vuex state获取当前的token是否存在
