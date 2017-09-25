@@ -92,7 +92,15 @@ export default {
             let scrollTop=document.querySelector(".list_compent_list_box").scrollTop;
             localStorage.setItem("scrolltop",scrollTop);
             }
-            
+            if(document.querySelector(".goodsList_List")){
+            let scrollTop=document.querySelector(".goodsList_List").scrollTop;
+            localStorage.setItem("scrolltop",scrollTop);
+            }
+            if(document.querySelector(".shop_main_goodsList")){
+            let scrollTop=document.querySelector(".shop_main_goodsList").scrollTop;
+            localStorage.setItem("storeTop",scrollTop);
+            }
+            localStorage.setItem("goodsInfo","11");
             this.$router.push({ path: '/goodsInfo/'+id}); 
         },
         load() {

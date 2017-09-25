@@ -85,6 +85,7 @@ export default {
                     ]
                 });
                 wx.error(function(res) {
+                    alert(JSON.stringify(res));   
                 });
             }, (res) => {
                 alert(JSON.stringify(res.body.msg));

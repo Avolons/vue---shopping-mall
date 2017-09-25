@@ -222,6 +222,7 @@ export default {
         /* 列表点击函数 */
         goSearch(id,name){
             window.location.href="/#/goodsList?categoryId="+id+"&name="+name;
+            window.localStorage.setItem("listReload",'11');
         }
     },
      mounted(){

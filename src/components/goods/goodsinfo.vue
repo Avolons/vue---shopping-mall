@@ -399,10 +399,14 @@ export default {
         /* 获取商品详情数据 */
     },
     activated() {
-        setTimeout(()=>{
+        if(localStorage.getItem('goodsInfo')){
+            setTimeout(()=>{
             this.havestart=true;
-        },500);
-        this.getData();
+            },500);
+            this.getData();
+            localStorage.setItem("goodsInfo","");
+        }
+        
     },
     /* 计算属性 */
     computed: {
@@ -857,6 +861,7 @@ export default {
         },
         /* 进入店铺主页面 */
         goShop() {
+             window.localStorage.setItem("store",'11');
             window.location.href = "/#/shop/" + this.storeId;
         },
         /* 进入购物车 */

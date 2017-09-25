@@ -265,7 +265,7 @@
         }
     }
     .order_number_collection{
-        margin-bottom: 70px;
+        padding-bottom: 70px;
         margin-top: 10px;
         box-sizing: border-box;
         padding: 0 15px;
@@ -370,7 +370,7 @@
             <cell title="运费"  :value="infoData.freight | currency('￥')" ></cell>
             <cell class="orderAction_main_truePrice" title="实付款" :value="infoData.totalPrice | currency('￥')"  ></cell>
             <cell  title="支付方式" :value="pay_type"></cell>
-            <x-textarea :max="20" readonly v-model="infoData.message" placeholder="买家留言"  ></x-textarea>
+            <x-textarea readonly v-model="infoData.message" placeholder="买家留言"  ></x-textarea>
         </group>
         <ul class="order_number_collection">
             <h3>订单编号：{{infoData.orderCardId}}</h3>

@@ -151,12 +151,14 @@
                this.history.push(this.searchValue);
                localStorage.setItem("zj_history",JSON.stringify(this.history));
                window.location.href="/#/goodslist?goods_name="+this.searchValue;
+               window.localStorage.setItem("listReload",'11');
                this.searchValue="";         
            },
            /* 历史记录搜索 */
            historySearch(item){
                this.searchValue=item;
                window.location.href="/#/goodslist?goods_name="+this.searchValue;
+               window.localStorage.setItem("listReload",'11');
                this.searchValue="";  
            },
            /* 清空历史记录 */

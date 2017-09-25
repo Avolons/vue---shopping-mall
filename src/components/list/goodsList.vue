@@ -1,5 +1,10 @@
 <style lang="scss">
    .goodsList{
+       &_List{
+           height: 100%;
+           box-sizing: border-box;
+           overflow-y: auto;
+       }
        &_main{
            height: 100%;
            background-color: #f1f1f1;
@@ -93,15 +98,15 @@
         <div class="goodsList_chenckList">
             <span v-for="(item,index) in typeList" :class="{'goodsList_chenckList--selected':item.select}" @click="typeCheck(index)">{{item.name}}</span>
         </div>
-            <div style="padding-top:40px;"> 
+            <div  class="goodsList_List" style="padding-top:40px;"> 
              <list-compent  :commonGoodsList="goodsList"></list-compent>
+                <load-more style="padding-bottom:20px;" v-show="loadshow" tip="加载更多"></load-more>
+                <load-more v-show="!loadshow && goodsList.length>8 " :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
             </div>
         <div class="goodsList_noGoods" v-show="!goodsList[0]">
             <i class="iconfont">&#xe638;</i>
             <p>抱歉，没有搜索到您想要的商品</p>
         </div>
-        <load-more style="padding-bottom:20px;" v-show="loadshow" tip="加载更多"></load-more>
-        <load-more v-show="!loadshow && goodsList.length>8 " :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
     </div>
 </div>
    
@@ -264,12 +269,15 @@ export default {
       }
   }
   ,mounted(){
-        /* this.Initialization(); */
+        this.page=1;
+        this.canBottom=true;
+        this.haveData=true;
+        this.Initialization();
         let self = this;
         function getScrollTop() {
             　　var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
-            　　if (document.body) {
-                　　　　bodyScrollTop = document.body.scrollTop;
+            　　if (document.querySelector(".goodsList_List")) {
+                　　　　bodyScrollTop = document.querySelector(".goodsList_List").scrollTop;
             　　}
             　　if (document.documentElement) {
                 　　　　documentScrollTop = document.documentElement.scrollTop;
@@ -280,8 +288,8 @@ export default {
         //文档的总高度
         function getScrollHeight() {
             　　var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
-            　　if (document.body) {
-                　　　　bodyScrollHeight = document.body.scrollHeight;
+            　　if (document.querySelector(".goodsList_List")) {
+                　　　　bodyScrollHeight = document.querySelector(".goodsList_List").scrollHeight;
             　　}
             　　if (document.documentElement) {
                 　　　　documentScrollHeight = document.documentElement.scrollHeight;
@@ -299,7 +307,7 @@ export default {
             　　}
             　　return windowHeight;
         }
-        window.onscroll = function() {
+        document.querySelector(".goodsList_List").onscroll = function() {
             　　if (getScrollTop() + getWindowHeight() >= (getScrollHeight()-10)) {
                    if(self.canBottom==true){
                         self.canBottom=false;
@@ -309,10 +317,18 @@ export default {
         };
   }
   ,activated(){
-      this.page=1;
-      this.canBottom=true;
-       this.haveData=true;
-      this.Initialization();
+        if(window.localStorage.getItem("listReload")){
+            this.page=1;
+            this.canBottom=true;
+            this.haveData=true;
+            this.Initialization();
+            window.localStorage.setItem("listReload",'');
+        }else{
+            setTimeout(() => {
+            document.querySelector(".goodsList_List").scrollTop = localStorage.getItem("scrolltop");
+        }, 50);
+        }
+      
   }
 }
 </script>

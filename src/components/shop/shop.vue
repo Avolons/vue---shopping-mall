@@ -1,8 +1,18 @@
 <style lang="scss">
     .shop_main{
+        display: flex;
+        flex-direction: column;
         height: 100%;
         background-color: #fff;
+        &_goodsList{
+            flex-shrink: 1;
+            flex-grow: 1;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
         &_header{
+            flex-shrink: 0;
+            flex-grow: 0;
             height: 115px;
             position: relative;
             overflow: hidden;
@@ -102,7 +112,7 @@
                 <i class="iconfont">&#xe6d7;</i>
             </div>
         </header>
-        <div class="shop_main_cardListbox">
+        <div v-show="cardList[0]" class="shop_main_cardListbox">
             <ul class="shop_main_cardList">
                 <li class="shop_main_cardSingle" v-for="item in cardList" @click="getCard(item.coupon_no)">
                     <div class="shop_main_box">
@@ -112,7 +122,11 @@
                 </li>
             </ul>
         </div>
-        <list-compent :commonGoodsList="goodsList"></list-compent>
+        <div class="shop_main_goodsList">
+         <list-compent :commonGoodsList="goodsList"></list-compent>
+        <load-more style="padding-bottom:20px;" v-show="loadshow" tip="加载更多"></load-more>
+        <load-more v-show="!loadshow && goodsList.length>8 " :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
+        </div>
         <toast v-model="toast"  type="success">{{confrim}}</toast>
     </div>
 </div>
@@ -120,7 +134,7 @@
 
 <script>
 import ListCompent from '../list/listCompent.vue';
-import { XHeader,Toast} from 'vux'
+import { XHeader,Toast,LoadMore} from 'vux'
 import { mapGetters } from 'vuex'
 import {API,getQuery} from '../../services'
 
@@ -128,18 +142,23 @@ export default {
   components: {
     XHeader,
     Toast,
+    LoadMore,
     ListCompent
   },
   data () {
     return {
+        haveData:true,
+        page:1,
+        canBottom:true,
+        loadshow:false,
         confrim:"请选择地址",
         toast:false,
         storeName:null,
         storeFace:null,
         storebgPic:null,
-      storeId:null,
-      goodsList:[1,5,7,6,8],
-      cardList:[]
+        storeId:null,
+        goodsList:[1,5,7,6,8],
+        cardList:[]
     }
   },
   computed:{
@@ -194,10 +213,17 @@ export default {
             }
         });
         API.main.storeGoods({
-            storeId:this.storeId
+            storeId:this.storeId,
+            page:this.page,
         }).then((res)=>{
             if(res.body.code==200){
                 this.goodsList=res.body.data.shopList.data;
+                if(res.body.data.shopList.data.length==10){
+                    this.haveData=true;
+                    this.page++; 
+                }else{
+                    this.haveData=false;  
+                }
             }
         }); 
         API.card.stordCardList({
@@ -207,12 +233,89 @@ export default {
                 this.cardList=res.body.data;
             }
         })
+      },
+      /* 获取更多数据 */
+      getMoreData(){
+          if(this.haveData){
+                this.loadshow=true;
+                API.main.storeGoods({
+                    storeId:this.storeId,
+                    page_number:10,
+                    page:this.page,
+                }).then((Response)=>{
+                    setTimeout(()=>{
+                    this.goodsList=this.goodsList.concat(Response.body.data.shopList.data);   
+                    this.canBottom=true;
+                    this.loadshow=false;
+                    },500);
+                    if(Response.body.data.shopList.data.length==10){
+                        this.haveData=true;
+                        this.page++;
+                    }else{
+                        this.haveData=false;
+                    }
+                });
+            }else{
+                this.canBottom=true; 
+            }
       }
   },mounted(){
+      let self = this;
+        let mainbox = document.querySelector(".shop_main_goodsList");
+        function getScrollTop() {
+            var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
+            if (mainbox) {
+                bodyScrollTop = mainbox.scrollTop;
+            }
+            if (document.documentElement) {
+                documentScrollTop = document.documentElement.scrollTop;
+            }
+            scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
+            return scrollTop;
+        }
+        function getScrollHeight() {
+            var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
+            if (mainbox) {
+                bodyScrollHeight = mainbox.scrollHeight;
+            }
+            if (document.documentElement) {
+                documentScrollHeight = document.documentElement.scrollHeight;
+            }
+            scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
+            return scrollHeight;
+        }
+        function getWindowHeight() {
+            var windowHeight = 0;
+            if (document.compatMode == "CSS1Compat") {
+                windowHeight = document.documentElement.clientHeight;
+            } else {
+                windowHeight = document.body.clientHeight;
+            }
+            return windowHeight;
+        }
+        document.querySelector(".shop_main_goodsList").onscroll = function() {
+            if ((getScrollTop() + getWindowHeight()) >= (getScrollHeight() - 10)) {
+                if (self.canBottom == true) {
+                    self.canBottom = false;
+                    self.getMoreData();
+                }
+            }
+        };
       this.Initialization();
   },
   activated(){
-      this.Initialization();
+      if(localStorage.getItem("store")){
+            this.page=1;
+            this.canBottom=true;
+            this.haveData=true;
+            this.Initialization();
+             window.localStorage.setItem("store",'');
+      }else{
+           setTimeout(() => {
+            document.querySelector(".shop_main_goodsList").scrollTop = localStorage.getItem("storeTop");
+        }, 50);
+      }
+       
   }
 }
 </script>

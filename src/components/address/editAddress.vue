@@ -146,7 +146,7 @@ export default {
         addressData:ChinaAddressV3Data,
         name:"",
         phone:"",
-        phone:[],
+        address:[],
         /* 详细地址 */
         addressDetils:"",
         isDefault:false,
@@ -174,7 +174,7 @@ export default {
                 this.title="新增地址";
                 this.name="";
                 this.phone="";
-                this.phone=[];
+                this.address=[];
                 this.addressDetils="";
                 this.isDefault=false;
             }else{

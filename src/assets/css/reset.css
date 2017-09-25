@@ -41,7 +41,7 @@
 body .weui-toast{
   width: auto !important;
   padding: 0 5px;
-  height: 30px !important;
+  display: flex;
   min-height: 30px !important;
   line-height: 30px;
   top: 240px;
@@ -49,6 +49,11 @@ body .weui-toast{
 
 body .weui-icon_toast{
   display: none;
+  margin: 0;
+}
+
+body .weui-toast__content{
+  margin: 0;
 }
 body .weui-tabbar{
   border-top: 1px solid #eee;
