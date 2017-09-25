@@ -12,9 +12,9 @@ Router.prototype.goBack = function () {
 　　window.history.go(-1);
 };
 
-var link = window.location.href;
-var imgurl = "https://s.zujiekeji.cn/img/zuling.png";
-var desc = "租介：让共享成为一种新的生活方式，让社会资源不再无序浪费";
+window.link = window.location.href;
+window.imgurl = "https://s.zujiekeji.cn/img/zuling.png";
+window.desc = "租介：让共享成为一种新的生活方式，让社会资源不再无序浪费";
 // 登录跳转判断
 router.beforeEach((to, from, next) => {
 	link = window.location.href;
@@ -44,96 +44,7 @@ router.beforeEach((to, from, next) => {
 	}
 });
 
-function isWeiXin() {
-	var ua = window.navigator.userAgent.toLowerCase();
-	if (ua.match(/MicroMessenger/i) == 'micromessenger') {
-		return true;
-	} else {
-		return false;
-	}
-}
-if (isWeiXin()) {
-	function getQueryString(name) {
-		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-		var r = location.search.substr(1).match(reg);
-		if (r != null)
-			return unescape(decodeURI(r[2]));
-		return null;
-	}
-	let openId = localStorage.getItem("openId");
 
-	var access_code = getQueryString('code');
-
-	if (!openId) {
-		if (access_code == null) {
-			var fromurl = location.href;//获取授权code的回调地址，获取到code，直接返回到当前页  
-			var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe67019703f582d76&redirect_uri=' + encodeURIComponent("http://wap.zujiekeji.cn") + '&response_type=code&scope=snsapi_base&state=0#wechat_redirect';
-			location.href = url;
-		} else {
-			if (!openId) {
-				API.order.getOpenId({
-					code: access_code,
-				}).then((res) => {
-					let openid = res.body.data;
-					localStorage.setItem("openId", openid);
-				}, (res) => {
-				});
-			}
-
-		}
-	}
-	
-	
-	API.card.wxShare({
-		url: link,
-	}).then((data) => {
-		wx.config({
-			debug: false,
-			appId: data.body.data.appId,
-			timestamp: data.body.data.timestamp,
-			nonceStr: data.body.data.nonceStr,
-			signature: data.body.data.signature,
-			jsApiList: [
-				"onMenuShareTimeline",
-				"onMenuShareAppMessage",
-				"onMenuShareQQ"
-			]
-		});
-		wx.error(function(res) {
-		});
-	}, (res) => {
-	});
-
-	wx.ready(function(res) {
-		//分享给朋友
-		wx.onMenuShareAppMessage({
-			title: document.title,
-			desc: desc,
-			link: link,
-			imgUrl: imgurl,
-			trigger: function(res) { },
-			success: function(res) { },
-			cancel: function(res) { },
-			fail: function(res) { }
-		});
-		//分享到朋友圈
-		wx.onMenuShareTimeline({
-			title: document.title,
-			link: link,
-			imgUrl: imgurl,
-			success: function(res) { },
-			cancel: function(res) { },
-		});
-		wx.onMenuShareQQ({
-			title: document.title,
-			desc: desc,
-			link: link,
-			imgUrl: imgurl,
-			success: function(res) { },
-			cancel: function(res) { },
-		});
-	});
-}
 
 
 
