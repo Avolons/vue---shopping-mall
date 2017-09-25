@@ -28,6 +28,7 @@ export default {
         }
     },
     mounted() {
+        
         function isWeiXin() {
             var ua = window.navigator.userAgent.toLowerCase();
             if (ua.match(/MicroMessenger/i) == 'micromessenger') {
@@ -70,14 +71,15 @@ export default {
             var imgurl = "https://s.zujiekeji.cn/img/zuling.png";
             var desc = "租介：让共享成为一种新的生活方式，让社会资源不再无序浪费";
             API.card.wxShare({
-                url: 'http://wap.zujiekeji.cn',
+                url: 'https://wap.zujiekeji.cn',
             }).then((data) => {
+                console.log(data.body);
                 wx.config({
-                    debug: true,
-                    appId: data.data.appId,
-                    timestamp: data.data.timestamp,
-                    nonceStr: data.data.nonceStr,
-                    signature: data.data.signature,
+                     debug: true,
+                    appId: data.body.data.appId,
+                    timestamp: data.body.data.timestamp,
+                    nonceStr: data.body.data.nonceStr,
+                    signature: data.body.data.signature,
                     jsApiList: [
                         "onMenuShareTimeline",
                         "onMenuShareAppMessage",
