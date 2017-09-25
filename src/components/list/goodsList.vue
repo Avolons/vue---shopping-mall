@@ -2,7 +2,7 @@
    .goodsList{
        &_main{
            height: 100%;
-           background-color: #fff;
+           background-color: #f1f1f1;
          .vux-header{
              display: flex;
              justify-content: center;
@@ -44,14 +44,14 @@
        }
        &_chenckList{
            position: fixed;
-           top: 47px;
+           top: 46px;
            left: 0;
            width: 100%;
            display: flex;
            box-sizing: border-box;
            padding: 0 35px;
            justify-content: flex-start;
-           height: 40px;
+           height: 41px;
            line-height: 40px;
            background-color: #f1f1f1;
            >span{
@@ -93,14 +93,14 @@
         <div class="goodsList_chenckList">
             <span v-for="(item,index) in typeList" :class="{'goodsList_chenckList--selected':item.select}" @click="typeCheck(index)">{{item.name}}</span>
         </div>
-            <div style="padding-top:40px"> 
+            <div style="padding-top:40px;"> 
              <list-compent  :commonGoodsList="goodsList"></list-compent>
             </div>
         <div class="goodsList_noGoods" v-show="!goodsList[0]">
             <i class="iconfont">&#xe638;</i>
             <p>抱歉，没有搜索到您想要的商品</p>
         </div>
-        <load-more v-show="loadshow" tip="加载更多"></load-more>
+        <load-more style="padding-bottom:20px;" v-show="loadshow" tip="加载更多"></load-more>
         <load-more v-show="!loadshow && goodsList.length>8 " :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
     </div>
 </div>
@@ -300,9 +300,6 @@ export default {
             　　return windowHeight;
         }
         window.onscroll = function() {
-            console.log(getScrollTop());
-            console.log(getWindowHeight());
-            console.log(getScrollHeight());
             　　if (getScrollTop() + getWindowHeight() >= (getScrollHeight()-10)) {
                    if(self.canBottom==true){
                         self.canBottom=false;

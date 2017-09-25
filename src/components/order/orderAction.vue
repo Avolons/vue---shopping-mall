@@ -686,6 +686,7 @@ export default {
                     if(res.body.code==200){
                         this.getOrderType(res.body.data);
                         this.infoData=res.body.data; 
+                        this.infoData.message='买家留言:'+this.infoData.message;
                         this.currentConfrim=this.titleArray[this.infoData.orderType-1];
                         this.timeForm();
                    }

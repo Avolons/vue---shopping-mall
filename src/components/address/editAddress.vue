@@ -146,7 +146,7 @@ export default {
         addressData:ChinaAddressV3Data,
         name:"",
         phone:"",
-        address:[],
+        phone:[],
         /* 详细地址 */
         addressDetils:"",
         isDefault:false,
@@ -172,6 +172,11 @@ export default {
           /* 当前属于新增状态 */
             if(this.$route.params.id=="add"){
                 this.title="新增地址";
+                this.name="";
+                this.phone="";
+                this.phone=[];
+                this.addressDetils="";
+                this.isDefault=false;
             }else{
                 this.title="地址编辑";
                 let id=this.$route.params.id;

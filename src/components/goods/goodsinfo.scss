@@ -33,6 +33,7 @@
 }
 .goodsinfo{
     &_container{
+        -webkit-overflow-scrolling : touch; 
         .swiper-demo-img{
             >img{
                 width: 100%;

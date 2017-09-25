@@ -96,7 +96,6 @@
     methods :{
         /* 路由切换函数 */
         routerchange(index){
-            console.log(this.$route.fullPath);
             if(index<this.currentindex){
                 this.transitionName = 'slide-right'
             }else{

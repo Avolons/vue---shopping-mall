@@ -12,7 +12,7 @@
                     <i class="iconfont">&#xe7a7;</i>
                 </div>
                 <!-- 商品简介轮播图 -->
-                <swiper class="main_swiper" dots-position="center" width="100%">
+                <swiper class="main_swiper" dots-position="center" :aspect-ratio="400/400" width="100%">
                     <swiper-item class="swiper-demo-img" v-for="(item, index) in bannerlist" :key="index">
                         <img :src="item.goodsFace">
                     </swiper-item>
@@ -703,7 +703,6 @@ export default {
             this.currentTypedata.rent_period[0].sel = 1;
             /* 商品名称对应 */
             this.goodsTitle = goodsData.goodsName;
-            document.querySelector(".goodsinfo_header .vux-swiper").style.height = Math.floor(window.innerWidth) + "px";
 
         },
 

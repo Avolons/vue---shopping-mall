@@ -299,7 +299,7 @@ export default {
             storeId:"",
         },
         priceShow:false,
-        currentPrice:-10,
+        currentPrice:0,
         currentCard:0,
         cardShow:false,
         confrim:"请选择地址",
@@ -374,7 +374,9 @@ export default {
         /* 计算商品总租金 */
         /* 租期*金额*数量+押金+运费 */
         goodsAllPrice(){
-            return (this.infoData.rent_period_now_rent_price*this.infoData.cart_time_number*this.infoData.cart_content_good_amount);
+            let Price=this.infoData.rent_period_now_rent_price*this.infoData.cart_time_number*this.infoData.cart_content_good_amount;
+            let allPrice=Price+this.currentPrice;
+            return allPrice<=0?0:allPrice;
         },
         /* 运费计算 */
         returnTplPrice(){

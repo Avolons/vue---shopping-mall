@@ -683,6 +683,12 @@ export const card={
       return Vue.http.post(API_ROOT + 'coupon/receiveNewerCoupon',data);
     },
     /**
+     * 微信分享接口
+     */
+    wxShare(data){
+      return Vue.http.get('https://www.zujiekeji.cn/index/wechat/getSignature',{params:data});
+    },
+    /**
      * 是否有活动
      * @param {any} data 
      * @returns 
@@ -690,5 +696,6 @@ export const card={
     getCouponActive(data){
       return Vue.http.get(API_ROOT + 'coupon/getCouponActive',{params:data});
     },
+    
     
 }

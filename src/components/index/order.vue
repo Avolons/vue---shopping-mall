@@ -48,6 +48,7 @@
     height: calc(100% - 138px);
     overflow-y: auto;
     background-color: #f3f3f3;
+     -webkit-overflow-scrolling : touch; 
     }
   &_single{
     background-color: #fff;
@@ -304,7 +305,9 @@ export default {
   },
   data () {
     return {
-        paydata:{},
+      /* 临时数据 */
+      temporary:[],
+      paydata:{},
       confrim:"",
       toast:false,
       showList1: true,
@@ -440,7 +443,7 @@ export default {
     /* 获取对应的数据 */
     getTypeData(){
             if(this.currentPage==1){
-                this.orderList=[];
+                this.temporary=[];
             }
           API.order.orderlist({
               userId:this.getUserInfoUserId,  
@@ -453,14 +456,13 @@ export default {
               let list= res.body.data.orderList.data
               for(let item of list) {
                   this.confrimType(item);
-                  this.orderList.push(item);
+                  this.temporary.push(item);
               }
               if(list.length==10){
-                  console.log(1);
                   this.currentPage++;
                   this.getTypeData();
               }else{
-                  
+                  this.orderList=this.temporary;
                   return false;
               }
               /* this.orderList=list; */
@@ -492,24 +494,24 @@ export default {
        
     },
     /* 支付接口 */
-      onBridgeReady(){
-          let self=this;
-            WeixinJSBridge.invoke(
-                'getBrandWCPayRequest',self.paydata,
-                function(res){  
-                    if(res.err_msg =="get_brand_wcpay_request:fail")  {
-                        alert(JSON.stringify(self.paydata));
-                        alert(JSON.stringify(res));
-                    } 
-                    if(res.err_msg == "get_brand_wcpay_request:ok" ) {
-                          self.confrim="支付成功";
-                          self.toast=true;
-                          self.currentPage=1;
-                          self.getTypeData();
-                    }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
-                }
-            ); 
-        },
+    onBridgeReady(){
+        let self=this;
+        WeixinJSBridge.invoke(
+            'getBrandWCPayRequest',self.paydata,
+            function(res){  
+                if(res.err_msg =="get_brand_wcpay_request:fail")  {
+                    alert(JSON.stringify(self.paydata));
+                    alert(JSON.stringify(res));
+                } 
+                if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                        self.confrim="支付成功";
+                        self.toast=true;
+                        self.currentPage=1;
+                        self.getTypeData();
+                }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
+            }
+        ); 
+    },
    /* 订单付款 */
     payOrder(id){
         /* 待付款订单生成支付订单 */

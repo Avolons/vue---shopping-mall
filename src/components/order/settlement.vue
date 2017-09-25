@@ -122,7 +122,7 @@
             <cell title="实付款"  :value="infoData.order_total_price | currency('￥')" ></cell>
         </group> 
         <group class="settlement_main_priceColl">
-            <cell title="实际租金"  :value="infoData.order_deposit | currency('￥')" ></cell>
+            <cell title="实际租金"  :value="infoData.order_count_money | currency('￥')" ></cell>
             <cell title="运费"  :value="infoData.order_freight | currency('￥')"></cell>
             <cell title="违约金" :value="infoData.settlement_bill_liquidated | currency('￥')"  ></cell>
             <cell title="损失赔偿金" :value="infoData.settlement_bill_damages | currency('￥')"  ></cell>

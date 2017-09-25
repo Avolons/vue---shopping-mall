@@ -135,6 +135,7 @@ body {
         width: 100%;
         height: calc(100% - 142px);
         overflow-y: auto;
+         -webkit-overflow-scrolling : touch; 
         background-color: #f1f1f1;
         /* background-color: #f3f3f3; */
         .vux-slider > .vux-indicator > a > .vux-icon-dot.active, .vux-slider .vux-indicator-right > a > .vux-icon-dot.active{
