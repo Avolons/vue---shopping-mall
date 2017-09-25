@@ -324,6 +324,7 @@ export default {
             if (this.$route.query.chose == 1) {
                 this.$store.dispatch('CurrentTpl', 0);
                 this.$store.dispatch('SetAddress', res);
+                localStorage.setItem('addressClick','11');
                 /* 路由回退 */
                 this.routerBack();
             }

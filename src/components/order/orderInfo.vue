@@ -183,12 +183,8 @@
          </div>
          <group class="orderInfon_main_address">
              <!-- 用户收货地址 -->
-            <template v-if="haveDefault">
-                <cell :title="getNamePhone"  :link="{path:'/addressList?chose=1'}"  :inline-desc='getAddress'></cell>
-            </template>
-            <template v-else>
-                 <cell class="nodefault" title="请选择收货地址"  :link="{path:'/addressList?chose=1'}" ></cell>       
-            </template>
+                <cell v-show="haveDefault" :title="getNamePhone"  :link="{path:'/addressList?chose=1'}"  :inline-desc='getAddress'></cell>
+                 <cell v-show="!haveDefault" class="nodefault" title="请选择收货地址"  :link="{path:'/addressList?chose=1'}" ></cell>       
                 <!-- 选择物流方式 -->
              <cell v-show="haveDefault" :title="returnTpl" :link="orderLogistics" ></cell>
             <div  v-show="returnTpl=='自提'"   class="main_since_single">
@@ -424,7 +420,6 @@ export default {
                           self.confrim="支付异常";
                           self.toast=true;
                           location.href="/#/index/main/order";
-                          
                     } 
                     if(res.err_msg =="get_brand_wcpay_request:cancel")  {
                             location.href="/#/index/main/order";
@@ -432,7 +427,6 @@ export default {
                     if(res.err_msg == "get_brand_wcpay_request:ok" ) {
                           self.confrim="支付成功";
                           self.toast=true;
-
                           location.href="/#/index/main/order";
                     }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
                 }
@@ -564,7 +558,7 @@ export default {
       }
   },mounted(){
       /* 获取总数据 */
-      this.Initialization();
+      /* this.Initialization(); */
   },
   activated(){
       /* 新订单时触发更新 */
@@ -576,6 +570,10 @@ export default {
         };
         this.priceShow=false;
         this.currentPrice=0;
+      }
+      if(localStorage.getItem('addressClick')){
+          localStorage.setItem('addressClick','');
+          this.haveDefault=true;
       }
   }
 } 

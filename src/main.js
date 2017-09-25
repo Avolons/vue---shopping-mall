@@ -17,15 +17,8 @@ window.imgurl = "https://s.zujiekeji.cn/img/zuling.png";
 window.desc = "租介：让共享成为一种新的生活方式，让社会资源不再无序浪费";
 // 登录跳转判断
 router.beforeEach((to, from, next) => {
-	link = window.location.href;
-	if(to.name=='goodsInfo'){
-		imgurl = localStorage.getItem('shareImg');
-		desc = localStorage.getItem('shareText');	
-	}
-	if(from.name=='goodsInfo'){
-		imgurl = "https://s.zujiekeji.cn/img/zuling.png";
-		desc = "租介：让共享成为一种新的生活方式，让社会资源不再无序浪费";
-	}
+	window.imgurl = "https://s.zujiekeji.cn/img/zuling.png";
+	window.desc = "租介：让共享成为一种新的生活方式，让社会资源不再无序浪费";
 	// 判断该路由是否需要登录权限
 	if (to.meta.requireAuth) {
 		// 通过vuex state获取当前的token是否存在
