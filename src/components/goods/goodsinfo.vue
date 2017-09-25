@@ -712,6 +712,7 @@ export default {
             window.imgurl = goodsData.goodsFace;
             window.desc =goodsData.share_content;
             window.link=encodeURI(window.location.href);
+            alert(window.link);
             wx.ready(function(res) {
 		//分享给朋友
 		wx.onMenuShareAppMessage({
