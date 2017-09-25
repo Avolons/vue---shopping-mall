@@ -8,8 +8,13 @@ import router from './router';
 
 /* 路由全局函数 */
 Router.prototype.goBack = function () { 
-　　this.isBack = true;
-　　window.history.go(-1);
+	if(history.length==1){
+		window.location.href="/";
+	}else{
+		this.isBack = true;
+		　　window.history.go(-1);
+	}
+　　
 };
 
 

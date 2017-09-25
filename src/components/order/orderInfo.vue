@@ -560,7 +560,7 @@ export default {
       }
   },mounted(){
       /* 获取总数据 */
-      /* this.Initialization(); */
+      this.Initialization();
   },
   activated(){
       /* 新订单时触发更新 */
