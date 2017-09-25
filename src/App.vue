@@ -73,7 +73,6 @@ export default {
             API.card.wxShare({
                 url: link,
             }).then((data) => {
-                console.log(data.body);
                 wx.config({
                      debug: true,
                     appId: data.body.data.appId,
@@ -87,10 +86,8 @@ export default {
                     ]
                 });
                 wx.error(function(res) {
-                    alert(JSON.stringify(res));   
                 });
             }, (res) => {
-                alert(JSON.stringify(res.body.msg));
             });
 
             wx.ready(function(res) {
