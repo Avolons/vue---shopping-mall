@@ -709,8 +709,9 @@ export default {
             this.goodsTitle = goodsData.goodsName;
             /* 分享数据重置 */
 
-            window.imgurl = goodsData.share_url;
+            window.imgurl = goodsData.goodsFace;
             window.desc =goodsData.share_content;
+            window.link=window.location.href;
             wx.ready(function(res) {
 		//分享给朋友
 		wx.onMenuShareAppMessage({

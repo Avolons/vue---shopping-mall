@@ -19,6 +19,7 @@ window.desc = "租介：让共享成为一种新的生活方式，让社会资�
 router.beforeEach((to, from, next) => {
 	window.imgurl = "https://s.zujiekeji.cn/img/zuling.png";
 	window.desc = "租介：让共享成为一种新的生活方式，让社会资源不再无序浪费";
+	window.link=window.location.href;
 	wx.ready(function(res) {
 		//分享给朋友
 		wx.onMenuShareAppMessage({
