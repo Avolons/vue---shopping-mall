@@ -707,7 +707,9 @@ export default {
             this.currentTypedata.rent_period[0].sel = 1;
             /* 商品名称对应 */
             this.goodsTitle = goodsData.goodsName;
-
+            /* 分享数据重置 */
+            localStorage.setItem("shareImg",goodsData.share_url);
+            localStorage.setItem("shareText",goodsData.share_content);
         },
 
         /* 商品规格选择函数 */

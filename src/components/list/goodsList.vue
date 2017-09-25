@@ -4,6 +4,7 @@
            height: 100%;
            box-sizing: border-box;
            overflow-y: auto;
+           -webkit-overflow-scrolling : touch; 
        }
        &_main{
            height: 100%;
