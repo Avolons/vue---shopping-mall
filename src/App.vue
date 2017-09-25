@@ -28,7 +28,7 @@ export default {
         }
     },
     mounted() {
-        
+
         function isWeiXin() {
             var ua = window.navigator.userAgent.toLowerCase();
             if (ua.match(/MicroMessenger/i) == 'micromessenger') {
@@ -74,7 +74,7 @@ export default {
                 url: link,
             }).then((data) => {
                 wx.config({
-                     debug: true,
+                    debug: false,
                     appId: data.body.data.appId,
                     timestamp: data.body.data.timestamp,
                     nonceStr: data.body.data.nonceStr,

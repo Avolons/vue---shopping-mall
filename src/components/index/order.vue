@@ -500,9 +500,16 @@ export default {
             'getBrandWCPayRequest',self.paydata,
             function(res){  
                 if(res.err_msg =="get_brand_wcpay_request:fail")  {
-                    alert(JSON.stringify(self.paydata));
-                    alert(JSON.stringify(res));
-                } 
+                          self.confrim="支付异常";
+                          self.toast=true;
+                          self.currentPage=1;
+                        self.getTypeData();
+                          
+                    } 
+                    if(res.err_msg =="get_brand_wcpay_request:cancel")  {
+                            self.currentPage=1;
+                        self.getTypeData();
+                    } 
                 if(res.err_msg == "get_brand_wcpay_request:ok" ) {
                         self.confrim="支付成功";
                         self.toast=true;
@@ -542,7 +549,6 @@ export default {
                       self.onBridgeReady();
                     }
                   },(err)=>{
-                      alert(JSON.stringify(err));
                   });
         })
                   
