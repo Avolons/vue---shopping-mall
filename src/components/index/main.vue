@@ -338,7 +338,7 @@ body {
         </scroller>
         <div class="main_listbox">
             <!-- 轮播图组件 -->
-            <swiper v-show="currentType==0" loop class="main_swiper" dots-position="center" height="auto" :aspect-ratio="250/750" @on-index-change="onSwiperItemIndexChange" v-model="swiperItemIndex">
+            <swiper v-show="currentType==0" loop class="main_swiper" dots-position="center" height="auto" :aspect-ratio="400/750" @on-index-change="onSwiperItemIndexChange" v-model="swiperItemIndex">
                 <swiper-item class="swiper-demo-img" v-for="(item, index) in bannerlist" :key="index">
                     <img @click="bannerClick(item.extras,item.bannerType)" :src="item.imagePath">
                 </swiper-item>
