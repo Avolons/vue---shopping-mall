@@ -39,6 +39,32 @@ router.beforeEach((to, from, next) => {
 });
 
 
+window.overscroll = function(el) {
+	el.addEventListener('touchstart', function() {
+		var top = el.scrollTop
+			, totalScroll = el.scrollHeight
+			, currentScroll = top + el.offsetHeight;
+		if (top === 0) {
+			el.scrollTop = 1;
+		} else if (currentScroll === totalScroll) {
+			el.scrollTop = top - 1;
+		}
+	});
+
+	el.addEventListener('touchmove', function(evt) {
+		if (el.offsetHeight < el.scrollHeight)
+			evt._isScroller = true;
+	});
+}
+var u = navigator.userAgent;
+var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+if(isiOS){
+	document.body.addEventListener('touchmove', function(evt) {
+		if (!evt._isScroller) {
+			evt.preventDefault();
+		}
+	});
+}
 
 
 
@@ -55,6 +81,8 @@ if(isCertify){
 /* 全局注册md5函数 */
 import { md5 } from 'vux';
 Vue.prototype.md5=md5;
+import  { LoadingPlugin } from 'vux'
+Vue.use(LoadingPlugin)
 import { ConfirmPlugin } from 'vux';
 Vue.use(ConfirmPlugin);
 import { dateFormat } from 'vux'

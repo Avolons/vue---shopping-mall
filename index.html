@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=0.9,user-scalable=0">
+  
   <meta name="apple-mobile-web-app-capable" content="yes">
   <!-- uc强制竖屏 -->
   <meta name="screen-orientation" content="portrait">
@@ -20,6 +20,16 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>租介网</title>
   <script>
+    var u = navigator.userAgent;
+    var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    var metaEl = document.createElement('meta');
+    metaEl.setAttribute('name', 'viewport');
+    if(isiOS){
+      metaEl.setAttribute('content', 'width=device-width,initial-scale=0.9, user-scalable=no');
+    }else{
+      metaEl.setAttribute('content', 'width=device-width,initial-scale=0.8, user-scalable=no');
+    }
+    document.head.appendChild(metaEl);
   </script>
   <script type="text/javascript"  src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 </head>

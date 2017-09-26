@@ -7,6 +7,8 @@
     &_main {
         background-color: #f3f3f3;
         height: 100%;
+        overflow-y: auto;
+         -webkit-overflow-scrolling : touch; 
         .vux-check-icon>.weui-icon-success:before,
         .vux-check-icon>.weui-icon-success-circle:before {
             color: #2196f3;
@@ -332,6 +334,7 @@ export default {
         }
     },
     mounted() {
+        overscroll(document.querySelector('.addressList_main'));
         let self = this;
         function getScrollTop() {
             var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
@@ -377,6 +380,7 @@ export default {
 
     },
     activated() {
+        overscroll(document.querySelector('.addressList_main'));
         this.currentPage = 1;
         this.canBottom = true;
         this.haveData = true;

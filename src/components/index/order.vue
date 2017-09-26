@@ -282,6 +282,11 @@
                                 
                     </div>
             </li>
+            <masker v-show='loading' color="000" fullscreen :opacity="0.1" >
+                <div slot="content" >
+                    <i class="weui-loading weui-icon_toast center"></i>
+                </div>
+            </masker>
               <toast v-model="toast"  type="success">{{confrim}}</toast>
         </ul>
     </div>
@@ -289,13 +294,14 @@
 </template>
 
 <script>
-import { Scroller,  Spinner, XButton, Group, Cell, LoadMore , Toast } from 'vux';
+import { Scroller,  Masker,Spinner, XButton, Group, Cell, LoadMore , Toast } from 'vux';
 import { mapGetters } from 'vuex';
 import { API,getQuery } from '../../services';
 
 export default {
   components: {
     Scroller,
+    Masker,
     Spinner,
     XButton,
     Group,
@@ -305,6 +311,7 @@ export default {
   },
   data () {
     return {
+        loading:false,
       /* 临时数据 */
       temporary:[],
       paydata:{},
@@ -353,12 +360,16 @@ export default {
     
   },
   mounted () {
+      overscroll(document.querySelector('.order_list'));
       localStorage.setItem("orderScroll",0);
+       this.loading=true;
         this.currentPage=1;
         this.getTypeData();
   },
   activated(){
+      overscroll(document.querySelector('.order_list'));
       if(localStorage.getItem("reload")){
+           this.loading=true;
                 this.currentPage=1;
                 this.getTypeData();
                 localStorage.setItem("reload","");     
@@ -461,6 +472,9 @@ export default {
                   this.getTypeData();
               }else{
                   this.orderList=this.temporary;
+                  this.loading=false;
+      overscroll(document.querySelector('.order_list'));
+                  
                   return false;
               }
             }
@@ -480,6 +494,7 @@ export default {
                     orderId:id,
                   }).then((res)=>{
                     if(res.body.code==200){
+                        self.loading=true;
                         self.confrim="删除成功";
                         self.toast=true;
                         self.currentPage=1;
@@ -512,6 +527,7 @@ export default {
                         self.toast=true;
                         self.currentPage=1;
                         self.getTypeData();
+
                 }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
             }
         ); 

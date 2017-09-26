@@ -14,8 +14,9 @@
     }
 }
 .settlement_main{
-    background-color: #f3f3f3;
-    height: 100%;
+    background-color: #f1f1f1;
+    height: calc(100% - 47px);
+    overflow-y: auto;
             &_mess{
                 box-sizing: border-box;
                 padding: 15px;
@@ -128,7 +129,7 @@
             <cell title="损失赔偿金" :value="infoData.settlement_bill_damages | currency('￥')"  ></cell>
             <cell title="小计" :value="infoData.settlement_bill_total | currency('￥')"  ></cell>
             <cell title="实际退款金额" :value="infoData.refund_amount | currency('￥')"  ></cell>
-            <x-textarea  style="height:auto" :max="20" readonly v-model="infoData.settlement_bill_remarks" placeholder="备注"  ></x-textarea>
+            <x-textarea  style="height:auto"  readonly v-model="infoData.settlement_bill_remarks" placeholder="备注"  ></x-textarea>
         </group> 
         <footer v-show="type" class="orderAction_footer">
              <button @click.stop="confrimSettlement()" >确认无误</button> 
@@ -205,9 +206,13 @@ export default {
         },
     },
     activated(){
+        overscroll(document.querySelector('.settlement_main'));
         this.orderId=this.$route.query.id;
         this.type=this.$route.query.type;
         this.getdata();
+    },
+    mounted(){
+        overscroll(document.querySelector('.settlement_main'));
     }
 }
 </script>

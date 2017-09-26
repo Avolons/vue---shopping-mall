@@ -3,7 +3,9 @@
     .collention{
         &_main{
             background-color: #fff;
-            overflow: hidden;
+            height: 100%;
+            overflow-y: auto;
+             -webkit-overflow-scrolling : touch; 
             &--haveGoods{
                 background-color: #fff;
             }
@@ -87,6 +89,8 @@ export default {
   },
   methods:{
       routerBack(){
+          localStorage.setItem('collection','11');
+          localStorage.setItem("collentionTop",0);
           this.$router.goBack();
       },
       /* 跳转到首页 */
@@ -137,6 +141,10 @@ export default {
       }
   },
   mounted(){
+      this.page=1;
+      this.haveData=true;
+      this.getData();
+       overscroll(document.querySelector('.collention_main'));
          let self = this;
         function getScrollTop() {
             　　var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
@@ -181,9 +189,17 @@ export default {
         }; 
   },
   activated(){
-      this.page=1;
+      setTimeout(()=>{
+          document.querySelector(".collention_main").scrollTop=localStorage.getItem("collentionTop");
+      },50);
+      overscroll(document.querySelector('.collention_main'));
+      if(localStorage.getItem('collection')){
+          localStorage.setItem('collection','');
+          this.page=1;
       this.haveData=true;
       this.getData();
+      }
+      
   }
 }
 </script>

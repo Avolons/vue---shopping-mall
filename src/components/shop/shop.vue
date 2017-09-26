@@ -260,6 +260,7 @@ export default {
             }
       }
   },mounted(){
+      overscroll(document.querySelector('.shop_main_goodsList'));
       let self = this;
         let mainbox = document.querySelector(".shop_main_goodsList");
         function getScrollTop() {
@@ -304,6 +305,7 @@ export default {
       this.Initialization();
   },
   activated(){
+      overscroll(document.querySelector('.shop_main_goodsList'));
       if(localStorage.getItem("store")){
             this.page=1;
             this.canBottom=true;

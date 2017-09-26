@@ -2,7 +2,6 @@
 <style lang="scss">
     .orderInfon{
         &_main{
-            padding-bottom: 80px;
             height: 100%;
             box-sizing: border-box;
             overflow-y: auto;
@@ -172,7 +171,11 @@
             }
         }
     }
-    
+    .orderInfo_main_content{
+        height: calc(100% - 107px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling : touch; 
+    }
 </style>
 
 <template>
@@ -181,7 +184,8 @@
           <div class="help_common_title">
              <x-header @on-click-back="routerBack" :left-options="{backText: '',preventGoBack:true}">确认订单</x-header>
          </div>
-         <group class="orderInfon_main_address">
+         <div class="orderInfo_main_content">
+              <group class="orderInfon_main_address">
              <!-- 用户收货地址 -->
                 <cell v-show="haveDefault" :title="getNamePhone"  :link="{path:'/addressList?chose=1'}"  :inline-desc='getAddress'></cell>
                  <cell v-show="!haveDefault" class="nodefault" title="请选择收货地址"  :link="{path:'/addressList?chose=1'}" ></cell>       
@@ -259,6 +263,8 @@
             <cell title="商品押金" :value="goodsDespoit | currency('￥')"  ></cell>
             <x-textarea :max="20" v-model="option" placeholder="买家留言"  ></x-textarea>
         </group>
+         </div>
+        
         <footer  class="orderInfon_footer">
                 <div class="orderInfon_footer_price">
                     合计： <span>{{goodsAllPrice+returnTplPrice+goodsDespoit+currentPrice | currency('￥')}}</span>
@@ -564,10 +570,12 @@ export default {
             }
       }
   },mounted(){
+       overscroll(document.querySelector('.orderInfo_main_content'));
       /* 获取总数据 */
       this.Initialization();
   },
   activated(){
+      overscroll(document.querySelector('.orderInfo_main_content'));
       /* 新订单时触发更新 */
       if(localStorage.getItem('orderClick')){
           localStorage.setItem('orderClick','');

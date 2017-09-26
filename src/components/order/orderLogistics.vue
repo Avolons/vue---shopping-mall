@@ -236,6 +236,8 @@ export default {
 
     },
     mounted() {
+        overscroll(document.querySelector('.order_logmain'));
+        
         let self = this;
         function getScrollTop() {
             　　var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
@@ -280,6 +282,7 @@ export default {
         };
     },
     activated() {
+        overscroll(document.querySelector('.order_logmain'));
         this.val=0,
         this.page=1;
         this.canBottom=true;

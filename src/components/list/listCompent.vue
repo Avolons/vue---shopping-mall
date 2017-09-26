@@ -100,6 +100,11 @@ export default {
             let scrollTop=document.querySelector(".shop_main_goodsList").scrollTop;
             localStorage.setItem("storeTop",scrollTop);
             }
+            if(document.querySelector(".collention_main")){
+            let scrollTop=document.querySelector(".collention_main").scrollTop;
+            localStorage.setItem("collentionTop",scrollTop);
+            }
+            
             localStorage.setItem("goodsInfo","11");
             this.$router.push({ path: '/goodsInfo/'+id}); 
         },

@@ -389,6 +389,7 @@ export default {
         }
     },
     mounted() {
+         overscroll(document.querySelector('.goodsinfo_container'));
         API.main.goodsInfo({
             goodsId: this.$route.params.id
         }).then((Response) => {
@@ -399,6 +400,7 @@ export default {
         /* 获取商品详情数据 */
     },
     activated() {
+         overscroll(document.querySelector('.goodsinfo_container'));
         if(localStorage.getItem('goodsInfo')){
             setTimeout(()=>{
             this.havestart=true;

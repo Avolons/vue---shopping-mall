@@ -76,6 +76,7 @@ export default {
                     token : "",
                 };
             localStorage.setItem("userInfo",JSON.stringify(userInfo));
+            localStorage.clear();
             self.$store.dispatch('SignOut');
             }
         })

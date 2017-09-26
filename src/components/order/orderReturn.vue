@@ -47,9 +47,13 @@
         color: #272727;
     }
     &_tplList{
-        padding-bottom: 40px;
     }
-    &_sinceList {}
+    &_sinceList {
+        height: 350px;
+        overflow-y: auto;
+        box-sizing: border-box;
+        padding-bottom: 70px;
+    }
     &_addressInfo {
         background-color: #fff;
             max-height: 110px;
@@ -115,6 +119,12 @@
         background-color: #f3f3f3;
     }
 }
+.return_main_tplbox{
+    height: 350px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding-bottom: 70px;
+}
 </style>
 
 <template>
@@ -155,17 +165,18 @@
             </div>
             <!-- 选择自提点 -->
             <div v-transfer-dom>
-                <popup style="border-top:1px solid #eee;background:#fff" v-model="tplShow" position="bottom" max-height="50%">
-                    <ul class="return_main_tplList">
-                        <li @click="confrimTpl(item)" class="return_main_tplSingle" v-for="item in tplList">{{item.name}}</li>
-                        
-                    </ul>
+                <popup  style="border-top:1px solid #eee;background:#fff" v-model="tplShow" position="bottom" >
+                    <div class="return_main_tplbox">
+                        <ul class="return_main_tplList">
+                            <li @click="confrimTpl(item)" class="return_main_tplSingle" v-for="item in tplList">{{item.name}}</li>
+                         </ul>
+                    </div>
                     <button type="button" @click="close()" class="return_main_tpl">取消</button>
                 </popup>
             </div>
             <!-- 选择快递公司 -->
             <div v-transfer-dom>
-                <popup style="border-top:1px solid #eee;background:#f3f3f3;padding-bottom:40px;padding-top:10px;" v-model="sinceShow" position="bottom" max-height="70%">
+                <popup  style="border-top:1px solid #eee;background:#f3f3f3;padding-bottom:40px;padding-top:10px;" v-model="sinceShow" position="bottom" >
                     <div class="return_main_sinceList">
                         <ul class="main_since_list">
                             <li v-for="(item,index) in sinceList" class="main_since_single" @click="confrimSince(item)">
@@ -464,6 +475,8 @@ export default {
         }
     },
     activated() {
+         overscroll(document.querySelector('.return_main_tplbox'));
+        overscroll(document.querySelector('.return_main_sinceList'));
         this.page = 1;
         this.isSelect="";
         this.tplisSelect="";
@@ -476,7 +489,8 @@ export default {
         this.getData();
     },
     mounted() {
-
+         overscroll(document.querySelector('.return_main_tplbox'));
+         overscroll(document.querySelector('.return_main_sinceList'));
     }
 }
 </script>

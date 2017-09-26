@@ -65,6 +65,13 @@ body .weui-tabbar:before{
   display: none;
 }
 
+.center{
+  position: fixed;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%,-50%);
+}
+
 /* 两行超过出现点点点 */
 .twonowarp{
   overflow : hidden;

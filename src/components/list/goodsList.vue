@@ -49,6 +49,7 @@
         }
        }
        &_chenckList{
+           z-index: 999;
            position: fixed;
            top: 46px;
            left: 0;
@@ -99,7 +100,7 @@
         <div class="goodsList_chenckList">
             <span v-for="(item,index) in typeList" :class="{'goodsList_chenckList--selected':item.select}" @click="typeCheck(index)">{{item.name}}</span>
         </div>
-            <div  class="goodsList_List" style="padding-top:40px;"> 
+            <div  class="goodsList_List" style="padding-top:40px;padding-bottom:40px"> 
              <list-compent  :commonGoodsList="goodsList"></list-compent>
                 <load-more style="padding-bottom:20px;" v-show="loadshow" tip="加载更多"></load-more>
                 <load-more v-show="!loadshow && goodsList.length>8 " :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
@@ -270,6 +271,7 @@ export default {
       }
   }
   ,mounted(){
+        overscroll(document.querySelector('.goodsList_List'));
         this.page=1;
         this.canBottom=true;
         this.haveData=true;
@@ -308,7 +310,7 @@ export default {
             　　}
             　　return windowHeight;
         }
-        document.querySelector(".goodsList_List").onscroll = function() {
+                document.querySelector(".goodsList_List").onscroll = function() {
             　　if (getScrollTop() + getWindowHeight() >= (getScrollHeight()-10)) {
                    if(self.canBottom==true){
                         self.canBottom=false;
@@ -318,6 +320,7 @@ export default {
         };
   }
   ,activated(){
+         overscroll(document.querySelector('.goodsList_List'));
         if(window.localStorage.getItem("listReload")){
             this.page=1;
             this.canBottom=true;
