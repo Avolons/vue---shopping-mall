@@ -904,7 +904,7 @@ export default {
         /* 立即租赁按钮点击 */
         buyGoods() {
             /* 登录认证 */
-            if (!JSON.parse(localStorage.getItem("userInfo")).id) {
+            if (!JSON.parse(localStorage.getItem("userInfo"))) {
                 window.location.href = "/#/login?type=good";
                 return false;
             }
