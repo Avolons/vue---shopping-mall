@@ -904,12 +904,12 @@ export default {
         /* 立即租赁按钮点击 */
         buyGoods() {
             /* 登录认证 */
-            if (!this.getUserInfoUserId) {
+            if (!JSON.parse(localStorage.getItem("userInfo")).id) {
                 window.location.href = "/#/login?type=good";
                 return false;
             }
             /* 实名认证 */
-            if (this.getIsCertify != 2 && this.getIsCertify != 4 && this.isCertify == 1) {
+            if (localStorage.getItem("isCertify") != 2 && localStorage.getItem("isCertify") != 4 && this.isCertify == 1) {
                 window.location.href = "/#/authentication";
                 return false;
             }

@@ -356,15 +356,13 @@ export default {
       localStorage.setItem("orderScroll",0);
         this.currentPage=1;
         this.getTypeData();
-        setInterval(()=>{
-            if(localStorage.getItem("reload")){
+  },
+  activated(){
+      if(localStorage.getItem("reload")){
                 this.currentPage=1;
                 this.getTypeData();
                 localStorage.setItem("reload","");     
             }
-        },1000);
-  },
-  activated(){
       setTimeout(()=>{
             if(localStorage.getItem("orderScroll")){
                 document.querySelector(".order_list").scrollTop=localStorage.getItem("orderScroll");
@@ -465,7 +463,6 @@ export default {
                   this.orderList=this.temporary;
                   return false;
               }
-              /* this.orderList=list; */
             }
           });
     },
