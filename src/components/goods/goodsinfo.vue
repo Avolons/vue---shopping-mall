@@ -938,9 +938,10 @@ export default {
                     perId = item.rent_period_id;
                 }
             }
+            let userInfo=JSON.parse(localStorage.getItem("userInfo"));
             API.main.addCar({
-                userId: this.getUserInfoUserId,
-                token: this.getUserInfoToken,
+                userId: userInfo.id,
+                token: userInfo.token,
                 goodsId: this.goodsId,
                 province: addresslist[0],
                 city: addresslist[1],
