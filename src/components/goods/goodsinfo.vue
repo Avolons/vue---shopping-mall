@@ -952,6 +952,7 @@ export default {
                 if (res.body.code == 200) {
                     let cartId = res.body.data.cartId;
                     this.$store.dispatch('SetOrder', cartId);
+                    localStorage.setItem('orderClick','11');
                     window.location.href = "/#/orderInfo/" + cartId;
                 }
             });

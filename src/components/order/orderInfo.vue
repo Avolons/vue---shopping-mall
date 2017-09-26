@@ -564,7 +564,8 @@ export default {
   },
   activated(){
       /* 新订单时触发更新 */
-      if(this.$store.state.currentOrder!=this.cartId){
+      if(localStorage.getItem('orderClick')){
+          localStorage.setItem('orderClick','');
          this.Initialization();
          this.cardstate={
             id:"",
@@ -573,6 +574,7 @@ export default {
         this.priceShow=false;
         this.currentPrice=0;
       }
+      /* 地址点击函数 */
       if(localStorage.getItem('addressClick')){
           localStorage.setItem('addressClick','');
           this.haveDefault=true;
