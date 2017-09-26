@@ -253,6 +253,7 @@ import {API,getQuery} from '../../services'
            if(!this.type){
               window.location.href="/#/index/main";
             }else{
+              localStorage.setItem("goodsInfo","login");
               window.history.go(-2)
             }  
           }else{

@@ -229,7 +229,7 @@ import {API,getQuery} from '../../services';
                 path:'/index/main',
               })
             }else{
-              localStorage.setItem("goodsInfo","11");
+              localStorage.setItem("goodsInfo","login");
               this.routerback();
             }
           }else{

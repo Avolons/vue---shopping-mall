@@ -402,10 +402,14 @@ export default {
     activated() {
          overscroll(document.querySelector('.goodsinfo_container'));
         if(localStorage.getItem('goodsInfo')){
-            setTimeout(()=>{
-            this.havestart=true;
-            },500);
-            this.getData();
+            if(localStorage.getItem('goodsInfo')=='login'){
+                window.location.reload();
+            }else{
+                 setTimeout(()=>{
+                this.havestart=true;
+                },500);
+                this.getData();
+            }
             localStorage.setItem("goodsInfo","");
         }
         
