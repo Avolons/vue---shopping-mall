@@ -279,11 +279,12 @@
             </footer>
             <toast v-model="toast" type="success">{{confrim}}</toast>
             <toast v-model="toasts" type="cancel">{{confrim}}</toast>
+           <!--  <actionsheet v-model="payShow"  show-cancel :menus="menus" @on-click-menu="click" show-cancel></actionsheet> -->
         </div>
     </div>
 </template>
 <script>
-import { XHeader, Cell, Group, XTextarea, dateFormat, Toast, CellBox, TransferDom, Popup } from 'vux';
+import { XHeader, Cell,Actionsheet, Group, XTextarea, dateFormat, Toast, CellBox, TransferDom, Popup } from 'vux';
 import { mapGetters } from 'vuex'
 import { API, getQuery } from '../../services';
 
@@ -292,6 +293,7 @@ export default {
         TransferDom
     },
     components: {
+        Actionsheet,
         XHeader,
         Group,
         Cell,
@@ -302,6 +304,11 @@ export default {
     },
     data() {
         return {
+            payShow:false,
+            menus:{
+                menu1: '微信支付',
+                menu2: '支付宝支付'
+            },
             cardstate: {
                 id: "",
                 storeId: "",
@@ -415,6 +422,7 @@ export default {
                 this.payMethod = 3;
                 return 0;
             } else {
+                this.payMethod = 5;
                 return 2;
             }
         },
@@ -538,10 +546,13 @@ export default {
                             document.body.appendChild(div);
                             document.forms.alipaysubmit.submit();
                         } else {
-                            const div = document.createElement('div');
+                           /*  self.payShow=true; */
+                           window.location.href=resopndy.body;
+                           console.log(window.location.href);
+                           /*  const div = document.createElement('div');
                             div.innerHTML = resopndy.body;
                             document.body.appendChild(div);
-                            document.forms.alipaysubmit.submit();
+                            document.forms.alipaysubmit.submit(); */
                         }
 
                     }, (err) => {

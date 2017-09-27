@@ -208,7 +208,7 @@ export default {
         /* 当前属于从分类中进入的接口*/
       if(this.$route.query.categoryId){
           /* 搜索栏赋值 */
-          this.goodsVal=this.$route.query.name;
+          this.goodsVal='';
           this.categoryId=this.$route.query.categoryId;
           API.main.searchGoods({
               goods_category_id:this.$route.query.categoryId,
