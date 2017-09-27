@@ -253,7 +253,9 @@ import {API,getQuery} from '../../services'
           };
           localStorage.setItem("userInfo",JSON.stringify(userInfo));
           this.$store.dispatch('SetUserInfo',userInfo);  
-          window.location.href="/#/index/main"; 
+           this.$router.push({
+                path:'/index/main'
+              })
           }else{
              this.confrim=Response.body.msg;
             this.toast=true; 

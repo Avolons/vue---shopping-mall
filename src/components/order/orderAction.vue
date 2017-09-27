@@ -607,8 +607,7 @@ export default {
                 'getBrandWCPayRequest', self.paydata,
                 function(res) {
                     if (res.err_msg == "get_brand_wcpay_request:fail") {
-                        alert(JSON.stringify(self.paydata));
-                        alert(JSON.stringify(res));
+                        
                     }
                     if (res.err_msg == "get_brand_wcpay_request:ok") {
                         self.confrim = "支付成功";
@@ -787,7 +786,7 @@ export default {
                         self.onBridgeReady();
                     }
                 }, (err) => {
-                    alert(JSON.stringify(err));
+                   
                 });
             })
 
@@ -840,7 +839,10 @@ export default {
         },
         /* 查看结算单 */
         seeSettlement(id) {
-            window.location.href = "/#/settlement?id=" + id;
+            this.$router.push({
+                path:'/settlement?id='+ id
+              })
+          
         },
         /* 提醒发货 ,结算 1-提醒发货2-提醒结算*/
         remind(id, type) {

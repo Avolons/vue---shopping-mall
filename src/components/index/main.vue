@@ -38,6 +38,7 @@ body {
 
 
 
+
 /* 选中滚动条函数 */
 
 @for $i from 1 through 10 {
@@ -142,7 +143,7 @@ body {
             background-color: #2196f3;
         }
         .list_compent_list_box {
-             -webkit-overflow-scrolling: touch;
+            -webkit-overflow-scrolling: touch;
             height: calc(100% - 142px);
             position: fixed;
             top: 91px;
@@ -155,8 +156,8 @@ body {
         }
     }
     &_typelist {
-         -webkit-overflow-scrolling: touch;
-        z-index: 9999; 
+        -webkit-overflow-scrolling: touch;
+        z-index: 9999;
         left: 0;
         width: 100%;
     }
@@ -320,7 +321,7 @@ body {
 </style>
 <template>
     <div class="main_container">
-         <header class="main_header">
+        <header class="main_header">
             <span class="main_menu" @click="golist()">
                 <i class="iconfont">&#xe606;</i>
             </span>
@@ -516,8 +517,11 @@ export default {
                 let scrollTop = document.querySelector(".main_listbox").scrollTop;
                 localStorage.setItem("scrolltop", scrollTop);
             }
-            localStorage.setItem("goodsInfo","11");
-            window.location.href = "/#/goodsInfo/" + id;
+            localStorage.setItem("goodsInfo", "11");
+            this.$router.push({
+                path: '/goodsInfo/' + id
+            });
+
         },
         /* 列表点击切换函数 */
         /* 根据焦点位置判断 */
@@ -588,11 +592,17 @@ export default {
         },
         /* 列表页跳转 */
         golist() {
-            window.location.href = "/#/list";
+            this.$router.push({
+                path: '/list'
+            });
+
         },
         /* 跳转到搜索页面 */
         gosearch() {
-            window.location.href = "/#/search";
+            this.$router.push({
+                path: '/search'
+            });
+
         },
         changeList() {
             this.showList1 = false
@@ -603,18 +613,27 @@ export default {
             })
         },
         getMoreHot() {
-            window.location.href = "/#/moreHot"
+            this.$router.push({
+                path: '/moreHot'
+            });
+
         },
         /* 轮播图点击函数 */
         bannerClick(id, type) {
             /* 1：店铺 2：商品 3：url */
             if (type == 1) {
-                window.location.href = "/#/shop/" + id;
+                this.$router.push({
+                    path: '/shop/' + id
+                });
+
             } else if (type == 2) {
-                localStorage.setItem("goodsInfo","11");
-                window.location.href = "/#/goodsInfo/" + id;
+                localStorage.setItem("goodsInfo", "11");
+                this.$router.push({
+                    path: '/goodsInfo/' + id
+                });
+
             } else {
-                window.location.href = "/#/";
+                /* window.location.href = "/#/"; */
             }
         }
     },
@@ -703,7 +722,7 @@ export default {
             }
         };
 
-       
+
     }
 }
 </script>

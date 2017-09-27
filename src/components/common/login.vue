@@ -140,7 +140,7 @@
 	<div id="login_main">
     <x-header class="login_header"  @on-click-back="routerback" :left-options="{backText:'取消',showBack: true,preventGoBack:true}">
         密码登录
-        <a href="/#/register"  slot="right">注册</a>
+        <a href="/?#/register"  slot="right">注册</a>
     </x-header>
     <img src="../../assets/img/common/logo.png" class="login_img"  alt="logo">
     <group class="login_group">

@@ -198,7 +198,10 @@ export default {
       },
       /* 跳到店铺详情页面 */
       goInfo(){
-          window.location.href="/#/shopInfo/"+this.storeId;
+          this.$router.push({
+                path:'/shopInfo/'+this.storeId
+              })
+          
       },
       /* 数据初始化 */
       Initialization(){

@@ -869,11 +869,15 @@ export default {
         /* 进入店铺主页面 */
         goShop() {
              window.localStorage.setItem("store",'11');
-            window.location.href = "/#/shop/" + this.storeId;
+              this.$router.push({
+                path:'/shop/'+this.storeId
+              })
         },
         /* 进入购物车 */
         goCar() {
-            window.location.href = "/#/download";
+             this.$router.push({
+                path:'/download'
+              })
         },
         /* 加入购物车 */
         addCar() {
@@ -911,17 +915,23 @@ export default {
         buyGoods() {
             /* 登录认证 */
             if (!localStorage.getItem("userInfo")) {
-                window.location.href = "/#/login?type=good";
+                this.$router.push({
+                path:'/login?type=good'
+              });
+                
                 return false;
             }
             /* 实名认证 */
             if (localStorage.getItem("isCertify") != 2 && localStorage.getItem("isCertify") != 4 && this.isCertify == 1) {
-                window.location.href = "/#/authentication";
+               this.$router.push({
+                path:'/authentication'
+              });
+              
                 return false;
             }
             /* 地址认证 */
             if (this.provideAddress) {
-                this.confrim = "暂不支持改地址，请重新选择";
+                this.confrim = "暂不支持该地址，请重新选择";
                 this.toasts = true;
                 return false;
             }
@@ -960,7 +970,10 @@ export default {
                     let cartId = res.body.data.cartId;
                     this.$store.dispatch('SetOrder', cartId);
                     localStorage.setItem('orderClick','11');
-                    window.location.href = "/#/orderInfo/" + cartId;
+                    this.$router.push({
+                path:'/orderInfo/'+ cartId
+              });
+                   
                 }
             });
 
@@ -979,7 +992,10 @@ export default {
                         this.confrim = "请登录后收藏";
                         this.toasts = true;
                         setTimeout(() => {
-                            window.location.href = "/#/login?type=good";
+                             this.$router.push({
+                                path:'/login?type=good'
+                            });
+                           
                         }, 500);
                     }
                 });

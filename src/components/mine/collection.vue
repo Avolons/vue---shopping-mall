@@ -95,7 +95,10 @@ export default {
       },
       /* 跳转到首页 */
       goIndex(){
-        window.location.href="/#/index/main";
+          this.$router.push({
+                path: '/index/main'
+            });
+       
       },
       /* 获取数据 */
       getData(){

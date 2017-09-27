@@ -138,7 +138,7 @@
 	<div id="login_code">
     <x-header class="logincode_header"   @on-click-back="routerback" :left-options="{backText:'取消',showBack: true,preventGoBack:true}">
         验证码登录
-        <a href="/#/register"  slot="right">注册</a>
+        <a href="/?#/register"  slot="right">注册</a>
     </x-header>
     <img src="../../assets/img/common/logo.png" class="logincode_img"  alt="logo">
     <group class="logincode_group">
@@ -251,7 +251,9 @@ import {API,getQuery} from '../../services'
           this.$store.dispatch('IsCertify');
           this.$store.dispatch('SetUserInfo',userInfo); 
            if(!this.type){
-              window.location.href="/#/index/main";
+              this.$router.push({
+                path:'/index/main'
+              })
             }else{
               localStorage.setItem("goodsInfo","login");
               window.history.go(-2)
@@ -263,7 +265,9 @@ import {API,getQuery} from '../../services'
         });
       },
       regist(){
-        window.location.href="/#/regist"
+        this.$router.push({
+                path:'/regist'
+              });
       }
     },
     activated(){
