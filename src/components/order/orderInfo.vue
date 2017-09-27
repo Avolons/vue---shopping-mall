@@ -279,7 +279,7 @@
             </footer>
             <toast v-model="toast" type="success">{{confrim}}</toast>
             <toast v-model="toasts" type="cancel">{{confrim}}</toast>
-            <actionsheet v-model="payShow"  show-cancel :menus="menus" @on-click-menu="browserPay" show-cancel></actionsheet>
+            <actionsheet 	 v-model="payShow"  show-cancel :menus="menus" @on-click-menu="browserPay" show-cancel></actionsheet>
         </div>
     </div>
 </template>
@@ -417,8 +417,10 @@ export default {
             if(key=='menu1'){
                     /* 微信支付 */
                     this.payMethod=5;
-                }else{
+                }else if(key=='menu2'){
                     this.payMethod=4;
+                }else{
+                    return false;
                 }
              API.order.orderPay({
                 userId: this.getUserInfoUserId,
@@ -454,7 +456,7 @@ export default {
                         if(key=='menu1'){
                             /* 微信支付 */
                             window.location.href=this.payTypeData;
-                        }else{
+                        }else if(key=='menu2'){
                         const div = document.createElement('div');
                         div.innerHTML = this.payTypeData;
                         document.body.appendChild(div);

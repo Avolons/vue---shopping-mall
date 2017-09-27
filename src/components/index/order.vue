@@ -207,6 +207,8 @@
 </style>
 <template>
     <div class="order_container">
+                                    <actionsheet v-model="payShow"  show-cancel :menus="menus" @on-click-menu="browserPay" show-cancel></actionsheet>
+        
         <h1 class="order_title">我的订单
         </h1>
         <scroller class="order_typelist" lock-y :scrollbar-x=false>
@@ -290,7 +292,6 @@
 
                 </div>
             </li>
-                                    <actionsheet v-model="payShow"  show-cancel :menus="menus" @on-click-menu="browserPay" show-cancel></actionsheet>
             
             <masker v-show='loading' color="000" fullscreen :opacity="0.1">
                 <div slot="content">
@@ -569,11 +570,13 @@ export default {
             );
         },
          browserPay(key){
-            if(key=='menu1'){
+             if(key=='menu1'){
                     /* 微信支付 */
                     this.payMethod=5;
-                }else{
+                }else if(key=='menu2'){
                     this.payMethod=4;
+                }else{
+                    return false;
                 }
              API.order.orderShipPay({
                 userId: this.getUserInfoUserId,
@@ -594,7 +597,7 @@ export default {
                         if(key=='menu1'){
                             /* 微信支付 */
                             window.location.href=this.payTypeData;
-                        }else{
+                        }else  if(key=='menu2'){
                         const div = document.createElement('div');
                         div.innerHTML = this.payTypeData;
                         document.body.appendChild(div);
