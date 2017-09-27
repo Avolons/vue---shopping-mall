@@ -18,17 +18,20 @@ body {
 }
 
 .main_typelist_item {
-    width: 70px;
+    width: 90px;
     height: 40px;
     display: inline-block;
     text-align: center;
     line-height: 40px;
     font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .main_typelist_bottomline {
     height: 2px;
-    width: 70px;
+    width: 90px;
     position: absolute;
     background-color: #2196f3;
     left: 0;
@@ -43,7 +46,7 @@ body {
 
 @for $i from 1 through 10 {
     .main_typelist_item:nth-of-type(#{$i})[class*="main_typelist_item--selected"]~.main_typelist_bottomline {
-        left: (70px * $i) - 70px;
+        left: (90px * $i) - 90px;
     }
 }
 
@@ -485,7 +488,7 @@ export default {
             API.card.getCouponActive().then((res) => {
                 if (res.body.code == 200) {
                     this.smallCard = true;
-                    this.cardUrl = res.body.data.url;
+                    this.cardUrl = '/activity/getCard.html';
                 }
             })
         },

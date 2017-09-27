@@ -126,13 +126,10 @@ export default {
     },
     methods: {
         /* 路由回退 */
-        routerBack() {
-            if(this.val==3){
-                this.confrim = "请选择自提点";
-                this.toast = true;
-                return false; 
+        routerBack(){
+            if(this.val!=3){
+                this.$store.dispatch("CurrentTpl", this.val);
             }
-            this.$store.dispatch("CurrentTpl", this.val);
             this.$router.goBack();
         },
         /* 数据初始化 */
