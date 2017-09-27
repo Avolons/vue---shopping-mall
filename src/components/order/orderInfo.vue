@@ -533,7 +533,6 @@ export default {
                                 self.onBridgeReady();
                             }
                         } else if (self.isAlipay() == 1) {
-                            alert(resopndy.body);
                             const div = document.createElement('div');
                             div.innerHTML = resopndy.body;
                             document.body.appendChild(div);
