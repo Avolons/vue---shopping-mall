@@ -279,7 +279,7 @@
             </footer>
             <toast v-model="toast" type="success">{{confrim}}</toast>
             <toast v-model="toasts" type="cancel">{{confrim}}</toast>
-           <!--  <actionsheet v-model="payShow"  show-cancel :menus="menus" @on-click-menu="click" show-cancel></actionsheet> -->
+            <actionsheet v-model="payShow"  show-cancel :menus="menus" @on-click-menu="browserPay" show-cancel></actionsheet>
         </div>
     </div>
 </template>
@@ -341,6 +341,7 @@ export default {
             cardList: [],
             /* 支付方式 */
             payMethod: 4,
+            payTypeData:null,
         }
     },
     computed: {
@@ -412,6 +413,64 @@ export default {
         }
     },
     methods: {
+        browserPay(key){
+            if(key=='menu1'){
+                    /* 微信支付 */
+                    this.payMethod=5;
+                }else{
+                    this.payMethod=4;
+                }
+             API.order.orderPay({
+                userId: this.getUserInfoUserId,
+                token: this.getUserInfoToken,
+                info: [{
+                    addressId: this.$store.state.tplId != 3 ? this.$store.state.addressData.id : "",//地址id 物流或者上门选择该字段
+                    cartId: this.cartId, //购物车id
+                    cart_tpl: this.$store.state.tplId,//物流方式
+                    freight_continued_price: this.tplRules.freight_continued_price,//快递续件运费
+                    freight_door_cost: this.tplRules.freight_door_cost,//上门的运费
+                    freight_first_price: this.tplRules.freight_first_price,//快递的收件运费
+                    goodsAmount: this.infoData.cart_content_good_amount,//数量
+                    order_time_number: this.infoData.cart_time_number,//租赁周期
+                    rentTime: this.infoData.cart_start_time,//
+                    rent_period_id: this.infoData.cart_content_rent_prieod_id,//
+                    returnTime: this.infoData.cart_end_time,//
+                    sinceId: this.$store.state.tplId == 3 ? this.$store.state.sinceData.since_id : "",//自提点id
+                    coupon_no: this.cardstate.id,
+                    message: this.option,
+                }]
+            }).then((res) => {
+                if (res.body.code == 200) {
+                    let self = this;
+                    let openId = localStorage.getItem("openId");
+                    API.order.OrderWechat({
+                        userId: this.getUserInfoUserId,
+                        token: this.getUserInfoToken,
+                        orderSn: res.body.data.order_big_sn,
+                        payMethod: this.payMethod,
+                        openId: openId,
+                    }).then((resopndy) => {
+                        self.payTypeData=resopndy.body;
+                        if(key=='menu1'){
+                            /* 微信支付 */
+                            window.location.href=this.payTypeData;
+                        }else{
+                        const div = document.createElement('div');
+                        div.innerHTML = this.payTypeData;
+                        document.body.appendChild(div);
+                        document.forms.alipaysubmit.submit();
+                        }
+                    }, (err) => {
+                        self.confrim = "支付异常";
+                        self.toast = true;
+                        self.$router.push({
+                            path: '/index/main/order'
+                        })
+                    });
+                }
+            });
+                
+        },
         /* 判断当前；浏览器环境  0 微信 1 支付宝 2 其他浏览器*/
         isAlipay() {
             var userAgent = navigator.userAgent.toLowerCase();
@@ -422,8 +481,8 @@ export default {
                 this.payMethod = 3;
                 return 0;
             } else {
-                this.payMethod = 5;
                 return 2;
+
             }
         },
         goShop(item) {
@@ -485,6 +544,7 @@ export default {
         },
         /* 提交订单 */
         buygoods() {
+            
             /* 数值校验 */
             if (this.getAddress == "") {
                 this.confrim = "请选择地址";
@@ -496,8 +556,9 @@ export default {
                 this.toasts = true;
                 return false;
             }
-            this.isAlipay();
-            API.order.orderPay({
+            let self=this;
+            if(this.isAlipay()==0){
+                API.order.orderPay({
                 userId: this.getUserInfoUserId,
                 token: this.getUserInfoToken,
                 info: [{
@@ -527,7 +588,6 @@ export default {
                         payMethod: this.payMethod,
                         openId: openId,
                     }).then((resopndy) => {
-                        if (self.isAlipay() == 0) {
                             /* 微信支付 */
                             this.paydata = resopndy.body;
                             if (typeof WeixinJSBridge == "undefined") {
@@ -540,21 +600,6 @@ export default {
                             } else {
                                 self.onBridgeReady();
                             }
-                        } else if (self.isAlipay() == 1) {
-                            const div = document.createElement('div');
-                            div.innerHTML = resopndy.body;
-                            document.body.appendChild(div);
-                            document.forms.alipaysubmit.submit();
-                        } else {
-                           /*  self.payShow=true; */
-                           window.location.href=resopndy.body;
-                           console.log(window.location.href);
-                           /*  const div = document.createElement('div');
-                            div.innerHTML = resopndy.body;
-                            document.body.appendChild(div);
-                            document.forms.alipaysubmit.submit(); */
-                        }
-
                     }, (err) => {
                         self.confrim = "支付异常";
                         self.toast = true;
@@ -563,7 +608,55 @@ export default {
                         })
                     });
                 }
-            });
+            });       
+            }else if(this.isAlipay()==1){
+                 API.order.orderPay({
+                userId: this.getUserInfoUserId,
+                token: this.getUserInfoToken,
+                info: [{
+                    addressId: this.$store.state.tplId != 3 ? this.$store.state.addressData.id : "",//地址id 物流或者上门选择该字段
+                    cartId: this.cartId, //购物车id
+                    cart_tpl: this.$store.state.tplId,//物流方式
+                    freight_continued_price: this.tplRules.freight_continued_price,//快递续件运费
+                    freight_door_cost: this.tplRules.freight_door_cost,//上门的运费
+                    freight_first_price: this.tplRules.freight_first_price,//快递的收件运费
+                    goodsAmount: this.infoData.cart_content_good_amount,//数量
+                    order_time_number: this.infoData.cart_time_number,//租赁周期
+                    rentTime: this.infoData.cart_start_time,//
+                    rent_period_id: this.infoData.cart_content_rent_prieod_id,//
+                    returnTime: this.infoData.cart_end_time,//
+                    sinceId: this.$store.state.tplId == 3 ? this.$store.state.sinceData.since_id : "",//自提点id
+                    coupon_no: this.cardstate.id,
+                    message: this.option,
+                }]
+            }).then((res) => {
+                if (res.body.code == 200) {
+                    let self = this;
+                    let openId = localStorage.getItem("openId");
+                    API.order.OrderWechat({
+                        userId: this.getUserInfoUserId,
+                        token: this.getUserInfoToken,
+                        orderSn: res.body.data.order_big_sn,
+                        payMethod: this.payMethod,
+                        openId: openId,
+                    }).then((resopndy) => {
+                            const div = document.createElement('div');
+                            div.innerHTML = resopndy.body;
+                            document.body.appendChild(div);
+                            document.forms.alipaysubmit.submit();
+                    }, (err) => {
+                        self.confrim = "支付异常";
+                        self.toast = true;
+                        self.$router.push({
+                            path: '/index/main/order'
+                        })
+                    });
+                }
+            });    
+            }else{
+               this.payShow=true;
+            }
+           
         },
         /* 数据初始化 */
         Initialization() {

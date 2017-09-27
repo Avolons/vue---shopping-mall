@@ -413,17 +413,18 @@
                 <button @click.stop="confrimSettlement(infoData.orderId)" v-if="infoData.orderType==14 || infoData.orderType==12">确认结算</button>
             </footer>
             <toast v-model="toast" type="success">{{confrim}}</toast>
-
+                        <actionsheet v-model="payShow"  show-cancel :menus="menus" @on-click-menu="browserPay" show-cancel></actionsheet>
         </div>
     </div>
 </template>
 <script>
-import { XHeader, Cell, Group, XTextarea, dateFormat, Toast } from 'vux';
+import { XHeader,Actionsheet, Cell, Group, XTextarea, dateFormat, Toast } from 'vux';
 import { mapGetters } from 'vuex'
 import { API, getQuery } from '../../services';
 
 export default {
     components: {
+        Actionsheet,
         XHeader,
         Group,
         Cell,
@@ -432,6 +433,10 @@ export default {
     },
     data() {
         return {
+            menus:{
+                menu1: '微信支付',
+                menu2: '支付宝支付'
+            },
             /* 页面定时器 */
             inter: null,
             confrim: "请选择地址",
@@ -453,6 +458,8 @@ export default {
             },
             /* 支付方式 */
             payMethod: 4,
+            payShow:false,
+            payTypeData:null,
             titleArray: [
                 {
                     title: "等待买家付款",//待付款
@@ -770,25 +777,69 @@ export default {
             }
 
         },
+         browserPay(key){
+            if(key=='menu1'){
+                    /* 微信支付 */
+                    this.payMethod=5;
+                }else{
+                    this.payMethod=4;
+                }
+             API.order.orderShipPay({
+                userId: this.getUserInfoUserId,
+                token: this.getUserInfoToken,
+                orderId: this.orderId,
+            }).then((res) => {
+                if (res.body.code == 200) {
+                    let self = this;
+                    let openId = localStorage.getItem("openId");
+                    API.order.OrderWechat({
+                        userId: this.getUserInfoUserId,
+                        token: this.getUserInfoToken,
+                        orderSn: res.body.data.order_big_sn,
+                        payMethod: this.payMethod,
+                        openId: openId,
+                    }).then((resopndy) => {
+                        self.payTypeData=resopndy.body;
+                        if(key=='menu1'){
+                            /* 微信支付 */
+                            window.location.href=this.payTypeData;
+                        }else{
+                        const div = document.createElement('div');
+                        div.innerHTML = this.payTypeData;
+                        document.body.appendChild(div);
+                        document.forms.alipaysubmit.submit();
+                        }
+                    }, (err) => {
+                        self.confrim = "支付异常";
+                        self.toast = true;
+                        self.$router.push({
+                            path: '/index/main/order'
+                        })
+                    });
+                }
+            });
+                
+        },
         /* 订单付款 */
         payOrder(id) {
             /* 待付款订单生成支付订单 */
-            let self = this;
-            this.isAlipay();
-            API.order.orderShipPay({
+           let self=this;
+            if(this.isAlipay()==0){
+                API.order.orderShipPay({
                 userId: this.getUserInfoUserId,
                 token: this.getUserInfoToken,
-                orderId: id,
+               orderId: id,
             }).then((res) => {
-                let openId = localStorage.getItem("openId");
-                API.order.OrderWechat({
-                    userId: this.getUserInfoUserId,
-                    token: this.getUserInfoToken,
-                    orderSn: res.body.data.order_big_sn,
-                    payMethod: this.payMethod,
-                    openId: openId,
-                }).then((resopndy) => {
-                    if (self.isAlipay() == 0) {
+                if (res.body.code == 200) {
+                    let self = this;
+                    let openId = localStorage.getItem("openId");
+                    API.order.OrderWechat({
+                        userId: this.getUserInfoUserId,
+                        token: this.getUserInfoToken,
+                        orderSn: res.body.data.order_big_sn,
+                        payMethod: this.payMethod,
+                        openId: openId,
+                    }).then((resopndy) => {
                             /* 微信支付 */
                             this.paydata = resopndy.body;
                             if (typeof WeixinJSBridge == "undefined") {
@@ -801,21 +852,47 @@ export default {
                             } else {
                                 self.onBridgeReady();
                             }
-                        } else if (self.isAlipay() == 1) {
+                    }, (err) => {
+                        self.confrim = "支付异常";
+                        self.toast = true;
+                        self.$router.push({
+                            path: '/index/main/order'
+                        })
+                    });
+                }
+            });       
+            }else if(this.isAlipay()==1){
+                 API.order.orderShipPay({
+                userId: this.getUserInfoUserId,
+                token: this.getUserInfoToken,
+                orderId: id,
+            }).then((res) => {
+                if (res.body.code == 200) {
+                    let self = this;
+                    let openId = localStorage.getItem("openId");
+                    API.order.OrderWechat({
+                        userId: this.getUserInfoUserId,
+                        token: this.getUserInfoToken,
+                        orderSn: res.body.data.order_big_sn,
+                        payMethod: this.payMethod,
+                        openId: openId,
+                    }).then((resopndy) => {
                             const div = document.createElement('div');
                             div.innerHTML = resopndy.body;
                             document.body.appendChild(div);
                             document.forms.alipaysubmit.submit();
-                        } else {
-                            const div = document.createElement('div');
-                            div.innerHTML = resopndy.body;
-                            document.body.appendChild(div);
-                            document.forms.alipaysubmit.submit();
-                        }
-                }, (err) => {
-                   
-                });
-            })
+                    }, (err) => {
+                        self.confrim = "支付异常";
+                        self.toast = true;
+                        self.$router.push({
+                            path: '/index/main/order'
+                        })
+                    });
+                }
+            });    
+            }else{
+               this.payShow=true;
+            }
 
         },
         /* 确认收货 */
