@@ -357,6 +357,8 @@ export default {
             /* 假数据模拟订单 */
             orderList: [],
             currentPage: 1,
+             /* 支付方式 */
+            payMethod:4,
         }
     },
     computed: {
@@ -388,6 +390,19 @@ export default {
         }, 100);
     },
     methods: {
+        /* 判断当前；浏览器环境  0 微信 1 支付宝 2 其他浏览器*/
+        isAlipay(){
+            var userAgent = navigator.userAgent.toLowerCase();
+            if(userAgent.match(/Alipay/i)=="alipay"){
+                this.payMethod=4;
+                return 1;
+            }else if(userAgent.match(/MicroMessenger/i)=="micromessenger"){
+                this.payMethod=3;
+                return 0;
+            }else{
+                return 2;
+            }
+        },
         /* typelist点击选中函数 */
         typeselect(index) {
             this.currentType = index;
@@ -546,6 +561,7 @@ export default {
         payOrder(id) {
             /* 待付款订单生成支付订单 */
             let self = this;
+            this.isAlipay();
             API.order.orderShipPay({
                 userId: this.getUserInfoUserId,
                 token: this.getUserInfoToken,
@@ -556,21 +572,34 @@ export default {
                     userId: this.getUserInfoUserId,
                     token: this.getUserInfoToken,
                     orderSn: res.body.data.order_big_sn,
-                    payMethod: 3,
+                    payMethod: this.payMethod,
                     openId: openId,
                 }).then((resopndy) => {
-                    this.paydata = resopndy.body;
-                    console.log(resopndy.body);
-                    if (typeof WeixinJSBridge == "undefined") {
-                        if (document.addEventListener) {
-                            document.addEventListener('WeixinJSBridgeReady', self.onBridgeReady, false);
-                        } else if (document.attachEvent) {
-                            document.attachEvent('WeixinJSBridgeReady', self.onBridgeReady);
-                            document.attachEvent('onWeixinJSBridgeReady', self.onBridgeReady);
+                   if (self.isAlipay() == 0) {
+                            /* 微信支付 */
+                            this.paydata = resopndy.body;
+                            if (typeof WeixinJSBridge == "undefined") {
+                                if (document.addEventListener) {
+                                    document.addEventListener('WeixinJSBridgeReady', self.onBridgeReady, false);
+                                } else if (document.attachEvent) {
+                                    document.attachEvent('WeixinJSBridgeReady', self.onBridgeReady);
+                                    document.attachEvent('onWeixinJSBridgeReady', self.onBridgeReady);
+                                }
+                            } else {
+                                self.onBridgeReady();
+                            }
+                        } else if (self.isAlipay() == 1) {
+                            alert(resopndy.body);
+                            const div = document.createElement('div');
+                            div.innerHTML = resopndy.body;
+                            document.body.appendChild(div);
+                            document.forms.alipaysubmit.submit();
+                        } else {
+                            const div = document.createElement('div');
+                            div.innerHTML = resopndy.body;
+                            document.body.appendChild(div);
+                            document.forms.alipaysubmit.submit();
                         }
-                    } else {
-                        self.onBridgeReady();
-                    }
                 }, (err) => {
                 });
             })

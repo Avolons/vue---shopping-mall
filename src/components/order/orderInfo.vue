@@ -333,7 +333,7 @@ export default {
             },
             cardList: [],
             /* 支付方式 */
-            payMethod:4,
+            payMethod: 4,
         }
     },
     computed: {
@@ -406,15 +406,15 @@ export default {
     },
     methods: {
         /* 判断当前；浏览器环境  0 微信 1 支付宝 2 其他浏览器*/
-        isAlipay(){
+        isAlipay() {
             var userAgent = navigator.userAgent.toLowerCase();
-            if(userAgent.match(/Alipay/i)=="alipay"){
-                this.payMethod=4;
+            if (userAgent.match(/Alipay/i) == "alipay") {
+                this.payMethod = 4;
                 return 1;
-            }else if(userAgent.match(/MicroMessenger/i)=="micromessenger"){
-                this.payMethod=3;
+            } else if (userAgent.match(/MicroMessenger/i) == "micromessenger") {
+                this.payMethod = 3;
                 return 0;
-            }else{
+            } else {
                 return 2;
             }
         },
@@ -519,26 +519,32 @@ export default {
                         payMethod: this.payMethod,
                         openId: openId,
                     }).then((resopndy) => {
-                        if(self.isAlipay()==0){
+                        if (self.isAlipay() == 0) {
                             /* 微信支付 */
-                        this.paydata = resopndy.body;
-                        if (typeof WeixinJSBridge == "undefined") {
-                            if (document.addEventListener) {
-                                document.addEventListener('WeixinJSBridgeReady', self.onBridgeReady, false);
-                            } else if (document.attachEvent) {
-                                document.attachEvent('WeixinJSBridgeReady', self.onBridgeReady);
-                                document.attachEvent('onWeixinJSBridgeReady', self.onBridgeReady);
+                            this.paydata = resopndy.body;
+                            if (typeof WeixinJSBridge == "undefined") {
+                                if (document.addEventListener) {
+                                    document.addEventListener('WeixinJSBridgeReady', self.onBridgeReady, false);
+                                } else if (document.attachEvent) {
+                                    document.attachEvent('WeixinJSBridgeReady', self.onBridgeReady);
+                                    document.attachEvent('onWeixinJSBridgeReady', self.onBridgeReady);
+                                }
+                            } else {
+                                self.onBridgeReady();
                             }
+                        } else if (self.isAlipay() == 1) {
+                            alert(resopndy.body);
+                            const div = document.createElement('div');
+                            div.innerHTML = resopndy.body;
+                            document.body.appendChild(div);
+                            document.forms.alipaysubmit.submit();
                         } else {
-                            self.onBridgeReady();
-                        }
-                        }else if(self.isAlipay()==1){
                             const div = document.createElement('div');
                             div.innerHTML = resopndy.body;
                             document.body.appendChild(div);
                             document.forms.alipaysubmit.submit();
                         }
-                        
+
                     }, (err) => {
                         self.confrim = "支付异常";
                         self.toast = true;
