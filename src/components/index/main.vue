@@ -463,7 +463,7 @@ export default {
         }
     },
     activated() {
-        
+
         overscroll(document.querySelector('.main_listbox'));
         overscroll(document.querySelector('.list_compent_list_box'));
         setTimeout(() => {
@@ -639,7 +639,7 @@ export default {
         }
     },
     mounted() {
-        window.location.href="/?#/index/main";
+       
         overscroll(document.querySelector('.main_listbox'));
         overscroll(document.querySelector('.list_compent_list_box'));
         /* 获取轮播图信息 */

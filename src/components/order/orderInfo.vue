@@ -403,6 +403,7 @@ export default {
         }
     },
     methods: {
+        /* 判断当前；浏览器环境  0 微信 1 支付宝 2 其他浏览器*/
         goShop(item) {
             this.cardstate.id = item.coupon_no;
             this.cardstate.storeId = item.store_id;
