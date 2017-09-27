@@ -106,7 +106,8 @@ export default {
             }
             
             localStorage.setItem("goodsInfo","11");
-            this.$router.push({ path: '/goodsInfo/'+id}); 
+            window.location.href="/?#/goodsInfo/"+id;
+            /* this.$router.push({ path: '/goodsInfo/'+id});  */
         },
         load() {
             console.log(1);
