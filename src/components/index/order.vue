@@ -395,7 +395,7 @@ export default {
         /* 进入订单详情 */
         getInfo(id) {
             this.$router.push({
-                path: '/orderAction' + id
+                path: '/orderAction/' + id
             });
 
             localStorage.setItem("orderScroll", document.querySelector(".order_list").scrollTop);
