@@ -333,7 +333,7 @@ export default {
             },
             cardList: [],
             /* 支付方式 */
-            payMethod:3,
+            payMethod:4,
         }
     },
     computed: {
@@ -533,9 +533,8 @@ export default {
                             self.onBridgeReady();
                         }
                         }else if(self.isAlipay()==1){
-                            alert(JSON.stringify(resopndy.body));
                             const div = document.createElement('div');
-                            div.innerHTML = resopndy.body.html;
+                            div.innerHTML = resopndy.body;
                             document.body.appendChild(div);
                             document.forms.alipaysubmit.submit();
                         }

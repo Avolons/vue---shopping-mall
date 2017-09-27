@@ -101,7 +101,7 @@ const store = new Vuex.Store({
 			state.userInfo.avatar = '';
 			state.userInfo.id = '';
 			state.userInfo.token = '';
-			window.location.href="/?#/index/main";
+			window.location.href="/#/index/main";
 		},
 		// 设置当前认证状态,
 		ISCERTIFY (state) {
