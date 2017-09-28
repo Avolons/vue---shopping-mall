@@ -369,7 +369,8 @@
             <!-- 收货地址和物流方式 -->
             <group class="orderAction_main_priceColl">
                 <cell title="合计租金" :value="(infoData.rentPrice*infoData.ordertimeNumber*infoData.shopNum)  | currency('￥')"></cell>
-                <cell title="红包减免" class="orderAction_main_card" :value="-infoData.couponPrice | currency('￥')"></cell>
+                <cell title="店铺优惠券" class="orderAction_main_card" :value="-infoData.storeCouponPrice | currency('￥')"></cell>
+                <cell title="平台优惠券" class="orderAction_main_card" :value="-infoData.couponPrice | currency('￥')"></cell>
                 <cell title="合计押金" :value="infoData.deposit | currency('￥')"></cell>
                 <cell title="运费" :value="infoData.freight | currency('￥')"></cell>
                 <cell class="orderAction_main_truePrice" title="实付款" :value="infoData.totalPrice | currency('￥')"></cell>
@@ -396,7 +397,7 @@
                 <button @click.stop="download()" class="order_single_btn--confirm" v-if="infoData.orderType==2">申请退款</button>
                 <button @click.stop="remind(infoData.orderId,1)" v-if="infoData.orderType==2">提醒发货</button>
                 <!-- 待收货状态 退货待结算 退货结算待确认 -->
-                <button @click.stop="download()" class="order_single_btn--confirm" v-if="infoData.orderType==3 || infoData.orderType==5">查看物流</button>
+                <button @click.stop="download()" class="order_single_btn--confirm" v-if="(infoData.orderType==3 || infoData.orderType==5) && infoData.order_express_type!=5">查看物流</button>
                 <!-- 退货待结算 待结算-->
                 <button @click.stop="remind(infoData.orderId,2)" v-if="infoData.orderType==5  || infoData.orderType==11">提醒结算</button>
                 <!-- 待收货状态 -->

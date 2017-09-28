@@ -488,7 +488,7 @@ export default {
             API.card.getCouponActive().then((res) => {
                 if (res.body.code == 200) {
                     this.smallCard = true;
-                    this.cardUrl = '/activity/getCard.html';
+                    this.cardUrl = res.body.data.url;
                 }
             })
         },
