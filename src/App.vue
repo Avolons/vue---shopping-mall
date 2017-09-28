@@ -52,7 +52,7 @@ export default {
                 if (access_code == null) {
                     var fromurl = location.href;//获取授权code的回调地址，获取到code，直接返回到当前页  
                     var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe67019703f582d76&redirect_uri=' + encodeURIComponent(location.href) + '&response_type=code&scope=snsapi_base&state=0#wechat_redirect';
-                    location.href = url;
+                   /*  location.href = url; */
                 } else {
                     if (!openId) {
                         API.order.getOpenId({

@@ -243,10 +243,7 @@ export default {
         editAddress(id) {
             /* 进入地址编辑页面 */
             this.$router.push({
-                path:'/editAddress',
-                params:{
-                    id:id
-                }
+                path:'/editAddress/'+id,
             })
         },
         /* 地址删除 */

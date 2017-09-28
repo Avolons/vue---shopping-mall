@@ -198,7 +198,10 @@ export default {
                         if(res.body.code==200){
                             self.confrim="结算成功";
                             self.toast=true;
-                            self.routerBack();
+                            localStorage.setItem("reload", "1");
+                            setTimeout(()=>{
+                                self.routerBack();
+                            },500);
                         }
                     });
                 }

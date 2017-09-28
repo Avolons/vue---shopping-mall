@@ -98,7 +98,6 @@ export default {
           this.$router.push({
                 path: '/index/main'
             });
-       
       },
       /* 获取数据 */
       getData(){
@@ -144,6 +143,7 @@ export default {
       }
   },
   mounted(){
+      /* 收据初始化 */
       this.page=1;
       this.haveData=true;
       this.getData();
@@ -151,8 +151,8 @@ export default {
          let self = this;
         function getScrollTop() {
             　　var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
-            　　if (document.body) {
-                　　　　bodyScrollTop = document.body.scrollTop;
+            　　if (document.querySelector('.collention_main')) {
+                　　　　bodyScrollTop = document.querySelector('.collention_main').scrollTop;
             　　}
             　　if (document.documentElement) {
                 　　　　documentScrollTop = document.documentElement.scrollTop;
@@ -163,8 +163,8 @@ export default {
         //文档的总高度
         function getScrollHeight() {
             　　var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
-            　　if (document.body) {
-                　　　　bodyScrollHeight = document.body.scrollHeight;
+            　　if (document.querySelector('.collention_main')) {
+                　　　　bodyScrollHeight = document.querySelector('.collention_main').scrollHeight;
             　　}
             　　if (document.documentElement) {
                 　　　　documentScrollHeight = document.documentElement.scrollHeight;
@@ -182,7 +182,10 @@ export default {
             　　}
             　　return windowHeight;
         }
-        window.onscroll = function() {
+        document.querySelector('.collention_main').onscroll = function() {
+            console.log(getScrollTop());
+            console.log(getWindowHeight());
+            console.log((getScrollHeight()-10));
         　　if (getScrollTop() + getWindowHeight() >= (getScrollHeight()-10)) {
                 if(self.canBottom==true){
                     self.canBottom=false;
@@ -197,10 +200,10 @@ export default {
       },50);
       overscroll(document.querySelector('.collention_main'));
       if(localStorage.getItem('collection')){
-          localStorage.setItem('collection','');
-          this.page=1;
-      this.haveData=true;
-      this.getData();
+            localStorage.setItem('collection','');
+            this.page=1;
+            this.haveData=true;
+            this.getData();
       }
       
   }

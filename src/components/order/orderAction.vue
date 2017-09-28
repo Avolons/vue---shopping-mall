@@ -327,17 +327,18 @@
                     <h3>{{returnTpl}}</h3>
                 </div>
                 <div class="main_since_single">
-                    <div class="main_since_text" v-show="this.infoData.order_express_type==1">
+                    <!-- 状态1和2为快递和上门地址 -->
+                    <div class="main_since_text" v-show="this.infoData.order_express_type==1 || this.infoData.order_express_type==2">
                         <h2 class="main_since_title">{{infoData.order_receiver_name}}</h2>
                         <h2 class="main_since_price">{{infoData.order_mobile}}</h2>
                     </div>
-                    <p v-show="this.infoData.order_express_type==1" class="main_since_intr twonowarp">{{infoData.order_province}}{{infoData.order_city}}{{infoData.order_district}}{{infoData.order_detailed}}</p>
-
+                    <p v-show="this.infoData.order_express_type==1 || this.infoData.order_express_type==2" class="main_since_intr twonowarp">{{infoData.order_province}}{{infoData.order_city}}{{infoData.order_district}}{{infoData.order_detailed}}</p>
+                    <!-- 状态3为自提点地址 -->
                     <div v-show="this.infoData.order_express_type==3" class="main_since_text">
                         <h2 class="main_since_title">{{infoData.since_name}}</h2>
                         <h2 class="main_since_price">{{infoData.since_tel}}</h2>
                     </div>
-                    <p v-show="this.infoData.order_express_type==3" class="main_since_intr twonowarp">{{infoData.province_name}}{{infoData.city_name}}{{infoData.region_name}}{{infoData.region_name}}</p>
+                    <p v-show="this.infoData.order_express_type==3" class="main_since_intr twonowarp">{{infoData.province_name}}{{infoData.city_name}}{{infoData.region_name}}{{infoData.since_detailed_address}}</p>
                 </div>
             </group>
             <h3 class="orderAction_main_shopTitle">
@@ -380,6 +381,8 @@
                 <li v-show="infoData.order_generation_time">订单生成时间：{{infoData.order_generation_time | orderdata }}</li>
                 <li v-show="infoData.order_pay_time">订单支付时间：{{infoData.order_pay_time | orderdata }}</li>
                 <li v-show="infoData.order_shipping_time">订单发货时间：{{infoData.order_shipping_time | orderdata }}</li>
+                <li v-show="infoData.order_shipping_time">申请退货时间：{{infoData.order_apply_refund_goods_time | orderdata }}</li>
+                
                 <li v-show="infoData.order_delivery_time">确认收货时间：{{infoData.order_delivery_time | orderdata }}</li>
                 <li v-show="infoData.order_goods_refund_time">订单归还时间：{{infoData.order_goods_refund_time | orderdata }}</li>
                 <li v-show="infoData.order_settlement_bill_generation_time">结算单生成时间：{{infoData.order_settlement_bill_generation_time | orderdata }}</li>
@@ -502,8 +505,8 @@ export default {
                     message: "退款金额将及时返还至您的付款账户"
                 },
                 {
-                    title: "待结算中",//退货待结算
-                    message: "等待商家确认收货并出具结算单"
+                    title: "退货待商家结算",//退货待结算
+                    message: "请尽快联系商家，与商家协商结算事宜"
                 },
                 {
                     title: "结算单已出",//退货结算待确认

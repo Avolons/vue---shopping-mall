@@ -274,7 +274,7 @@
                     <!-- 待发货状态 -->
                     <button @click.stop="remind(item.order_id,1)" v-if="item.orderType==2">提醒发货</button>
                     <!-- 待收货状态 退货待结算 退货结算待确认 -->
-                    <button @click.stop="download()" v-if="item.orderType==3 || item.srcorderType==0">查看物流</button>
+                    <button @click.stop="download()" v-if="(item.orderType==3 || item.srcorderType==0) && item.order_express_type!=3">查看物流</button>
                     <!-- 退货待结算 待结算-->
                     <button @click.stop="remind(item.order_id,2)" v-if="(item.orderType==5 && !item.srcorderType) || item.srcorderType==0">提醒结算</button>
                     <!-- 待收货状态 -->
@@ -282,7 +282,7 @@
                     <!-- 待归还状态   -->
                     <button @click.stop="confirmReturn(item)" v-if="item.orderType==4">归还</button>
                     <!-- 退货完成 结算完成 评价完成 -->
-                    <button @click.stop="seeSettlement(item.order_id)" class="order_single_btn--confirm" v-if="item.orderType==7">结算单</button>
+                    <button @click.stop="seeSettlement(item.order_id)" class="order_single_btn--confirm" v-if="item.orderType==7 || item.orderType==6">结算单</button>
                     <!-- 待评价 -->
                     <button @click.stop="download()" v-if="item.orderType==6">评价</button>
                     <!-- 评价完成 -->
@@ -766,7 +766,7 @@ export default {
         /* 查看结算单 */
         seeSettlement(id) {
             this.$router.push({
-                path: '/settlement' + id
+                path: '/settlement/?id=' + id
             });
 
             localStorage.setItem("orderScroll", document.querySelector(".order_list").scrollTop);

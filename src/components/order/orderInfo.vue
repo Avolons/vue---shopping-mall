@@ -226,8 +226,11 @@
                     <cell title="运费" :value="returnTplPrice | currency('￥')"></cell>
                     <cell title="商品租金" :value="goodsAllPrice  | currency('￥')"></cell>
                     <cell-box class="orderInfon_main_card" @click.native="cardshow" is-link>
-                        <button>减免</button>
-                        <span>优惠减免</span>
+                        <span>店铺优惠券</span>
+                        <span v-show="priceShow">{{currentPrice | currency('￥')}}</span>
+                    </cell-box>
+                    <cell-box class="orderInfon_main_card" @click.native="cardshow" is-link>
+                        <span>平台优惠券</span>
                         <span v-show="priceShow">{{currentPrice | currency('￥')}}</span>
                     </cell-box>
                     <div v-transfer-dom>
