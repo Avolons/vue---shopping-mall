@@ -47,6 +47,25 @@
 }
 
 .order {
+    &_noAnyList{
+        position: fixed;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        top: 87px;
+        height: 70%;
+        >i{
+            font-size: 160px;
+            color: #666;
+        }
+        >P{
+            font-size: 15px;
+            color: #272727;
+        }
+    }
     &_list {
         position: fixed;
         width: 100%;
@@ -301,6 +320,10 @@
             <toast v-model="toast" type="success">{{confrim}}</toast>
 
         </ul>
+        <div v-show="haveNoList" class="order_noAnyList">
+            <i class="iconfont">&#xe8b5;</i>
+            <p>暂无相关订单</p>
+        </div>
     </div>
 </template>
 
@@ -378,7 +401,27 @@ export default {
             'getUserInfoUserId',
             'getUserInfoToken',
         ]),
-
+        haveNoList(){
+            let index=0;
+            for(let item of this.orderList) {
+                if(this.currentType==item.orderType){
+                    index++;
+                }
+            }
+            if(this.currentType==0){
+                if(this.orderList.length>0){
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+            if(index==0){
+                return true;
+            }else{
+                return false;
+            }
+            
+        }
     },
     mounted() {
         overscroll(document.querySelector('.order_list'));
