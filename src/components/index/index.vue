@@ -26,13 +26,13 @@
 }
 .weui-bar__item_on{
     .weui-tabbar__icon{
-        color: #4d7ad2 !important;
+        color: #2196f3 !important;
         .iconfont{
-            color: #4d7ad2 !important;
+            color: #2196f3 !important;
         }
     }
     .weui-tabbar__label{
-        color: #4d7ad2 !important;
+        color: #2196f3 !important;
     }
 }
 </style>

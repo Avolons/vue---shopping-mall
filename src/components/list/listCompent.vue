@@ -60,19 +60,27 @@
            height="-97"
            @on-pullup-loading="load"> -->
         <ul class="list_compent_list">
-            <li v-for="(item,index) in commonGoodsList" class="list_compent_single" @click="goInfo(item.goodsId)">
-                <div class="list_compent_img">
+            <li v-for="(item,index) in commonGoodsList" class="main_recommend_single" @click="goInfo(item.goodsId)">
+                <div class="main_recommend_img">
                     <img :src="item.goodsFace" alt="">
                 </div>
-                <div class="list_compent_text">
-                    <h2 class="list_compent_title">{{item.goodsName}}</h2>
-                    <h2 v-if="!item.act_price" class="list_compent_price">￥{{item.rentPrice}}/{{timeMap[item.rent_period_type]}}
+                <div class="main_recommend_text">
+                    <h2 class="main_recommend_title">{{item.goodsName}}</h2>
+                    <ul class="main_recommend_typeList">
+                            <li class="main_recommend_type"  v-for="ite in item.serviceSign">
+                                {{ite}}
+                            </li>
+                    </ul>
+                    <div class="main_recommend_box">
+                    <h2 v-if="!item.act_price" class="main_recommend_price">￥{{item.rentPrice}}/{{timeMap[item.rent_period_type]}}
                     </h2>
-                    <h2 v-else class="list_compent_price">￥{{item.act_price}}/{{timeMap[item.rent_period_type]}}
-                        <span  class="list_compent_oldprice">
+                    <h2 v-else class="main_recommend_price">￥{{item.act_price}}/{{timeMap[item.rent_period_type]}}
+                        <span  class="main_recommend_oldprice">
                             ￥{{item.rentPrice}}/{{timeMap[item.rent_period_type]}}
                         </span>
                     </h2>
+                     <h2 class="main_recommend_address">{{item.region}}</h2>
+                        </div>
                 </div>
             </li>
         </ul>

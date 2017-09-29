@@ -2,7 +2,7 @@
 <style lang="scss">
 body {
     height: 100%;
-    background-color: #f3f3f3;
+    background-color: #f1f1f1;
     .weui-tabbar {
         background-color: #fff;
     }
@@ -11,44 +11,38 @@ body {
 .main_container .main_typelist_box {
     height: 40px;
     position: relative;
-    width: 560px;
+    padding-left: 15px;
     font-size: 0;
-    border-bottom: 1px solid #f3f3f3;
+    border-bottom: 1px solid #f1f1f1;
     background-color: #fff;
+    box-sizing: border-box;
+    overflow-x: auto;
 }
 
 .main_typelist_item {
-    width: 90px;
     height: 40px;
     display: inline-block;
     text-align: center;
     line-height: 40px;
     font-size: 14px;
+    color: #333;
     white-space: nowrap;
     overflow: hidden;
+    margin-right: 35px;
     text-overflow: ellipsis;
+    &--selected{
+        color: #2196f3;
+    }
 }
 
-.main_typelist_bottomline {
-    height: 2px;
-    width: 90px;
-    position: absolute;
-    background-color: #2196f3;
-    left: 0;
-    bottom: 0;
-    transition: all 0.2s ease-in;
-}
+
 
 
 
 
 /* 选中滚动条函数 */
 
-@for $i from 1 through 10 {
-    .main_typelist_item:nth-of-type(#{$i})[class*="main_typelist_item--selected"]~.main_typelist_bottomline {
-        left: (90px * $i) - 90px;
-    }
-}
+
 
 @keyframes hongbao {
     0% {
@@ -69,6 +63,82 @@ body {
 }
 
 .main {
+    &_fun{
+       &_list{
+           background-color: #fff;
+           height: 80px;
+           box-sizing: border-box;
+           padding: 12.5px 15px 0 15px;
+           display: flex;
+           justify-content: space-between;
+       } 
+       &_single{
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           >img{
+               display: block;
+               height: 35px;
+               width: 35px;
+           }
+           >h3{
+               font-size: 12px;
+               color: #333;
+               margin-top: 7.5px;
+           }
+       }
+    }
+    &_channel{
+        &_list{
+            margin-bottom: 20px;
+        }
+        &_single{
+            margin-top: 10px;
+        }
+        &_goodsList{
+            white-space: nowrap; 
+            padding: 10px 15px;
+            overflow-x: auto;
+            width: 100%;
+            box-sizing: border-box;
+            
+            background-color: #fff;
+        }
+        &_goodsSingle{
+            display: inline-block;
+            width: 110px;
+            &:not(:last-of-type){
+                margin-right: 25px;
+            }
+        }
+        &_goodsTitle{
+            font-size: 13px;
+            color: #666;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        &_goodsText{
+            font-size: 12px;
+            text-align: center;
+            color: #e31111;
+            >span{
+                font-size: 11px;
+                color: #666;
+                text-decoration: line-through;
+            }
+        }
+        &_goodsImg{
+            display: black;
+            height: 110px;
+            width: 110px;
+        }
+        &_img{
+            width: 100%;
+            display: block;
+        }
+    }
     &_card {
         &_fixed {
             position: fixed;
@@ -135,7 +205,7 @@ body {
         }
     }
     &_listbox {
-        height: calc(100% - 142px);
+        height: calc(100% - 141px);
         box-sizing: border-box;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
@@ -181,7 +251,7 @@ body {
         background-color: #f5f5f5;
         box-sizing: border-box;
         font-size: 14px;
-        color: #6d6d6d;
+        color: #666;
         height: 30px;
         line-height: 30px;
         flex-grow: 1;
@@ -196,7 +266,7 @@ body {
         width: 40px;
         flex-grow: 0;
         display: block;
-        text-align: left;
+        text-align: right;
         line-height: 30px;
         font-size: 25px;
         color: #bfbfbf;
@@ -205,58 +275,78 @@ body {
         }
     }
     &_hot {
-        background-color: #f6f6f6;
+        color: #2196f3;
+        background-color: #fff;
         height: 45px;
-        border-bottom: 1px solid #dddddd;
+        border-bottom: 5px solid #f1f1f1;
         position: relative;
-        &>img {
-            display: block;
-            margin: 0 auto;
-            height: 100%;
-        }
-        &_more {
-            position: absolute;
-            right: 15px;
-            display: block;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #2196f3;
-            border-radius: 50%;
-            font-size: 16px;
-            color: #fff;
-            width: 20px;
-            height: 20px;
-            line-height: 18px;
-            text-align: center;
+        line-height: 45px;
+        display: flex;
+        align-items: center;
+        font-size: 17px;
+        padding-left: 15px;
+        box-sizing: border-box;
+        >i{
+            margin-left: 12.5px;
         }
     }
     &_recommend {
         @extend .main_hot;
     }
-    &_recommend {}
     &_hot {
         &_list {
-            background-color: #fff;
+            margin-bottom: 15px;
+            background-color: #f1f1f1;
         }
         &_single {
-            height: 130px;
             display: flex;
-            border-bottom: 1px solid #f3f3f3;
+            margin-bottom: 5px;
+            background-color: #fff;
+            
         }
         &_img {
-            height: 130px;
-            width: 130px;
+            height: 150px;
+            width: 150px;
             display: block;
             flex-grow: 0;
-            box-sizing: border-box;
             padding: 15px;
+            padding-right: 17.5px;
             &>img {
-                height: 100px;
-                width: 100px;
+                height: 150px;
+                width: 150px;
                 display: block;
             }
         }
+        &_address{
+            font-size: 11px;
+            color: #999;
+            display: flex;
+            align-items: flex-end;
+            flex-shrink: 0;
+        }
+        &_contentbox{
+            display: flex;
+            flex-grow: 1;
+            align-items: flex-end;
+        }
+        &_typeList{
+            flex-grow: 1;
+            flex-shrink: 1;
+        }
+        &_type{
+            height: 17px;
+            line-height: 15px;
+            border: 1px solid #2196f3;
+            box-sizing: border-box;
+            padding: 0 5px;
+            border-radius: 3px;
+            display: inline-block;
+            font-size: 11px;
+            color: #2196f3;
+            margin-right: 5px;
+        }
         &_title {
+            width: 100%;
             color: #666;
             font-size: 13px;
             overflow: hidden;
@@ -264,21 +354,26 @@ body {
             font-weight: 400;
         }
         &_price {
-            color: #f80000;
+            margin-top: 12.5px;
+            width: 100%;
+            color: #e81010;
             font-size: 15px;
         }
         &_oldprice{
-            color: #272727;
+            color: #666;
             font-size: 13px;
             text-decoration: line-through;
         }
         &_text {
             box-sizing: border-box;
-            padding: 20px 10px;
+            padding-top: 40px;
             flex-grow: 1;
+            padding-right: 40px;
             display: flex;
-            justify-content: space-around;
+            flex-wrap: wrap;
+            justify-content: flex-start;
             flex-direction: column;
+            padding-bottom: 20px;
         }
     }
     &_recommend {
@@ -306,21 +401,56 @@ body {
             }
         }
         &_title {
-            margin-top: 5px;
-
-            color: #272727;
-            font-size: 14px;
+            margin-top: 20px;
+            color: #666;
+            font-size: 13px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
             font-weight: 400;
         }
+        &_typeList{
+            height: 45px;
+            display: flex;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+        &_type{
+            height: 17px;
+            line-height: 15px;
+            border: 1px solid #2196f3;
+            box-sizing: border-box;
+            padding: 0 5px;
+            border-radius: 3px;
+            display: inline-block;
+            font-size: 11px;
+            color: #2196f3;
+            margin-right: 5px;
+        }
         &_price {
-            margin-top: 5px;
-            color: #f80000;
-            font-size: 15px;
+            flex-grow: 1;
+            margin-top: 10px;
+            color: #e81010;
+            font-size: 12px;
+        }
+        &_address{
+            flex-shrink: 1;
+            font-size: 11px;
+            color: #999;
+            display: flex;
+            align-items: flex-end;
+        }
+        &_box{
+            display: flex;
+        }
+        &_oldprice{
+            color: #666;
+            font-size: 11px;
+            text-decoration: line-through;
         }
         &_text {
+            flex-wrap: wrap;
+            display: flex;
             box-sizing: border-box;
             flex-direction: column;
         }
@@ -330,32 +460,52 @@ body {
 <template>
     <div class="main_container">
         <header class="main_header">
-            <span class="main_menu" @click="golist()">
-                <i class="iconfont">&#xe606;</i>
-            </span>
             <div class="main_search" @click="gosearch">
                 <i class="iconfont">&#xe60c;</i> 请输入商品名
             </div>
+            <span class="main_menu" @click="golist()">
+                <i class="iconfont">&#xe606;</i>
+            </span>
         </header>
-        <scroller class="main_typelist" lock-y :scrollbar-x=false>
             <div class="main_typelist_box">
                 <div class="main_typelist_item" v-for="(item,index) in typeList" :class="{'main_typelist_item--selected':item.click}" @click="typeselect(index,item.goods_category_id)">
                     <span>{{item.hot_label_name}}</span>
                 </div>
-                <div class="main_typelist_bottomline"></div>
             </div>
-        </scroller>
         <div class="main_listbox">
             <!-- 轮播图组件 -->
-            <swiper v-show="currentType==0" loop class="main_swiper" dots-position="center" height="auto" :aspect-ratio="400/750" @on-index-change="onSwiperItemIndexChange" v-model="swiperItemIndex">
+            <swiper v-show="currentType==0" loop class="main_swiper" dots-position="center" height="auto" :aspect-ratio="300/750" @on-index-change="onSwiperItemIndexChange" v-model="swiperItemIndex">
                 <swiper-item class="swiper-demo-img" v-for="(item, index) in bannerlist" :key="index">
                     <img @click="bannerClick(item.extras,item.bannerType)" :src="item.imagePath">
                 </swiper-item>
             </swiper>
-            <!-- 热门商品 -->
+            <!-- table功能区域 -->
+            <ul v-show="currentType==0" class="main_fun_list">
+                <li v-for="item in iconList" class="main_fun_single">
+                    <img :src="item.img" alt="icon">
+                    <h3>{{item.name}}</h3>
+                </li>
+            </ul>
+            <!-- 频道列表区域 -->
+            <ul v-show="currentType==0" class="main_channel_list">
+                <li v-for="item in channelList" class="main_channel_single" >
+                    <img class="main_channel_img" :src="item.bg_image" alt="channel">
+                    <ul class="main_channel_goodsList">
+                        <li @click="goInfo(ite.goods_id)" v-for="ite in item.goods" class="main_channel_goodsSingle">
+                            <img class="main_channel_goodsImg" :src="ite.goods_main_pic" alt="">
+                            <h3 class="main_channel_goodsTitle">{{ite.goods_name}}</h3>
+                            <p  v-if="!ite.act_price" class="main_channel_goodsText"> ￥{{ite.rent_price}}/{{timeMap[ite.rent_period_type]}}
+                            </p>
+                            <p v-else class="main_channel_goodsText"> ￥{{ite.act_price}}/{{timeMap[ite.rent_period_type]}}
+                                <span>￥{{ite.rent_price}}/{{timeMap[ite.rent_period_type]}}</span>
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+            </ul> 
+            <!-- 热门商品,只能放3个 -->
             <div class="main_hot" v-show="currentType==0">
-                <img src="../../assets/img/index/hot.png" alt="hot">
-                <span @click="getMoreHot" class="main_hot_more">></span>
+                热门单品 <i class="iconfont">&#xe6d7;</i>
             </div>
             <ul class="main_hot_list" v-show="currentType==0">
                 <li v-for="item in hotGoodsList" class="main_hot_single" @click="goInfo(item.goodsId)">
@@ -364,6 +514,29 @@ body {
                     </div>
                     <div class="main_hot_text">
                         <h2 class="main_hot_title twonowarp">{{item.goodsName}}</h2>
+                        <div class="main_hot_contentbox">
+                            <ul class="main_hot_typeList">
+                                <li class="main_hot_type" v-show="item.goods_is_free_deposit==1">
+                                    免押金
+                                </li>
+                                <li class="main_hot_type" v-show="item.goods_is_free_shipping==1">
+                                    包邮
+                                </li>
+                                <li class="main_hot_type" v-show="item.goods_is_deductible==1">
+                                    免赔
+                                </li>
+                                <li class="main_hot_type" v-show="item.goods_is_door==1">
+                                    送货上门
+                                </li>
+                                <li class="main_hot_type" v-show="item.goods_is_since==1">
+                                    自提
+                                </li>
+                                <li class="main_hot_type" v-show="item.goods_is_follow_lease==1">
+                                    随租随还
+                                </li>
+                            </ul>
+                            <h2 class="main_hot_address">{{item.region}}</h2>
+                        </div>
                         <h2 v-if="!item.act_price" class="main_hot_price">￥{{item.rentPrice}}/{{timeMap[item.rent_period_type]}}</h2>
                         <h2 v-else class="main_hot_price">
                             ￥{{item.act_price}}/{{timeMap[item.rent_period_type]}}
@@ -374,10 +547,39 @@ body {
                     </div>
                 </li>
             </ul>
+
+             <!-- 新品特惠 -->
+            <div class="main_recommend" v-show="currentType==0">
+                新品特惠 <i class="iconfont">&#xe6d7;</i>
+            </div>
+            <!-- 新品特惠商品列表 -->
+            <ul class="main_recommend_list" v-show="currentType==0">
+                <li v-for="item in newGoodsList" class="main_recommend_single" @click="goInfo(item.goodsId)">
+                    <div class="main_recommend_img">
+                        <img :src="item.goodsFace" alt="img">
+                    </div>
+                    <div class="main_recommend_text">
+                        <h2 class="main_recommend_title">{{item.goodsName}}</h2>
+                        <ul class="main_recommend_typeList">
+                                <li class="main_recommend_type"  v-for="ite in item.serviceSign">
+                                    {{ite}}
+                                </li>
+                        </ul>
+                        <div class="main_recommend_box">
+                            <h2 v-if="!item.act_price" class="main_recommend_price">￥{{item.rentPrice}}/{{timeMap[item.rent_period_type]}}</h2>
+                        <h2 v-else class="main_recommend_price">￥{{item.act_price}}/{{timeMap[item.rent_period_type]}}
+                            <span  class="main_recommend_oldprice">
+                                ￥{{item.rentPrice}}/{{timeMap[item.rent_period_type]}}
+                            </span>
+                        </h2>
+                        <h2 class="main_recommend_address">{{item.region}}</h2>
+                        </div>
+                    </div>
+                </li>
+            </ul>
             <!-- 推荐商品 -->
             <div class="main_recommend" v-show="currentType==0">
-                <img src="../../assets/img/index/recommend.png" alt="hot">
-                <span></span>
+                推荐商品 
             </div>
             <!-- 推荐商品列表 -->
             <ul class="main_recommend_list" v-show="currentType==0">
@@ -387,12 +589,20 @@ body {
                     </div>
                     <div class="main_recommend_text">
                         <h2 class="main_recommend_title">{{item.goodsName}}</h2>
+                        <ul class="main_recommend_typeList">
+                                <li class="main_recommend_type"  v-for="ite in item.serviceSign">
+                                    {{ite}}
+                                </li>
+                        </ul>
+                        <div class="main_recommend_box">
                         <h2 v-if="!item.act_price" class="main_recommend_price">￥{{item.rentPrice}}/{{timeMap[item.rent_period_type]}}</h2>
                         <h2 v-else class="main_recommend_price">￥{{item.act_price}}/{{timeMap[item.rent_period_type]}}
                             <span  class="main_recommend_oldprice">
                                 ￥{{item.rentPrice}}/{{timeMap[item.rent_period_type]}}
                             </span>
                         </h2>
+                        <h2 class="main_recommend_address">{{item.region}}</h2>
+                        </div>
                     </div>
                 </li>
             </ul>
@@ -462,10 +672,9 @@ export default {
             bottomCount: 20,
             /* 轮播图数据集合 */
             bannerlist: [
-                'https://static.vux.li/demo/1.jpg',
-                'https://static.vux.li/demo/1.jpg',
-                'https://static.vux.li/demo/1.jpg',
+                
             ],
+            
             /* 时间周期对照表 */
             timeMap: { 1: "日", 2: "周", 3: "月", 4: "季", 5: "年" },
             /* 当前被选中列表 */
@@ -474,6 +683,12 @@ export default {
             typeList: [],
             /* 首页热租商品 */
             hotGoodsList: [],
+            /* 首页频道列表 */
+            channelList:[],
+            /* 首页标签 */
+            iconList:[],
+            /* 新品特惠商品列表 */
+            newGoodsList:[],
             /* 首页推荐商品 */
             recGoodsList: [],
             /* 根据首页商品标签页长度进行商品数据列表缓存，防止重复请求数据 */
@@ -623,16 +838,8 @@ export default {
             this.$router.push({
                 path: '/search'
             });
-
         },
-        changeList() {
-            this.showList1 = false
-            this.$nextTick(() => {
-                this.$refs.scroller.reset({
-                    top: 0
-                })
-            })
-        },
+        /* 跳转多更多商品页面 */
         getMoreHot() {
             this.$router.push({
                 path: '/moreHot'
@@ -656,10 +863,10 @@ export default {
             } else {
                 /* window.location.href = "/#/"; */
             }
-        }
+        },
     },
     mounted() {
-       
+       /* 可拖动返回列表滚动初始化 */
         overscroll(document.querySelector('.main_listbox'));
         overscroll(document.querySelector('.list_compent_list_box'));
         /* 获取轮播图信息 */
@@ -668,6 +875,24 @@ export default {
         }).then((Response) => {
             this.bannerlist = Response.body.data.bannerList;
         });
+        /* 获取频道信息 */
+        API.newMain.channelList().then((res)=>{
+            if(res.body.code==200){
+                this.channelList=res.body.data;
+            }
+        });
+        /* 获取活动标签信息 */
+        API.newMain.iconList().then((res)=>{
+            if(res.body.code==200){
+                this.iconList=res.body.data;
+            }
+        });
+        /* 获取新品特惠信息 */
+        API.newMain.newGoods().then((res)=>{
+            if(res.body.code==200){
+                this.newGoodsList=res.body.data.data;
+            }
+        })
         /* 获取首页标签 */
         API.main.hotTagLabel().then((Response) => {
             let firstLabel = {
@@ -682,6 +907,7 @@ export default {
             this.goodsList = new Array(shopList.length);
             this.typeList = shopList;
             setTimeout((res) => {
+                /* 防止数据卡死 */
                 document.querySelectorAll(".main_typelist_item")[1].click();
                 document.querySelectorAll(".main_typelist_item")[0].click();
             }, 500);
@@ -689,7 +915,7 @@ export default {
         /* 获取热门商品 */
         API.main.goodsHot({
             recomandId: 3,
-            page_number: 4
+            page_number: 3
         }).then((Response) => {
             this.hotGoodsList = Response.body.data.shopList.data;
         });
@@ -702,6 +928,7 @@ export default {
         }).then((Response) => {
             this.recGoodsList = Response.body.data.shopList.data;
         });
+        /* 下拉加载更多操作 */
         let self = this;
         let mainbox = document.querySelector(".list_compent_list_box");
         function getScrollTop() {

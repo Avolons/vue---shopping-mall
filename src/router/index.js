@@ -235,6 +235,7 @@ import orderAction from '../components/order/orderAction.vue';//订单列表详�
 import orderLogistics from '../components/order/orderLogistics.vue';//订单物流选择
 import shop from '../components/shop/shop.vue';//店铺主页
 import shopInfo from '../components/shop/shopInfo.vue';//店铺详情
+import selected from '../components/shop/selected.vue';//精选店铺
 import download from '../components/common/download.vue';//下载App
 import authInfo from '../components/antScore/authInfo.vue';//芝麻信用授权
 import authPage from '../components/antScore/authPage.vue';//芝麻信用授权操作
@@ -396,7 +397,13 @@ const routes = [{
         path:'/shopInfo/:id',
         name: 'shopInfo',
         component: shopInfo
-    },{
+    },
+    {
+        path:'/selected',
+        name: 'selected',
+        component: selected
+    },
+    {
         path:'/download',
         name: 'download',
         component: download
