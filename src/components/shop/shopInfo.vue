@@ -116,10 +116,8 @@ export default {
       }
   },mounted(){
       this.Initialization();
-      
   },
   activated(){
-    
       this.Initialization();
   }
 }

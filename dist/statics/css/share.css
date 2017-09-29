@@ -1,0 +1,251 @@
+@charset "UTF-8";
+/*
+分享页面
+*/
+/**
+ * 此处写上scss常用mixins//移动端解决方案配置
+ */
+/**
+ * 配置项目常用变量
+ */
+.share_main {
+  height: 100%;
+  background: url("/img/bc.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #79c4ff;
+  background-size: cover;
+}
+
+.share_main_inner {
+  height: 100%;
+  position: relative;
+}
+
+.share_main_confrim {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0.13333rem 0.13333rem;
+  color: #fff;
+  font-size: 16px;
+  z-index: 9999;
+  border-radius: 0.06667rem;
+  display: none;
+}
+
+[data-dpr="2"] .share_main_confrim {
+  font-size: 32px;
+}
+
+[data-dpr="3"] .share_main_confrim {
+  font-size: 48px;
+}
+
+.share_main_chose {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  border-radius: 0.13333rem;
+  background-color: #fff;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  z-index: 9999;
+  width: 70%;
+  padding: 0.26667rem;
+  font-size: 16px;
+  color: #272727;
+  -ms-flex-pack: justify;
+      justify-content: space-between;
+  display: none;
+}
+
+[data-dpr="2"] .share_main_chose {
+  font-size: 32px;
+}
+
+[data-dpr="3"] .share_main_chose {
+  font-size: 48px;
+}
+
+.share_main_chose > h3 {
+  text-align: center;
+  line-height: 1.33333rem;
+  width: 100%;
+}
+
+.share_main_chose > button {
+  outline: none;
+  background-image: url("/img/btnbc.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 45%;
+  height: 0.8rem;
+  text-align: center;
+  display: block;
+  background-color: transparent;
+  line-height: 0.8rem;
+  color: #d83739;
+}
+
+.share_main_openLink {
+  position: absolute;
+  top: 0.66667rem;
+  right: 0.26667rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0.13333rem 0.13333rem;
+  color: #fff;
+  font-size: 16px;
+  z-index: 9999;
+  border-radius: 0.06667rem;
+  display: none;
+}
+
+[data-dpr="2"] .share_main_openLink {
+  font-size: 32px;
+}
+
+[data-dpr="3"] .share_main_openLink {
+  font-size: 48px;
+}
+
+.share_main_openLink > i {
+  position: absolute;
+  bottom: 100%;
+  right: -0.13333rem;
+  font-size: 20px;
+  font-weight: 700;
+  color: #000;
+}
+
+[data-dpr="2"] .share_main_openLink > i {
+  font-size: 40px;
+}
+
+[data-dpr="3"] .share_main_openLink > i {
+  font-size: 60px;
+}
+
+.share_main_card {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+  width: 100%;
+}
+
+.share_main_card > img {
+  width: 60%;
+  display: block;
+  margin: 0 auto;
+}
+
+.share_main_card_text {
+  color: #fcec2b;
+  font-size: 18px;
+  position: absolute;
+  width: 30%;
+  text-align: center;
+  top: 70%;
+  line-height: 0.6rem;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+[data-dpr="2"] .share_main_card_text {
+  font-size: 36px;
+}
+
+[data-dpr="3"] .share_main_card_text {
+  font-size: 54px;
+}
+
+.share_main_card_text--big {
+  font-size: 25px;
+}
+
+[data-dpr="2"] .share_main_card_text--big {
+  font-size: 50px;
+}
+
+[data-dpr="3"] .share_main_card_text--big {
+  font-size: 75px;
+}
+
+.share_main_text {
+  position: absolute;
+  width: 100%;
+  bottom: 0.53333rem;
+}
+
+.share_main_getCard {
+  height: 1.04rem;
+  width: 4.5rem;
+  background-image: url("/img/btnbc.png");
+  display: block;
+  margin: 0 auto;
+  background-size: cover;
+  background-color: transparent;
+  outline: none;
+  margin-top: 0.53333rem;
+  color: #d83739;
+  font-size: 17px;
+}
+
+[data-dpr="2"] .share_main_getCard {
+  font-size: 34px;
+}
+
+[data-dpr="3"] .share_main_getCard {
+  font-size: 51px;
+}
+
+.share_main_mobile {
+  background-color: transparent;
+  border: none;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  color: #d83739;
+  font-size: 17px;
+}
+
+[data-dpr="2"] .share_main_mobile {
+  font-size: 34px;
+}
+
+[data-dpr="3"] .share_main_mobile {
+  font-size: 51px;
+}
+
+::-webkit-input-placeholder {
+  /* WebKit browsers */
+  color: #d83739;
+}
+
+:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #d83739;
+}
+
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #d83739;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  color: #d83739;
+}

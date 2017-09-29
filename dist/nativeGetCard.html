@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta name="flexible" content="initial-dpr=2">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>租介网</title>  
+    <link rel="stylesheet" href="/statics/css/reset.css" />
+    <link rel="stylesheet" href="/statics/css/share.css" />
+</head>
+  <body>
+    <div class="share_main">
+      <div class="share_main_inner">  
+        <div class="share_main_openLink"> <i class="iconfont">&#xe6d8;</i>点开右上角分享给好友</div>
+        <div class="share_main_confrim">恭喜你领取成功</div>
+        <div class="share_main_card"> <img src="/img/card.png" alt="card">
+          <p class="share_main_card_text share_main_card_text--big">3.5元</p>
+        </div>
+        <div class="share_main_text">
+          <div class="share_main_getCard share_main_getCard-click">
+            <input type="text" readonly placeholder="领取红包" id="share_main_mobile" class="share_main_mobile">
+          </div>
+          <button id="share_main_share" class="share_main_getCard share_main_share">分享给好友</button>
+        </div>
+      </div>
+    </div>  
+<script charset="utf-8" src="/lib/lib-flexible/flexible.js"></script>
+<script type="text/javascript" charset="utf-8" src="/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+      let activityContent = {
+      };
+      (function () {
+      $.ajax({
+      url: "http://106.14.135.243:8082/index/coupon/activtyContent",
+      type: "POST",
+      data: {},
+      async: true,
+      dataType: "json",
+      success: function (data) {
+      activityContent = data.data;
+      /* 金额出现 */
+      document.querySelector(".share_main_card_text").innerText = activityContent.amount + '元';
+      /* 微信监控 */
+      },
+      error: function (error) {
+      }
+      });
+      }());
+      var u = navigator.userAgent;
+      var isAndroid = u.indexOf('Android') > -1 ||u.indexOf('Adr') > -1; //android终端
+      var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+      document.querySelector(".share_main_mobile").addEventListener('click', function () {
+      if(isAndroid){
+      Android.getCoupon();
+      }else{
+      window.open("getCoupon");
+      iOS.getCoupon();
+      }
+      });
+      document.querySelector(".share_main_share").addEventListener('click', function () {
+      if(isAndroid){
+      Android.shareActivity();
+      }else{
+      window.open("shareActivity");
+      iOS.shareActivity();
+      }
+      });
+          
+    </script>
+</body>
+</html>
