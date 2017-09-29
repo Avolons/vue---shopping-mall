@@ -14,7 +14,6 @@ Router.prototype.goBack = function () {
 		this.isBack = true;
 		　　window.history.go(-1);
 	}
-　　
 };
 
 
@@ -116,9 +115,6 @@ Vue.filter('orderdata', function(value) {
 //引入css重置文件,基本的样式文件
 require('./assets/css/reset.css')
 
-
-
-	
 
 
 // HTTP相关

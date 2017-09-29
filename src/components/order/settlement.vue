@@ -179,7 +179,7 @@ export default {
               orderId:this.orderId,
             }).then((res)=>{
                 if(res.body.code==200){
-                          this.infoData=res.body.data.bill; 
+                    this.infoData=res.body.data.bill; 
                 }
             })
         },

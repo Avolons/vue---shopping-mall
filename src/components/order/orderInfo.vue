@@ -113,6 +113,11 @@
                     color: #f80000;
                     width: 50%;
                     display: block;
+                    >span{
+                        color: #272727;
+                        font-size: 13px;
+                        text-decoration: line-through;
+                    }
                 }
                 &:nth-of-type(3) {
                     width: 50%;
@@ -210,8 +215,12 @@
                             {{infoData.goodsName}}
                         </span>
                         <!-- 单价租金 -->
-                        <span class="orderInfon_main_price">
+                        <span v-if="!act_price" class="orderInfon_main_price">
                             ￥{{infoData.rent_period_now_rent_price}}/{{timeText}}
+                        </span>
+                        <span v-else class="orderInfon_main_price">
+                            ￥{{act_price}}/{{timeText}}
+                            <span class="orderInfon_main_price_old">￥{{infoData.rent_period_now_rent_price}}/{{timeText}}</span>
                         </span>
                         <!-- 数量 -->
                         <span class="orderInfon_main_num">数量×{{infoData.cart_content_good_amount}}</span>
@@ -357,6 +366,8 @@ export default {
             payTypeData: null,
             /* 当前红包数据类型 */
             currentCardType: 0,
+            /* 活动价格 */
+            act_price:null,
         }
     },
     computed: {
@@ -413,7 +424,12 @@ export default {
         /* 计算商品总租金 */
         /* 租期*金额*数量+押金+运费 */
         goodsAllPrice() {
-            let Price = this.infoData.rent_period_now_rent_price * this.infoData.cart_time_number * this.infoData.cart_content_good_amount;
+            let Price;
+            if(this.act_price){
+                Price = this.act_price * this.infoData.cart_time_number * this.infoData.cart_content_good_amount;
+            }else{
+                Price = this.infoData.rent_period_now_rent_price * this.infoData.cart_time_number * this.infoData.cart_content_good_amount;
+            }
             return Price;
         },
         /* 运费计算 */
@@ -433,6 +449,16 @@ export default {
         }
     },
     methods: {
+        /* 获取当前活动价格 */
+        getArtPrice(rentType,dataObj){
+            for(let item of dataObj) {
+                if(item.rent_period_type==rentType){
+                    return  item.act_price;
+                }
+            }
+            return null;
+        },
+        /* 浏览器支付 */
         browserPay(key) {
             if (key == 'menu1') {
                 /* 微信支付 */
@@ -740,6 +766,8 @@ export default {
                 cartId: [this.cartId],
             }).then((res) => {
                 this.infoData = res.body.data.cart_list[0];
+                /* 获取当前活动价格 */
+                this.act_price=this.getArtPrice(this.infoData.rent_period_type,this.infoData.rent_period);
                 this.orderLogistics = "/orderLogistics/" + this.infoData.cart_content_goods_id;
                 /* 获取红包 1为平台优惠券 2为店铺优惠券 */
                 API.card.storeCard({

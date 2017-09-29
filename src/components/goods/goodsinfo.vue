@@ -19,10 +19,19 @@
                 </swiper>
                 <h2 class="goodsinfo_title twonowarp">{{goodsTitle}}</h2>
                 <div class="goodsinfo_box">
-                    <div class="goodsinfo_price">
+                    <!-- 原租价和现租价 -->
+                    <div class="goodsinfo_price" v-show="!currentGoodsData.act_price">
                         <span class="goodsinfo_newprice">￥{{currentGoodsData.rent_period_now_rent_price}}/{{timeText}}</span>
-                        <span class="goodsinfo_oldprice">￥{{currentGoodsData.rent_period_old_rent_price}}/{{timeText}}</span>
                     </div>
+                    <!-- 有活动价格时显示活动价格和租价 -->
+
+                    <div class="goodsinfo_price" v-show="currentGoodsData.act_price">
+                        <!-- 活动价 -->
+                        <span class="goodsinfo_newprice">￥{{currentGoodsData.act_price}}/{{timeText}}</span>
+                        <!-- 租价 -->
+                        <span class="goodsinfo_oldprice">￥{{currentGoodsData.rent_period_now_rent_price}}/{{timeText}}</span>
+                    </div>
+
                     <!-- 日期选择框 -->
                     <ul class="goodsinfo_datetime">
                         <template v-for="(item,index) in currentTypedata.rent_period">
@@ -33,7 +42,8 @@
                 <div class="goodsinfo_box">
                     <div class="goodsinfo_allprice">
                         总租金：
-                        <span>{{currentGoodsData.rent_period_now_rent_price*currentGoodsData.rentTime*currentGoodsData.goodsnum | currency('￥') }}</span>
+                        <span v-show="!currentGoodsData.act_price">{{currentGoodsData.rent_period_now_rent_price*currentGoodsData.rentTime*currentGoodsData.goodsnum | currency('￥') }}</span>
+                        <span v-show="currentGoodsData.act_price">{{currentGoodsData.act_price*currentGoodsData.rentTime*currentGoodsData.goodsnum | currency('￥') }}</span>
                     </div>
                     <div class="goodsinfo_rentTime">
                         租期
@@ -68,7 +78,7 @@
                                 <span>请选择起租日期</span>
                                 <button @click="timehaveSelect()">完成</button>
                             </div>
-                            <inline-calendar class="inline-calendar-demo" :show.sync="timeconfig.show" v-model="timeValue" :start-date="timerange.startTime" :end-date="timerange.endTime" :range="timeconfig.range" :render-on-value-change="timeconfig.changerender" :show-last-month="timeconfig.showLastMonth" :show-next-month="timeconfig.showNextMonth" :highlight-weekend="timeconfig.highlightWeekend" :return-six-rows="timeconfig.return6Rows" :hide-header="timeconfig.hideHeader" :hide-week-list="timeconfig.hideWeekList" :replace-text-list="timeconfig.replaceTextList" :weeks-list="timeconfig.weeksList" :render-function="timeconfig.buildSlotFn" :disable-past="timeconfig.disablePast" :disable-future="timeconfig.disableFuture">
+                            <inline-calendar @on-change='timehaveSelect' class="inline-calendar-demo" :show.sync="timeconfig.show" v-model="timeValue" :start-date="timerange.startTime" :end-date="timerange.endTime" :range="timeconfig.range" :render-on-value-change="timeconfig.changerender" :show-last-month="timeconfig.showLastMonth" :show-next-month="timeconfig.showNextMonth" :highlight-weekend="timeconfig.highlightWeekend" :return-six-rows="timeconfig.return6Rows" :hide-header="timeconfig.hideHeader" :hide-week-list="timeconfig.hideWeekList" :replace-text-list="timeconfig.replaceTextList" :weeks-list="timeconfig.weeksList" :render-function="timeconfig.buildSlotFn" :disable-past="timeconfig.disablePast" :disable-future="timeconfig.disableFuture">
                             </inline-calendar>
                         </div>
                     </popup>
@@ -189,8 +199,11 @@
                         <popup @on-show="sizeRember" class="goodsinfo_sizeSelect_content" v-model="colorSizeShow" position="bottom" max-height="100%">
                             <img :src="returnImg" alt="img" class="goodsinfo_sizeSelect_img">
                             <div class="goodsinfo_sizeSelect_message">
-                                <h3 class="goodsinfo_sizeSelect_title">
+                                <h3 v-show="!currentGoodsData.act_price" class="goodsinfo_sizeSelect_title">
                                     ￥{{currentGoodsData.rent_period_now_rent_price}}/{{timeText}}
+                                </h3>
+                                 <h3 v-show="currentGoodsData.act_price" class="goodsinfo_sizeSelect_title">
+                                    ￥{{currentGoodsData.act_price}}/{{timeText}}
                                 </h3>
                                 <span class="goodsinfo_sizeSelect_color">
                                     {{afterSelectData.val}}
@@ -548,7 +561,12 @@ export default {
             if (this.currentTypedata.goods_deposit == 0) {
                 return 0;
             }
-            let despoite = this.currentTypedata.goods_deposit * this.currentGoodsData.goodsnum - this.currentGoodsData.rent_period_now_rent_price * this.currentGoodsData.rentTime * this.currentGoodsData.goodsnum;
+            let despoite;
+            if(this.currentTypedata.act_price){
+            despoite = this.currentTypedata.goods_deposit * this.currentGoodsData.goodsnum - this.currentGoodsData.act_price * this.currentGoodsData.rentTime * this.currentGoodsData.goodsnum;
+            }else{
+            despoite = this.currentTypedata.goods_deposit * this.currentGoodsData.goodsnum - this.currentGoodsData.rent_period_now_rent_price * this.currentGoodsData.rentTime * this.currentGoodsData.goodsnum;
+            }
             if (despoite <= 0) {
                 return 0;
             } else {
@@ -582,6 +600,7 @@ export default {
         }
     },
     methods: {
+        /* 选择完成起租日期 */
         timehaveSelect() {
             this.havestart = false;
             this.timeselectshow = false;
@@ -701,6 +720,9 @@ export default {
             this.currentGoodsData.rent_period_now_rent_price = temporary.rent_period_now_rent_price;
             this.currentGoodsData.rent_period_min_advance = temporary.rent_period_min_advance;
             this.currentGoodsData.rent_period_max_advance = temporary.rent_period_max_advance;
+            if(temporary.act_price){
+                this.currentGoodsData.act_price = temporary.act_price;
+            }
             /* 是否需要认证 */
             this.isCertify = goodsData.goods_is_verify_real_name;
             /* 初始被选中时间 */
@@ -819,6 +841,9 @@ export default {
             this.currentGoodsData.rent_period_now_rent_price = temporary.rent_period_now_rent_price;
             this.currentGoodsData.rent_period_min_advance = temporary.rent_period_min_advance;
             this.currentGoodsData.rent_period_max_advance = temporary.rent_period_max_advance;
+            if(temporary.act_price){
+                this.currentGoodsData.act_price = temporary.act_price; 
+            }
             /* 初始被选中时间 */
             this.timeValue = this.timerange.startTime;
             /* 初始周期被选中 */

@@ -38,6 +38,11 @@
         color: #f80000;
         font-size: 15px;
     }
+    &_oldprice{
+        color: #272727;
+        font-size: 13px;
+        text-decoration: line-through;
+    }
     &_text {
         box-sizing: border-box;
         flex-direction: column;
@@ -61,7 +66,13 @@
                 </div>
                 <div class="list_compent_text">
                     <h2 class="list_compent_title">{{item.goodsName}}</h2>
-                    <h2 class="list_compent_price">￥{{item.rentPrice}}/{{timeMap[item.rent_period_type]}}</h2>
+                    <h2 v-if="!item.act_price" class="list_compent_price">￥{{item.rentPrice}}/{{timeMap[item.rent_period_type]}}
+                    </h2>
+                    <h2 v-else class="list_compent_price">￥{{item.act_price}}/{{timeMap[item.rent_period_type]}}
+                        <span  class="list_compent_oldprice">
+                            ￥{{item.rentPrice}}/{{timeMap[item.rent_period_type]}}
+                        </span>
+                    </h2>
                 </div>
             </li>
         </ul>
