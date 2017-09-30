@@ -94,7 +94,6 @@ body{
       <!-- 两种状态，授权状态和未授权状态 -->
       <template v-if="getIsCertify==4 ">
           <cell  title="芝麻信用" >
-              
               <span style="font-size:12px;color:red">{{relief_limit}}</span>
               <i slot="icon" class="iconfont">&#xe60a;</i>
           </cell>

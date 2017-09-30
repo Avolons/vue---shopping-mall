@@ -748,33 +748,7 @@ export default {
             * revertId 归还地址编号
             * company 物流公司名 */
             let self = this;
-            if (item.order_express_type == 2) {
-                this.$vux.confirm.show({
-                    /* title: 'Title', */
-                    content: '是否确认归还',
-                    onConfirm() {
-                        /* 点击确认时执行具体删除操作 */
-                        API.order.orderReturn({
-                            userId: self.getUserInfoUserId,
-                            token: self.getUserInfoToken,
-                            orderId: self.orderId,
-                            sinceId: "",
-                            expressId: "",
-                            logisticsName: "",
-                            revertId: "",
-                            company: "",
-                        }).then((res) => {
-                            if (res.body.code == 200) {
-                                self.confrim = "归还成功";
-                                this.Initialization();
-                                self.toast = true;
-                            }
-                        });
-                    }
-                });
-            } else {
                 this.$router.push({ path: '/orderReturn?type=' + item.order_express_type + "&orderId=" + self.orderId });
-            }
 
         },
          browserPay(key){
