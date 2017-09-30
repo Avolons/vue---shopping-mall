@@ -133,32 +133,22 @@
             <div class="help_common_title">
                 <x-header @on-click-back="routerBack" :left-options="{backText: '',preventGoBack:true}">商品归还</x-header>
             </div>
-            <h3 class="return_main_title" v-show="returnType==3">自提点信息</h3>
-            <h3 class="return_main_title" v-show="returnType==1">物流信息</h3>
+            <h3 class="return_main_title">选择归还地址</h3>
             <div class="return_main_address">
                 <group>
                     <cell title="归还地址" @click.native="openPoup(1)" :value="isSelect" is-link></cell>
                 </group>
                 <div class="return_main_addressInfo">
-                    <template v-if="returnType==3">
-                         <div class="main_since_text">
-                        <h2 class="main_since_title">{{sincedata.since_name}}</h2>
-                        <h2 class="main_since_price">{{sincedata.since_tel}}</h2>
-                    </div>
-                    <p class="main_since_intr twonowarp">{{sincedata.province_name}}{{sincedata.city_name}}{{sincedata.region_name}}{{sincedata.since_detailed_address}}</p>
-                    </template>
-                    <template v-else>
                      <div class="main_since_text">
                         <h2 class="main_since_title">{{sincedata.revent_receiver_name}}</h2>
                         <h2 class="main_since_price">{{sincedata.revent_tel}}</h2>
                     </div>
                     <p class="main_since_intr twonowarp">{{sincedata.revent_province}}{{sincedata.revent_city}}{{sincedata.revent_region}}{{sincedata.revent_detailed_address}}</p>
-                </template>
                 </div>
-                <group v-show="returnType==1">
+                <group >
                     <cell title="物流公司" @click.native="openPoup(0)" :value="tplisSelect" is-link></cell>
                 </group>
-                <input class="return_main_input" v-model="code" v-show="returnType==1" type="text" placeholder="请输入运单号码">
+                <input class="return_main_input" v-model="code"  type="text" placeholder="请输入运单号码">
                     <button  @click="orderBack" class="return_main_prompt">
                     提交
                 </button>
@@ -294,7 +284,10 @@ export default {
                 {
                     name: "其他",
                     id: "auto",
-                },
+                },{
+                    name:"无",
+                    id:"wu"
+                }
             ],
             /* 归还地址 */
             sinceList: [],
@@ -320,34 +313,7 @@ export default {
             }).then((res) => {
                 if (res.body.code == 200) {
                     this.infoData = res.body.data;
-                    if(this.returnType==3){
-                    this.getSince();
-                        
-                    }else{
-                        this.getReturnList();
-                    }
-                }
-            });
-        },
-        /* 获取自提点列表 */
-        getSince() {
-            API.order.goodsSince({
-                userId: this.getUserInfoUserId,
-                token: this.getUserInfoToken,
-                province: this.infoData.order_province,
-                city: this.infoData.order_city,
-                region: this.infoData.order_district,
-                goodsId: this.infoData.goodsId,
-                page: this.page,
-                page_number: 10,
-            }).then((res) => {
-                /*  */
-                if (res.body.code == 200) {
-                    this.sinceList = this.sinceList.concat(res.body.data.ztd.data);
-                    if (res.body.data.ztd.data.length == 10) {
-                        this.page++;
-                        this.getSince();
-                    }
+                    this.getReturnList();
                 }
             });
         },
@@ -398,19 +364,8 @@ export default {
         orderBack() {
             let self=this;
             /* 快递 */
-            if(this.returnType==1){
                 if(!this.isSelect){
                     this.confrim="请输入归还地址";
-                    this.toasts=true;
-                    return false;
-                }
-                if(!this.tplisSelect){
-                    this.confrim="请输入物流方式";
-                    this.toasts=true;
-                    return false;
-                }
-                if(!this.code){
-                    this.confrim="请输入运单号码";
                     this.toasts=true;
                     return false;
                 }
@@ -439,38 +394,7 @@ export default {
                     });
                 }
             });
-            }else{
-                if(!this.isSelect){
-                    this.confrim="请输入归还地址";
-                    this.toasts=true;
-                    return false;
-                }
-                this.$vux.confirm.show({
-                /* title: 'Title', */
-                content: '是否确认归还',
-                onConfirm () {
-                    /* 点击确认时执行具体删除操作 */
-                    API.order.orderReturn({
-                        userId:self.getUserInfoUserId,  
-                        token:self.getUserInfoToken,
-                        orderId:self.orderId,
-                        /* sinceId:self., */
-                        expressId:"",
-                        logisticsName:"",
-                        revertId:"",
-                        company:"",
-                    }).then((res)=>{
-                        if(res.body.code==200){
-                            self.confrim="归还成功";
-                            localStorage.setItem("reload","1"); 
-                            setTimeout(()=>{
-                             self.$router.push({ path: '/index/main/order'});
-                            },500);
-                        }
-                    });
-                }
-            });
-            }
+           
             
         }
     },
