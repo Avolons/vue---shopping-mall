@@ -289,6 +289,30 @@ export const person = {
   addressDefault(data) {
     return Vue.http.post(API_ROOT + 'user/defaultaddress',data);
   },
+  /*
+  * 获取用户芝麻信用分信息
+  */
+  getUserZMScore(data){
+    return Vue.http.post(API_ROOT + 'zhima/getUserZMScore',data);
+  },
+  /**
+   * 处理用户实名信息
+   */
+  handleUserIdentityInfo(data){
+    return Vue.http.post(API_ROOT + 'zhima/handleUserIdentityInfo',data);
+  },
+  /**
+   * 更新用户芝麻信用分
+   */
+  updateUserZMScore(data){
+    return Vue.http.post(API_ROOT + 'zhima/updateUserZMScore',data);
+  },
+  /**
+   * 查询芝麻减免信息
+   */
+  getUserZMReliefInfo(data){
+    return Vue.http.post(API_ROOT + 'zhima/getUserZMReliefInfo',data);
+  },
   /**
    * 删除地址
    * userId

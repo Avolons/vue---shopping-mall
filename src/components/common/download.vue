@@ -2,7 +2,7 @@
     <div>
       <!--  -->
       <div class="help_common_title">
-             <x-header @on-click-back="routerBack" :left-options="{backText: '',preventGoBack:true}">很抱歉</x-header>
+             <x-header @on-click-back="routerBack" :left-options="{backText: '',preventGoBack:true}">开发中</x-header>
         </div>
       <div class="shop_nofunction">
         <i class="iconfont">&#xe638;</i>

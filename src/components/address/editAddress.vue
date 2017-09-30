@@ -174,7 +174,7 @@ export default {
                 this.title="新增地址";
                 this.name="";
                 this.phone="";
-                this.address=['北京市','市辖区','东城区'];
+                this.address=[];
                 this.addressDetils="";
                 this.isDefault=false;
             }else{

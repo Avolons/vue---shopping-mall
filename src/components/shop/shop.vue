@@ -1,12 +1,9 @@
 <style lang="scss">
     .shop_main{
-        .weui-loadmore_line .weui-loadmore__tips{
-            background-color: #f1f1f1 !important;
-        }
         display: flex;
         flex-direction: column;
         height: 100%;
-        background-color: #f1f1f1;
+        background-color: #fff;
         &_goodsList{
             flex-shrink: 1;
             flex-grow: 1;
@@ -68,7 +65,6 @@
             overflow-x: auto;
             background-color: #f1f1f1;
             white-space: nowrap;
-            flex-shrink: 0;
         }
         &_cardList{
              height: 100%;

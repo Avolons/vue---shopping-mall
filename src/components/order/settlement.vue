@@ -179,7 +179,7 @@ export default {
               orderId:this.orderId,
             }).then((res)=>{
                 if(res.body.code==200){
-                    this.infoData=res.body.data.bill; 
+                          this.infoData=res.body.data.bill; 
                 }
             })
         },
@@ -198,10 +198,7 @@ export default {
                         if(res.body.code==200){
                             self.confrim="结算成功";
                             self.toast=true;
-                            localStorage.setItem("reload", "1");
-                            setTimeout(()=>{
-                                self.routerBack();
-                            },500);
+                            self.routerBack();
                         }
                     });
                 }

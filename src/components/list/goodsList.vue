@@ -71,9 +71,6 @@
            }
        }
        &_noGoods{
-           position: fixed;
-           width: 100%;
-           top: 88px;
            height: 60%;
            align-items: center;
            display: flex;
@@ -323,7 +320,6 @@ export default {
         };
   }
   ,activated(){
-       this.categoryId="";
          overscroll(document.querySelector('.goodsList_List'));
         if(window.localStorage.getItem("listReload")){
             this.page=1;

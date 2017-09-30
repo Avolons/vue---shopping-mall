@@ -94,13 +94,14 @@ body{
       <!-- 两种状态，授权状态和未授权状态 -->
       <template v-if="getIsCertify==4 ">
           <cell  title="芝麻信用" >
-              <span style="font-size:12px;">已授权</span>
+              
+              <span style="font-size:12px;color:red">{{relief_limit}}</span>
               <i slot="icon" class="iconfont">&#xe60a;</i>
           </cell>
       </template>
       <template v-else>
-          <cell  title="芝麻信用" is-link link="/download">
-            <span style="font-size:12px;padding-right:20px">未授权</span>
+          <cell  title="芝麻信用" @click.native="authorization">
+            <span style="font-size:12px;">未授权</span>
             <i slot="icon" class="iconfont">&#xe60a;</i>
           </cell>
       </template>
@@ -123,7 +124,8 @@ body{
 </template>
 <script>
 import {XHeader,Tabbar,TabbarItem,Cell,Group } from 'vux'
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
+import { API, getQuery } from '../../services';
 
   export default {
       data() {
@@ -132,7 +134,8 @@ import { mapGetters } from 'vuex'
                name:"网二",
                img:"../../assets//img//index//avatar.png"
            },
-           
+           zmed:false,
+           relief_limit:''
           }
       },
     components: {
@@ -145,14 +148,36 @@ import { mapGetters } from 'vuex'
     computed:{
     ...mapGetters([
       'getIsCertify',
+      'getUserInfoUserId',
     ])
   },
     mounted(){
       /* 获取当前的认证状态 */ 
       this.$store.dispatch('IsCertify');
+      this.userZMReliefInfo();
     },
     methods :{
-      
+      /*获取芝麻信用减免额度*/
+        userZMReliefInfo(){
+            API.person.getUserZMReliefInfo({
+                user_id: this.getUserInfoUserId
+            }).then((res) => {
+                if (res.body.code == 200) {
+                    this.zmed = true;
+                    this.relief_limit = '剩余免押金额度' + res.body.data.tmp_relief_limit + '元';
+                }else{
+                    this.relief_limit = '去授权';
+                }
+            })
+        },
+        authorization(){
+            if(this.zmed){
+                return;
+            }
+            this.$router.push({
+                path:'/authInfo'
+            })
+        }
     }
   }
 </script>

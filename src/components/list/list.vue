@@ -227,6 +227,7 @@ export default {
             this.$router.push({
                 path: '/goodsList?categoryId=' + id + "&name=" + name
             });
+
             window.localStorage.setItem("listReload", '11');
         }
     },
@@ -239,6 +240,7 @@ export default {
             this.typeList[0].click = true;
         });
     },
+
 
 }
 </script>
