@@ -92,9 +92,8 @@ body{
       </template>
       
       <!-- 两种状态，授权状态和未授权状态 -->
-      <template v-if="getIsCertify==4 ">
+      <template v-if="getIsCertify==4 || getIsCertify==2 ">
           <cell  title="芝麻信用" >
-              
               <span style="font-size:12px;color:red">{{relief_limit}}</span>
               <i slot="icon" class="iconfont">&#xe60a;</i>
           </cell>
@@ -158,6 +157,7 @@ import { API, getQuery } from '../../services';
     },
     methods :{
       /*获取芝麻信用减免额度*/
+      
         userZMReliefInfo(){
             API.person.getUserZMReliefInfo({
                 user_id: this.getUserInfoUserId
