@@ -1,0 +1,167 @@
+body{
+    background: #fff;
+}
+.ant_header{
+    height: 300px;
+    background: url(../../assets/img/common/zmxy_bg.png) no-repeat center;
+    background-size: cover;
+
+    &_title{
+        color:#fff;
+        text-align: center;
+        padding: 20px 10px;
+        font-size: 20px;
+
+        i{
+            font-size: 20px;
+            float: left;
+            display: inline;
+        }
+    }
+    &_score{
+        box-sizing: border-box;
+        height: 160px;
+        width: 55%;
+        background:url(../../assets/img/common/zmxy_yuanhu.png) no-repeat center;
+        background-size: 100% 100%;
+        margin: 20px auto 0;
+        padding-top: 50px;
+        text-align: center;
+        color: #fff;
+
+        .hasAuth{
+            div{
+                font-size: 17px;
+            }
+        }
+        .noAuth{
+            padding-top: 20px;
+            font-size: 26px;
+            font-family: PingFang-SC-Regular
+
+        }
+        
+    }
+    &_zujie{
+        text-align: center;
+        color: #fff;
+        margin-top: 30px;
+
+        .logo{
+            font-size: 32px;
+            margin-bottom: 10px;
+
+            img{
+                vertical-align: middle;
+                margin-right: 10px;
+            }
+        }
+        
+    }
+}
+.ant_middle{
+    text-align: center;
+    padding: 20px 0;
+    
+    p{
+        padding: 5px 0;
+        font-size: 17px;
+        color: #666;
+
+        span{
+            color: #2196f3;
+        }
+    }
+
+    .goAuth{
+        padding: 0 15px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        color: #666;
+
+        i{
+            display: inline-block;
+            
+        }
+    }
+}
+.ant_logo{
+    text-align: center;
+    color:#666;
+    margin: 30px 0;
+}
+.ant_form{
+    .weui-cells{
+        border: 1px solid #d9d9d9;
+        width: 90%;
+        margin: 20px auto;
+        border-radius: 5px;
+    }
+    .weui-cells:before{
+        display: none;
+    }
+    .weui-btn_primary{
+        background: #2196f3;
+        padding: 5px 0;
+    }
+    .iconfont{
+        color: #999;
+        margin-right: 10px;
+        font-size: 22px;
+    }
+}
+.zujie_state{
+    margin-top: 40px;
+    text-align: center;
+    color:#666;
+}
+.ant_rate{
+    margin-left: 25px;
+    background: url(../../assets/img/common/zhima_rude_line.png) no-repeat -10px 45px;
+
+    h3{
+        margin-bottom: 30px;
+    }
+    div{
+        margin: 0 0 20px 25px;
+
+        h6{
+            margin-bottom: 10px;
+            font-size: 20px;
+            color: #666;
+            i{
+                display: inline-block;
+                width: 10px;
+                height: 10px;
+                border-radius: 50px;
+                vertical-align: 2px;
+                margin-right: 10px;
+            }
+            .dot1{
+                background: url(../../assets/img/common/dot1.png) no-repeat;
+                background-size: cover;
+            }
+            .dot2{
+                background: url(../../assets/img/common/dot2.png) no-repeat;
+                background-size: cover;
+            }
+            .dot3{
+                background: url(../../assets/img/common/dot3.png) no-repeat;
+                background-size: cover;
+            }
+            .dot4{
+                background: url(../../assets/img/common/dot4.png) no-repeat;
+                background-size: cover;
+            }
+        }
+
+        p{
+            padding-left: 20px;
+            color: #666;
+            span{
+                color: #2196f3;
+            }
+        }
+    }
+}

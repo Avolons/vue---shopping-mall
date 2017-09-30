@@ -236,6 +236,8 @@ import orderLogistics from '../components/order/orderLogistics.vue';//订单物�
 import shop from '../components/shop/shop.vue';//店铺主页
 import shopInfo from '../components/shop/shopInfo.vue';//店铺详情
 import download from '../components/common/download.vue';//下载App
+import authInfo from '../components/antScore/authInfo.vue';//芝麻信用授权
+import authPage from '../components/antScore/authPage.vue';//芝麻信用授权操作
 
 
 const routes = [{
@@ -285,6 +287,14 @@ const routes = [{
         path: '/goodsinfo/:id',
         name: 'goodsinfo',
         component: goodsinfo
+    },{
+        path: '/authInfo',
+        name: 'authInfo',
+        component: authInfo
+    },{
+        path: '/authPage',
+        name: 'authPage',
+        component: authPage
     },{
         path: '/goodslease/:id',
         name: 'goodslease',
