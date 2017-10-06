@@ -454,8 +454,8 @@ export default {
         /* 支付宝付款成功后的回调函数 */
         success(item){
             API.alipay.success({
-                out_order_no:item.invoke_state.order_id,
-                order_no:item.invoke_state.order_no,
+                out_order_no:item.out_order_no,
+                order_no:item.order_no,
                 invoke_state:item.invoke_state,
                 user_id:item.user_id,
                 admit_state:item.admit_state,
