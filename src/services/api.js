@@ -724,3 +724,16 @@ export const card={
     
 }
 
+/**
+ * 支付宝借还相关接口
+ */
+export const alipay={
+    /**
+     * 借还订单接口
+     * @param {any} data 
+     * @returns 
+     */
+    orderId(data){  
+      return Vue.http.post('slb.zujiekeji.cn/index/Zmjiehuan/createRentOrder',data);
+    }, 
+}

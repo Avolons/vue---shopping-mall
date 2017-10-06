@@ -267,6 +267,11 @@ body {
             color: #f80000;
             font-size: 15px;
         }
+        &_oldprice{
+            color: #272727;
+            font-size: 13px;
+            text-decoration: line-through;
+        }
         &_text {
             box-sizing: border-box;
             padding: 20px 10px;
@@ -359,7 +364,13 @@ body {
                     </div>
                     <div class="main_hot_text">
                         <h2 class="main_hot_title twonowarp">{{item.goodsName}}</h2>
-                        <h2 class="main_hot_price">￥{{item.rentPrice}}/{{timeMap[item.rent_period_type]}}</h2>
+                        <h2 v-if="!item.act_price" class="main_hot_price">￥{{item.rentPrice}}/{{timeMap[item.rent_period_type]}}</h2>
+                        <h2 v-else class="main_hot_price">
+                            ￥{{item.act_price}}/{{timeMap[item.rent_period_type]}}
+                            <span  class="main_hot_oldprice">
+                                ￥{{item.rentPrice}}/{{timeMap[item.rent_period_type]}}
+                            </span>
+                        </h2>
                     </div>
                 </li>
             </ul>
@@ -368,6 +379,7 @@ body {
                 <img src="../../assets/img/index/recommend.png" alt="hot">
                 <span></span>
             </div>
+            <!-- 推荐商品列表 -->
             <ul class="main_recommend_list" v-show="currentType==0">
                 <li v-for="item in recGoodsList" class="main_recommend_single" @click="goInfo(item.goodsId)">
                     <div class="main_recommend_img">
@@ -375,7 +387,12 @@ body {
                     </div>
                     <div class="main_recommend_text">
                         <h2 class="main_recommend_title">{{item.goodsName}}</h2>
-                        <h2 class="main_recommend_price">￥{{item.rentPrice}}/{{timeMap[item.rent_period_type]}}</h2>
+                        <h2 v-if="!item.act_price" class="main_recommend_price">￥{{item.rentPrice}}/{{timeMap[item.rent_period_type]}}</h2>
+                        <h2 v-else class="main_recommend_price">￥{{item.act_price}}/{{timeMap[item.rent_period_type]}}
+                            <span  class="main_recommend_oldprice">
+                                ￥{{item.rentPrice}}/{{timeMap[item.rent_period_type]}}
+                            </span>
+                        </h2>
                     </div>
                 </li>
             </ul>
@@ -488,7 +505,7 @@ export default {
             API.card.getCouponActive().then((res) => {
                 if (res.body.code == 200) {
                     this.smallCard = true;
-                    this.cardUrl = '/activity/getCard.html';
+                    this.cardUrl = res.body.data.url;
                 }
             })
         },

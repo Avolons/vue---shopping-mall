@@ -49,28 +49,32 @@
                 <!-- 日期选择 -->
                 <div @click="haveSelect()" class="goodsinfo_content_alltime" v-show="havestart">
                     选择起租时间
-                    <span><i  style="color: #989898;" class="iconfont">&#xe6d7;</i></span>
+                    <span>
+                        <i style="color: #989898;" class="iconfont">&#xe6d7;</i>
+                    </span>
                 </div>
                 <div @click="haveSelect()" v-show="!havestart" class="goodsinfo_content_alltime">
                     您将租用 &nbsp;&nbsp; {{timeValue}}&nbsp;至&nbsp;{{despoiteRange}}&nbsp;({{currentGoodsData.rentTime}}{{timeText}})
-                    <span><i  style="color: #989898;" class="iconfont">&#xe6d7;</i></span>
+                    <span>
+                        <i style="color: #989898;" class="iconfont">&#xe6d7;</i>
+                    </span>
                 </div>
 
                 <div v-transfer-dom>
-                        <!-- 时间选择 -->
-                        <popup  style="border-top:1px solid #eee;background:#fff"  v-model="timeselectshow" position="bottom" max-height="100%">
-                            <div class="goodsinfo_content_timeselect">
-                                <div class="goodsinfo_content_close">
-                                    <span>请选择起租日期</span>
-                                    <button @click="timehaveSelect()">完成</button>
-                                </div>
-                             <inline-calendar   class="inline-calendar-demo" :show.sync="timeconfig.show" v-model="timeValue" :start-date="timerange.startTime" :end-date="timerange.endTime" :range="timeconfig.range" :render-on-value-change="timeconfig.changerender" :show-last-month="timeconfig.showLastMonth" :show-next-month="timeconfig.showNextMonth" :highlight-weekend="timeconfig.highlightWeekend" :return-six-rows="timeconfig.return6Rows" :hide-header="timeconfig.hideHeader" :hide-week-list="timeconfig.hideWeekList" :replace-text-list="timeconfig.replaceTextList" :weeks-list="timeconfig.weeksList" :render-function="timeconfig.buildSlotFn" :disable-past="timeconfig.disablePast" :disable-future="timeconfig.disableFuture">
-                             </inline-calendar>  
+                    <!-- 时间选择 -->
+                    <popup style="border-top:1px solid #eee;background:#fff" v-model="timeselectshow" position="bottom" max-height="100%">
+                        <div class="goodsinfo_content_timeselect">
+                            <div class="goodsinfo_content_close">
+                                <span>请选择起租日期</span>
+                                <button @click="timehaveSelect()">完成</button>
                             </div>
-                        </popup>
-                    </div>
+                            <inline-calendar class="inline-calendar-demo" :show.sync="timeconfig.show" v-model="timeValue" :start-date="timerange.startTime" :end-date="timerange.endTime" :range="timeconfig.range" :render-on-value-change="timeconfig.changerender" :show-last-month="timeconfig.showLastMonth" :show-next-month="timeconfig.showNextMonth" :highlight-weekend="timeconfig.highlightWeekend" :return-six-rows="timeconfig.return6Rows" :hide-header="timeconfig.hideHeader" :hide-week-list="timeconfig.hideWeekList" :replace-text-list="timeconfig.replaceTextList" :weeks-list="timeconfig.weeksList" :render-function="timeconfig.buildSlotFn" :disable-past="timeconfig.disablePast" :disable-future="timeconfig.disableFuture">
+                            </inline-calendar>
+                        </div>
+                    </popup>
+                </div>
                 <div class="goodsinfo_content_time">
-                    
+
                     <!-- 商品特性 -->
                     <ul class="goodsinfo_typelist">
                         <li class="goodsinfo_typelist_single" v-show="staticdata.goods_is_free_deposit==1">
@@ -180,7 +184,7 @@
                         </label>
                     </div>
 
-                     <group v-show="haveRules!=0">
+                    <group v-show="haveRules!=0">
                         <cell style="height:44px;" title="租赁规则/合约" :link="'/goodslease/'+goodsId"></cell>
                     </group>
 
@@ -202,7 +206,7 @@
                                     商品数量
                                     <div class="goodsinfo_rentTime_num">
                                         <span @click="numcouter(1,0)">-</span>
-                                        <input type="number"  @blur="goodsNumCheck(1)" v-model="currentGoodsData.goodsnum">
+                                        <input type="number" @blur="goodsNumCheck(1)" v-model="currentGoodsData.goodsnum">
                                         <span @click="numcouter(1,1)">+</span>
                                     </div>
                                 </div>
@@ -296,11 +300,11 @@ export default {
     },
     data() {
         return {
-            zmed:false,
-            relief_limit:0,//芝麻分减免额度
-            havestart:true,
-            timeselectshow:false,
-            haveRules:false,
+            zmed: false,
+            relief_limit: 0,//芝麻分减免额度
+            havestart: true,
+            timeselectshow: false,
+            haveRules: false,
             confrim: "",
             toasts: false,
             toast: false,
@@ -398,7 +402,7 @@ export default {
         }
     },
     mounted() {
-         overscroll(document.querySelector('.goodsinfo_container'));
+        overscroll(document.querySelector('.goodsinfo_container'));
         API.main.goodsInfo({
             goodsId: this.$route.params.id
         }).then((Response) => {
@@ -411,19 +415,19 @@ export default {
         this.userZMReliefInfo();
     },
     activated() {
-         overscroll(document.querySelector('.goodsinfo_container'));
-        if(localStorage.getItem('goodsInfo')){
-            if(localStorage.getItem('goodsInfo')=='login'){
+        overscroll(document.querySelector('.goodsinfo_container'));
+        if (localStorage.getItem('goodsInfo')) {
+            if (localStorage.getItem('goodsInfo') == 'login') {
                 window.location.reload();
-            }else{
-                 setTimeout(()=>{
-                this.havestart=true;
-                },500);
+            } else {
+                setTimeout(() => {
+                    this.havestart = true;
+                }, 500);
                 this.getData();
             }
-            localStorage.setItem("goodsInfo","");
+            localStorage.setItem("goodsInfo", "");
         }
-        
+
     },
     /* 计算属性 */
     computed: {
@@ -594,15 +598,15 @@ export default {
         }
     },
     methods: {
-        timehaveSelect(){
-            this.havestart=false;
-            this.timeselectshow=false;
+        timehaveSelect() {
+            this.havestart = false;
+            this.timeselectshow = false;
         },
-        haveSelect(){
-            this.timeselectshow=true;
+        haveSelect() {
+            this.timeselectshow = true;
         },
         /*获取芝麻信用减免额度*/
-        userZMReliefInfo(){
+        userZMReliefInfo() {
             API.person.getUserZMReliefInfo({
                 user_id: this.getUserInfoUserId
             }).then((res) => {
@@ -631,12 +635,12 @@ export default {
             })
         },
         /*芝麻信用授权*/
-        authorization(){
-            if(this.zmed){
+        authorization() {
+            if (this.zmed) {
                 return;
             }
             this.$router.push({
-                path:'/authInfo'
+                path: '/authInfo'
             })
         },
         /* 获取默认地址 */
@@ -694,7 +698,7 @@ export default {
             /* 商品id */
             this.goodsId = goodsData.goodsId;
             /* 是否有规则 */
-            this.haveRules=goodsData.goods_leasing_rules;
+            this.haveRules = goodsData.goods_leasing_rules;
             /* 是否收藏 */
             this.isCollection = goodsData.isCollect == 1 ? true : false;
             /* 店铺ID */
@@ -746,7 +750,7 @@ export default {
             /* 商品名称对应 */
             this.goodsTitle = goodsData.goodsName;
             /* 分享数据重置 */
-           
+
         },
 
         /* 商品规格选择函数 */
@@ -817,18 +821,18 @@ export default {
             if (type === 1) {
                 if (this.currentGoodsData.goodsnum > this.goods_sales_count) {
                     this.currentGoodsData.goodsnum = this.goods_sales_count;
-                }else if(this.currentGoodsData.goodsnum < 1){
-                    this.currentGoodsData.goodsnum=1;
+                } else if (this.currentGoodsData.goodsnum < 1) {
+                    this.currentGoodsData.goodsnum = 1;
                 }
-                this.currentGoodsData.goodsnum=Math.ceil(this.currentGoodsData.goodsnum);
+                this.currentGoodsData.goodsnum = Math.ceil(this.currentGoodsData.goodsnum);
             } else {
                 /* 当前输入值大于最大租用周期且当前租用周期不为无限期的情况下 */
                 if (this.currentGoodsData.rentTime > this.currentGoodsData.rent_period_max_rent) {
                     this.currentGoodsData.rentTime = this.currentGoodsData.rent_period_max_rent
-                }else if(this.currentGoodsData.rentTime<this.currentGoodsData.rent_period_min_rent){
-                        this.currentGoodsData.rentTime=this.currentGoodsData.rent_period_min_rent;
+                } else if (this.currentGoodsData.rentTime < this.currentGoodsData.rent_period_min_rent) {
+                    this.currentGoodsData.rentTime = this.currentGoodsData.rent_period_min_rent;
                 }
-                this.currentGoodsData.rentTime=Math.ceil(this.currentGoodsData.rentTime);
+                this.currentGoodsData.rentTime = Math.ceil(this.currentGoodsData.rentTime);
             }
 
         },
@@ -900,16 +904,16 @@ export default {
         },
         /* 进入店铺主页面 */
         goShop() {
-             window.localStorage.setItem("store",'11');
-              this.$router.push({
-                path:'/shop/'+this.storeId
-              })
+            window.localStorage.setItem("store", '11');
+            this.$router.push({
+                path: '/shop/' + this.storeId
+            })
         },
         /* 进入购物车 */
         goCar() {
-             this.$router.push({
-                path:'/download'
-              })
+            this.$router.push({
+                path: '/download'
+            })
         },
         /* 加入购物车 */
         addCar() {
@@ -943,23 +947,45 @@ export default {
                 }
             });
         },
+        /* 判断当前；浏览器环境  0 微信 1 支付宝 2 其他浏览器*/
+        isAlipay() {
+            var userAgent = navigator.userAgent.toLowerCase();
+            if (userAgent.match(/Alipay/i) == "alipay") {
+                this.payMethod = 4;
+                return 1;
+            } else if (userAgent.match(/MicroMessenger/i) == "micromessenger") {
+                this.payMethod = 3;
+                return 0;
+            } else {
+                return 2;
+
+            }
+        },
         /* 立即租赁按钮点击 */
         buyGoods() {
             /* 登录认证 */
             if (!localStorage.getItem("userInfo")) {
                 this.$router.push({
-                path:'/login?type=good'
-              });
-                
+                    path: '/login?type=good'
+                });
+
                 return false;
             }
             /* 实名认证 */
             if (localStorage.getItem("isCertify") != 2 && localStorage.getItem("isCertify") != 4 && this.isCertify == 1) {
-               this.$router.push({
-                path:'/authentication'
-              });
-              
+                this.$router.push({
+                    path: '/authentication'
+                });
+
                 return false;
+            }
+            /* 判断当前浏览器是否为支付宝环境 */
+            if (this.isAlipay() == 1) {
+                if (localStorage.getItem("isCertify") != 2 && localStorage.getItem("isCertify") != 4) {
+                    this.$router.push({
+                        path: '/authentication'
+                    });
+                }
             }
             /* 地址认证 */
             if (this.provideAddress) {
@@ -967,12 +993,13 @@ export default {
                 this.toasts = true;
                 return false;
             }
-            if(this.havestart){
+            if (this.havestart) {
                 this.confrim = "请选择起租日期";
                 this.toasts = true;
-                this.timeselectshow=true;
-                return false;   
+                this.timeselectshow = true;
+                return false;
             }
+
             let addresslist = (this.getName(this.goodsAddress)).split(" ");
             let perId;
             for (let item of this.currentTypedata.rent_period) {
@@ -980,7 +1007,7 @@ export default {
                     perId = item.rent_period_id;
                 }
             }
-            let userInfo=JSON.parse(localStorage.getItem("userInfo"));
+            let userInfo = JSON.parse(localStorage.getItem("userInfo"));
             API.main.addCar({
                 userId: userInfo.id,
                 token: userInfo.token,
@@ -999,13 +1026,20 @@ export default {
                 goods_content_id: this.currentTypedata.content_id
             }).then((res) => {
                 if (res.body.code == 200) {
-                    let cartId = res.body.data.cartId;
+                     let cartId = res.body.data.cartId;
                     this.$store.dispatch('SetOrder', cartId);
-                    localStorage.setItem('orderClick','11');
-                    this.$router.push({
-                path:'/orderInfo/'+ cartId
-              });
-                   
+                    API.main.storeInfo({
+                        storeId:this.storeId
+                    }).then((res)=>{
+                        if(res.body.code==200){
+                            localStorage.setItem('orderClick', '11');
+                            this.$router.push({
+                                path: '/orderInfo/' + cartId+'/?address='+res.body.data.enterprise_license_location
+                            });
+                        }
+                    });
+                    
+
                 }
             });
 
@@ -1024,10 +1058,10 @@ export default {
                         this.confrim = "请登录后收藏";
                         this.toasts = true;
                         setTimeout(() => {
-                             this.$router.push({
-                                path:'/login?type=good'
+                            this.$router.push({
+                                path: '/login?type=good'
                             });
-                           
+
                         }, 500);
                     }
                 });
