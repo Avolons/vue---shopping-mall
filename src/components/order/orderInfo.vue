@@ -219,7 +219,7 @@
                             ￥{{infoData.rent_period_now_rent_price}}/{{timeText}}
                         </span>
                         <span v-else class="orderInfon_main_price">
-                            ￥{{infoData.act_price}}/{{timeText}}
+                            ￥{{act_price}}/{{timeText}}
                             <span class="orderInfon_main_price_old">￥{{infoData.rent_period_now_rent_price}}/{{timeText}}</span>
                         </span>
                         <!-- 数量 -->
@@ -745,7 +745,7 @@ export default {
                                 goods_name:this.infoData.goodsName,
                                 address:this.getAddress,    
                                 shop_name:this.storeInfo,
-                                rent_amount:this.infoData.act_price?this.infoData.act_price:this.infoData.rent_period_now_rent_price,
+                                rent_amount:this.infoData.act_price?this.act_price:this.infoData.rent_period_now_rent_price,
                                 deposit_amount:this.goodsDespoit,
                                 borrow_time:this.infoData.cart_start_time,
                                 expiry_time:this.infoData.cart_end_time,
@@ -753,8 +753,9 @@ export default {
                             }
                         }).then((res)=>{
                                 if(res.body.code == 200){
-                                    alert(JSON.stringify(res.body));
+                                    window.location.href=res.body.data.link_url;
                                 }
+                        },(err)=>{
                         });
                         /* API.order.OrderWechat({
                             userId: this.getUserInfoUserId,
@@ -782,7 +783,7 @@ export default {
         },
         /* 数据初始化 */
         Initialization() {
-            /* this.storeInfo=this.$route.query.address; */
+            this.storeInfo=this.$route.query.address;
             this.cartId = this.$route.params.id;
             API.order.orderConfirm({
                 userId: this.getUserInfoUserId,
