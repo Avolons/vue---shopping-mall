@@ -739,7 +739,7 @@ export default {
                         let self = this;
                         let openId = localStorage.getItem("openId");
                         /* order_id */
-                        API.order.OrderWechat({
+                        API.alipay.orderId({
                             userId:this.getUserInfoUserId,
                             Info:{
                                 goods_name:this.infoData.goodsName,
