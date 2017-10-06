@@ -430,6 +430,9 @@ export default {
         this.getTypeData();
     },
     activated() {
+        /* 获取当前url参数 */
+        let  biz_content=this.$route.query.biz_content;
+        alert(biz_content);
         overscroll(document.querySelector('.order_list'));
         if (localStorage.getItem("reload")) {
             this.loading = true;
@@ -700,6 +703,7 @@ export default {
                 });
                 /* 当前状态为支付宝的情况下 */
             } else if (this.isAlipay() == 1) {
+                alert(window.location.href);
                 API.order.orderShipPay({
                     userId: this.getUserInfoUserId,
                     token: this.getUserInfoToken,

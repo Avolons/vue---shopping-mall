@@ -3,7 +3,7 @@ import Vue from 'vue';
 
 
 var API_ROOT = "https://api.zujiekeji.cn/index/";
-/* var API_ROOT = "http://106.14.135.243:8082/index/"; */
+/* var API_ROOT = "http://106.14.135.243:8082/index/"; */ 
 /* 个人中心相关api */
 
 /**
@@ -744,6 +744,13 @@ export const alipay={
     return(data){  
       return Vue.http.post('https://slb.zujiekeji.cn/index/Zmjiehuan/deleteRentOrder',data);
     }, 
-
+    /**
+     * 成功订单
+     * @param {any} data 
+     * @returns 
+     */
+    success(data){  
+      return Vue.http.post('https://slb.zujiekeji.cn/index/Zmjiehuan/chanelSuccessOrder',data);
+    }, 
     
 }
