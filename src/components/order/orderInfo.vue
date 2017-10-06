@@ -711,9 +711,6 @@ export default {
                 });
                 /* 当前为支付宝环境 */
             } else if (this.isAlipay() == 1) {
-                API.alipay.orderId({
-
-                })
                 API.order.orderPay({
                     userId: this.getUserInfoUserId,
                     token: this.getUserInfoToken,
@@ -757,24 +754,7 @@ export default {
                                 }
                         },(err)=>{
                         });
-                        /* API.order.OrderWechat({
-                            userId: this.getUserInfoUserId,
-                            token: this.getUserInfoToken,
-                            orderSn: res.body.data.order_big_sn,
-                            payMethod: this.payMethod,
-                            openId: openId,
-                        }).then((resopndy) => {
-                            const div = document.createElement('div');
-                            div.innerHTML = resopndy.body;
-                            document.body.appendChild(div);
-                            document.forms.alipaysubmit.submit();
-                        }, (err) => {
-                            self.confrim = "支付异常";
-                            self.toast = true;
-                            self.$router.push({
-                                path: '/index/main/order'
-                            })
-                        }); */
+                       
                     }
                 });
             } else {

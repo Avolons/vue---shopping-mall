@@ -288,7 +288,7 @@
                     <!-- 订单关闭 评价完成 退款完成 退货完成 -->
                     <button @click.stop="deletOrder(item.order_id)" class="order_single_btn--confirm" v-if="item.orderType==1 || item.orderType==7 || item.orderType==8 || item.orderType==9 || item.orderType==10">删除订单</button>
                     <!-- 代付款状态 -->
-                    <button @click.stop="payOrder(item.order_id)" v-if="item.orderType==1">付款</button>
+                    <button @click.stop="payOrder(item.order_id,item)" v-if="item.orderType==1">付款</button>
                     <!-- 待发货状态 -->
                     <button @click.stop="remind(item.order_id,1)" v-if="item.orderType==2">提醒发货</button>
                     <!-- 待收货状态 退货待结算 退货结算待确认 -->
@@ -657,7 +657,7 @@ export default {
 
         },
         /* 订单付款 */
-        payOrder(id) {
+        payOrder(id,item) {
             this.orderId = id;
             /* 待付款订单生成支付订单 */
             let self = this;
@@ -698,6 +698,7 @@ export default {
                         });
                     }
                 });
+                /* 当前状态为支付宝的情况下 */
             } else if (this.isAlipay() == 1) {
                 API.order.orderShipPay({
                     userId: this.getUserInfoUserId,
@@ -707,23 +708,24 @@ export default {
                     if (res.body.code == 200) {
                         let self = this;
                         let openId = localStorage.getItem("openId");
-                        API.order.OrderWechat({
-                            userId: this.getUserInfoUserId,
-                            token: this.getUserInfoToken,
-                            orderSn: res.body.data.order_big_sn,
-                            payMethod: this.payMethod,
-                            openId: openId,
-                        }).then((resopndy) => {
-                            const div = document.createElement('div');
-                            div.innerHTML = resopndy.body;
-                            document.body.appendChild(div);
-                            document.forms.alipaysubmit.submit();
-                        }, (err) => {
-                            self.confrim = "支付异常";
-                            self.toast = true;
-                            self.$router.push({
-                                path: '/index/main/order'
-                            })
+                       /* order_id */
+                        API.alipay.orderId({
+                            userId:this.getUserInfoUserId,
+                            Info:{
+                                goods_name:item.goodsName,
+                                address:item.recevie_address,    
+                                shop_name:item.store_name,
+                                rent_amount:item.actual_price,
+                                deposit_amount:item.order_deposit,
+                                borrow_time:item.order_goods_rent_time,
+                                expiry_time:item.order_goods_return_time,
+                                order_id:id,
+                            }
+                        }).then((res)=>{
+                                if(res.body.code == 200){
+                                    window.location.href=res.body.data.link_url;
+                                }
+                        },(err)=>{
                         });
                     }
                 });

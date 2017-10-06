@@ -839,7 +839,8 @@ export default {
                         })
                     });
                 }
-            });       
+            });      
+            /* 当前支付方式为支付宝 */ 
             }else if(this.isAlipay()==1){
                  API.order.orderShipPay({
                 userId: this.getUserInfoUserId,
@@ -849,24 +850,26 @@ export default {
                 if (res.body.code == 200) {
                     let self = this;
                     let openId = localStorage.getItem("openId");
-                    API.order.OrderWechat({
-                        userId: this.getUserInfoUserId,
-                        token: this.getUserInfoToken,
-                        orderSn: res.body.data.order_big_sn,
-                        payMethod: this.payMethod,
-                        openId: openId,
-                    }).then((resopndy) => {
-                            const div = document.createElement('div');
-                            div.innerHTML = resopndy.body;
-                            document.body.appendChild(div);
-                            document.forms.alipaysubmit.submit();
-                    }, (err) => {
-                        self.confrim = "支付异常";
-                        self.toast = true;
-                        self.$router.push({
-                            path: '/index/main/order'
-                        })
-                    });
+                    /* order_id */
+                        API.alipay.orderId({
+                            userId:this.getUserInfoUserId,
+                            Info:{
+                                goods_name:this.infoData.shopeName,
+                                address:this.infoData.order_province+this.infoData.order_city+this.infoData.order_district+this.infoData.order_detailed,    
+                                shop_name:this.infoData.store_name,
+                                rent_amount:this.infoData.totalPrice,
+                                deposit_amount:this.infoData.deposit,
+                                borrow_time:this.infoData.order_goods_rent_time,
+                                expiry_time:this.infoData.order_goods_return_time,
+                                order_id:id,
+                            }
+                        }).then((res)=>{
+                                if(res.body.code == 200){
+                                    window.location.href=res.body.data.link_url;
+                                }
+                        },(err)=>{
+                        });
+                  
                 }
             });    
             }else{
