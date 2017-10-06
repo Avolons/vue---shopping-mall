@@ -431,8 +431,10 @@ export default {
     },
     activated() {
         /* 获取当前url参数 */
-        let  biz_content=this.$route.query.biz_content;
-        alert(biz_content);
+        let  biz_content= JSON.parse(this.$route.query.biz_content);
+        if(biz_content){
+            this.success(biz_content);
+        }
         overscroll(document.querySelector('.order_list'));
         if (localStorage.getItem("reload")) {
             this.loading = true;
@@ -447,6 +449,22 @@ export default {
         }, 100);
     },
     methods: {
+        /* 支付宝付款成功后的回调函数 */
+        success(item){
+            API.alipay.success({
+                out_order_no:item.invoke_state.order_id,
+                order_no:item.invoke_state.order_no,
+                invoke_state:item.invoke_state,
+                user_id:item.user_id,
+                admit_state:item.admit_state,
+            }).then((res)=>{
+                if(res.body.code==200){
+                   self.loading = true;
+                    self.currentPage = 1;
+                    self.getTypeData(); 
+                }
+            });
+        },
         /* 判断当前；浏览器环境  0 微信 1 支付宝 2 其他浏览器*/
         isAlipay() {
             var userAgent = navigator.userAgent.toLowerCase();
