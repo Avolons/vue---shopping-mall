@@ -433,7 +433,6 @@ export default {
         /* 获取当前url参数 */
         let  biz_content= this.$route.query.biz_content;
         if(biz_content){
-            alert(biz_content);
             biz_content= JSON.parse(biz_content);
             this.success(biz_content);
         }
@@ -460,14 +459,15 @@ export default {
                 user_id:item.user_id,
                 admit_state:item.admit_state,
             }).then((res)=>{
-                alert(JSON.stringify(res));
                 if(res.body.code==200){
                    self.loading = true;
                     self.currentPage = 1;
-                    self.getTypeData(); 
+                    setTimeout(()=>{
+                        self.getTypeData();
+                    },100);
+                    
                 }
             },(err)=>{
-                alert(JSON.stringify(err))
             });
         },
         /* 判断当前；浏览器环境  0 微信 1 支付宝 2 其他浏览器*/
