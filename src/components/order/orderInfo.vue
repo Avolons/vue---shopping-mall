@@ -745,7 +745,7 @@ export default {
                                 goods_name:this.infoData.goodsName,
                                 address:this.getAddress,    
                                 shop_name:this.storeInfo,
-                                rent_amount:this.infoData.act_price?this.act_price:this.infoData.rent_period_now_rent_price,
+                                rent_amount:this.goodsTotolPrice,
                                 deposit_amount:this.goodsDespoit,
                                 borrow_time:this.infoData.cart_start_time,
                                 expiry_time:this.infoData.cart_end_time,
