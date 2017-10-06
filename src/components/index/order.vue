@@ -431,8 +431,9 @@ export default {
     },
     activated() {
         /* 获取当前url参数 */
-        let  biz_content= JSON.parse(this.$route.query.biz_content);
+        let  biz_content= this.$route.query.biz_content;
         if(biz_content){
+            biz_content= JSON.parse(biz_content);
             this.success(biz_content);
         }
         overscroll(document.querySelector('.order_list'));
@@ -721,7 +722,6 @@ export default {
                 });
                 /* 当前状态为支付宝的情况下 */
             } else if (this.isAlipay() == 1) {
-                alert(window.location.href);
                 API.order.orderShipPay({
                     userId: this.getUserInfoUserId,
                     token: this.getUserInfoToken,
@@ -734,7 +734,7 @@ export default {
                         API.alipay.orderId({
                             userId:this.getUserInfoUserId,
                             Info:{
-                                goods_name:item.goodsName,
+                                goods_name:item.goods_name,
                                 address:item.recevie_address,    
                                 shop_name:item.store_name,
                                 rent_amount:item.actual_price,

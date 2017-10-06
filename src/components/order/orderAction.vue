@@ -940,6 +940,7 @@ export default {
                          API.alipay.return({
                             order_no:id
                         }).then((res)=>{
+                            alert(JSON.stringify(res));
                             if(res.body.code==200){
                                 self.confrim = "退款成功";
                                 self.Initialization();
@@ -947,6 +948,7 @@ export default {
                                 localStorage.setItem("reload", "1");  
                             }
                         },(res)=>{
+                            alert(JSON.stringify(res));
                         });
                     }
                 });
