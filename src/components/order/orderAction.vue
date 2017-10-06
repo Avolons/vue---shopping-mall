@@ -369,8 +369,8 @@
             <!-- 收货地址和物流方式 -->
             <group class="orderAction_main_priceColl">
                 <cell title="合计租金" :value="(infoData.rentPrice*infoData.ordertimeNumber*infoData.shopNum)  | currency('￥')"></cell>
-                <cell title="店铺优惠券" class="orderAction_main_card" :value="-infoData.storeCouponPrice | currency('￥')"></cell>
-                <cell title="平台优惠券" class="orderAction_main_card" :value="-infoData.couponPrice | currency('￥')"></cell>
+                <cell title="店铺优惠券" class="orderAction_main_card" :value="-infoData.storeCouponPrice | currency('￥') || '￥-0.00'"></cell>
+                <cell title="平台优惠券" class="orderAction_main_card" :value="-infoData.couponPrice | currency('￥') || '￥-0.00'"></cell>
                 <cell title="合计押金" :value="infoData.deposit | currency('￥')"></cell>
                 <cell title="运费" :value="infoData.freight | currency('￥')"></cell>
                 <cell class="orderAction_main_truePrice" title="实付款" :value="infoData.totalPrice | currency('￥')"></cell>
@@ -394,7 +394,7 @@
                 <!-- 代付款状态 -->
                 <button @click.stop="payOrder(infoData.orderId)" v-if="infoData.orderType==1">付款</button>
                 <!-- 待发货状态 -->
-                <button @click.stop="download()" class="order_single_btn--confirm" v-if="infoData.orderType==2">申请退款</button>
+                <button @click.stop="renturnMonery(infoData.orderId,infoData)" class="order_single_btn--confirm" v-if="infoData.orderType==2">申请退款</button>
                 <button @click.stop="remind(infoData.orderId,1)" v-if="infoData.orderType==2">提醒发货</button>
                 <!-- 待收货状态 退货待结算 退货结算待确认 -->
                 <button @click.stop="download()" class="order_single_btn--confirm" v-if="(infoData.orderType==3 || infoData.orderType==5) && infoData.order_express_type!=5">查看物流</button>
@@ -929,6 +929,31 @@ export default {
                 path:'/settlement?id='+ id
               })
           
+        },
+        /* 退款 */
+        renturnMonery(id,item){
+            if(this.isAlipay()==1 && item.is_jiehuan==1){
+                let self = this;
+                this.$vux.confirm.show({
+                    content: '是否确认退款',
+                    onConfirm() {
+                         API.alipay.return({
+                            order_no:id
+                        }).then((res)=>{
+                            if(res.body.code==200){
+                                self.confrim = "退款成功";
+                                self.Initialization();
+                                self.toast = true;
+                                localStorage.setItem("reload", "1");  
+                            }
+                        },(res)=>{
+                        });
+                    }
+                });
+               
+            }else{
+                this.download();
+            }
         },
         /* 提醒发货 ,结算 1-提醒发货2-提醒结算*/
         remind(id, type) {

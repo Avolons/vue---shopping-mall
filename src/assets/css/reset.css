@@ -67,9 +67,9 @@ body .weui-tabbar:before{
 
 .center{
   position: fixed;
-  left: 50%;
+  left: calc(50% - 19px);
   top: 40%;
-  transform: translate(-50%,-50%);
+  
 }
 
 /* 两行超过出现点点点 */

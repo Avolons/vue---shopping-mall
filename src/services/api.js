@@ -736,4 +736,14 @@ export const alipay={
     orderId(data){  
       return Vue.http.post('https://slb.zujiekeji.cn/index/Zmjiehuan/createRentOrder',data);
     }, 
+    /**
+     * 撤销订单
+     * @param {any} data 
+     * @returns 
+     */
+    return(data){  
+      return Vue.http.post('https://slb.zujiekeji.cn/index/Zmjiehuan/deleteRentOrder',data);
+    }, 
+
+    
 }
