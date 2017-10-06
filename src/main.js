@@ -37,6 +37,10 @@ router.beforeEach((to, from, next) => {
 	}
 });
 
+document.querySelector("body").addEventListener('touchstart', function(e) {
+    var e = e || event;
+    e.preventDefault();
+}, false);
 
 window.overscroll = function(el) {
 	el.addEventListener('touchstart', function() {

@@ -940,15 +940,13 @@ export default {
                          API.alipay.return({
                             order_no:item.zm_order_no
                         }).then((res)=>{
-                            alert(JSON.stringify(res));
                             if(res.body.code==200){
                                 self.confrim = "退款成功";
-                                self.Initialization();
                                 self.toast = true;
-                                localStorage.setItem("reload", "1");  
+                                localStorage.setItem("reload", "1"); 
+                                self.routerBack(); 
                             }
                         },(res)=>{
-                            alert(JSON.stringify(res));
                         });
                     }
                 });
