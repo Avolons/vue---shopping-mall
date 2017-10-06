@@ -938,7 +938,7 @@ export default {
                     content: '是否确认退款',
                     onConfirm() {
                          API.alipay.return({
-                            order_no:id
+                            order_no:item.zm_order_no
                         }).then((res)=>{
                             alert(JSON.stringify(res));
                             if(res.body.code==200){
