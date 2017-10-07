@@ -466,6 +466,7 @@ export default {
                         self.getTypeData();
                     },100);
                 }
+                Window.location.href="/#/index/main/order";
                 window.location.reload();
             },(err)=>{
             });
