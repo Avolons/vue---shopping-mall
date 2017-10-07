@@ -465,8 +465,8 @@ export default {
                     setTimeout(()=>{
                         self.getTypeData();
                     },100);
-                    
                 }
+                window.location.reload();
             },(err)=>{
             });
         },
