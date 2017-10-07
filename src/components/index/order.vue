@@ -460,14 +460,13 @@ export default {
                 admit_state:item.admit_state,
             }).then((res)=>{
                 if(res.body.code==200){
-                   self.loading = true;
-                    self.currentPage = 1;
-                    setTimeout(()=>{
-                        self.getTypeData();
-                    },100);
+                   
                 }
-                Window.location.href="/#/index/main/order";
-                window.location.reload();
+                window.location.href="/#/index/main/order";
+                setTimeout(()=>{
+                    window.location.reload();
+                },100);
+                
             },(err)=>{
             });
         },
