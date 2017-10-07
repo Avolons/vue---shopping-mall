@@ -1020,8 +1020,8 @@ export default {
                 amount: this.currentGoodsData.goodsnum,
                 rent_prieod_id: perId,
                 time_number: this.currentGoodsData.rentTime,
-                start_time: (new Date(this.timeValue)) / 1000,
-                end_time: (new Date(this.despoiteRange)) / 1000,
+                start_time: ((new Date(this.timeValue)).getTime()-3600*8*1000) / 1000,
+                end_time: ((new Date(this.despoiteRange)).getTime()+3600*16*1000-1000) / 1000,
                 cart_type: 2,
                 goods_content_id: this.currentTypedata.content_id
             }).then((res) => {

@@ -2,7 +2,7 @@
 import Vue from 'vue';
 
 
-var API_ROOT = "https://api.zujiekeji.cn/index/";
+var API_ROOT = "https://isapi.zujiekeji.cn/index/";
 /* var API_ROOT = "http://106.14.135.243:8082/index/"; */ 
 /* 个人中心相关api */
 
@@ -64,6 +64,71 @@ export const login = {
     return Vue.http.post(API_ROOT + 'user/code_login',data);
   }
 }
+
+
+/**
+ * 新版本首页接口
+ */
+export const newMain = {
+  /**
+   * 获取频道
+   * @param {any} data 
+   * @returns 
+   */
+  channelList(data) {
+    return Vue.http.get(API_ROOT + 'index/channelList',{params:data});
+  },
+  /**
+   * 获取标签
+   * @param {any} data 
+   * @returns 
+   */
+  iconList(data) {
+    return Vue.http.get(API_ROOT + 'index/iconList',{params:data});
+  },
+  /**
+   * 获取标签详情
+   * @param {any} data 
+   * @returns 
+   * icon_id
+   * page
+   * page_name
+   */
+  iconDetail(data) {
+    return Vue.http.get(API_ROOT + 'index/iconDetail',{params:data});
+  },
+  /**
+   * 新品特惠
+   * @param {any} data 
+   * @returns 
+   * page
+   * page_number
+   */
+  newGoods(data) {
+    return Vue.http.get(API_ROOT + 'index/newGoods',{params:data});
+  },
+  /**
+   * 精选商家
+   * @param {any} data 
+   * @returns 
+   * icon_id
+   * page
+   * page_number
+   */
+  iconShop(data) {
+    return Vue.http.get(API_ROOT + 'index/iconShop',{params:data});
+  },
+  /**
+   * 频道详情
+   * @param {any} data 
+   * @returns 
+   */
+  channelDetail(data) {
+    return Vue.http.get(API_ROOT + 'index/channelDetail',{params:data});
+  },
+}
+
+
 
 
 /**
@@ -223,6 +288,10 @@ export const main = {
   },
   
 }
+
+
+
+
 
 /**
  * 个人中心相关api
@@ -734,7 +803,7 @@ export const alipay={
      * @returns 
      */
     orderId(data){  
-      return Vue.http.post('https://slb.zujiekeji.cn/index/Zmjiehuan/createRentOrder',data);
+      return Vue.http.post(API_ROOT + 'Zmjiehuan/createRentOrder',data);
     }, 
     /**
      * 撤销订单
@@ -742,7 +811,7 @@ export const alipay={
      * @returns 
      */
     return(data){  
-      return Vue.http.post('https://slb.zujiekeji.cn/index/Zmjiehuan/deleteRentOrder',data);
+      return Vue.http.post(API_ROOT + 'Zmjiehuan/deleteRentOrder',data);
     }, 
     /**
      * 成功订单
@@ -750,7 +819,7 @@ export const alipay={
      * @returns 
      */
     success(data){  
-      return Vue.http.post('https://slb.zujiekeji.cn/index/Zmjiehuan/chanelSuccessOrder',data);
+      return Vue.http.post(API_ROOT + 'Zmjiehuan/chanelSuccessOrder',data);
     }, 
     
 }
