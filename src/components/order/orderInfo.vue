@@ -743,7 +743,7 @@ export default {
                                 address:this.getAddress,    
                                 shop_name:this.storeInfo,
                                 rent_amount:this.goodsTotolPrice,
-                                deposit_amount:this.goods_deposit,//押金
+                                deposit_amount:this.infoData.goods_deposit,//押金
                                 borrow_time:this.infoData.cart_start_time,
                                 expiry_time:this.infoData.cart_end_time,
                                 order_id:res.body.data.order_id,
