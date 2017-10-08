@@ -148,7 +148,7 @@ export default {
       this.haveData=true;
       this.getData();
        overscroll(document.querySelector('.collention_main'));
-         let self = this;
+        let self = this;
         function getScrollTop() {
             　　var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
             　　if (document.querySelector('.collention_main')) {

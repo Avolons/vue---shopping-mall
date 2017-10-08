@@ -52,13 +52,6 @@
  
  <template>
     <div>
-        <!-- <scroller lock-x 
-           scrollbar-y 
-           use-pullup 
-           :pullup-config="pullupConfig" 
-           ref="demo2" 
-           height="-97"
-           @on-pullup-loading="load"> -->
         <ul class="list_compent_list">
             <li v-for="(item,index) in commonGoodsList" class="main_recommend_single" @click="goInfo(item.goodsId)">
                 <div class="main_recommend_img">
@@ -84,7 +77,6 @@
                 </div>
             </li>
         </ul>
-        <!--  </scroller> -->
     </div>
 </template>
  
@@ -123,7 +115,10 @@ export default {
             let scrollTop=document.querySelector(".collention_main").scrollTop;
             localStorage.setItem("collentionTop",scrollTop);
             }
-            
+            if(document.querySelector(".morehot_main")){
+            let scrollTop=document.querySelector(".morehot_main").scrollTop;
+            localStorage.setItem("moreHotTop",scrollTop);
+            }
             localStorage.setItem("goodsInfo","11");
             window.location.href="/#/goodsInfo/"+id;
             /* this.$router.push({ path: '/goodsInfo/'+id});  */

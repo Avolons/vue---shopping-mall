@@ -210,6 +210,7 @@ import car from '../components/index/car.vue';//首页购物车
 import order from '../components/index/order.vue';//首页订单页
 import mine from '../components/index/mine.vue';//首页个人中心页面
 import moreHot from '../components/index/moreHot.vue';//首页更多商品跳转
+import chaneel from '../components/index/chaneel.vue';//频道页面
 import list from '../components/list/list.vue';//商品分类列表页面
 import search from '../components/search/search.vue';//商品搜索页面
 import goodsList from '../components/list/goodsList.vue';//商品具体列表页面
@@ -260,7 +261,13 @@ const routes = [{
         redirect: '/index/main',
         name: 'index',
         component: index
-    },{
+    },
+    {
+        path: '/chaneel',
+        name: 'chaneel',
+        component: chaneel
+    },
+    {
         path: '/login',
         name: 'login',
         component: login

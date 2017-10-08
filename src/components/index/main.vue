@@ -365,6 +365,7 @@ body {
             text-decoration: line-through;
         }
         &_text {
+            width: 100%;
             box-sizing: border-box;
             padding-top: 40px;
             flex-grow: 1;
@@ -405,6 +406,7 @@ body {
             color: #666;
             font-size: 13px;
             overflow: hidden;
+            width: 100%;
             text-overflow: ellipsis;
             white-space: nowrap;
             font-weight: 400;
@@ -449,6 +451,7 @@ body {
             text-decoration: line-through;
         }
         &_text {
+            width: 100%;
             flex-wrap: wrap;
             display: flex;
             box-sizing: border-box;
@@ -480,8 +483,9 @@ body {
                 </swiper-item>
             </swiper>
             <!-- table功能区域 -->
+            <!-- 1商品列表 2精选商家 3运营活动 -->
             <ul v-show="currentType==0" class="main_fun_list">
-                <li v-for="item in iconList" class="main_fun_single">
+                <li v-for="item in iconList" class="main_fun_single" @click="funClick(item.name,item.type,item.icon_id)">
                     <img :src="item.img" alt="icon">
                     <h3>{{item.name}}</h3>
                 </li>
@@ -489,7 +493,7 @@ body {
             <!-- 频道列表区域 -->
             <ul v-show="currentType==0" class="main_channel_list">
                 <li v-for="item in channelList" class="main_channel_single" >
-                    <img class="main_channel_img" :src="item.bg_image" alt="channel">
+                    <img class="main_channel_img" @click="channelClick(item.title,item.channel_id)"   :src="item.bg_image" alt="channel">
                     <ul class="main_channel_goodsList">
                         <li @click="goInfo(ite.goods_id)" v-for="ite in item.goods" class="main_channel_goodsSingle">
                             <img class="main_channel_goodsImg" :src="ite.goods_main_pic" alt="">
@@ -504,7 +508,7 @@ body {
                 </li>
             </ul> 
             <!-- 热门商品,只能放3个 -->
-            <div class="main_hot" v-show="currentType==0">
+            <div class="main_hot" v-show="currentType==0" @click="funClick('热门单品',1)">
                 热门单品 <i class="iconfont">&#xe6d7;</i>
             </div>
             <ul class="main_hot_list" v-show="currentType==0">
@@ -549,7 +553,7 @@ body {
             </ul>
 
              <!-- 新品特惠 -->
-            <div class="main_recommend" v-show="currentType==0">
+            <div class="main_recommend" v-show="currentType==0" @click="funClick('新品特惠',1)">
                 新品特惠 <i class="iconfont">&#xe6d7;</i>
             </div>
             <!-- 新品特惠商品列表 -->
@@ -715,6 +719,36 @@ export default {
         ]),
     },
     methods: {
+        /* 频道点击函数 */
+        channelClick(name,id){
+            let scrollTop = document.querySelector(".main_listbox").scrollTop;
+            localStorage.setItem("scrolltop", scrollTop);
+            this.$router.push({
+                path:'/chaneel?name='+name+"&id="+id,
+            })       
+        },
+        /* 功能table点击函数 */
+        funClick(name,type,id=1){
+            let scrollTop = document.querySelector(".main_listbox").scrollTop;
+            localStorage.setItem("scrolltop", scrollTop);
+            if(type==1){
+                this.$router.push({
+                    path:'/moreHot/?name='+name+'&id='+id
+                })
+            }else if(type==2){
+                this.$router.push({
+                    path:'/selected/?id='+id
+                })
+            }else{
+                if(!localStorage.getItem("userInfo")){
+                    this.$router.push({
+                        path:"/login"
+                    });
+                    return false;
+                }
+                window.location.href="/getCard.html";
+            }
+        },
         /* 是否显示活动红包 */
         isShowCard() {
             API.card.getCouponActive().then((res) => {
@@ -762,6 +796,8 @@ export default {
         /* 列表点击切换函数 */
         /* 根据焦点位置判断 */
         typeselect(index, id) {
+            let scrollTop = document.querySelector(".main_listbox").scrollTop;
+            localStorage.setItem("scrolltop", scrollTop);
             for (let item of this.typeList) {
                 item.click = false;
             }
