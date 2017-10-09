@@ -31,7 +31,7 @@ getCode.addEventListener('click', function () {
         return false;
     }
     $.ajax({
-        url: "https://isapi.zujiekeji.cn/index/user/send_phone_code",
+        url: "http://isapi.zujiekeji.cn/index/user/send_phone_code",
         type: "POST",
         data: {
             user_phone: mobile.value,
@@ -47,6 +47,7 @@ getCode.addEventListener('click', function () {
                 intr = setInterval(function () {
                     if (getCode.innerText == 1) {
                         isdisabled = true;
+                        getCode.innerText = "获取验证码";
                         clearInterval(intr);
                         return false;
                     }
@@ -94,7 +95,7 @@ document.querySelector(".share_main_registerbtn").addEventListener('click', func
         return false;
     }
     $.ajax({
-        url: "https://isapi.zujiekeji.cn/index/user/app_register",
+        url: "http://isapi.zujiekeji.cn/index/user/app_register",
         type: "POST",
         data: {
             user_phone: mobile.value,
@@ -105,10 +106,10 @@ document.querySelector(".share_main_registerbtn").addEventListener('click', func
         dataType: "json",
         success: function success(data) {
             $.ajax({
-                url: "https://isapi.zujiekeji.cn/index/user/app_register",
+                url: "http://isapi.zujiekeji.cn/index/coupon/receiveShareCoupon",
                 type: "POST",
                 data: {
-                    p: "MTcxNTg3MQ==", //getQueryString("p"),
+                    p: getQueryString("p"),
                     userId: data.data.user_id,
                     token: data.data.token
                 },
@@ -121,7 +122,7 @@ document.querySelector(".share_main_registerbtn").addEventListener('click', func
                     setTimeout(function () {
                         confrim.style.display = 'none';
                         window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zujie";
-                    }, 1500);
+                    }, 3000);
                 },
                 error: function error(_error2) {
                     /*  alert(JSON.stringify(error)); */

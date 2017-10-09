@@ -45,7 +45,7 @@ document.querySelector(".share_main_btn").addEventListener('click', function () 
         /* h5状态 */
         var userInfo = localStorage.getItem('userInfo');
         if (!userInfo) {
-            window.location.href = "http://127.0.0.1:8081/#/login";
+            window.location.href = "/#/login";
             return false;
         }
         userInfo = JSON.parse(userInfo);
