@@ -571,6 +571,12 @@ export default {
 
         },
         /**
+         * 计算芝麻信用押金减免额度
+         */
+        antDerate(){
+            return this.couterDespoite
+        },
+        /**
          * 返回颜色规格id
          */
         typeArray() {
@@ -611,7 +617,6 @@ export default {
             API.person.getUserZMReliefInfo({
                 user_id: this.getUserInfoUserId
             }).then((res) => {
-                console.log(res)
                 if (res.body.code == 200) {
                     this.zmed = true;
                     this.relief_limit = res.body.data.relief_limit
@@ -620,7 +625,6 @@ export default {
         },
         /* 检查是否支持该地址 */
         checkAddress() {
-            console.log(1);
             let addresslist = (this.getName(this.goodsAddress)).split(" ");
             API.main.judgeAddress({
                 province: addresslist[0],
@@ -636,10 +640,7 @@ export default {
             })
         },
         /*芝麻信用授权*/
-        authorization() {
-            if (this.zmed) {
-                return;
-            }
+        authorization(){
             this.$router.push({
                 path: '/authInfo'
             })
