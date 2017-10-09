@@ -34,11 +34,27 @@ body {
   height: 0.53333rem;
 }
 
+.share_main_down {
+  position: absolute;
+  display: block;
+  width: 24%;
+  bottom: 29.42%;
+  right: 22.53%;
+}
+
+.share_main_see {
+  position: absolute;
+  display: block;
+  width: 24%;
+  bottom: 29.42%;
+  left: 20.53%;
+}
+
 .share_main_registermobile {
   color: #d83739;
   font-weight: 300;
   text-align: center;
-  font-size: 0.37333rem;
+  font-size: 14px;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: center;
@@ -54,11 +70,19 @@ body {
   outline: none;
 }
 
+[data-dpr="2"] .share_main_registermobile {
+  font-size: 28px;
+}
+
+[data-dpr="3"] .share_main_registermobile {
+  font-size: 42px;
+}
+
 .share_main_registercode {
   font-weight: 300;
   color: #d83739;
   text-align: center;
-  font-size: 0.37333rem;
+  font-size: 14px;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: center;
@@ -74,11 +98,19 @@ body {
   outline: none;
 }
 
+[data-dpr="2"] .share_main_registercode {
+  font-size: 28px;
+}
+
+[data-dpr="3"] .share_main_registercode {
+  font-size: 42px;
+}
+
 .share_main_registerpassword {
   font-weight: 300;
   color: #d83739;
   text-align: center;
-  font-size: 0.37333rem;
+  font-size: 14px;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: center;
@@ -94,11 +126,19 @@ body {
   outline: none;
 }
 
+[data-dpr="2"] .share_main_registerpassword {
+  font-size: 28px;
+}
+
+[data-dpr="3"] .share_main_registerpassword {
+  font-size: 42px;
+}
+
 .share_main_registergetcode {
   font-weight: 300;
   text-align: center;
-  font-size: 0.37333rem;
-  color: #d83739;
+  font-size: 14px;
+  color: #43b9f5;
   border: none;
   top: 38.62%;
   width: 24%;
@@ -108,6 +148,14 @@ body {
   height: 4.24%;
   background-color: transparent;
   outline: none;
+}
+
+[data-dpr="2"] .share_main_registergetcode {
+  font-size: 28px;
+}
+
+[data-dpr="3"] .share_main_registergetcode {
+  font-size: 42px;
 }
 
 .share_main_registerbtn {
