@@ -33,7 +33,7 @@
                 <div class="goodsinfo_box">
                     <div class="goodsinfo_allprice">
                         总租金：
-                        <span>{{currentGoodsData.rent_period_now_rent_price*currentGoodsData.rentTime*currentGoodsData.goodsnum | currency('￥') }}</span>
+                        <span>{{totalRent | currency('￥') }}</span>
                     </div>
                     <div class="goodsinfo_rentTime">
                         租期
@@ -160,7 +160,7 @@
                         芝麻信用押金减免额
                         <span class="authorization" v-show="!zmed">去授权</span>
                         <i style="color: #989898;" class="iconfont" v-show="!zmed">&#xe6d7;</i>
-                        <span v-show="zmed">{{relief_limit}}元</span>
+                        <span v-show="zmed" style="color:red">{{antDerate}}元</span>
                     </div>
                     <!-- 配送地址 -->
                     <div class="goodsinfo_content_address">
@@ -301,7 +301,8 @@ export default {
     data() {
         return {
             zmed: false,
-            relief_limit: 0,//芝麻分减免额度
+            reliefLimit: 0,//芝麻分减免额度
+            reliefRate:0,
             havestart: true,
             timeselectshow: false,
             haveRules: false,
@@ -397,6 +398,7 @@ export default {
                 rent_period_now_rent_price: "20.00",//现租价
                 rent_period_min_advance: 6,//最少提前
                 rent_period_max_advance: 1,//最大提前
+
             },
             currentTimeIndex: 0//当前被选中的日渐周期index
         }
@@ -569,12 +571,31 @@ export default {
                 despoite = this.currentTypedata.goods_deposit * this.currentGoodsData.goodsnum - this.currentGoodsData.rent_period_now_rent_price * this.currentGoodsData.rentTime * this.currentGoodsData.goodsnum;
             }
 
+            return despoite;
+
+        },
+        /**
+         * 计算总租金
+         */
+        totalRent(){
+            let rentAmount;
+            if (this.currentTypedata.act_price) {
+                rentAmount = this.currentGoodsData.act_price * this.currentGoodsData.goodsnum  * this.currentGoodsData.rentTime;
+            } else {
+                rentAmount = this.currentGoodsData.rent_period_now_rent_price * this.currentGoodsData.goodsnum  * this.currentGoodsData.rentTime;
+            }
+
+            return rentAmount;
         },
         /**
          * 计算芝麻信用押金减免额度
          */
         antDerate(){
-            return this.couterDespoite
+            if(this.couterDespoite == 0){
+                return 0;
+            }else{
+               return (this.couterDespoite * this.reliefRate).toFixed(2);
+            }
         },
         /**
          * 返回颜色规格id
@@ -619,7 +640,8 @@ export default {
             }).then((res) => {
                 if (res.body.code == 200) {
                     this.zmed = true;
-                    this.relief_limit = res.body.data.relief_limit
+                    this.reliefLimit = res.body.data.relief_limit;
+                    this.reliefRate = res.body.data.relief_rate / 100;
                 }
             })
         },
