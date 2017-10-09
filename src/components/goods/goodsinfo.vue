@@ -568,7 +568,7 @@ export default {
             } else {
                 despoite = this.currentTypedata.goods_deposit * this.currentGoodsData.goodsnum - this.currentGoodsData.rent_period_now_rent_price * this.currentGoodsData.rentTime * this.currentGoodsData.goodsnum;
             }
-
+            return despoite;
         },
         /**
          * 返回颜色规格id

@@ -9,21 +9,137 @@
  * 配置项目常用变量
  */
 .share_main {
-  height: 100%;
-  background: url("/img/bc.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-color: #79c4ff;
-  background-size: cover;
-}
-
-.share_main_inner {
-  height: 100%;
   position: relative;
 }
 
-.share_main_confrim {
+.share_main_img {
+  display: block;
+  width: 100%;
+}
+
+.share_main_shareimg {
+  display: block;
+  width: 100%;
+}
+
+.share_main_back {
+  position: fixed;
+  left: 0.4rem;
+  top: 0.4rem;
+  height: 0.53333rem;
+}
+
+.share_main_registermobile {
+  color: #d83739;
+  font-weight: 300;
+  text-align: center;
+  font-size: 0.37333rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  border: none;
+  top: 25.78%;
+  width: 56.4%;
+  display: block;
+  left: 20.53%;
   position: absolute;
+  height: 3.27%;
+  background-color: transparent;
+  outline: none;
+}
+
+.share_main_registercode {
+  font-weight: 300;
+  color: #d83739;
+  text-align: center;
+  font-size: 0.37333rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  border: none;
+  top: 29.7%;
+  width: 29.33%;
+  display: block;
+  left: 20.53%;
+  position: absolute;
+  height: 3.27%;
+  background-color: transparent;
+  outline: none;
+}
+
+.share_main_registerpassword {
+  font-weight: 300;
+  color: #d83739;
+  text-align: center;
+  font-size: 0.37333rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  border: none;
+  top: 34%;
+  width: 56.4%;
+  display: block;
+  left: 20.53%;
+  position: absolute;
+  height: 3.27%;
+  background-color: transparent;
+  outline: none;
+}
+
+.share_main_registergetcode {
+  font-weight: 300;
+  text-align: center;
+  font-size: 0.37333rem;
+  color: #d83739;
+  border: none;
+  top: 29.7%;
+  width: 24%;
+  display: block;
+  right: 22.67%;
+  position: absolute;
+  height: 3.27%;
+  background-color: transparent;
+  outline: none;
+}
+
+.share_main_registerbtn {
+  top: 38.11%;
+  width: 56.4%;
+  display: block;
+  left: 20.53%;
+  position: absolute;
+  height: 3.27%;
+  background-color: transparent;
+  outline: none;
+}
+
+.share_main_sharebtn {
+  top: 38.87%;
+  width: 67%;
+  display: block;
+  left: 15.2%;
+  position: absolute;
+  height: 4.95%;
+  background-color: transparent;
+  outline: none;
+}
+
+.share_main_btn {
+  top: 38.87%;
+  width: 67%;
+  display: block;
+  left: 15.2%;
+  position: absolute;
+  height: 4.95%;
+  background-color: transparent;
+  outline: none;
+}
+
+.share_main_confrim {
+  position: fixed;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
@@ -98,7 +214,7 @@
 }
 
 .share_main_openLink {
-  position: absolute;
+  position: fixed;
   top: 0.66667rem;
   right: 0.26667rem;
   background-color: rgba(0, 0, 0, 0.5);

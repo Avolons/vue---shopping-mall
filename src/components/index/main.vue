@@ -746,7 +746,7 @@ export default {
                     });
                     return false;
                 }
-                window.location.href="/getCard.html";
+                window.location.href="/share.html?type=H5";
             }
         },
         /* 是否显示活动红包 */
@@ -889,15 +889,13 @@ export default {
                 this.$router.push({
                     path: '/shop/' + id
                 });
-
             } else if (type == 2) {
                 localStorage.setItem("goodsInfo", "11");
                 this.$router.push({
                     path: '/goodsInfo/' + id
                 });
-
             } else {
-                /* window.location.href = "/#/"; */
+                window.location.href = "/getCard.html?type=H5";
             }
         },
     },
