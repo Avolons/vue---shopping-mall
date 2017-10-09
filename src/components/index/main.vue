@@ -68,7 +68,7 @@ body {
            background-color: #fff;
            height: 80px;
            box-sizing: border-box;
-           padding: 12.5px 15px 0 15px;
+           padding: 12.5px 30px 0 30px;
            display: flex;
            justify-content: space-between;
        } 

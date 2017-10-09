@@ -68,7 +68,7 @@
                                 <span>请选择起租日期</span>
                                 <button @click="timehaveSelect()">完成</button>
                             </div>
-                            <inline-calendar class="inline-calendar-demo" :show.sync="timeconfig.show" v-model="timeValue" :start-date="timerange.startTime" :end-date="timerange.endTime" :range="timeconfig.range" :render-on-value-change="timeconfig.changerender" :show-last-month="timeconfig.showLastMonth" :show-next-month="timeconfig.showNextMonth" :highlight-weekend="timeconfig.highlightWeekend" :return-six-rows="timeconfig.return6Rows" :hide-header="timeconfig.hideHeader" :hide-week-list="timeconfig.hideWeekList" :replace-text-list="timeconfig.replaceTextList" :weeks-list="timeconfig.weeksList" :render-function="timeconfig.buildSlotFn" :disable-past="timeconfig.disablePast" :disable-future="timeconfig.disableFuture">
+                            <inline-calendar @on-change='timehaveSelect' class="inline-calendar-demo" :show.sync="timeconfig.show" v-model="timeValue" :start-date="timerange.startTime" :end-date="timerange.endTime" :range="timeconfig.range" :render-on-value-change="timeconfig.changerender" :show-last-month="timeconfig.showLastMonth" :show-next-month="timeconfig.showNextMonth" :highlight-weekend="timeconfig.highlightWeekend" :return-six-rows="timeconfig.return6Rows" :hide-header="timeconfig.hideHeader" :hide-week-list="timeconfig.hideWeekList" :replace-text-list="timeconfig.replaceTextList" :weeks-list="timeconfig.weeksList" :render-function="timeconfig.buildSlotFn" :disable-past="timeconfig.disablePast" :disable-future="timeconfig.disableFuture">
                             </inline-calendar>
                         </div>
                     </popup>
@@ -562,12 +562,13 @@ export default {
             if (this.currentTypedata.goods_deposit == 0) {
                 return 0;
             }
-            let despoite = this.currentTypedata.goods_deposit * this.currentGoodsData.goodsnum - this.currentGoodsData.rent_period_now_rent_price * this.currentGoodsData.rentTime * this.currentGoodsData.goodsnum;
-            if (despoite <= 0) {
-                return 0;
+            let despoite;
+            if (this.currentTypedata.act_price) {
+                despoite = this.currentTypedata.goods_deposit * this.currentGoodsData.goodsnum - this.currentGoodsData.act_price * this.currentGoodsData.rentTime * this.currentGoodsData.goodsnum;
             } else {
-                return despoite;
+                despoite = this.currentTypedata.goods_deposit * this.currentGoodsData.goodsnum - this.currentGoodsData.rent_period_now_rent_price * this.currentGoodsData.rentTime * this.currentGoodsData.goodsnum;
             }
+
         },
         /**
          * 返回颜色规格id
@@ -738,6 +739,10 @@ export default {
             this.currentGoodsData.rent_period_now_rent_price = temporary.rent_period_now_rent_price;
             this.currentGoodsData.rent_period_min_advance = temporary.rent_period_min_advance;
             this.currentGoodsData.rent_period_max_advance = temporary.rent_period_max_advance;
+            if(temporary.act_price){
+                this.currentGoodsData.act_price = temporary.act_price;
+            }
+
             /* 是否需要认证 */
             this.isCertify = goodsData.goods_is_verify_real_name;
             /* 初始被选中时间 */
@@ -859,6 +864,10 @@ export default {
             this.currentGoodsData.rent_period_now_rent_price = temporary.rent_period_now_rent_price;
             this.currentGoodsData.rent_period_min_advance = temporary.rent_period_min_advance;
             this.currentGoodsData.rent_period_max_advance = temporary.rent_period_max_advance;
+            if(temporary.act_price){
+                this.currentGoodsData.act_price = temporary.act_price; 
+            }
+
             /* 初始被选中时间 */
             this.timeValue = this.timerange.startTime;
             /* 初始周期被选中 */
@@ -880,7 +889,7 @@ export default {
                         this.currentGoodsData.rentTime--;
                     }
                 }
-                size--
+                size--;
             } else {
                 /* 租期选择情况下要考虑最小租期和最大租期 */
                 if (size == 1) {
@@ -1020,25 +1029,25 @@ export default {
                 amount: this.currentGoodsData.goodsnum,
                 rent_prieod_id: perId,
                 time_number: this.currentGoodsData.rentTime,
-                start_time: ((new Date(this.timeValue)).getTime()-3600*8*1000) / 1000,
-                end_time: ((new Date(this.despoiteRange)).getTime()+3600*16*1000-1000) / 1000,
+                start_time: ((new Date(this.timeValue)).getTime() - 3600 * 8 * 1000) / 1000,
+                end_time: ((new Date(this.despoiteRange)).getTime() + 3600 * 16 * 1000 - 1000) / 1000,
                 cart_type: 2,
                 goods_content_id: this.currentTypedata.content_id
             }).then((res) => {
                 if (res.body.code == 200) {
-                     let cartId = res.body.data.cartId;
+                    let cartId = res.body.data.cartId;
                     this.$store.dispatch('SetOrder', cartId);
                     API.main.storeInfo({
-                        storeId:this.storeId
-                    }).then((res)=>{
-                        if(res.body.code==200){
+                        storeId: this.storeId
+                    }).then((res) => {
+                        if (res.body.code == 200) {
                             localStorage.setItem('orderClick', '11');
                             this.$router.push({
-                                path: '/orderInfo/' + cartId+'/?address='+res.body.data.enterprise_license_location
+                                path: '/orderInfo/' + cartId + '/?address=' + res.body.data.enterprise_license_location
                             });
                         }
                     });
-                    
+
 
                 }
             });

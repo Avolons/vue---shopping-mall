@@ -49,10 +49,9 @@
     &_tplList{
     }
     &_sinceList {
-        height: 350px;
+        max-height: 350px;
         overflow-y: auto;
         box-sizing: border-box;
-        padding-bottom: 70px;
     }
     &_addressInfo {
         background-color: #fff;

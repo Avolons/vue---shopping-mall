@@ -113,27 +113,25 @@ export default {
         },
         /* 获取table活动数据 */
         getChannelGoods() {
-            API.newMain.iconDetail({
-                icon_id: this.icon_id,
-                page_number: 10,
-                page: this.page
-            }).then((res) => {
-                if (res.body.code == 200) {
-                        setTimeout(() => {
-                            this.goodsList = this.goodsList.concat(res.body.data.data);
-                            this.canBottom = true;
-                            this.loadshow = false;
-                        }, 500);
-                    if (res.body.data.data.length == 10) {
-                        this.haveData = true;
-                        this.page++;
-                    } else {
-                        this.haveData = false;
-                    }
-                }
-            });
+             API.main.searchGoods({
+              goods_category_id:this.icon_id,
+              goods_sort:0,
+              page_number:10,
+              page:this.page,
+          }).then((res)=>{
+              setTimeout(() => {
+                this.goodsList=this.goodsList.concat(res.body.data.shopList.data);
+                this.canBottom = true;
+                this.loadshow = false;
+            }, 500);
+            if(res.body.data.shopList.data.length==10){
+                this.haveData=true;
+                this.page++;
+            }else{
+                this.haveData=false;
+            }   
+          });
         }
-
     },
     activated() {
         setTimeout(()=>{

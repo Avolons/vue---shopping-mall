@@ -619,13 +619,13 @@ export default {
                         setTimeout(() => {
                             self.$router.push({
                                 path: '/index/main/order'
-                            })
+                            });
                         }, 500);
                     }
                     if (res.err_msg == "get_brand_wcpay_request:cancel") {
                         self.$router.push({
                             path: '/index/main/order'
-                        })
+                        });
                     }
                     if (res.err_msg == "get_brand_wcpay_request:ok") {
                         self.confrim = "支付成功";
@@ -633,7 +633,7 @@ export default {
                         setTimeout(() => {
                             self.$router.push({
                                 path: '/index/main/order'
-                            })
+                            });
                         }, 500);
                     }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
                 }
@@ -770,6 +770,11 @@ export default {
                 token: this.getUserInfoToken,
                 cartId: [this.cartId],
             }).then((res) => {
+                if(res.body.code != 200){
+                      this.$router.push({
+                        path: '/index/main/order'
+                    });  
+                    }
                 this.infoData = res.body.data.cart_list[0];
                 /* 获取当前活动价格 */
                 this.act_price=this.getArtPrice(this.infoData.rent_period_type,this.infoData.rent_period);
@@ -796,7 +801,11 @@ export default {
                         this.storeList = res.body.data;
                     }
                 });
-            });
+            },(res)=>{
+                     this.$router.push({
+                        path: '/index/main/order'
+                    });
+                });
             this.getDefaultAddress();
             /* 清除之前的快递信息 */
             this.$store.dispatch('ClearTpl');
