@@ -8,6 +8,13 @@ var mobile = document.querySelector(".share_main_registermobile"),
 /* 提示框 */
 var confrim = document.querySelector('.share_main_confrim');
 
+function getQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+    var r = window.location.search.substr(1).match(reg); //匹配目标参数
+    if (r != null) return unescape(r[2]);
+    return null; //返回参数值
+}
+
 var isdisabled = false;
 var intr = void 0;
 /* 获取验证码操作 */
@@ -40,7 +47,7 @@ getCode.addEventListener('click', function () {
                 intr = setInterval(function () {
                     if (getCode.innerText == 1) {
                         isdisabled = true;
-                        getCode.innerText = 60;
+                        clearInterval(intr);
                         return false;
                     }
                     getCode.innerText -= 1;
@@ -97,15 +104,31 @@ document.querySelector(".share_main_registerbtn").addEventListener('click', func
         async: true,
         dataType: "json",
         success: function success(data) {
-            /* 领取优惠券成功 */
-            confrim.innerText = "领取成功，请下载租介app进行使用";
-            confrim.style.display = 'block';
-            setTimeout(function () {
-                confrim.style.display = 'none';
-                window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zujie";
-            }, 1500);
+            $.ajax({
+                url: "https://isapi.zujiekeji.cn/index/user/app_register",
+                type: "POST",
+                data: {
+                    p: "MTcxNTg3MQ==", //getQueryString("p"),
+                    userId: data.data.user_id,
+                    token: data.data.token
+                },
+                async: true,
+                dataType: "json",
+                success: function success(data) {
+                    /* 领取优惠券成功 */
+                    confrim.innerText = "领取成功，请下载租介app进行使用";
+                    confrim.style.display = 'block';
+                    setTimeout(function () {
+                        confrim.style.display = 'none';
+                        window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zujie";
+                    }, 1500);
+                },
+                error: function error(_error2) {
+                    /*  alert(JSON.stringify(error)); */
+                }
+            });
         },
-        error: function error(_error2) {
+        error: function error(_error3) {
             /*  alert(JSON.stringify(error)); */
         }
     });

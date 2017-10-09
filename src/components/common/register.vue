@@ -244,7 +244,7 @@ import {API,getQuery} from '../../services'
           if(Response.body.code==200){
             Response=Response.body.data;
               /* 触发vuex登录状态更改操作 */
-            let token=this.md5(Response.user_id)+Response.user_id;
+            let token=Response.token;
             let userInfo={
             loginname : Response.nickname,
             avatar : Response.face,
