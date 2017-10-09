@@ -168,7 +168,6 @@ body {
             }
         }
         &_mask {
-            height: 50%;
             width: 70%;
             position: absolute;
             left: 50%;
@@ -182,8 +181,17 @@ body {
             height: 30px;
             width: 30px !important;
             position: absolute;
-            right: 0;
-            top: 0;
+            right: 10px;
+            top: -15px;
+        }
+        &_gouse{
+            position: absolute;
+            bottom: 1%;
+            background-color: transparent;
+            height: 14.28%;
+            width: 89.63%;
+            display: block;
+            left:5.45%;
         }
     }
     &_container {
@@ -618,15 +626,11 @@ body {
             </div>
             <!-- 红包 -->
             <div class="main_card">
-                <img @click="cardClick" v-show="smallCard" class="main_card_fixed" src="../../assets/img/common/hongbao.png" alt="">
                 <masker v-show="cardShow" :fullscreen=true color="000" :opacity="0.5">
                     <div class="main_card_mask" slot="content">
                         <img src="../../assets/img/common/money.png" alt="">
                         <img @click="closeCard" class="main_card_maskClose" src="../../assets/img/common/close.png" alt="">
-                        <div class="main_card_content">
-                            <h3>{{cardContent.price}}元</h3>
-                            <p>{{cardContent.text}}</p>
-                        </div>
+                        <button @click="gouese" type="button" class="main_card_gouse"></button>
                     </div>
                 </masker>
             </div>
@@ -657,8 +661,6 @@ export default {
     data() {
         return {
             cardUrl: "",
-            /* 小红包 */
-            smallCard: false,
             /* 红包内容 */
             cardContent: {
                 price: 10,
@@ -746,7 +748,7 @@ export default {
                     });
                     return false;
                 }
-                window.location.href="/getCard.html";
+                window.location.href="/share.html?type=H5";
             }
         },
         /* 是否显示活动红包 */
@@ -765,10 +767,14 @@ export default {
                 token: this.getUserInfoToken,
             }).then((res) => {
                 if (res.body.code == 200) {
-                    this.cardContent.price = res.body.data.amount;
-                    this.cardContent.title = res.body.data.intro;
                     this.cardShow = true;
                 }
+            });
+        },
+        gouese(){
+            this.cardShow=false;
+            this.$router.push({
+                path: '/card' 
             });
         },
         /* 红包点击 */
@@ -889,15 +895,13 @@ export default {
                 this.$router.push({
                     path: '/shop/' + id
                 });
-
             } else if (type == 2) {
                 localStorage.setItem("goodsInfo", "11");
                 this.$router.push({
                     path: '/goodsInfo/' + id
                 });
-
             } else {
-                /* window.location.href = "/#/"; */
+                window.location.href = "/getCard.html?type=H5";
             }
         },
     },

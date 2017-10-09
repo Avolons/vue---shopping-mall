@@ -2,96 +2,17 @@
 
 /* 获取优惠活动内容 */
 
-var activityContent = {};
-(function () {
-    $.ajax({
-        url: "http://106.14.135.243:8082/index/coupon/activtyContent",
-        type: "POST",
-        data: {},
-        async: true,
-        dataType: "json",
-        success: function success(data) {
-            activityContent = data.data;
-            /* 金额出现 */
-            document.querySelector(".share_main_card_text").innerText = activityContent.amount + '元';
-            /* 微信监控 */
-            var title = data.data.share.title,
-                link = data.data.share.url,
-                imgurl = data.data.share.img,
-                desc = data.data.share.content;
-            $.ajax({
-                url: "https://www.zujiekeji.cn/index/wechat/getSignature",
-                type: "GET",
-                data: {
-                    "url": link
-                },
-                async: true,
-                dataType: "json",
-                success: function success(data) {
-                    wx.config({
-                        debug: false,
-                        appId: data.data.appId,
-                        timestamp: data.data.timestamp,
-                        nonceStr: data.data.nonceStr,
-                        signature: data.data.signature,
-                        jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage", "onMenuShareQQ"]
-                    });
-                    wx.error(function (res) {
-                        /*  alert(JSON.stringify(res)); */
-                    });
-                },
-                error: function error(_error) {
-                    /*  alert(JSON.stringify(error)); */
-                }
-            });
-
-            wx.ready(function (res) {
-                //分享给朋友
-                wx.onMenuShareAppMessage({
-                    title: title,
-                    desc: desc,
-                    link: link,
-                    imgUrl: imgurl,
-                    trigger: function trigger(res) {},
-                    success: function success(res) {},
-                    cancel: function cancel(res) {},
-                    fail: function fail(res) {}
-                });
-                //分享到朋友圈
-                wx.onMenuShareTimeline({
-                    title: title,
-                    link: link,
-                    imgUrl: imgurl,
-                    success: function success(res) {},
-                    cancel: function cancel(res) {}
-                });
-                wx.onMenuShareQQ({
-                    title: title,
-                    desc: desc,
-                    link: link,
-                    imgUrl: imgurl,
-                    success: function success(res) {},
-                    cancel: function cancel(res) {}
-                });
-            });
-        },
-        error: function error(_error2) {}
-    });
-})();
-
 /* 提示框 */
 var confrim = document.querySelector('.share_main_confrim');
 
-var shareConfrim = document.querySelector('.share_main_openLink');
 /* 领取优惠券 */
-function getCard(id, token, card) {
+function getCard(id, token) {
     $.ajax({
         url: "http://106.14.135.243:8082/index/coupon/receiveCoupon",
         type: "POST",
         data: {
             userId: id,
-            token: token,
-            couponNo: card
+            token: token
         },
         async: true,
         dataType: "json",
@@ -103,19 +24,40 @@ function getCard(id, token, card) {
                 confrim.style.display = 'none';
             }, 1500);
         },
-        error: function error(_error3) {
+        error: function error(_error) {
             /*  alert(JSON.stringify(error)); */
         }
     });
 }
 
-document.querySelector(".share_main_mobile").addEventListener('click', function () {
-    var userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    getCard(userInfo.id, userInfo.token, activityContent.coupon_no);
+function getQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+    var r = window.location.search.substr(1).match(reg); //匹配目标参数
+    if (r != null) return unescape(r[2]);
+    return null; //返回参数值
+}
+
+document.querySelector(".share_main_btn").addEventListener('click', function () {
+    var u = navigator.userAgent;
+    var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+    var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    if (getQueryString("type") == 'H5') {
+        /* h5状态 */
+        var userInfo = localStorage.getItem('userInfo');
+        if (!userInfo) {
+            window.location.href = "http://127.0.0.1:8081/#/login";
+            return false;
+        }
+        userInfo = JSON.parse(userInfo);
+        getCard(userInfo.id, userInfo.token);
+    } else if (isAndroid) {
+        Android.getCoupon();
+    } else {
+        window.open("getCoupon");
+        iOS.getCoupon();
+    }
 });
 
-document.querySelector(".share_main_share").addEventListener('click', function () {
-    shareConfrim.style.display = 'block';
+document.querySelector(".share_main_back").addEventListener('click', function () {
+    window.history.back(-1);
 });
-
-/* 判断当前是否处于登录状态，如果不是，跳转到登录页面 */

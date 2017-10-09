@@ -741,6 +741,8 @@ export default {
                         API.alipay.orderId({
                             userId:this.getUserInfoUserId,
                             Info:{
+                                /* 传递借还支付参数 */
+                                orderSn: res.body.data.order_big_sn,
                                 goods_name:this.infoData.goodsName,
                                 address:this.getAddress,    
                                 shop_name:this.storeInfo,

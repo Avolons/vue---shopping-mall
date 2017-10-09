@@ -8,22 +8,191 @@
 /**
  * 配置项目常用变量
  */
-.share_main {
+body {
   height: 100%;
-  background: url("/img/bc.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-color: #79c4ff;
-  background-size: cover;
+  background-color: #fa4926;
 }
 
-.share_main_inner {
-  height: 100%;
+.share_main {
   position: relative;
 }
 
-.share_main_confrim {
+.share_main_img {
+  display: block;
+  width: 100%;
+}
+
+.share_main_shareimg {
+  display: block;
+  width: 100%;
+}
+
+.share_main_back {
+  position: fixed;
+  left: 0.4rem;
+  top: 0.4rem;
+  height: 0.53333rem;
+}
+
+.share_main_down {
   position: absolute;
+  display: block;
+  width: 24%;
+  bottom: 29.42%;
+  right: 22.53%;
+}
+
+.share_main_see {
+  position: absolute;
+  display: block;
+  width: 24%;
+  bottom: 29.42%;
+  left: 20.53%;
+}
+
+.share_main_registermobile {
+  color: #d83739;
+  font-weight: 300;
+  text-align: center;
+  font-size: 14px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  border: none;
+  top: 33.29%;
+  width: 56.4%;
+  display: block;
+  left: 20.53%;
+  position: absolute;
+  height: 4.24%;
+  background-color: transparent;
+  outline: none;
+}
+
+[data-dpr="2"] .share_main_registermobile {
+  font-size: 28px;
+}
+
+[data-dpr="3"] .share_main_registermobile {
+  font-size: 42px;
+}
+
+.share_main_registercode {
+  font-weight: 300;
+  color: #d83739;
+  text-align: center;
+  font-size: 14px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  border: none;
+  top: 38.62%;
+  width: 29.33%;
+  display: block;
+  left: 20.53%;
+  position: absolute;
+  height: 4.24%;
+  background-color: transparent;
+  outline: none;
+}
+
+[data-dpr="2"] .share_main_registercode {
+  font-size: 28px;
+}
+
+[data-dpr="3"] .share_main_registercode {
+  font-size: 42px;
+}
+
+.share_main_registerpassword {
+  font-weight: 300;
+  color: #d83739;
+  text-align: center;
+  font-size: 14px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  border: none;
+  top: 44%;
+  width: 56.4%;
+  display: block;
+  left: 20.53%;
+  position: absolute;
+  height: 4.24%;
+  background-color: transparent;
+  outline: none;
+}
+
+[data-dpr="2"] .share_main_registerpassword {
+  font-size: 28px;
+}
+
+[data-dpr="3"] .share_main_registerpassword {
+  font-size: 42px;
+}
+
+.share_main_registergetcode {
+  font-weight: 300;
+  text-align: center;
+  font-size: 14px;
+  color: #43b9f5;
+  border: none;
+  top: 38.62%;
+  width: 24%;
+  display: block;
+  right: 22.67%;
+  position: absolute;
+  height: 4.24%;
+  background-color: transparent;
+  outline: none;
+}
+
+[data-dpr="2"] .share_main_registergetcode {
+  font-size: 28px;
+}
+
+[data-dpr="3"] .share_main_registergetcode {
+  font-size: 42px;
+}
+
+.share_main_registerbtn {
+  top: 49.15%;
+  width: 56.4%;
+  display: block;
+  left: 20.53%;
+  position: absolute;
+  height: 3.27%;
+  background-color: transparent;
+  outline: none;
+}
+
+.share_main_sharebtn {
+  top: 55.84%;
+  width: 67%;
+  display: block;
+  left: 15.2%;
+  position: absolute;
+  height: 7.1%;
+  background-color: transparent;
+  outline: none;
+}
+
+.share_main_btn {
+  top: 55.84%;
+  width: 67%;
+  display: block;
+  left: 15.2%;
+  position: absolute;
+  height: 7.1%;
+  background-color: transparent;
+  outline: none;
+}
+
+.share_main_confrim {
+  position: fixed;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
@@ -98,7 +267,7 @@
 }
 
 .share_main_openLink {
-  position: absolute;
+  position: fixed;
   top: 0.66667rem;
   right: 0.26667rem;
   background-color: rgba(0, 0, 0, 0.5);
