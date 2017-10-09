@@ -1,6 +1,7 @@
 
 import Vue from 'vue';
 
+var sourceStr = '/?source=3';
 
 var API_ROOT = "https://isapi.zujiekeji.cn/index/";
 /* var API_ROOT = "http://106.14.135.243:8082/index/"; */ 
@@ -19,7 +20,7 @@ export const login = {
    * @returns 
    */
   pwdLogin(data) {
-    return Vue.http.post(API_ROOT + 'user/app_login', data);
+    return Vue.http.post(API_ROOT + 'user/app_login' + sourceStr, data);
   },
   /**
    * 注册接口
@@ -30,7 +31,7 @@ export const login = {
    * @returns 
    */
   register(data){
-    return Vue.http.post(API_ROOT + 'user/app_register',data);
+    return Vue.http.post(API_ROOT + 'user/app_register' + sourceStr, data);
   },
   /**
    * 忘记密码接口
@@ -41,7 +42,7 @@ export const login = {
    * @returns 
    */
   updatePwd(data){
-    return Vue.http.post(API_ROOT + 'user/update_password',data);
+    return Vue.http.post(API_ROOT + 'user/update_password' + sourceStr,data);
   },
   /**
    * 发送验证码接口
@@ -51,7 +52,7 @@ export const login = {
    * @returns 
    */
   sendCode(data){
-    return Vue.http.post(API_ROOT + 'user/send_phone_code',data);
+    return Vue.http.post(API_ROOT + 'user/send_phone_code' + sourceStr,data);
   },
   /**
    * 验证码登录接口
@@ -61,7 +62,7 @@ export const login = {
    * @returns 
    */
   codeLogin(data){
-    return Vue.http.post(API_ROOT + 'user/code_login',data);
+    return Vue.http.post(API_ROOT + 'user/code_login' + sourceStr,data);
   }
 }
 
@@ -76,7 +77,7 @@ export const newMain = {
    * @returns 
    */
   channelList(data) {
-    return Vue.http.get(API_ROOT + 'index/channelList',{params:data});
+    return Vue.http.get(API_ROOT + 'index/channelList' + sourceStr,{params:data});
   },
   /**
    * 获取标签
@@ -84,7 +85,7 @@ export const newMain = {
    * @returns 
    */
   iconList(data) {
-    return Vue.http.get(API_ROOT + 'index/iconList',{params:data});
+    return Vue.http.get(API_ROOT + 'index/iconList' + sourceStr,{params:data});
   },
   /**
    * 获取标签详情
@@ -95,7 +96,7 @@ export const newMain = {
    * page_name
    */
   iconDetail(data) {
-    return Vue.http.get(API_ROOT + 'index/iconDetail',{params:data});
+    return Vue.http.get(API_ROOT + 'index/iconDetail' + sourceStr,{params:data});
   },
   /**
    * 新品特惠
@@ -105,7 +106,7 @@ export const newMain = {
    * page_number
    */
   newGoods(data) {
-    return Vue.http.get(API_ROOT + 'index/newGoods',{params:data});
+    return Vue.http.get(API_ROOT + 'index/newGoods' + sourceStr,{params:data});
   },
   /**
    * 精选商家
@@ -116,7 +117,7 @@ export const newMain = {
    * page_number
    */
   iconShop(data) {
-    return Vue.http.get(API_ROOT + 'index/iconShop',{params:data});
+    return Vue.http.get(API_ROOT + 'index/iconShop' + sourceStr,{params:data});
   },
   /**
    * 频道详情
@@ -124,7 +125,7 @@ export const newMain = {
    * @returns 
    */
   channelDetail(data) {
-    return Vue.http.get(API_ROOT + 'index/channelDetail',{params:data});
+    return Vue.http.get(API_ROOT + 'index/channelDetail' + sourceStr,{params:data});
   },
 }
 
@@ -143,7 +144,7 @@ export const main = {
    * @returns 
    */
   getBanner(data) {
-    return Vue.http.get(API_ROOT + 'index/banner',{params:data});
+    return Vue.http.get(API_ROOT + 'index/banner' + sourceStr,{params:data});
   },
   /**
    * 获取首页热租商品以及更多
@@ -154,7 +155,7 @@ export const main = {
    * @returns 
    */
   goodsHot(data) { 
-    return Vue.http.get(API_ROOT + 'index/recomandgoods',{params:data});
+    return Vue.http.get(API_ROOT + 'index/recomandgoods' + sourceStr,{params:data});
   },
   /**
    * 首页推荐商品
@@ -162,7 +163,7 @@ export const main = {
    * @returns 
    */
   goodsIndexRecom(data) {
-    return Vue.http.get(API_ROOT + 'index/hotgoods',{params:data});
+    return Vue.http.get(API_ROOT + 'index/hotgoods' + sourceStr,{params:data});
   },
   /**
    * 首页热门标签位置
@@ -170,7 +171,7 @@ export const main = {
    * @returns 
    */
   hotTagLabel(data) {
-    return Vue.http.get(API_ROOT + 'index/hotlabel',{params:data});
+    return Vue.http.get(API_ROOT + 'index/hotlabel' + sourceStr,{params:data});
   },
   /**
    * 搜索商品
@@ -180,7 +181,7 @@ export const main = {
    * @returns 
    */
   searchGoods(data) {
-    return Vue.http.get(API_ROOT + 'index/searchgoods',{params:data});
+    return Vue.http.get(API_ROOT + 'index/searchgoods' + sourceStr,{params:data});
   },
   /**
    * 获取热门标签对应具体商品
@@ -190,7 +191,7 @@ export const main = {
    * @returns 
    */
   searchGoodsCategory(data) {
-    return Vue.http.get(API_ROOT + 'index/searchgoodscategory',{params:data});
+    return Vue.http.get(API_ROOT + 'index/searchgoodscategory' + sourceStr,{params:data});
   },
   /**
    * 热门推荐商品
@@ -198,7 +199,7 @@ export const main = {
    * @returns 
    */
   hotRecord(data) {
-    return Vue.http.get(API_ROOT + 'index/goodshotrecord',{params:data});
+    return Vue.http.get(API_ROOT + 'index/goodshotrecord' + sourceStr,{params:data});
   },
   /**
    * 获取商品详情
@@ -208,7 +209,7 @@ export const main = {
    * @returns 
    */
   goodsInfo(data) {
-    return Vue.http.post(API_ROOT + 'index/goodslist',data);
+    return Vue.http.post(API_ROOT + 'index/goodslist' + sourceStr,data);
   },
   /**
    * 店铺信息
@@ -217,7 +218,7 @@ export const main = {
    * @returns 
    */
   storeInfo(data) {
-    return Vue.http.post(API_ROOT + 'index/storelist',data);
+    return Vue.http.post(API_ROOT + 'index/storelist' + sourceStr,data);
   },
   /**
    * 店铺商品列表
@@ -226,7 +227,7 @@ export const main = {
    * @returns 
    */
   storeGoods(data) {
-    return Vue.http.get(API_ROOT + 'index/storegoodslist',{params:data});
+    return Vue.http.get(API_ROOT + 'index/storegoodslist' + sourceStr,{params:data});
   },
   /**
    * 商品评论列表
@@ -234,7 +235,7 @@ export const main = {
    * @returns 
    */
   goodsComment(data) {
-    return Vue.http.get(API_ROOT + 'index/goodscommentlist',{params:data});
+    return Vue.http.get(API_ROOT + 'index/goodscommentlist' + sourceStr,{params:data});
   },
   /**
    * 判断商品是否支持该地址
@@ -246,7 +247,7 @@ export const main = {
    * @returns 
    */
   judgeAddress(data) {
-    return Vue.http.post(API_ROOT + 'index/is_address',data);
+    return Vue.http.post(API_ROOT + 'index/is_address' + sourceStr,data);
   },
   /**
    * 获取商品分类
@@ -254,7 +255,7 @@ export const main = {
    * @returns 
    */
   goodsCategory(data) {
-    return Vue.http.get(API_ROOT + 'index/getGoodsCategory',{params:data});
+    return Vue.http.get(API_ROOT + 'index/getGoodsCategory' + sourceStr,{params:data});
   },
   /**
    * 获取商品租赁规则
@@ -263,7 +264,7 @@ export const main = {
    * @returns 
    */
   goodsRule(data) {
-    return Vue.http.post(API_ROOT + 'index/goodsleasing',data);
+    return Vue.http.post(API_ROOT + 'index/goodsleasing' + sourceStr,data);
   },
   /**
    * 添加到购物车
@@ -284,7 +285,7 @@ export const main = {
    * @returns 
    */
   addCar(data) {
-    return Vue.http.post(API_ROOT + 'index/cartContentAdd',data);
+    return Vue.http.post(API_ROOT + 'index/cartContentAdd' + sourceStr,data);
   },
   
 }
@@ -308,7 +309,7 @@ export const person = {
    * @returns 
    */
   getAddressList(data) {
-    return Vue.http.get(API_ROOT + 'user/useraddresssel',{params:data});
+    return Vue.http.get(API_ROOT + 'user/useraddresssel' + sourceStr,{params:data});
   },
   /**
    * 添加用户地址
@@ -326,7 +327,7 @@ export const person = {
    * @returns 
    */
   addressAdd(data) {
-    return Vue.http.post(API_ROOT + 'user/useraddressadd',data);
+    return Vue.http.post(API_ROOT + 'user/useraddressadd' + sourceStr,data);
   },
   /**
    * 更改地址数据
@@ -345,7 +346,7 @@ export const person = {
    * @returns 
    */
   addressEdit(data) {
-    return Vue.http.post(API_ROOT + 'user/useraddressedit',data);
+    return Vue.http.post(API_ROOT + 'user/useraddressedit' + sourceStr,data);
   },
   /**
    * 设置默认地址
@@ -356,31 +357,31 @@ export const person = {
    * @returns 
    */
   addressDefault(data) {
-    return Vue.http.post(API_ROOT + 'user/defaultaddress',data);
+    return Vue.http.post(API_ROOT + 'user/defaultaddress' + sourceStr,data);
   },
   /*
   * 获取用户芝麻信用分信息
   */
   getUserZMScore(data){
-    return Vue.http.post(API_ROOT + 'zhima/getUserZMScore',data);
+    return Vue.http.post(API_ROOT + 'zhima/getUserZMScore' + sourceStr,data);
   },
   /**
    * 处理用户实名信息
    */
   handleUserIdentityInfo(data){
-    return Vue.http.post(API_ROOT + 'zhima/handleUserIdentityInfo',data);
+    return Vue.http.post(API_ROOT + 'zhima/handleUserIdentityInfo' + sourceStr,data);
   },
   /**
    * 更新用户芝麻信用分
    */
   updateUserZMScore(data){
-    return Vue.http.post(API_ROOT + 'zhima/updateUserZMScore',data);
+    return Vue.http.post(API_ROOT + 'zhima/updateUserZMScore' + sourceStr,data);
   },
   /**
    * 查询芝麻减免信息
    */
   getUserZMReliefInfo(data){
-    return Vue.http.post(API_ROOT + 'zhima/getUserZMReliefInfo',data);
+    return Vue.http.post(API_ROOT + 'zhima/getUserZMReliefInfo' + sourceStr,data);
   },
   /**
    * 删除地址
@@ -391,7 +392,7 @@ export const person = {
    * @returns 
    */
   addressDelete(data) {
-    return Vue.http.post(API_ROOT + 'user/useraddressdel',data);
+    return Vue.http.post(API_ROOT + 'user/useraddressdel' + sourceStr,data);
   },
   /**
    * 获取用户默认地址
@@ -403,7 +404,7 @@ export const person = {
    * @returns 
    */
   addressInfo(data) {
-    return Vue.http.post(API_ROOT + 'user/useraddressinfo',data);
+    return Vue.http.post(API_ROOT + 'user/useraddressinfo' + sourceStr,data);
   },
   /**
    * 获取商品收藏列表
@@ -415,7 +416,7 @@ export const person = {
    * @returns 
    */
   shopCollectList(data) {
-    return Vue.http.get(API_ROOT + 'user/usercollect',{params:data});
+    return Vue.http.get(API_ROOT + 'user/usercollect' + sourceStr,{params:data});
   },
   /**
    * userId
@@ -425,7 +426,7 @@ export const person = {
    * @returns 
    */
   collectShop(data) {
-    return Vue.http.post(API_ROOT + 'user/usercollectadd',data);
+    return Vue.http.post(API_ROOT + 'user/usercollectadd' + sourceStr,data);
   },
   /**
    * userId
@@ -435,7 +436,7 @@ export const person = {
    * @returns 
    */
   unCollectShop(data) {
-    return Vue.http.post(API_ROOT + 'user/usercollectdel',data);
+    return Vue.http.post(API_ROOT + 'user/usercollectdel' + sourceStr,data);
   },
   /**
    * 用户实名认证
@@ -447,7 +448,7 @@ export const person = {
    * @returns 
    */
   userIdentify(data) {
-    return Vue.http.post(API_ROOT + 'user/useridentiadd',data);
+    return Vue.http.post(API_ROOT + 'user/useridentiadd' + sourceStr,data);
   },
   /**
    * 用户反馈
@@ -459,7 +460,7 @@ export const person = {
    * @returns 
    */
   feedback(data) {
-    return Vue.http.post(API_ROOT + 'user/opinionAdd',data);
+    return Vue.http.post(API_ROOT + 'user/opinionAdd' + sourceStr,data);
   }
 };
 
@@ -482,7 +483,7 @@ export const order = {
    * @returns 
    */
   orderConfirm(data) {
-    return Vue.http.post(API_ROOT + 'index/confirmorder',data);
+    return Vue.http.post(API_ROOT + 'index/confirmorder' + sourceStr,data);
   },
   /**
    * 获取物流信息
@@ -494,7 +495,7 @@ export const order = {
    * @returns 
    */
   expressInfo(data) {
-    return Vue.http.post(API_ROOT + 'user/alicloudapi',data);
+    return Vue.http.post(API_ROOT + 'user/alicloudapi' + sourceStr,data);
   },
   /**
    * 获取物流方式
@@ -506,7 +507,7 @@ export const order = {
    * @returns 
    */
   orderTpl(data) {
-    return Vue.http.post(API_ROOT + 'index/tpl_list',data);
+    return Vue.http.post(API_ROOT + 'index/tpl_list' + sourceStr,data);
   },
   /**
    * 运费模板
@@ -519,7 +520,7 @@ export const order = {
    * @returns 
    */
   tplPrice(data) {
-    return Vue.http.post(API_ROOT + 'order/tpl_price',data);
+    return Vue.http.post(API_ROOT + 'order/tpl_price' + sourceStr,data);
   },
    /**
    * 自提点列表
@@ -535,7 +536,7 @@ export const order = {
    * @returns 
    */
   goodsSince(data) {
-    return Vue.http.get(API_ROOT + 'index/since_sel',{params:data});
+    return Vue.http.get(API_ROOT + 'index/since_sel' + sourceStr,{params:data});
   },
   /**
    * 商品归还地址列表
@@ -548,7 +549,7 @@ export const order = {
    * @returns 
    */
   goodsRevert(data) {
-    return Vue.http.get(API_ROOT + 'index/revert_sel',{params:data});
+    return Vue.http.get(API_ROOT + 'index/revert_sel' + sourceStr,{params:data});
   },
   /**
    * 订单列表
@@ -570,7 +571,7 @@ export const order = {
    * @returns 
    */
   orderlist(data) {
-    return Vue.http.get(API_ROOT + 'order/orderlist',{params:data});
+    return Vue.http.get(API_ROOT + 'order/orderlist' + sourceStr,{params:data});
   },
   /**
    * 删除订单
@@ -581,7 +582,7 @@ export const order = {
    * @returns 
    */
   orderDel(data) {
-    return Vue.http.post(API_ROOT + 'order/orderdel',data);
+    return Vue.http.post(API_ROOT + 'order/orderdel' + sourceStr,data);
   },
   /**
    * 确认收货
@@ -592,7 +593,7 @@ export const order = {
    * @returns 
    */
   orderReceipt(data) { //确认收货
-    return Vue.http.post(API_ROOT + 'order/orderreceipt',data);
+    return Vue.http.post(API_ROOT + 'order/orderreceipt' + sourceStr,data);
   },
   /**
    * 确认归还
@@ -608,7 +609,7 @@ export const order = {
    * @returns 
    */
   orderReturn(data) {
-    return Vue.http.post(API_ROOT + 'order/orderreturn',data);
+    return Vue.http.post(API_ROOT + 'order/orderreturn' + sourceStr,data);
   },
  /**
    * 确认结算
@@ -619,7 +620,7 @@ export const order = {
    * @returns 
    */
   orderSettle(data) {
-    return Vue.http.post(API_ROOT + 'order/ordersettlement',data);
+    return Vue.http.post(API_ROOT + 'order/ordersettlement' + sourceStr,data);
   },
   /**
    * 获取单个订单详情
@@ -630,7 +631,7 @@ export const order = {
    * @returns 
    */
   orderInfo(data) {
-    return Vue.http.post(API_ROOT + 'order/orderfind',data);
+    return Vue.http.post(API_ROOT + 'order/orderfind' + sourceStr,data);
   },
    /**
    * 生成支付订单
@@ -650,7 +651,7 @@ export const order = {
    * @returns 
    */
   orderPay(data) {
-    return Vue.http.post(API_ROOT + 'order/orderadd',data);
+    return Vue.http.post(API_ROOT + 'order/orderadd' + sourceStr,data);
   },
   /**
    * 待付款订单生成支付订单
@@ -661,7 +662,7 @@ export const order = {
    * @returns 
    */
   orderShipPay(data) {
-    return Vue.http.post(API_ROOT + 'order/ordershippingpay',data);
+    return Vue.http.post(API_ROOT + 'order/ordershippingpay' + sourceStr,data);
   },
   /**
    * 获取用户某状态订单情况
@@ -671,7 +672,7 @@ export const order = {
    * @returns 
    */
   orderNum(data) {
-    return Vue.http.post(API_ROOT + 'Order/orderInfoto',data);
+    return Vue.http.post(API_ROOT + 'Order/orderInfoto' + sourceStr,data);
   },
   /**
    * 获取订单结算单信息
@@ -682,7 +683,7 @@ export const order = {
    * @returns 
    */
   orderSettleInfo(data) {
-    return Vue.http.post(API_ROOT + 'order/setbill',data);
+    return Vue.http.post(API_ROOT + 'order/setbill' + sourceStr,data);
   },
   /**
    * 提交订单评论
@@ -694,7 +695,7 @@ export const order = {
    * @returns 
    */
   orderComment(data) {
-    return Vue.http.post(API_ROOT + 'Order/orderComment',data);
+    return Vue.http.post(API_ROOT + 'Order/orderComment' + sourceStr,data);
   },
   /**
    * 获取订单部评论
@@ -705,7 +706,7 @@ export const order = {
    * @returns 
    */
   myOrderComment(data) {
-    return Vue.http.post(API_ROOT + 'order/mycomment',data);
+    return Vue.http.post(API_ROOT + 'order/mycomment' + sourceStr,data);
   },
   /* 微信支付 */
   /* userId
@@ -713,7 +714,7 @@ export const order = {
   orderSn  生成支付订单接口返回的订单编号
   payMethod   2 */
   OrderWechat(data) {
-    return Vue.http.post("https://api.zujiekeji.cn/pay/jsapi/index",data);
+    return Vue.http.post("https://api.zujiekeji.cn/pay/jsapi/index" + sourceStr,data);
   },
   /**
    * 提醒结算
@@ -723,7 +724,7 @@ export const order = {
    * type
    */
   orderRemind(data){
-    return Vue.http.post(API_ROOT +"message/subOrderMsg",data);
+    return Vue.http.post(API_ROOT +"message/subOrderMsg" + sourceStr,data);
   }
   
 }
@@ -742,14 +743,14 @@ export const card={
      * page
      */
     myCardList(data){
-      return Vue.http.get(API_ROOT + 'coupon/index',{params:data});
+      return Vue.http.get(API_ROOT + 'coupon/index' + sourceStr,{params:data});
       
     },
     /**
      * 店铺红包列表
      */
     stordCardList(data){
-      return Vue.http.get(API_ROOT + 'coupon/storeCoupon',{params:data});
+      return Vue.http.get(API_ROOT + 'coupon/storeCoupon' + sourceStr,{params:data});
     },
     /**
      * 
@@ -759,13 +760,13 @@ export const card={
      * @returns 
      */
     storeCard(data){
-      return Vue.http.post(API_ROOT + 'coupon/userCoupon',data);
+      return Vue.http.post(API_ROOT + 'coupon/userCoupon' + sourceStr,data);
     },
     /**
      * 领取店铺优惠券
      */
     receiveStoreCoupon(data){
-      return Vue.http.post(API_ROOT + 'coupon/receiveStoreCoupon',data);
+      return Vue.http.post(API_ROOT + 'coupon/receiveStoreCoupon' + sourceStr,data);
     },
     /**
      * 获取新人红包
@@ -773,13 +774,13 @@ export const card={
      * @returns 
      */
     receiveNewerCoupon(data){
-      return Vue.http.post(API_ROOT + 'coupon/receiveNewerCoupon',data);
+      return Vue.http.post(API_ROOT + 'coupon/receiveNewerCoupon' + sourceStr,data);
     },
     /**
      * 微信分享接口
      */
     wxShare(data){
-      return Vue.http.get('https://www.zujiekeji.cn/index/wechat/getSignature',{params:data});
+      return Vue.http.get('https://www.zujiekeji.cn/index/wechat/getSignature' + sourceStr,{params:data});
     },
     /**
      * 是否有活动
@@ -787,7 +788,7 @@ export const card={
      * @returns 
      */
     getCouponActive(data){
-      return Vue.http.get(API_ROOT + 'coupon/getCouponActive',{params:data});
+      return Vue.http.get(API_ROOT + 'coupon/getCouponActive' + sourceStr,{params:data});
     },
     
     
@@ -803,7 +804,7 @@ export const alipay={
      * @returns 
      */
     orderId(data){  
-      return Vue.http.post(API_ROOT + 'Zmjiehuan/createRentOrder',data);
+      return Vue.http.post(API_ROOT + 'Zmjiehuan/createRentOrder' + sourceStr,data);
     }, 
     /**
      * 撤销订单
@@ -811,7 +812,7 @@ export const alipay={
      * @returns 
      */
     return(data){  
-      return Vue.http.post(API_ROOT + 'Zmjiehuan/deleteRentOrder',data);
+      return Vue.http.post(API_ROOT + 'Zmjiehuan/deleteRentOrder' + sourceStr,data);
     }, 
     /**
      * 成功订单
@@ -819,7 +820,7 @@ export const alipay={
      * @returns 
      */
     success(data){  
-      return Vue.http.post(API_ROOT + 'Zmjiehuan/chanelSuccessOrder',data);
+      return Vue.http.post(API_ROOT + 'Zmjiehuan/chanelSuccessOrder' + sourceStr,data);
     }, 
     
 }

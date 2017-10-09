@@ -153,7 +153,7 @@
                     <!-- 押金 -->
                     <div class="goodsinfo_content_despoite">
                         押金
-                        <span>{{couterDespoite | currency('￥') }}</span>
+                        <span>{{couterDespoite - antDerate | currency('￥') }}</span>
                     </div>
                     <!-- 芝麻信用授权 -->
                     <div @click="authorization()" class="goodsinfo_content_alltime">
@@ -591,7 +591,7 @@ export default {
          * 计算芝麻信用押金减免额度
          */
         antDerate(){
-            if(this.couterDespoite == 0){
+            if(this.couterDespoite == 0 || this.couterDespoite - this.totalRent <= 0){
                 return 0;
             }else{
                return (this.couterDespoite * this.reliefRate).toFixed(2);
@@ -1066,7 +1066,7 @@ export default {
                         if (res.body.code == 200) {
                             localStorage.setItem('orderClick', '11');
                             this.$router.push({
-                                path: '/orderInfo/' + cartId + '/?address=' + res.body.data.enterprise_license_location
+                                path: '/orderInfo/' + cartId + '/?address=' + res.body.data.enterprise_license_location + '&antDerate=' + this.antDerate
                             });
                         }
                     });

@@ -277,7 +277,8 @@
                             <button class="orderInfon_main_cardclose" type="button" @click="closeCard">不使用优惠券</button>
                         </popup>
                     </div>
-                    <cell title="商品押金" :value="goodsDespoit | currency('￥')"></cell>
+                    <cell title="商品押金" :value="goodsDespoit - antDerate | currency('￥')"></cell>
+                    <div style="font-size:12px;color:red;margin:-12px 0 0 15px">平台已为您减免{{antDerate}}元租金</div>
                     <x-textarea :max="20" v-model="option" placeholder="买家留言"></x-textarea>
                 </group>
             </div>
@@ -285,7 +286,7 @@
             <footer class="orderInfon_footer">
                 <div class="orderInfon_footer_price">
                     合计：
-                    <span>{{goodsTotolPrice | currency('￥')}}</span>
+                    <span>{{goodsTotolPrice - antDerate | currency('￥')}}</span>
                 </div>
                 <button class="orderInfon_footer_btn" @click="buygoods" type="button">提交订单</button>
             </footer>
@@ -369,6 +370,7 @@ export default {
             /* 活动价格 */
             act_price:null,
             storeInfo:null,
+            antDerate:0
         }
     },
     computed: {
@@ -764,6 +766,7 @@ export default {
         /* 数据初始化 */
         Initialization() {
             this.storeInfo=this.$route.query.address;
+            this.antDerate = this.$route.query.antDerate;
             this.cartId = this.$route.params.id;
             API.order.orderConfirm({
                 userId: this.getUserInfoUserId,
