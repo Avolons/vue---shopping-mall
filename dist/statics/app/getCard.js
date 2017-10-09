@@ -43,11 +43,12 @@ document.querySelector(".share_main_btn").addEventListener('click', function () 
     var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
     if (getQueryString("type") == 'H5') {
         /* h5状态 */
-        var userInfo = JSON.parse(localStorage.getItem('userInfo'));
+        var userInfo = localStorage.getItem('userInfo');
         if (!userInfo) {
             window.location.href = "http://127.0.0.1:8081/#/login";
             return false;
         }
+        userInfo = JSON.parse(userInfo);
         getCard(userInfo.id, userInfo.token);
     } else if (isAndroid) {
         Android.getCoupon();

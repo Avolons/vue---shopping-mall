@@ -8,6 +8,11 @@
 /**
  * 配置项目常用变量
  */
+body {
+  height: 100%;
+  background-color: #fa4926;
+}
+
 .share_main {
   position: relative;
 }
@@ -39,12 +44,12 @@
   -ms-flex-align: center;
       align-items: center;
   border: none;
-  top: 25.78%;
+  top: 33.29%;
   width: 56.4%;
   display: block;
   left: 20.53%;
   position: absolute;
-  height: 3.27%;
+  height: 4.24%;
   background-color: transparent;
   outline: none;
 }
@@ -59,12 +64,12 @@
   -ms-flex-align: center;
       align-items: center;
   border: none;
-  top: 29.7%;
+  top: 38.62%;
   width: 29.33%;
   display: block;
   left: 20.53%;
   position: absolute;
-  height: 3.27%;
+  height: 4.24%;
   background-color: transparent;
   outline: none;
 }
@@ -79,12 +84,12 @@
   -ms-flex-align: center;
       align-items: center;
   border: none;
-  top: 34%;
+  top: 44%;
   width: 56.4%;
   display: block;
   left: 20.53%;
   position: absolute;
-  height: 3.27%;
+  height: 4.24%;
   background-color: transparent;
   outline: none;
 }
@@ -95,18 +100,18 @@
   font-size: 0.37333rem;
   color: #d83739;
   border: none;
-  top: 29.7%;
+  top: 38.62%;
   width: 24%;
   display: block;
   right: 22.67%;
   position: absolute;
-  height: 3.27%;
+  height: 4.24%;
   background-color: transparent;
   outline: none;
 }
 
 .share_main_registerbtn {
-  top: 38.11%;
+  top: 49.15%;
   width: 56.4%;
   display: block;
   left: 20.53%;
@@ -117,23 +122,23 @@
 }
 
 .share_main_sharebtn {
-  top: 38.87%;
+  top: 55.84%;
   width: 67%;
   display: block;
   left: 15.2%;
   position: absolute;
-  height: 4.95%;
+  height: 7.1%;
   background-color: transparent;
   outline: none;
 }
 
 .share_main_btn {
-  top: 38.87%;
+  top: 55.84%;
   width: 67%;
   display: block;
   left: 15.2%;
   position: absolute;
-  height: 4.95%;
+  height: 7.1%;
   background-color: transparent;
   outline: none;
 }

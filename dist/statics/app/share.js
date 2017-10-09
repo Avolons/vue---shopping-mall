@@ -14,11 +14,12 @@ document.querySelector(".share_main_sharebtn").addEventListener('click', functio
     var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
     var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
     if (getQueryString("type") == 'H5') {
-        var userInfo = JSON.parse(localStorage.getItem('userInfo'));
+        var userInfo = localStorage.getItem('userInfo');
         if (!userInfo) {
             window.location.href = "http://127.0.0.1:8081/#/login";
             return false;
         }
+        userInfo = JSON.parse(userInfo);
         (function () {
             $.ajax({
                 url: "http://106.14.135.243:8082/index/coupon/activtyShare",
