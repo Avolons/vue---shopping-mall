@@ -153,15 +153,16 @@
                     <!-- 押金 -->
                     <div class="goodsinfo_content_despoite">
                         押金
-                        <span>{{couterDespoite - antDerate | currency('￥') }}</span>
+                        <span>{{couterDespoite | currency('￥') }}</span>
+                        <!-- <span>{{couterDespoite - antDerate | currency('￥') }}</span> -->
                     </div>
                     <!-- 芝麻信用授权 -->
-                    <div @click="authorization()" class="goodsinfo_content_alltime">
+                    <!-- <div @click="authorization()" class="goodsinfo_content_alltime">
                         芝麻信用押金减免额
                         <span class="authorization" v-show="!zmed">去授权</span>
                         <i style="color: #989898;" class="iconfont" v-show="!zmed">&#xe6d7;</i>
                         <span v-show="zmed" style="color:red">{{antDerate}}元</span>
-                    </div>
+                    </div> -->
                     <!-- 配送地址 -->
                     <div class="goodsinfo_content_address">
                         <group label-width="5em" label-align="left">
@@ -591,7 +592,7 @@ export default {
          * 计算芝麻信用押金减免额度
          */
         antDerate(){
-            if(this.couterDespoite == 0 || this.couterDespoite - this.totalRent <= 0){
+            if(this.couterDespoite == 0 || this.currentTypedata.goods_deposit - this.totalRent < 0){
                 return 0;
             }else{
                return (this.couterDespoite * this.reliefRate).toFixed(2);
