@@ -92,8 +92,8 @@ body{
       </template>
       
       <!-- 两种状态，授权状态和未授权状态 -->
-      <template v-if="getIsCertify==4 || getIsCertify==2 ">
-          <cell  title="芝麻信用" >
+      <template v-if="getIsCertify==4 || getIsCertify==2 " >
+          <cell  title="芝麻信用" @click.native="authorization">
               <span style="font-size:12px;color:red">{{relief_limit}}</span>
               <i slot="icon" class="iconfont">&#xe60a;</i>
           </cell>
@@ -171,9 +171,9 @@ import { API, getQuery } from '../../services';
             })
         },
         authorization(){
-            if(this.zmed){
-                return;
-            }
+            // if(this.zmed){
+            //     return;
+            // }
             this.$router.push({
                 path:'/authInfo'
             })
