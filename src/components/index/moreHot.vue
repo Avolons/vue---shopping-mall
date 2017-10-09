@@ -57,6 +57,10 @@ export default {
             if (this.haveData) {
                 this.loadshow = true;
                 if (this.goodstype == 1) {
+                    if(this.$route.query.type=="icon"){
+                        this.getIcon();
+                        return false;
+                    }
                     this.getChannelGoods();
                 } else if (this.goodstype == 2) {
                     this.getMoreHot();
@@ -131,6 +135,25 @@ export default {
                 this.haveData=false;
             }   
           });
+        },
+        getIcon(){
+          API.newMain.iconDetail({
+              icon_id:this.icon_id,
+              page_number:10,
+              page:this.page,
+          }).then((res)=>{
+              setTimeout(() => {
+                this.goodsList=this.goodsList.concat(res.body.data.data);
+                this.canBottom = true;
+                this.loadshow = false;
+            }, 500);
+            if(res.body.data.data.length==10){
+                this.haveData=true;
+                this.page++;
+            }else{
+                this.haveData=false;
+            }   
+          });  
         }
     },
     activated() {

@@ -735,7 +735,7 @@ export default {
             localStorage.setItem("scrolltop", scrollTop);
             if(type==1){
                 this.$router.push({
-                    path:'/moreHot/?name='+name+'&id='+id
+                    path:'/moreHot/?name='+name+'&id='+id+'&type=icon'
                 })
             }else if(type==2){
                 this.$router.push({

@@ -8,7 +8,7 @@ var confrim = document.querySelector('.share_main_confrim');
 /* 领取优惠券 */
 function getCard(id, token) {
     $.ajax({
-        url: "http://106.14.135.243:8082/index/coupon/receiveCoupon",
+        url: "https://isapi.zujiekeji.cn/index/coupon/receiveCoupon",
         type: "POST",
         data: {
             userId: id,

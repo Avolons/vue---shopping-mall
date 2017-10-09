@@ -31,7 +31,7 @@ getCode.addEventListener('click', function () {
         return false;
     }
     $.ajax({
-        url: "http://isapi.zujiekeji.cn/index/user/send_phone_code",
+        url: "https://isapi.zujiekeji.cn/index/user/send_phone_code",
         type: "POST",
         data: {
             user_phone: mobile.value,
@@ -95,7 +95,7 @@ document.querySelector(".share_main_registerbtn").addEventListener('click', func
         return false;
     }
     $.ajax({
-        url: "http://isapi.zujiekeji.cn/index/user/app_register",
+        url: "https://isapi.zujiekeji.cn/index/user/app_register",
         type: "POST",
         data: {
             user_phone: mobile.value,
@@ -106,7 +106,7 @@ document.querySelector(".share_main_registerbtn").addEventListener('click', func
         dataType: "json",
         success: function success(data) {
             $.ajax({
-                url: "http://isapi.zujiekeji.cn/index/coupon/receiveShareCoupon",
+                url: "https://isapi.zujiekeji.cn/index/coupon/receiveShareCoupon",
                 type: "POST",
                 data: {
                     p: getQueryString("p"),

@@ -22,7 +22,7 @@ document.querySelector(".share_main_sharebtn").addEventListener('click', functio
         userInfo = JSON.parse(userInfo);
         (function () {
             $.ajax({
-                url: "http://isapi.zujiekeji.cn/index/coupon/activtyShare",
+                url: "https://isapi.zujiekeji.cn/index/coupon/activtyShare",
                 type: "POST",
                 data: {
                     userId: userInfo.id,
