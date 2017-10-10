@@ -851,7 +851,19 @@ export default {
                     let self = this;
                     let openId = localStorage.getItem("openId");
                     /* order_id */
-                        API.alipay.orderId({
+                    API.order.OrderWechat({
+                            userId: this.getUserInfoUserId,
+                            token: this.getUserInfoToken,
+                            orderSn: res.body.data.order_big_sn,
+                            payMethod: this.payMethod,
+                            openId: openId,
+                        }).then((resopndy) => {
+                            const div = document.createElement('div');
+                            div.innerHTML = resopndy.body;
+                            document.body.appendChild(div);
+                            document.forms.alipaysubmit.submit();
+                        })
+                       /*  API.alipay.orderId({
                             userId:this.getUserInfoUserId,
                             Info:{
                                 goods_name:this.infoData.shopeName,
@@ -868,7 +880,7 @@ export default {
                                     window.location.href=res.body.data.link_url;
                                 }
                         },(err)=>{
-                        });
+                        }); */
                   
                 }
             });    

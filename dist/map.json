@@ -45,11 +45,11 @@
             "type": "js"
         },
         "modules/app/register.js": {
-            "uri": "/statics/app/register_4bfe01e.js",
+            "uri": "/statics/app/register_c792923.js",
             "type": "js"
         },
         "modules/app/share.js": {
-            "uri": "/statics/app/share_f9a8d43.js",
+            "uri": "/statics/app/share_f718215.js",
             "type": "js"
         }
     },

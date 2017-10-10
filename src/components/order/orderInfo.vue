@@ -113,7 +113,7 @@
                     color: #f80000;
                     width: 50%;
                     display: block;
-                    >span{
+                    >span {
                         color: #272727;
                         font-size: 13px;
                         text-decoration: line-through;
@@ -370,9 +370,9 @@ export default {
             /* 当前红包数据类型 */
             currentCardType: 0,
             /* 活动价格 */
-            act_price:null,
-            storeInfo:null,
-            antDerate:0
+            act_price: null,
+            storeInfo: null,
+            antDerate: 0
         }
     },
     computed: {
@@ -413,7 +413,7 @@ export default {
             if (this.infoData.goods_deposit == 0) {
                 return 0;
             }
-            let despoite = this.infoData.goods_deposit * this.infoData.cart_content_good_amount - (this.goodsAllPrice+this.currentPrice+this.storePrice);
+            let despoite = this.infoData.goods_deposit * this.infoData.cart_content_good_amount - (this.goodsAllPrice + this.currentPrice + this.storePrice);
             if (despoite <= 0) {
                 return 0;
             } else {
@@ -430,9 +430,9 @@ export default {
         /* 租期*金额*数量+押金+运费 */
         goodsAllPrice() {
             let Price;
-            if(this.act_price){
+            if (this.act_price) {
                 Price = this.act_price * this.infoData.cart_time_number * this.infoData.cart_content_good_amount;
-            }else{
+            } else {
                 Price = this.infoData.rent_period_now_rent_price * this.infoData.cart_time_number * this.infoData.cart_content_good_amount;
             }
             return Price;
@@ -455,10 +455,10 @@ export default {
     },
     methods: {
         /* 获取当前活动价格 */
-        getArtPrice(rentType,dataObj){
-            for(let item of dataObj) {
-                if(item.rent_period_type==rentType){
-                    return  item.act_price;
+        getArtPrice(rentType, dataObj) {
+            for (let item of dataObj) {
+                if (item.rent_period_type == rentType) {
+                    return item.act_price;
                 }
             }
             return null;
@@ -543,28 +543,28 @@ export default {
         goShop(item) {
             /* 当前数据类型为店铺红包 */
             if (this.currentCardType == 0) {
-                
+
                 this.cardstate.storeId = item.coupon_no;
                 this.storePrice = 0 - item.amount;
                 if (this.storePrice + this.goodsAllPrice <= 0) {
-                        this.storePrice = 0 - this.goodsAllPrice;
-                    }
+                    this.storePrice = 0 - this.goodsAllPrice;
+                }
                 /* 平台红包已经选择的情况下 */
-                if(this.currentPrice != 0){
-                    if(this.storePrice + this.goodsAllPrice == 0)  {
-                            this.currentPrice = 0;
-                            this.cardstate.id ="";
-                    }else{
-                            this.currentPrice = 0 - (this.goodsAllPrice + this.storePrice);
+                if (this.currentPrice != 0) {
+                    if (this.storePrice + this.goodsAllPrice == 0) {
+                        this.currentPrice = 0;
+                        this.cardstate.id = "";
+                    } else {
+                        this.currentPrice = 0 - (this.goodsAllPrice + this.storePrice);
                     }
                 }
             } else {
-                if (this.storePrice+this.goodsAllPrice == 0) {
+                if (this.storePrice + this.goodsAllPrice == 0) {
                     this.confrim = "已达最大优惠额度";
                     this.toast = true;
                     this.cardShow = false;
                     return false;
-                }else{
+                } else {
                     this.cardstate.id = item.coupon_no;
                     this.currentPrice = 0 - item.amount;
                     if (this.currentPrice + this.storePrice + this.goodsAllPrice <= 0) {
@@ -581,13 +581,13 @@ export default {
             /* 撤销店铺红包 */
             if (this.currentCardType == 0) {
                 /* 存在平台红包的情况下 */
-                if(this.currentPrice!=0){
-                    if(this.currentPrice+this.goodsAllPrice<=0){
-                        this.currentPrice=0-this.goodsAllPrice;
-                    }else{
-                        for(let item of this.zjList) {
-                            if(item.coupon_no==this.cardstate.id){
-                                this.currentPrice=0-item.amount;
+                if (this.currentPrice != 0) {
+                    if (this.currentPrice + this.goodsAllPrice <= 0) {
+                        this.currentPrice = 0 - this.goodsAllPrice;
+                    } else {
+                        for (let item of this.zjList) {
+                            if (item.coupon_no == this.cardstate.id) {
+                                this.currentPrice = 0 - item.amount;
                             }
                         }
                     }
@@ -740,10 +740,9 @@ export default {
                         let self = this;
                         let openId = localStorage.getItem("openId");
                         /* order_id */
-                        API.alipay.orderId({
+                        /* API.alipay.orderId({
                             userId:this.getUserInfoUserId,
                             Info:{
-                                /* 传递借还支付参数 */
                                 goods_name:this.infoData.goodsName,
                                 address:this.getAddress,    
                                 shop_name:this.storeInfo,
@@ -758,8 +757,19 @@ export default {
                                     window.location.href=res.body.data.link_url;
                                 }
                         },(err)=>{
-                        });
-                       
+                        }); */
+                        API.order.OrderWechat({
+                            userId: this.getUserInfoUserId,
+                            token: this.getUserInfoToken,
+                            orderSn: res.body.data.order_big_sn,
+                            payMethod: this.payMethod,
+                            openId: openId,
+                        }).then((resopndy) => {
+                            const div = document.createElement('div');
+                            div.innerHTML = resopndy.body;
+                            document.body.appendChild(div);
+                            document.forms.alipaysubmit.submit();
+                        })
                     }
                 });
             } else {
@@ -768,7 +778,7 @@ export default {
         },
         /* 数据初始化 */
         Initialization() {
-            this.storeInfo=this.$route.query.address;
+            this.storeInfo = this.$route.query.address;
             this.antDerate = this.$route.query.antDerate;
             this.cartId = this.$route.params.id;
             API.order.orderConfirm({
@@ -776,14 +786,14 @@ export default {
                 token: this.getUserInfoToken,
                 cartId: [this.cartId],
             }).then((res) => {
-                if(res.body.code != 200){
-                      this.$router.push({
+                if (res.body.code != 200) {
+                    this.$router.push({
                         path: '/index/main/order'
-                    });  
-                    }
+                    });
+                }
                 this.infoData = res.body.data.cart_list[0];
                 /* 获取当前活动价格 */
-                this.act_price=this.getArtPrice(this.infoData.rent_period_type,this.infoData.rent_period);
+                this.act_price = this.getArtPrice(this.infoData.rent_period_type, this.infoData.rent_period);
                 this.orderLogistics = "/orderLogistics/" + this.infoData.cart_content_goods_id;
                 /* 获取红包 1为平台优惠券 2为店铺优惠券 */
                 API.card.storeCard({
@@ -807,11 +817,11 @@ export default {
                         this.storeList = res.body.data;
                     }
                 });
-            },(res)=>{
-                     this.$router.push({
-                        path: '/index/main/order'
-                    });
+            }, (res) => {
+                this.$router.push({
+                    path: '/index/main/order'
                 });
+            });
             this.getDefaultAddress();
             /* 清除之前的快递信息 */
             this.$store.dispatch('ClearTpl');
