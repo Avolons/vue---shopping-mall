@@ -848,7 +848,7 @@ export default {
                     path:'/selected/?id='+id
                 })
             }else{
-                window.location.href="/share.html?type=H5";
+                window.location.href="/down.html";
             }
         },
         /* 是否显示活动红包 */

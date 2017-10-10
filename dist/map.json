@@ -40,6 +40,10 @@
             "uri": "/statics/css/share.css",
             "type": "css"
         },
+        "modules/app/down.js": {
+            "uri": "/statics/app/down_ce51643.js",
+            "type": "js"
+        },
         "modules/app/getCard.js": {
             "uri": "/statics/app/getCard_b4bdeed.js",
             "type": "js"
