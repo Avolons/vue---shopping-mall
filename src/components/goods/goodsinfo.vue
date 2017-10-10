@@ -19,10 +19,19 @@
                 </swiper>
                 <h2 class="goodsinfo_title twonowarp">{{goodsTitle}}</h2>
                 <div class="goodsinfo_box">
-                    <div class="goodsinfo_price">
-                        <span class="goodsinfo_newprice">￥{{currentGoodsData.rent_period_now_rent_price}}/{{timeText}}</span>
-                        <span class="goodsinfo_oldprice">￥{{currentGoodsData.rent_period_old_rent_price}}/{{timeText}}</span>
+                                        <!-- 原租价和现租价 -->
+                   <div class="goodsinfo_price" v-show="!currentGoodsData.act_price">
+                         <span class="goodsinfo_newprice">￥{{currentGoodsData.rent_period_now_rent_price}}/{{timeText}}</span>
+                     </div>
+                    <!-- 有活动价格时显示活动价格和租价 -->
+
+                   <div class="goodsinfo_price" v-show="currentGoodsData.act_price">
+                       <!-- 活动价 -->
+                        <span class="goodsinfo_newprice">￥{{currentGoodsData.act_price}}/{{timeText}}</span>
+                        <!-- 租价 -->
+                        <span class="goodsinfo_oldprice">￥{{currentGoodsData.rent_period_now_rent_price}}/{{timeText}}</span>
                     </div>
+
                     <!-- 日期选择框 -->
                     <ul class="goodsinfo_datetime">
                         <template v-for="(item,index) in currentTypedata.rent_period">

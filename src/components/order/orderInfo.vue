@@ -442,9 +442,10 @@ export default {
             let num = this.infoData.cart_content_good_amount;
             let second = num - 1;
             if (this.$store.state.tplId == 1) {
-                return this.tplRules.freight_first_price + this.tplRules.freight_continued_price * second - 0;
+                return this.tplRules.freight_first_price-0 + ((this.tplRules.freight_continued_price-0) * second) ;
+                
             } else if (this.$store.state.tplId == 2) {
-                return this.tplRules.freight_door_cost * num - 0;
+                return (this.tplRules.freight_door_cost-0) * num ;
             } else if (this.$store.state.tplId == 3) {
                 this.tpl = this.$store.state.sinceData;
                 return 0;
