@@ -41,7 +41,7 @@ export default {
             haveData: false,
             page: 1,
             goodstype: 1,//1 频道 2.热卖 3.特惠
-            icon_id: 1,
+            icon_id: -1,
         }
     },
     components: {

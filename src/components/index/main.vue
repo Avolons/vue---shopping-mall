@@ -11,6 +11,7 @@ body {
 .main_container .main_typelist_box {
     height: 40px;
     position: relative;
+    white-space: nowrap;
     padding-left: 15px;
     font-size: 0;
     border-bottom: 1px solid #f1f1f1;
@@ -377,6 +378,7 @@ body {
             box-sizing: border-box;
             padding-top: 40px;
             flex-grow: 1;
+            flex-shrink: 1;
             padding-right: 40px;
             display: flex;
             flex-wrap: wrap;

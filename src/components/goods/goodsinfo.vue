@@ -572,7 +572,7 @@ export default {
                 despoite = this.currentTypedata.goods_deposit * this.currentGoodsData.goodsnum - this.currentGoodsData.rent_period_now_rent_price * this.currentGoodsData.rentTime * this.currentGoodsData.goodsnum;
             }
 
-            return despoite;
+            return despoite>=0?despoite:0;
 
         },
         /**
