@@ -141,6 +141,82 @@ body {
         }
     }
     &_card {
+       &_title{
+           top: 5.08%;
+           color: #fff;
+           font-size: 15px;
+           text-align: center;
+           position: absolute;
+           width: 100%;
+           text-indent: 10px;
+       }
+       &_price{
+           top: 12.92%;
+           color: #fff;
+           font-size: 25px;
+           text-align: center;
+           position: absolute;
+           width: 100%;
+           >span{
+               font-size: 15px;
+           }
+       }
+       &_list{
+            position: absolute;  
+            height: 42.37%;
+            bottom: 16%;
+            left: 13.63%;
+            width: 72.72%;
+            overflow-y: auto;
+       }
+       &_single{
+            margin-bottom: 10px;
+            position: relative;
+            overflow: hidden;
+            >img{
+                display: block;
+                width: 100%;
+                left: 0;
+                top: 0;
+            }
+            >div{
+                display: flex;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                >h3{
+                    position: relative;
+                    z-index: 1;
+                    width: 28.75%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #ff6000;
+                    font-size: 20px;
+                }
+                >h4{
+                    color: #ff6000;
+                    font-size: 15px;
+                    position: relative;
+                    z-index: 1;  
+                    width: 71.25%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                >span{
+                    position: absolute;
+                    z-index: 1; 
+                    font-size: 10px;
+                    right: 0px;
+                    bottom: 3px;
+                    color: #ff6000;
+                    transform: scale(0.5);
+                }
+            }
+       }
         &_fixed {
             position: fixed;
             top: 50%;
@@ -632,6 +708,18 @@ body {
                     <div class="main_card_mask" slot="content">
                         <img src="../../assets/img/common/money.png" alt="">
                         <img @click="closeCard" class="main_card_maskClose" src="../../assets/img/common/close.png" alt="">
+                        <h2 class="main_card_title">新人大礼包</h2>
+                        <span class="main_card_price"><span>￥</span>30</span>
+                        <ul class="main_card_list">
+                            <li class="main_card_single" v-for="item in cardobj.list">
+                                <img src="../../assets/img/common/maincard.png" alt="">
+                                <div>
+                                    <h3>￥{{item.amount}}</h3>
+                                    <h4>全场通用</h4>
+                                    <span>新人专享</span>
+                                </div>
+                            </li>
+                        </ul>
                         <button @click="gouese" type="button" class="main_card_gouse"></button>
                     </div>
                 </masker>
@@ -682,7 +770,22 @@ export default {
             bannerlist: [
                 
             ],
-            
+            cardobj:{
+                title:"新人大礼包",
+                price:"30",
+                list:[
+                    {
+                        price:"10",
+                        title:"全场通用",
+                        type:"新人专享",
+                    },
+                    {
+                        price:"20",
+                        title:"全场通用",
+                        type:"新人专享",
+                    },
+                ]
+            },
             /* 时间周期对照表 */
             timeMap: { 1: "日", 2: "周", 3: "月", 4: "季", 5: "年" },
             /* 当前被选中列表 */
@@ -744,12 +847,6 @@ export default {
                     path:'/selected/?id='+id
                 })
             }else{
-                if(!localStorage.getItem("userInfo")){
-                    this.$router.push({
-                        path:"/login"
-                    });
-                    return false;
-                }
                 window.location.href="/share.html?type=H5";
             }
         },
@@ -764,11 +861,12 @@ export default {
         },
         /* 获取红包 */
         getCard() {
-            API.card.receiveNewerCoupon({
+            API.card.remindCard({
                 userId: this.getUserInfoUserId,
                 token: this.getUserInfoToken,
             }).then((res) => {
                 if (res.body.code == 200) {
+                    this.cardobj.list=res.body.data
                     this.cardShow = true;
                 }
             });

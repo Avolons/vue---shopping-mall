@@ -790,6 +790,14 @@ export const card={
     getCouponActive(data){
       return Vue.http.get(API_ROOT + 'coupon/getCouponActive' + sourceStr,{params:data});
     },
+    /**
+     * 提醒是否是红包
+     * @param {any} data 
+     * @returns 
+     */
+    remindCard(data){
+      return Vue.http.post(API_ROOT + 'coupon/couponRemind' + sourceStr,data);
+    },
     
     
 }

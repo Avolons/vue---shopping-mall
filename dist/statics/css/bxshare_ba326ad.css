@@ -1,0 +1,6 @@
+@charset "UTF-8";
+.bxshare_img{width:100%}
+.bxshare_btn_outer{position:fixed;background-color:rgba(0,0,0,.8);left:0;bottom:0;width:100%;height:1.33333rem}
+.bxshare_btn_download{font-size:18px;display:block;color:#fff;background-color:#36b4fc;width:80%;height:.86667pxrem;line-height:.86667rem;text-align:center;position:absolute;left:50%;top:50%;-webkit-transform:translate(-50%,-50%);-ms-transform:translate(-50%,-50%);transform:translate(-50%,-50%);border-radius:.4rem;cursor:pointer}
+[data-dpr="2"] .bxshare_btn_download{font-size:36px}
+[data-dpr="3"] .bxshare_btn_download{font-size:54px}

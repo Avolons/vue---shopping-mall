@@ -28,6 +28,7 @@ body {
 }
 
 .share_main_back {
+  display: none;
   position: fixed;
   left: 0.4rem;
   top: 0.4rem;
@@ -60,12 +61,12 @@ body {
   -ms-flex-align: center;
       align-items: center;
   border: none;
-  top: 33.29%;
+  top: 29.69468%;
   width: 56.4%;
   display: block;
   left: 20.53%;
   position: absolute;
-  height: 4.24%;
+  height: 3.78208%;
   background-color: transparent;
   outline: none;
 }
@@ -88,12 +89,12 @@ body {
   -ms-flex-align: center;
       align-items: center;
   border: none;
-  top: 38.62%;
+  top: 34.44904%;
   width: 29.33%;
   display: block;
   left: 20.53%;
   position: absolute;
-  height: 4.24%;
+  height: 3.78208%;
   background-color: transparent;
   outline: none;
 }
@@ -107,12 +108,12 @@ body {
 }
 
 .share_main_registerlink {
-  height: 1.4%;
+  height: 1.2488%;
   position: absolute;
   display: block;
   width: 24.66%;
   left: 40%;
-  top: 54.48%;
+  top: 48.59616%;
 }
 
 .share_main_registerpassword {
@@ -125,12 +126,12 @@ body {
   -ms-flex-align: center;
       align-items: center;
   border: none;
-  top: 44%;
+  top: 39.248%;
   width: 56.4%;
   display: block;
   left: 20.53%;
   position: absolute;
-  height: 4.24%;
+  height: 3.78208%;
   background-color: transparent;
   outline: none;
 }
@@ -143,18 +144,29 @@ body {
   font-size: 42px;
 }
 
+.share_main_registerdown {
+  top: 71.97%;
+  width: 56.4%;
+  display: block;
+  left: 20.53%;
+  position: absolute;
+  height: 3.78208%;
+  background-color: transparent;
+  outline: none;
+}
+
 .share_main_registergetcode {
-  font-weight: 300;
+  font-weight: 400;
   text-align: center;
   font-size: 14px;
   color: #43b9f5;
   border: none;
-  top: 38.62%;
+  top: 34.44904%;
   width: 24%;
   display: block;
   right: 22.67%;
   position: absolute;
-  height: 4.24%;
+  height: 3.78208%;
   background-color: transparent;
   outline: none;
 }
@@ -168,12 +180,12 @@ body {
 }
 
 .share_main_registerbtn {
-  top: 49.15%;
+  top: 43.8418%;
   width: 56.4%;
   display: block;
   left: 20.53%;
   position: absolute;
-  height: 3.27%;
+  height: 3.78208%;
   background-color: transparent;
   outline: none;
 }
