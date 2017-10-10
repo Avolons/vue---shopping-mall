@@ -56,6 +56,7 @@ window.overscroll = function(el) {
 			evt._isScroller = true;
 	});
 }
+
 var u = navigator.userAgent;
 var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
 if(isiOS){

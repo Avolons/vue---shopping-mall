@@ -8,7 +8,7 @@ var confrim = document.querySelector('.share_main_confrim');
 /* 领取优惠券 */
 function getCard(id, token) {
     $.ajax({
-        url: "http://106.14.135.243:8082/index/coupon/receiveCoupon",
+        url: "https://isapi.zujiekeji.cn/index/coupon/receiveCoupon",
         type: "POST",
         data: {
             userId: id,
@@ -45,7 +45,7 @@ document.querySelector(".share_main_btn").addEventListener('click', function () 
         /* h5状态 */
         var userInfo = localStorage.getItem('userInfo');
         if (!userInfo) {
-            window.location.href = "http://127.0.0.1:8081/#/login";
+            window.location.href = "/#/login";
             return false;
         }
         userInfo = JSON.parse(userInfo);

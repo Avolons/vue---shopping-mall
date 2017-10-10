@@ -1,0 +1,1 @@
+module.exports=function(e,n,t){123==e.query.yan?n.sendFile(__dirname+"/test.json",function(e){e&&t(e)}):(n.write("empty"),n.end())};

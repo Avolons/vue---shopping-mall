@@ -33,7 +33,7 @@
                 <div class="goodsinfo_box">
                     <div class="goodsinfo_allprice">
                         总租金：
-                        <span>{{currentGoodsData.rent_period_now_rent_price*currentGoodsData.rentTime*currentGoodsData.goodsnum | currency('￥') }}</span>
+                        <span>{{totalRent | currency('￥') }}</span>
                     </div>
                     <div class="goodsinfo_rentTime">
                         租期
@@ -154,14 +154,15 @@
                     <div class="goodsinfo_content_despoite">
                         押金
                         <span>{{couterDespoite | currency('￥') }}</span>
+                        <!-- <span>{{couterDespoite - antDerate | currency('￥') }}</span> -->
                     </div>
                     <!-- 芝麻信用授权 -->
-                    <div @click="authorization()" class="goodsinfo_content_alltime">
+                    <!-- <div @click="authorization()" class="goodsinfo_content_alltime">
                         芝麻信用押金减免额
                         <span class="authorization" v-show="!zmed">去授权</span>
                         <i style="color: #989898;" class="iconfont" v-show="!zmed">&#xe6d7;</i>
-                        <span v-show="zmed">{{relief_limit}}元</span>
-                    </div>
+                        <span v-show="zmed" style="color:red">{{antDerate}}元</span>
+                    </div> -->
                     <!-- 配送地址 -->
                     <div class="goodsinfo_content_address">
                         <group label-width="5em" label-align="left">
@@ -301,7 +302,8 @@ export default {
     data() {
         return {
             zmed: false,
-            relief_limit: 0,//芝麻分减免额度
+            reliefLimit: 0,//芝麻分减免额度
+            reliefRate:0,
             havestart: true,
             timeselectshow: false,
             haveRules: false,
@@ -397,6 +399,7 @@ export default {
                 rent_period_now_rent_price: "20.00",//现租价
                 rent_period_min_advance: 6,//最少提前
                 rent_period_max_advance: 1,//最大提前
+
             },
             currentTimeIndex: 0//当前被选中的日渐周期index
         }
@@ -568,7 +571,32 @@ export default {
             } else {
                 despoite = this.currentTypedata.goods_deposit * this.currentGoodsData.goodsnum - this.currentGoodsData.rent_period_now_rent_price * this.currentGoodsData.rentTime * this.currentGoodsData.goodsnum;
             }
-            return despoite;
+
+            return despoite>=0?despoite:0;
+
+        },
+        /**
+         * 计算总租金
+         */
+        totalRent(){
+            let rentAmount;
+            if (this.currentTypedata.act_price) {
+                rentAmount = this.currentGoodsData.act_price * this.currentGoodsData.goodsnum  * this.currentGoodsData.rentTime;
+            } else {
+                rentAmount = this.currentGoodsData.rent_period_now_rent_price * this.currentGoodsData.goodsnum  * this.currentGoodsData.rentTime;
+            }
+
+            return rentAmount;
+        },
+        /**
+         * 计算芝麻信用押金减免额度
+         */
+        antDerate(){
+            if(this.couterDespoite == 0 || this.currentTypedata.goods_deposit - this.totalRent < 0){
+                return 0;
+            }else{
+               return (this.couterDespoite * this.reliefRate).toFixed(2);
+            }
         },
         /**
          * 返回颜色规格id
@@ -611,16 +639,15 @@ export default {
             API.person.getUserZMReliefInfo({
                 user_id: this.getUserInfoUserId
             }).then((res) => {
-                console.log(res)
                 if (res.body.code == 200) {
                     this.zmed = true;
-                    this.relief_limit = res.body.data.relief_limit
+                    this.reliefLimit = res.body.data.relief_limit;
+                    this.reliefRate = res.body.data.relief_rate / 100;
                 }
             })
         },
         /* 检查是否支持该地址 */
         checkAddress() {
-            console.log(1);
             let addresslist = (this.getName(this.goodsAddress)).split(" ");
             API.main.judgeAddress({
                 province: addresslist[0],
@@ -636,10 +663,7 @@ export default {
             })
         },
         /*芝麻信用授权*/
-        authorization() {
-            if (this.zmed) {
-                return;
-            }
+        authorization(){
             this.$router.push({
                 path: '/authInfo'
             })
@@ -1043,7 +1067,7 @@ export default {
                         if (res.body.code == 200) {
                             localStorage.setItem('orderClick', '11');
                             this.$router.push({
-                                path: '/orderInfo/' + cartId + '/?address=' + res.body.data.enterprise_license_location
+                                path: '/orderInfo/' + cartId + '/?address=' + res.body.data.enterprise_license_location + '&antDerate=' + this.antDerate
                             });
                         }
                     });

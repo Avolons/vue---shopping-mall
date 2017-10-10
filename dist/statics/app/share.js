@@ -16,13 +16,13 @@ document.querySelector(".share_main_sharebtn").addEventListener('click', functio
     if (getQueryString("type") == 'H5') {
         var userInfo = localStorage.getItem('userInfo');
         if (!userInfo) {
-            window.location.href = "http://127.0.0.1:8081/#/login";
+            window.location.href = "/#/login";
             return false;
         }
         userInfo = JSON.parse(userInfo);
         (function () {
             $.ajax({
-                url: "http://106.14.135.243:8082/index/coupon/activtyShare",
+                url: "https://isapi.zujiekeji.cn/index/coupon/activtyShare",
                 type: "POST",
                 data: {
                     userId: userInfo.id,
@@ -37,7 +37,7 @@ document.querySelector(".share_main_sharebtn").addEventListener('click', functio
                         imgurl = data.data.sharepic,
                         desc = data.data.content;
                     $.ajax({
-                        url: "https://www.zujiekeji.cn/index/wechat/getSignature",
+                        url: "https://isapi.zujiekeji.cn/index/wechat/getSignature",
                         type: "GET",
                         data: {
                             "url": link

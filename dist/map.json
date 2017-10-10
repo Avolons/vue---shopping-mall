@@ -29,7 +29,7 @@
             "type": "css"
         },
         "modules/app/bxgoodsshare.js": {
-            "uri": "/statics/app/bxgoodsshare.js",
+            "uri": "/statics/app/bxgoodsshare_39158f8.js",
             "type": "js"
         },
         "modules/css/bxshare.scss": {
@@ -41,15 +41,15 @@
             "type": "css"
         },
         "modules/app/getCard.js": {
-            "uri": "/statics/app/getCard.js",
+            "uri": "/statics/app/getCard_b4bdeed.js",
             "type": "js"
         },
         "modules/app/register.js": {
-            "uri": "/statics/app/register.js",
+            "uri": "/statics/app/register_4bfe01e.js",
             "type": "js"
         },
         "modules/app/share.js": {
-            "uri": "/statics/app/share.js",
+            "uri": "/statics/app/share_f9a8d43.js",
             "type": "js"
         }
     },
