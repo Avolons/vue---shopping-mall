@@ -396,6 +396,7 @@ body {
             flex-grow: 0;
             padding: 15px;
             padding-right: 17.5px;
+            flex-shrink: 0;
             &>img {
                 height: 150px;
                 width: 150px;
