@@ -429,6 +429,7 @@ export default {
     activated() {
         overscroll(document.querySelector('.goodsinfo_container'));
         if (localStorage.getItem('goodsInfo')) {
+            this.currentGoodsData.act_price=null;
             if (localStorage.getItem('goodsInfo') == 'login') {
                 window.location.reload();
             } else {
@@ -537,7 +538,7 @@ export default {
                         month_3 = 12;
                         year_3--;
                     }
-                    return dateFormat(new Date(year + year_3 + "-" + month_3 + "-" + (day - 1)), 'YYYY-MM-DD');
+                    return dateFormat(new Date(year + year_3 + "/" + month_3 + "/" + (day - 1)), 'YYYY-MM-DD');
                     break;
                 case 4:
                     /* 季度相加超出一年 */
@@ -547,10 +548,10 @@ export default {
                         month_4 = 12;
                         year_4--;
                     }
-                    return dateFormat(new Date(year + year_4 + "-" + month_4 + "-" + (day - 1)), 'YYYY-MM-DD');
+                    return dateFormat(new Date(year + year_4 + "/" + month_4 + "/" + (day - 1)), 'YYYY-MM-DD');
                     break;
                 case 5:
-                    return dateFormat(new Date((year + num) + "-" + month + "-" + (day - 1)), 'YYYY-MM-DD');
+                    return dateFormat(new Date((year + num) + "/" + month + "/" + (day - 1)), 'YYYY-MM-DD');
                     break;
             }
         },
@@ -589,7 +590,7 @@ export default {
          */
         totalRent(){
             let rentAmount;
-            if (this.currentTypedata.act_price) {
+            if (this.currentGoodsData.act_price) {
                 rentAmount = this.currentGoodsData.act_price * this.currentGoodsData.goodsnum  * this.currentGoodsData.rentTime;
             } else {
                 rentAmount = this.currentGoodsData.rent_period_now_rent_price * this.currentGoodsData.goodsnum  * this.currentGoodsData.rentTime;
