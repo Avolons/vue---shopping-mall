@@ -20,6 +20,10 @@
             "uri": "/lib/normalize-css/normalize.css",
             "type": "css"
         },
+        "modules/app/share.js": {
+            "uri": "/statics/app/share_761bacc.js",
+            "type": "js"
+        },
         "modules/css/reset.scss": {
             "uri": "/statics/css/reset.css",
             "type": "css"
@@ -46,10 +50,6 @@
         },
         "modules/app/register.js": {
             "uri": "/statics/app/register_5de3333.js",
-            "type": "js"
-        },
-        "modules/app/share.js": {
-            "uri": "/statics/app/share_bc368ea.js",
             "type": "js"
         }
     },
