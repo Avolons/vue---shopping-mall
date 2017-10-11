@@ -151,7 +151,7 @@
         <x-input style="margin-top:60px" placeholder="请输入密码"  type="password"  v-model="form.user_password">
         <i class="iconfont" slot="label">&#xe600;</i>
       </x-input>
-        <p class="register_book">注册即同意 <a href="">《租介用户协议》</a></p> 
+        <p class="register_book">注册即同意 <a href="/#/agreement">《租介用户协议》</a></p> 
       <x-button class="register_btn"  @click.native="register">立即注册</x-button>
     </group>
     

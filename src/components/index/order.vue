@@ -386,7 +386,7 @@ export default {
             /* 时间对照表 */
             timeMap: { 1: "日", 2: "周", 3: "月", 4: "季", 5: "年" },
             /* 假数据模拟订单 */
-            orderList: [],
+            orderList: [[],[],[],[],[],[],[]],
             /* 当前7大列表对应数据 */
             currentPage:1,
             canBottom:true,
