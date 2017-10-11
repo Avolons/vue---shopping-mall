@@ -535,6 +535,9 @@ export default {
             if(!this.canBottom){
                 return false;
             }
+            if(index==this.currentType){
+                return false;
+            }
             this.currentType = index;
             this.orderList[this.currentType]=[];
             this.currentPage=1;
