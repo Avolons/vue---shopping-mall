@@ -583,6 +583,7 @@ body {
                     <img class="main_channel_img" @click="channelClick(item.title,item.channel_id)"   :src="item.bg_image" alt="channel">
                     <ul class="main_channel_goodsList">
                         <li @click="goInfo(ite.goods_id)" v-for="ite in item.goods" class="main_channel_goodsSingle">
+                            
                             <img class="main_channel_goodsImg" :src="ite.goods_main_pic" alt="">
                             <h3 class="main_channel_goodsTitle">{{ite.goods_name}}</h3>
                             <p  v-if="!ite.act_price" class="main_channel_goodsText"> ￥{{ite.rent_price}}/{{timeMap[ite.rent_period_type]}}
@@ -601,7 +602,7 @@ body {
             <ul class="main_hot_list" v-show="currentType==0">
                 <li v-for="item in hotGoodsList" class="main_hot_single" @click="goInfo(item.goodsId)">
                     <div class="main_hot_img">
-                        <img :src="item.goodsFace" alt="img">
+                        <x-img default-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507702400938&di=fc233efbd5c433313c2ec5c3fa424b1c&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01cf3655c8d56132f8755e66dcb76d.png%40900w_1l_2o_100sh.jpg" :src="item.goodsFace" :webp-src="item.goodsFace"  class="ximg-demo"  :offset="-100" container=".main_listbox"></x-img>
                     </div>
                     <div class="main_hot_text">
                         <h2 class="main_hot_title twonowarp">{{item.goodsName}}</h2>
@@ -647,7 +648,7 @@ body {
             <ul class="main_recommend_list" v-show="currentType==0">
                 <li v-for="item in newGoodsList" class="main_recommend_single" @click="goInfo(item.goodsId)">
                     <div class="main_recommend_img">
-                        <img :src="item.goodsFace" alt="img">
+                        <x-img default-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507702400938&di=fc233efbd5c433313c2ec5c3fa424b1c&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01cf3655c8d56132f8755e66dcb76d.png%40900w_1l_2o_100sh.jpg" :src="item.goodsFace" :webp-src="item.goodsFace"  class="ximg-demo"  :offset="-100" container=".main_listbox"></x-img>
                     </div>
                     <div class="main_recommend_text">
                         <h2 class="main_recommend_title">{{item.goodsName}}</h2>
@@ -676,7 +677,7 @@ body {
             <ul class="main_recommend_list" v-show="currentType==0">
                 <li v-for="item in recGoodsList" class="main_recommend_single" @click="goInfo(item.goodsId)">
                     <div class="main_recommend_img">
-                        <img :src="item.goodsFace" alt="img">
+                        <x-img default-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507702400938&di=fc233efbd5c433313c2ec5c3fa424b1c&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01cf3655c8d56132f8755e66dcb76d.png%40900w_1l_2o_100sh.jpg" :src="item.goodsFace" :webp-src="item.goodsFace"  class="ximg-demo"  :offset="-100" container=".main_listbox"></x-img>
                     </div>
                     <div class="main_recommend_text">
                         <h2 class="main_recommend_title">{{item.goodsName}}</h2>
@@ -731,13 +732,14 @@ body {
 
 <script>
 import ListCompent from '../list/listCompent.vue';
-import { Scroller, Swiper, SwiperItem, Spinner, XButton, Group, Cell, LoadMore, Masker } from 'vux'
+import { Scroller, XImg,Swiper, SwiperItem, Spinner, XButton, Group, Cell, LoadMore, Masker } from 'vux'
 import { API, getQuery } from '../../services';
 import { mapGetters } from 'vuex';
 
 
 export default {
     components: {
+        XImg,
         Masker,
         Scroller,
         Spinner,
@@ -1047,11 +1049,11 @@ export default {
             shopList.splice(0, 0, firstLabel);
             this.goodsList = new Array(shopList.length);
             this.typeList = shopList;
-            setTimeout((res) => {
-                /* 防止数据卡死 */
+             /* 防止数据卡死 */
+            /* setTimeout((res) => {
                 document.querySelectorAll(".main_typelist_item")[1].click();
                 document.querySelectorAll(".main_typelist_item")[0].click();
-            }, 500);
+            }, 500); */
         });
         /* 获取热门商品 */
         API.main.goodsHot({

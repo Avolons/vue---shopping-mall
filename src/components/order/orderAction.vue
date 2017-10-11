@@ -940,11 +940,10 @@ export default {
             this.$router.push({
                 path:'/settlement?id='+ id
               })
-          
         },
         /* 退款 */
         renturnMonery(id,item){
-            if(this.isAlipay()==1 && item.is_jiehuan==1){
+            /* if(this.isAlipay()==1 && item.is_jiehuan==1){
                 let self = this;
                 this.$vux.confirm.show({
                     content: '是否确认退款',
@@ -965,7 +964,8 @@ export default {
                
             }else{
                 this.download();
-            }
+            } */
+            this.download();
         },
         /* 提醒发货 ,结算 1-提醒发货2-提醒结算*/
         remind(id, type) {

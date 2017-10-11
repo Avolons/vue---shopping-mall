@@ -1,10 +1,12 @@
 <style lang="scss">
    .goodsList{
        &_List{
-           height: 100%;
+           height: calc(100% - 47px);
            box-sizing: border-box;
            overflow-y: auto;
            -webkit-overflow-scrolling : touch; 
+           padding-top:40px;
+           padding-bottom:40px;
        }
        &_main{
            height: 100%;
@@ -103,7 +105,7 @@
         <div class="goodsList_chenckList">
             <span v-for="(item,index) in typeList" :class="{'goodsList_chenckList--selected':item.select}" @click="typeCheck(index)">{{item.name}}</span>
         </div>
-            <div  class="goodsList_List" style="padding-top:40px;padding-bottom:40px"> 
+            <div  class="goodsList_List"> 
              <list-compent  :commonGoodsList="goodsList"></list-compent>
                 <load-more style="padding-bottom:20px;" v-show="loadshow" tip="加载更多"></load-more>
                 <load-more v-show="!loadshow && goodsList.length>8 " :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>

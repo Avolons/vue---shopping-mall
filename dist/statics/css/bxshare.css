@@ -3,6 +3,10 @@
 /**
  * 此处写上scss常用mixins//移动端解决方案配置
  */
+*:not(input) {
+  -webkit-user-select: none;
+}
+
 /**
  * 配置项目常用变量
  */

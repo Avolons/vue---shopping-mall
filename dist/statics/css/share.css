@@ -5,6 +5,10 @@
 /**
  * 此处写上scss常用mixins//移动端解决方案配置
  */
+*:not(input) {
+  -webkit-user-select: none;
+}
+
 /**
  * 配置项目常用变量
  */
@@ -67,7 +71,6 @@ body {
   left: 20.53%;
   position: absolute;
   height: 3.78208%;
-  background-color: transparent;
   outline: none;
 }
 
@@ -77,6 +80,14 @@ body {
 
 [data-dpr="3"] .share_main_registermobile {
   font-size: 42px;
+}
+
+.share_main_registermobile > input {
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  border: none;
+  text-align: center;
 }
 
 .share_main_registercode {
@@ -95,7 +106,6 @@ body {
   left: 20.53%;
   position: absolute;
   height: 3.78208%;
-  background-color: transparent;
   outline: none;
 }
 
@@ -105,6 +115,14 @@ body {
 
 [data-dpr="3"] .share_main_registercode {
   font-size: 42px;
+}
+
+.share_main_registercode > input {
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  border: none;
+  text-align: center;
 }
 
 .share_main_registerlink {
@@ -132,7 +150,6 @@ body {
   left: 20.53%;
   position: absolute;
   height: 3.78208%;
-  background-color: transparent;
   outline: none;
 }
 
@@ -142,6 +159,14 @@ body {
 
 [data-dpr="3"] .share_main_registerpassword {
   font-size: 42px;
+}
+
+.share_main_registerpassword > input {
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  border: none;
+  text-align: center;
 }
 
 .share_main_registerdown {

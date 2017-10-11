@@ -238,7 +238,7 @@
         </scroller>
         <ul class="order_list">
             <!-- 此处进行显示判断，当前选中类型等于当前item类型时候才显示 -->
-            <li @click="getInfo(item.order_id)" class="order_single" v-for="item in orderList" v-show="currentType==item.orderType || currentType==0 || (item.orderType==7 && currentType==0)  || (item.orderType==8 && currentType==0) || (item.orderType==9 && currentType==0) || (item.orderType==10 && currentType==0) ">
+            <li @click="getInfo(item.order_id)" class="order_single" v-for="item in orderList[currentType]" >
                 <div class="order_single_shop">
                     <h2>{{item.store_name}}</h2>
                     <span v-if="item.orderType==1" class="order_single_type">待付款</span>
@@ -355,7 +355,7 @@ export default {
             scrollTop: 0,
             onFetching: false,
             bottomCount: 20,
-            currentType: 0,/* 0-6分辨对应6种状态 */
+            currentType: 0,/* 0-6分辨对应7种状态 */
             /* 订单状态 */
             typeList: [{
                 name: "全部订单",
@@ -383,7 +383,8 @@ export default {
             timeMap: { 1: "日", 2: "周", 3: "月", 4: "季", 5: "年" },
             /* 假数据模拟订单 */
             orderList: [],
-            currentPage: 1,
+            /* 当前7大列表对应数据 */
+            currentPage:[1,1,1,1,1,1,1],
             /* 支付方式 */
             payMethod: 4,
             menus: {
@@ -424,25 +425,31 @@ export default {
     },
     mounted() {
         overscroll(document.querySelector('.order_list'));
+        /* 当前滚动距离为0 */
         localStorage.setItem("orderScroll", 0);
         this.loading = true;
-        this.currentPage = 1;
+        /* this.currentPage[0] = 1; */
         this.getTypeData();
     },
     activated() {
         /* 获取当前url参数 */
         let  biz_content= this.$route.query.biz_content;
+        /* 支付宝借还成功后的回调 */
         if(biz_content){
             biz_content= JSON.parse(biz_content);
             this.success(biz_content);
         }
+
         overscroll(document.querySelector('.order_list'));
+        /* 当前页面需要重载数据 */
         if (localStorage.getItem("reload")) {
             this.loading = true;
-            this.currentPage = 1;
-            this.getTypeData();
+            /* 数据重载永远只重新加载当前显示列表数据 */
+            this.currentPage[this.currentType] = 1;
+            this.getTypeData(this.currentType);
             localStorage.setItem("reload", "");
         }
+        /* 重置滚动距离 */
         setTimeout(() => {
             if (localStorage.getItem("orderScroll")) {
                 document.querySelector(".order_list").scrollTop = localStorage.getItem("orderScroll");
@@ -486,6 +493,7 @@ export default {
         /* typelist点击选中函数 */
         typeselect(index) {
             this.currentType = index;
+            getTypeData(index);
         },
         /* 进入订单详情 */
         getInfo(id) {
@@ -555,7 +563,8 @@ export default {
             }
         },
         /* 获取对应的数据 */
-        getTypeData() {
+        /* 使用分页结构数据,使用同一个div，根据类型进行数据替换 */
+        getTypeData(status) {
             if (this.currentPage == 1) {
                 this.temporary = [];
             }
@@ -564,6 +573,7 @@ export default {
                 token: this.getUserInfoToken,
                 orderStatus: 0,
                 page_number: 10,
+                orderStatus:status,
                 page: this.currentPage,
             }).then((res) => {
                 if (res.body.code == 200) {
@@ -574,9 +584,10 @@ export default {
                     }
                     if (list.length == 10) {
                         this.currentPage++;
-                        this.getTypeData();
+
                     } else {
                         this.orderList = this.temporary;
+                        /* 显示当前 */
                         this.loading = false;
                         overscroll(document.querySelector('.order_list'));
 
