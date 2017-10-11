@@ -55,6 +55,14 @@ body {
   left: 20.53%;
 }
 
+.share_main_register_box {
+  float: left;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+
 .share_main_registermobile {
   color: #d83739;
   font-weight: 300;
@@ -65,12 +73,13 @@ body {
   -ms-flex-align: center;
       align-items: center;
   border: none;
-  top: 29.69468%;
+  margin-top: 73.33%;
   width: 56.4%;
-  display: block;
-  left: 20.53%;
-  position: absolute;
+  margin-left: 20.53%;
+  position: relative;
+  z-index: 999;
   height: 3.78208%;
+  background: transparent;
   outline: none;
 }
 
@@ -100,12 +109,14 @@ body {
   -ms-flex-align: center;
       align-items: center;
   border: none;
-  top: 34.44904%;
+  margin-top: 2.26%;
   width: 29.33%;
+  position: relative;
+  z-index: 999;
   display: block;
-  left: 20.53%;
-  position: absolute;
+  margin-left: 20.53%;
   height: 3.78208%;
+  background: transparent;
   outline: none;
 }
 
@@ -144,12 +155,14 @@ body {
   -ms-flex-align: center;
       align-items: center;
   border: none;
-  top: 39.248%;
+  position: relative;
+  z-index: 999;
+  margin-top: 2.28%;
   width: 56.4%;
   display: block;
-  left: 20.53%;
-  position: absolute;
+  margin-left: 20.53%;
   height: 3.78208%;
+  background: transparent;
   outline: none;
 }
 
@@ -164,7 +177,6 @@ body {
 .share_main_registerpassword > input {
   height: 100%;
   width: 100%;
-  background: transparent;
   border: none;
   text-align: center;
 }
