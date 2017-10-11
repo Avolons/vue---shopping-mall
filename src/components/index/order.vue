@@ -67,6 +67,9 @@
         }
     }
     &_list {
+        .weui-loadmore_line .weui-loadmore__tips{
+            background:#f1f1f1 !important;
+        }
         position: fixed;
         width: 100%;
         top: 87px;
@@ -238,7 +241,7 @@
         </scroller>
         <ul class="order_list">
             <!-- 此处进行显示判断，当前选中类型等于当前item类型时候才显示 -->
-            <li @click="getInfo(item.order_id)" class="order_single" v-for="item in orderList[currentType]" >
+            <li @click="getInfo(item.order_id)" class="order_single" v-for="item in orderList[this.currentType]" >
                 <div class="order_single_shop">
                     <h2>{{item.store_name}}</h2>
                     <span v-if="item.orderType==1" class="order_single_type">待付款</span>
@@ -257,7 +260,8 @@
                     <span v-if="item.srcOrderType==3" class="order_single_type">退款中</span>
                 </div>
                 <div class="order_single_content">
-                    <img :src="item.goods_main_pic" alt="img" class="order_single_img">
+                        <x-img :src="item.goods_main_pic" :webp-src="item.goods_main_pic"  default-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507702400938&di=fc233efbd5c433313c2ec5c3fa424b1c&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01cf3655c8d56132f8755e66dcb76d.png%40900w_1l_2o_100sh.jpg"  class="order_single_img"  :offset="-100" container=".order_list"></x-img>
+                 
                     <div class="order_single_text">
                         <h3 class="order_single_title">
                             {{item.goods_name}}
@@ -307,19 +311,18 @@
                     <button @click.stop="download()" v-if="item.orderType==7">查看评论</button>
                     <!-- 退货结算待确认 结算待确认 -->
                     <button @click.stop="confrimSettlement(item.order_id)" v-if="item.srcorderType==1 || (item.orderType==5 && item.srcorderType==2)">确认结算</button>
-
                 </div>
             </li>
-
             <masker v-show='loading' color="000" fullscreen :opacity="0.1">
                 <div slot="content">
                     <i class="weui-loading weui-icon_toast center"></i>
                 </div>
             </masker>
             <toast v-model="toast" type="success">{{confrim}}</toast>
-
+               <load-more v-show="loadshow" tip="加载更多"></load-more>
+            <load-more v-show="!loadshow && orderList[this.currentType].length>8" :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
         </ul>
-        <div v-show="haveNoList" class="order_noAnyList">
+        <div v-show="!orderList[this.currentType][0]" class="order_noAnyList">
             <i class="iconfont">&#xe8b5;</i>
             <p>暂无相关订单</p>
         </div>
@@ -327,12 +330,14 @@
 </template>
 
 <script>
-import { Scroller, Masker, Actionsheet, Spinner, XButton, Group, Cell, LoadMore, Toast } from 'vux';
+import { Scroller,XImg, Masker, Actionsheet, Spinner, XButton, Group, Cell, LoadMore, Toast } from 'vux';
 import { mapGetters } from 'vuex';
 import { API, getQuery } from '../../services';
 
 export default {
     components: {
+        XImg,
+        LoadMore,
         Actionsheet,
         Scroller,
         Masker,
@@ -340,7 +345,6 @@ export default {
         XButton,
         Group,
         Cell,
-        LoadMore,
         Toast
     },
     data() {
@@ -384,7 +388,10 @@ export default {
             /* 假数据模拟订单 */
             orderList: [],
             /* 当前7大列表对应数据 */
-            currentPage:[1,1,1,1,1,1,1],
+            currentPage:1,
+            canBottom:true,
+            loadshow:false,
+            haveData:false,
             /* 支付方式 */
             payMethod: 4,
             menus: {
@@ -401,35 +408,60 @@ export default {
             'getUserInfoUserId',
             'getUserInfoToken',
         ]),
-        haveNoList() {
-            let index = 0;
-            for (let item of this.orderList) {
-                if (this.currentType == item.orderType) {
-                    index++;
-                }
-            }
-            if (this.currentType == 0) {
-                if (this.orderList.length > 0) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            if (index == 0) {
-                return true;
-            } else {
-                return false;
-            }
-
-        }
     },
     mounted() {
         overscroll(document.querySelector('.order_list'));
         /* 当前滚动距离为0 */
         localStorage.setItem("orderScroll", 0);
-        this.loading = true;
-        /* this.currentPage[0] = 1; */
-        this.getTypeData();
+        /* this.loading = true;
+        this.haveData=true;
+        this.orderList=[];
+        this.currentPage = 1; */
+        let self = this;
+        /* self.getTypeData(this.currentType); */
+        function getScrollTop() {
+            　　var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
+            　　if (document.querySelector('.order_list')) {
+                　　　　bodyScrollTop = document.querySelector('.order_list').scrollTop;
+            　　}
+            　　if (document.documentElement) {
+                　　　　documentScrollTop = document.documentElement.scrollTop;
+            　　}
+            　　scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
+            　　return scrollTop;
+        }
+        //文档的总高度
+        function getScrollHeight() {
+            　　var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
+            　　if (document.querySelector('.order_list')) {
+                　　　　bodyScrollHeight = document.querySelector('.order_list').scrollHeight;
+            　　}
+            　　if (document.documentElement) {
+                　　　　documentScrollHeight = document.documentElement.scrollHeight;
+            　　}
+            　　scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
+            　　return scrollHeight;
+        }
+        //浏览器视口的高度
+        function getWindowHeight() {
+            　　var windowHeight = 0;
+            　　if (document.compatMode == "CSS1Compat") {
+                　　　　windowHeight = document.documentElement.clientHeight;
+            　　} else {
+                　　　　windowHeight = document.body.clientHeight;
+            　　}
+            　　return windowHeight;
+        }
+        document.querySelector('.order_list').onscroll = function() {
+        　　if (getScrollTop() + getWindowHeight() >= (getScrollHeight()-10)) {
+                if(self.canBottom==true){
+                    self.canBottom=false;
+                    self.getTypeData(self.currentType);
+                }
+        　　}
+        }; 
+       
+        
     },
     activated() {
         /* 获取当前url参数 */
@@ -441,14 +473,11 @@ export default {
         }
 
         overscroll(document.querySelector('.order_list'));
-        /* 当前页面需要重载数据 */
-        if (localStorage.getItem("reload")) {
-            this.loading = true;
-            /* 数据重载永远只重新加载当前显示列表数据 */
-            this.currentPage[this.currentType] = 1;
-            this.getTypeData(this.currentType);
-            localStorage.setItem("reload", "");
-        }
+        this.orderList[this.currentType]=[];
+        /* 数据重载永远只重新加载当前显示列表数据 */
+        this.currentPage = 1;
+        this.haveData=true;
+        this.getTypeData(this.currentType);
         /* 重置滚动距离 */
         setTimeout(() => {
             if (localStorage.getItem("orderScroll")) {
@@ -492,8 +521,14 @@ export default {
         },
         /* typelist点击选中函数 */
         typeselect(index) {
+            if(!this.canBottom){
+                return false;
+            }
             this.currentType = index;
-            getTypeData(index);
+            this.orderList[this.currentType]=[];
+            this.currentPage=1;
+            this.haveData=true;
+            this.getTypeData(this.currentType);
         },
         /* 进入订单详情 */
         getInfo(id) {
@@ -564,14 +599,14 @@ export default {
         },
         /* 获取对应的数据 */
         /* 使用分页结构数据,使用同一个div，根据类型进行数据替换 */
+        /* 使用类型判断是分页数据还是 */
         getTypeData(status) {
-            if (this.currentPage == 1) {
-                this.temporary = [];
-            }
-            API.order.orderlist({
+            if(this.haveData){
+                this.loadshow=true;
+                API.order.orderlist({
                 userId: this.getUserInfoUserId,
                 token: this.getUserInfoToken,
-                orderStatus: 0,
+                orderStatus: status,
                 page_number: 10,
                 orderStatus:status,
                 page: this.currentPage,
@@ -580,21 +615,26 @@ export default {
                     let list = res.body.data.orderList.data
                     for (let item of list) {
                         this.confrimType(item);
-                        this.temporary.push(item);
                     }
-                    if (list.length == 10) {
-                        this.currentPage++;
-
-                    } else {
-                        this.orderList = this.temporary;
-                        /* 显示当前 */
+                    this.orderList[this.currentType]=this.orderList[this.currentType].concat(list);
+                    this.loadshow=false;
+                    this.canBottom=true;
+                      /* 显示当前 */
                         this.loading = false;
                         overscroll(document.querySelector('.order_list'));
-
-                        return false;
+                    if (res.body.data.hasNext) {
+                        this.currentPage++;
+                        this.haveData=true;
+                    } else {
+                        this.haveData=false;
                     }
+                    return false;
                 }
             });
+          }else{
+              this.canBottom=true;
+          }
+            
         },
         /* 删除订单 */
         deletOrder(id) {

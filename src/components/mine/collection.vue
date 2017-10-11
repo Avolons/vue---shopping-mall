@@ -183,9 +183,6 @@ export default {
             　　return windowHeight;
         }
         document.querySelector('.collention_main').onscroll = function() {
-            console.log(getScrollTop());
-            console.log(getWindowHeight());
-            console.log((getScrollHeight()-10));
         　　if (getScrollTop() + getWindowHeight() >= (getScrollHeight()-10)) {
                 if(self.canBottom==true){
                     self.canBottom=false;

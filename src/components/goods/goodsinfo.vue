@@ -235,7 +235,7 @@
                     </div>
                 </div>
                 <div class="goodsinfo_content_text">
-                    <img src="../../assets/img//goods/goodsrules.png" width="100%" alt="">
+                    <img :src="use_intro_img" width="100%" alt="">
                     <!-- 租赁清单图片 -->
                     <template v-if="staticdata.rentlist[0]">
                         <h3 class="goodsinfo_content_rentTitle">租赁清单</h3>
@@ -327,6 +327,8 @@ export default {
             typeSizeChange: null,
             /* 是否被收藏 */
             isCollection: false,
+            /* 详情图片 */
+            use_intro_img:"",
             /* 日期控件配置参数 */
             timeconfig: {
                 show: false,
@@ -732,6 +734,8 @@ export default {
             this.sizelist = goodsData.goodsattrcontent.gg;
             /* 商品id */
             this.goodsId = goodsData.goodsId;
+            /* 使用须知 */
+            this.use_intro_img=goodsData.use_intro_img;
             /* 是否有规则 */
             this.haveRules = goodsData.goods_leasing_rules;
             /* 是否收藏 */
