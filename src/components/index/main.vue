@@ -8,16 +8,22 @@ body {
     }
 }
 
+.main_typelist_list_fixed{
+        -webkit-overflow-scrolling: touch;
+        height: 40.5px;
+        padding-left: 15px;
+        font-size: 0;
+        white-space: nowrap;
+        overflow-x: auto;
+        width: 100%;
+        box-sizing: border-box;
+        background-color: #fff;
+}
 .main_container .main_typelist_box {
     height: 40px;
-    position: relative;
-    white-space: nowrap;
-    padding-left: 15px;
-    font-size: 0;
     border-bottom: 1px solid #f1f1f1;
-    background-color: #fff;
     box-sizing: border-box;
-    overflow-x: auto;
+    overflow-y: auto;
 }
 
 .main_typelist_item {
@@ -27,10 +33,7 @@ body {
     line-height: 40px;
     font-size: 14px;
     color: #333;
-    white-space: nowrap;
-    overflow: hidden;
     margin-right: 35px;
-    text-overflow: ellipsis;
     &--selected{
         color: #2196f3;
     }
@@ -314,10 +317,10 @@ body {
         }
     }
     &_typelist {
-        -webkit-overflow-scrolling: touch;
+        /* -webkit-overflow-scrolling: touch;
         z-index: 9999;
         left: 0;
-        width: 100%;
+        width: 100%; */
     }
     &_header {
         box-sizing: border-box;
@@ -558,9 +561,15 @@ body {
             </span>
         </header>
             <div class="main_typelist_box">
-                <div class="main_typelist_item" v-for="(item,index) in typeList" :class="{'main_typelist_item--selected':item.click}" @click="typeselect(index,item.goods_category_id)">
-                    <span>{{item.hot_label_name}}</span>
-                </div>
+                 <ul>
+                <li >
+                        <ul class="main_typelist_list_fixed">
+                            <li class="main_typelist_item" v-for="(item,index) in typeList" :class="{'main_typelist_item--selected':item.click}" @click="typeselect(index,item.goods_category_id)">
+                                <span>{{item.hot_label_name}}</span>
+                            </li>
+                        </ul> 
+                </li>
+            </ul> 
             </div>
         <div class="main_listbox">
             <!-- 轮播图组件 -->
@@ -577,6 +586,7 @@ body {
                     <h3>{{item.name}}</h3>
                 </li>
             </ul>
+           
             <!-- 频道列表区域 -->
             <ul v-show="currentType==0" class="main_channel_list">
                 <li v-for="item in channelList" class="main_channel_single" >
@@ -812,7 +822,7 @@ export default {
         }
     },
     activated() {
-
+        overscroll(document.querySelector('.main_typelist_box'));
         overscroll(document.querySelector('.main_listbox'));
         overscroll(document.querySelector('.list_compent_list_box'));
         setTimeout(() => {
@@ -1010,6 +1020,7 @@ export default {
     },
     mounted() {
        /* 可拖动返回列表滚动初始化 */
+       overscroll(document.querySelector('.main_typelist_box'));
         overscroll(document.querySelector('.main_listbox'));
         overscroll(document.querySelector('.list_compent_list_box'));
         /* 获取轮播图信息 */

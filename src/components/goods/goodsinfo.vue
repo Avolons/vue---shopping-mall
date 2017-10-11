@@ -256,7 +256,12 @@
             </article>
             <!-- 底部区域 -->
             <!-- 加入购物车，立即租赁，固定位置按钮 -->
-            <footer class="goodsinfo_footer">
+           
+            <toast v-model="toast" type="success">{{confrim}}</toast>
+            <toast v-model="toasts" type="cancel">{{confrim}}</toast>
+
+        </div>
+         <footer class="goodsinfo_footer">
                 <div class="goodsinfo_btnlist">
                     <ul class="goodsinfo_funlist">
                         <li class="goodsinfo_funlist_single" @click="goShop()">
@@ -277,10 +282,6 @@
                     <button type="button" @click="buyGoods()" class="goodsinfo_btnlist_buy">立即租赁</button>
                 </div>
             </footer>
-            <toast v-model="toast" type="success">{{confrim}}</toast>
-            <toast v-model="toasts" type="cancel">{{confrim}}</toast>
-
-        </div>
     </div>
 </template>
 

@@ -413,10 +413,13 @@ export default {
         overscroll(document.querySelector('.order_list'));
         /* 当前滚动距离为0 */
         localStorage.setItem("orderScroll", 0);
-        /* this.loading = true;
-        this.haveData=true;
-        this.orderList=[];
-        this.currentPage = 1; */
+        this.loading = true;
+            /* 数据重载永远只重新加载当前显示列表数据 */
+             this.orderList[this.currentType]=[];
+            /* 数据重载永远只重新加载当前显示列表数据 */
+            this.currentPage = 1;
+            this.haveData=true;
+            this.getTypeData(this.currentType);
         let self = this;
         /* self.getTypeData(this.currentType); */
         function getScrollTop() {
@@ -473,11 +476,19 @@ export default {
         }
 
         overscroll(document.querySelector('.order_list'));
-        this.orderList[this.currentType]=[];
-        /* 数据重载永远只重新加载当前显示列表数据 */
-        this.currentPage = 1;
-        this.haveData=true;
-        this.getTypeData(this.currentType);
+                /* 当前页面需要重载数据 */
+        if (localStorage.getItem("reload")) {
+            this.loading = true;
+            /* 数据重载永远只重新加载当前显示列表数据 */
+             this.orderList[this.currentType]=[];
+            /* 数据重载永远只重新加载当前显示列表数据 */
+            this.currentPage = 1;
+            this.haveData=true;
+            this.getTypeData(this.currentType);
+            localStorage.setItem("reload", "");
+        }
+
+       
         /* 重置滚动距离 */
         setTimeout(() => {
             if (localStorage.getItem("orderScroll")) {

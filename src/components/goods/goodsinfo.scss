@@ -138,23 +138,23 @@
         align-items: center;
         &_num{
             margin-left: 15px;
-            height: 30px;
-            width: 107px;
+            height: 35px;
+            width: 125px;
             border:1px solid #dddddd;
             display: flex;
             >span{
-                height: 30px;
-                width: 30px;
+                height: 35px;
+                width: 40px;
                 display: block;
                 font-size: 16px;
-                line-height: 30px;
+                line-height: 35px;
                 text-align: center;
             }
             >input{
                 display: block;
                 width: 45px;
-                height: 30px;
-                line-height: 30px;
+                height: 35px;
+                line-height: 35px;
                 box-sizing: border-box;
                 border: none;
                 border-left: 1px solid #ddd;
