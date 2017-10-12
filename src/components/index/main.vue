@@ -10,7 +10,7 @@ body {
 
 .main_typelist_list_fixed{
         -webkit-overflow-scrolling: touch;
-        height: 40px;
+        height: 40.5px;
         padding-left: 15px;
         font-size: 0;
         white-space: nowrap;

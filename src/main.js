@@ -88,7 +88,7 @@ import { md5 } from 'vux';
 Vue.prototype.md5=md5;
 /* 全局注册图片格式化format函数 */
 let  imgFormat;
-if(navigator.userAgent.indexOf("Safari") > -1){
+if(navigator.userAgent.indexOf("Safari") > -1 || (navigator.userAgent.toLowerCase().match(/MicroMessenger/i)=="micromessenger"&&navigator.userAgent.indexOf('iPhone') > -1)){
 	imgFormat=function(url){
 		if(typeof url=='string'){
 			if(url.indexOf("@!")>-1){

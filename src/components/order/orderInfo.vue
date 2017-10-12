@@ -480,7 +480,7 @@ export default {
                 userId: this.getUserInfoUserId,
                 token: this.getUserInfoToken,
                 info: [{
-                    addressId: this.$store.state.tplId != 3 ? this.$store.state.addressData.id : "",//地址id 物流或者上门选择该字段
+                    addressId:this.$store.state.addressData.id ,//地址id 物流或者上门选择该字段
                     cartId: this.cartId, //购物车id
                     cart_tpl: this.$store.state.tplId,//物流方式
                     freight_continued_price: this.tplRules.freight_continued_price,//快递续件运费
@@ -668,7 +668,7 @@ export default {
                     userId: this.getUserInfoUserId,
                     token: this.getUserInfoToken,
                     info: [{
-                        addressId: this.$store.state.tplId != 3 ? this.$store.state.addressData.id : "",//地址id 物流或者上门选择该字段
+                        addressId:this.$store.state.addressData.id,//地址id 物流或者上门选择该字段
                         cartId: this.cartId, //购物车id
                         cart_tpl: this.$store.state.tplId,//物流方式
                         freight_continued_price: this.tplRules.freight_continued_price,//快递续件运费
@@ -722,7 +722,7 @@ export default {
                     userId: this.getUserInfoUserId,
                     token: this.getUserInfoToken,
                     info: [{
-                        addressId: this.$store.state.tplId != 3 ? this.$store.state.addressData.id : "",//地址id 物流或者上门选择该字段
+                        addressId: this.$store.state.addressData.id,//地址id 物流或者上门选择该字段
                         cartId: this.cartId, //购物车id
                         cart_tpl: this.$store.state.tplId,//物流方式
                         freight_continued_price: this.tplRules.freight_continued_price,//快递续件运费
@@ -773,6 +773,8 @@ export default {
                             document.body.appendChild(div);
                             document.forms.alipaysubmit.submit();
                         })
+                    }else{
+                        alert(res.body.msg);
                     }
                 });
             } else {
