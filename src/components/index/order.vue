@@ -520,16 +520,10 @@ export default {
                             payMethod: 4,
                             openId: item.user_id,
                         }).then((resopndy) => {
-                            if(resopndy.body.code==200){
                                 const div = document.createElement('div');
                                 div.innerHTML = resopndy.body;
                                 document.body.appendChild(div);
                                 document.forms.alipaysubmit.submit();
-                            }else{
-                                self.confrim = "支付异常";
-                                alert(JSON.stringify(resopndy.body));
-                                 self.toast = true;
-                            }
                         })
                 }
             },(err)=>{
