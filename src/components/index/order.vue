@@ -473,7 +473,10 @@ export default {
         /* 支付宝借还成功后的回调 */
         if(biz_content){
             biz_content= JSON.parse(biz_content);
-            this.success(biz_content);
+            let timetamp=JSON.parse(biz_content.invoke_state).timestamp;
+            if((new Date().getTime()/1000)-timetamp<=30){
+                this.success(biz_content);
+            }
         }
         overscroll(document.querySelector('.order_list'));
                 /* 当前页面需要重载数据 */

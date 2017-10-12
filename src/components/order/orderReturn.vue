@@ -169,20 +169,11 @@
                     <div class="return_main_sinceList">
                         <ul class="main_since_list">
                             <li v-for="(item,index) in sinceList" class="main_since_single" @click="confrimSince(item)">
-                        <template v-if="returnType==3">
-                                <div class="main_since_text">
-                                    <h2 class="main_since_title">{{item.since_name}}</h2>
-                                    <h2 class="main_since_price">{{item.since_tel}}</h2>
-                                </div>
-                                <p class="main_since_intr twonowarp">{{item.province_name}}{{item.city_name}}{{item.region_name}}{{item.since_detailed_address}}</p>
-                           </template>
-                           <template v-else>
                             <div class="main_since_text">
                                 <h2 class="main_since_title">{{item.revent_receiver_name}}</h2>
                                 <h2 class="main_since_price">{{item.revent_tel}}</h2>
                             </div>
                             <p class="main_since_intr twonowarp">{{item.revent_province}}{{item.revent_city}}{{item.revent_region}}{{item.revent_detailed_address}}</p>
-                        </template>
                             </li>
                         </ul>
                     </div>
