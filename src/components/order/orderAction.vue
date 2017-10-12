@@ -384,7 +384,7 @@
                 <h3>订单编号：{{infoData.orderCardId}}</h3>
                 <li v-show="infoData.order_generation_time">订单生成时间：{{infoData.order_generation_time | orderdata }}</li>
                 <li v-show="infoData.order_pay_time">订单支付时间：{{infoData.order_pay_time | orderdata }}</li>
-                <li v-show="infoData.order_goods_return_time">申请退款时间：{{infoData.order_goods_return_time | orderdata }}</li>
+                <li v-show="infoData.order_apply_refund_time">申请退款时间：{{infoData.order_apply_refund_time | orderdata }}</li>
                 <li v-show="infoData.order_shipping_time">订单发货时间：{{infoData.order_shipping_time | orderdata }}</li>
                 <li v-show="infoData.order_apply_refund_goods_time">申请退货时间：{{infoData.order_apply_refund_goods_time | orderdata }}</li>
                 <li v-show="infoData.order_delivery_time">确认收货时间：{{infoData.order_delivery_time | orderdata }}</li>

@@ -102,7 +102,7 @@
     <div class="settlement_main">
         <div class="settlement_main_mess">
             <!-- 商品详情图 -->
-            <img :src="infoData.goods_main_pic" alt="" class="settlement_main_img">
+            <img :src="imgFormat(infoData.goods_main_pic)" alt="" class="settlement_main_img">
             <div class="settlement_main_text">
                 <!-- 商品详情名称 -->
                 <span class="settlement_main_goodsTitle twonowarp">
@@ -122,8 +122,8 @@
         </group> 
         <group class="settlement_main_priceColl">
             <cell title="商品租金"  :value="infoData.order_count_money | currency('￥')" ></cell>
-            <cell title="店铺优惠"  :value=" infoData.store_coupon_amount | currency('￥')" ></cell>
-            <cell title="平台优惠"  :value=" infoData.coupon_amount | currency('￥')" ></cell>
+            <cell title="店铺优惠"  :value="-infoData.store_coupon_amount | currency('￥')" ></cell>
+            <cell title="平台优惠"  :value="-infoData.coupon_amount | currency('￥')" ></cell>
             <cell title="运费"  :value="infoData.order_freight | currency('￥')"></cell>
             <cell title="违约金" :value="infoData.settlement_bill_liquidated | currency('￥')"  ></cell>
             <cell title="损失赔偿金" :value="infoData.settlement_bill_damages | currency('￥')"  ></cell>

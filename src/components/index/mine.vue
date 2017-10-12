@@ -60,7 +60,7 @@ body{
 	<div class="mine_container">
         <header class="mine_header">
             <!-- :src="user.img"  -->
-            <img class="mine_avatar"   :src="this.$store.state.userInfo.avatar"  alt="avatar">
+            <img class="mine_avatar"   :src="imgFormat(this.$store.state.userInfo.avatar)"  alt="avatar">
             <span class="mine_name">{{this.$store.state.userInfo.loginname}}</span>
         </header>
    
