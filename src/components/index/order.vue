@@ -474,7 +474,8 @@ export default {
         if(biz_content){
             biz_content= JSON.parse(biz_content);
             let timetamp=JSON.parse(biz_content.invoke_state).timestamp;
-            if((new Date().getTime()/1000)-timetamp<=30){
+            alert(timetamp,(new Date().getTime()/1000),((new Date().getTime()/1000)-timetamp));
+            if(((new Date().getTime()/1000)-timetamp)<=30){
                 this.success(biz_content);
             }
         }
