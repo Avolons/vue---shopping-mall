@@ -277,9 +277,9 @@
                             <button class="orderInfon_main_cardclose" type="button" @click="closeCard">不使用优惠券</button>
                         </popup>
                     </div>
-                    <!-- <cell title="商品押金" :value="goodsDespoit - antDerate | currency('￥')"></cell> -->
-                    <cell title="商品押金" :value="goodsDespoit | currency('￥')"></cell>
-                    <!-- <div style="font-size:12px;color:red;margin:-12px 0 0 15px">平台已为您减免{{antDerate}}元租金</div> -->
+                    <cell title="商品押金" :value="goodsDespoit - antDerate | currency('￥')"></cell>
+                    <!-- <cell title="商品押金" :value="goodsDespoit | currency('￥')"></cell> -->
+                    <div style="font-size:12px;color:red;margin:-12px 0 0 15px">平台已为您减免{{antDerate}}元租金</div>
                     <x-textarea :max="20" v-model="option" placeholder="买家留言"></x-textarea>
                 </group>
             </div>
@@ -287,8 +287,8 @@
             <footer class="orderInfon_footer">
                 <div class="orderInfon_footer_price">
                     合计：
-                    <span>{{goodsTotolPrice | currency('￥')}}</span>
-                    <!-- <span>{{goodsTotolPrice - antDerate | currency('￥')}}</span> -->
+                    <!-- <span>{{goodsTotolPrice | currency('￥')}}</span> -->
+                    <span>{{goodsTotolPrice - antDerate | currency('￥')}}</span>
                 </div>
                 <button class="orderInfon_footer_btn" @click="buygoods" type="button">提交订单</button>
             </footer>
@@ -420,6 +420,19 @@ export default {
                 return 0;
             } else {
                 return despoite;
+            }
+        },
+        /* 计算商品借还押金 */
+        goodsalipay(){
+            /* 计算后如果押金小于0写原押金，否则写真实押金，原押金也为0则显示0.1 */
+            if(this.goodsDespoit<=0){
+                if(this.infoData.goods_deposit==0){
+                    return 0.1;
+                }else{
+                    return this.infoData.goods_deposit;
+                }
+            }else{
+                return this.goodsDespoit.toFixed(2);
             }
         },
         /* 计算商品合计租金 */
@@ -750,8 +763,8 @@ export default {
                                 goods_name:this.infoData.goodsName,
                                 address:this.getAddress,    
                                 shop_name:this.storeInfo,
-                                rent_amount:this.goodsTotolPrice,
-                                deposit_amount:this.infoData.goods_deposit,//押金
+                                rent_amount:this.goodsTotolPrice,/* 总支付价格 */
+                                deposit_amount:this.goodsalipay,//押金
                                 borrow_time:this.infoData.cart_start_time,
                                 expiry_time:this.infoData.cart_end_time,
                                 order_id:res.body.data.order_id,

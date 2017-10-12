@@ -410,6 +410,13 @@ export default {
         ]),
     },
     mounted() {
+        /* 获取当前url参数 */
+        let  biz_content= this.$route.query.biz_content;
+        /* 支付宝借还成功后的回调 */
+        if(biz_content){
+            biz_content= JSON.parse(biz_content);
+            this.success(biz_content);
+        }
         overscroll(document.querySelector('.order_list'));
         /* 当前滚动距离为0 */
         localStorage.setItem("orderScroll", 0);
@@ -467,13 +474,7 @@ export default {
         
     },
     activated() {
-        /* 获取当前url参数 */
-        let  biz_content= this.$route.query.biz_content;
-        /* 支付宝借还成功后的回调 */
-        if(biz_content){
-            biz_content= JSON.parse(biz_content);
-            this.success(biz_content);
-        }
+        
 
         overscroll(document.querySelector('.order_list'));
                 /* 当前页面需要重载数据 */
@@ -515,7 +516,6 @@ export default {
                             payMethod: 4,
                             openId: openId,
                         }).then((resopndy) => {
-                            window.location.href="/#/index/main/order";
                             const div = document.createElement('div');
                             div.innerHTML = resopndy.body;
                             document.body.appendChild(div);
