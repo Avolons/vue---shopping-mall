@@ -652,7 +652,7 @@ export const order = {
    * @returns 
    */
   orderPay(data) {
-    return Vue.http.post('https://api.zujiekeji.cn/index/order/orderadd' + sourceStr,data);
+    return Vue.http.post(API_ROOT + 'order/orderadd' + sourceStr,data);
   },
   /**
    * 待付款订单生成支付订单
