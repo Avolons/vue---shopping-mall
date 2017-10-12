@@ -208,7 +208,7 @@
                 </h3>
                 <div class="orderInfon_main_mess">
                     <!-- 商品详情图 -->
-                    <img :src="infoData.goodsFace" alt="" class="orderInfon_main_img">
+                    <img :src="imgFormat(infoData.goodsFace)" alt="" class="orderInfon_main_img">
                     <div class="orderInfon_main_text">
                         <!-- 商品详情名称 -->
                         <span class="orderInfon_main_goodsTitle twonowarp">
@@ -348,7 +348,9 @@ export default {
             /* 订单id */
             cartId: 0,
             /* 订单详情数据 */
-            infoData: {},
+            infoData: {
+                goodsFace:""
+            },
             /* 时间对照表 */
             timeMap: { 1: "日", 2: "周", 3: "月", 4: "季", 5: "年" },
             /* 运费规则列表 */

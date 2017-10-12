@@ -109,9 +109,9 @@
              <x-header @on-click-back="routerBack" :left-options="{backText: '',preventGoBack:true}">{{storeName}}</x-header>
         </div> 
         <header class="shop_main_header">
-            <img class="shop_main_shopface" :src="storebgPic" alt="shopface">
+            <img class="shop_main_shopface" :src="imgFormat(storebgPic)" alt="shopface">
             <div class="shop_main_cell" @click="goInfo()">
-                <img class="shop_main_logo" :src="storeFace" alt="logo">
+                <img class="shop_main_logo" :src="imgFormat(storeFace)" alt="logo">
                 <h3 class="shop_main_title">{{storeName}}</h3>
                 <i class="iconfont">&#xe6d7;</i>
             </div>
@@ -158,8 +158,8 @@ export default {
         confrim:"请选择地址",
         toast:false,
         storeName:null,
-        storeFace:null,
-        storebgPic:null,
+        storeFace:"",
+        storebgPic:"",
         storeId:null,
         goodsList:[1,5,7,6,8],
         cardList:[]

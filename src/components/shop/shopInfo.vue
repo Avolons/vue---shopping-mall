@@ -58,9 +58,9 @@
              <x-header @on-click-back="routerBack" :left-options="{backText: '',preventGoBack:true}">{{storeName}}</x-header>
         </div> 
         <header class="shopInfo_main_header">
-            <img class="shopInfo_main_shopface" :src="storebgPic" alt="shopface">
+            <img class="shopInfo_main_shopface" :src="imgFormat(storebgPic)" alt="shopface">
             <div class="shopInfo_main_cell">
-                <img class="shopInfo_main_logo" :src="storeFace" alt="logo">
+                <img class="shopInfo_main_logo" :src="imgFormat(storeFace)" alt="logo">
                 <h3 class="shopInfo_main_title">{{storeName}}</h3>
                 
             </div>
@@ -86,8 +86,8 @@ export default {
   data () {
     return {
       storeName:null,
-        storeFace:null,
-        storebgPic:null,
+        storeFace:"",
+        storebgPic:"",
         address:null,
         time:null,
       storeId:null,

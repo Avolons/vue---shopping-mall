@@ -184,7 +184,6 @@
 <script>
 
 import { XHeader, Cell, Group, Confirm, Toast, LoadMore } from 'vux'
-import addresslist from './addresslist.json';
 import { mapGetters } from 'vuex'
 import { API, getQuery } from '../../services';
 

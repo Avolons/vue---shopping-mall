@@ -25,7 +25,7 @@
             <ul class="main_hot_list" >
                 <li v-for="item in items.goods" class="main_hot_single" @click="goInfo(item.goodsId)">
                     <div class="main_hot_img">
-                        <img :src="item.goodsFace" alt="img">
+                        <img :src="imgFormat(item.goodsFace)" alt="img">
                     </div>
                     <div class="main_hot_text">
                         <h2 class="main_hot_title twonowarp">{{item.goodsName}}</h2>

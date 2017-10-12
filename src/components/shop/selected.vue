@@ -100,9 +100,9 @@
             <ul class="select_main_list">
                 <li v-for="item in shopList" class="select_main_single" >
                     <div class="select_main_imgBox">
-                         <img class="select_main_img"   :src="item.bg_img" alt="channel">
+                         <img class="select_main_img"   :src="imgFormat(item.bg_img)" alt="channel">
                          <div class="select_main_textBox">
-                             <img :src="item.store_header" alt="">
+                             <img :src="imgFormat(item.store_header)" alt="">
                              <h3>{{item.store_name}}</h3>
                              <h3 @click="goShop(item.store_id)" >进店</h3>
                              <i  @click="goShop(item.store_id)" class="iconfont">&#xe6d7;</i>
@@ -110,7 +110,7 @@
                     </div>
                     <ul class="select_main_goodsList">
                         <li @click="goInfo(ite.goods_id)" v-for="ite in item.goods" class="select_main_goodsSingle">
-                            <img class="select_main_goodsImg" :src="ite.goods_main_pic" alt="">
+                            <img class="select_main_goodsImg" :src="imgFormat(ite.goods_main_pic)" alt="">
                             <h3 class="select_main_goodsTitle">{{ite.goods_name}}</h3>
                             <p  v-if="!ite.act_price" class="select_main_goodsText"> ￥{{ite.rent_price}}/{{timeMap[ite.rent_period_type]}}
                             </p>

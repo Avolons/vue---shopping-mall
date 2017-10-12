@@ -290,10 +290,10 @@
 
 <template>
     <div>
-        <div class="orderAction_main">
-            <div class="help_common_title">
+         <div class="help_common_title">
                 <x-header @on-click-back="routerBack" :left-options="{backText: '',preventGoBack:true}">订单详情</x-header>
             </div>
+        <div class="orderAction_main">
             <div class="orderAction_main_type">
                 <!-- 订单完成 评价完成 退款成功 退货成功-->
                 <i v-show="infoData.orderType==7 || infoData.orderType==9 || infoData.orderType==10" class="iconfont">&#xe613;</i>
@@ -322,23 +322,26 @@
                 </div>
             </div>
             <group class="orderAction_main_address">
-                <div class="orderAction_main_tplType">
+                <div v-show="infoData.order_express_type==0" class="orderAction_main_tplType">
+                    <h3>归还地址</h3>
+                </div>
+                <div v-show="infoData.order_express_type!=0" class="orderAction_main_tplType">
                     <h3>物流方式</h3>
                     <h3>{{returnTpl}}</h3>
                 </div>
                 <div class="main_since_single">
                     <!-- 状态1和2为快递和上门地址 -->
-                    <div class="main_since_text" v-show="this.infoData.order_express_type==1 || this.infoData.order_express_type==2">
+                    <div class="main_since_text" v-show="infoData.order_express_type==1 || infoData.order_express_type==2 || infoData.order_express_type==0">
                         <h2 class="main_since_title">{{infoData.order_receiver_name}}</h2>
                         <h2 class="main_since_price">{{infoData.order_mobile}}</h2>
                     </div>
-                    <p v-show="this.infoData.order_express_type==1 || this.infoData.order_express_type==2" class="main_since_intr twonowarp">{{infoData.order_province}}{{infoData.order_city}}{{infoData.order_district}}{{infoData.order_detailed}}</p>
+                    <p v-show="infoData.order_express_type==1 || infoData.order_express_type==2 || infoData.order_express_type==0" class="main_since_intr twonowarp">{{infoData.order_province}}{{infoData.order_city}}{{infoData.order_district}}{{infoData.order_detailed}}</p>
                     <!-- 状态3为自提点地址 -->
-                    <div v-show="this.infoData.order_express_type==3" class="main_since_text">
+                    <div v-show="infoData.order_express_type==3" class="main_since_text">
                         <h2 class="main_since_title">{{infoData.since_name}}</h2>
                         <h2 class="main_since_price">{{infoData.since_tel}}</h2>
                     </div>
-                    <p v-show="this.infoData.order_express_type==3" class="main_since_intr twonowarp">{{infoData.province_name}}{{infoData.city_name}}{{infoData.region_name}}{{infoData.since_detailed_address}}</p>
+                    <p v-show="infoData.order_express_type==3" class="main_since_intr twonowarp">{{infoData.province_name}}{{infoData.city_name}}{{infoData.region_name}}{{infoData.since_detailed_address}}</p>
                 </div>
             </group>
             <h3 class="orderAction_main_shopTitle">
@@ -346,7 +349,7 @@
             </h3>
             <div class="orderAction_main_mess">
                 <!-- 商品详情图 -->
-                <img :src="infoData.shopPic" alt="" class="orderAction_main_img">
+                <img :src="imgFormat(infoData.shopPic)" alt="" class="orderAction_main_img">
                 <div class="orderAction_main_text">
                     <!-- 商品详情名称 -->
                     <span class="orderAction_main_goodsTitle twonowarp">
@@ -388,7 +391,11 @@
                 <li v-show="infoData.order_settlement_bill_generation_time">结算单生成时间：{{infoData.order_settlement_bill_generation_time | orderdata }}</li>
                 <li v-show="infoData.order_settlement_bill_confirm_time">结算单确认时间：{{infoData.order_settlement_bill_confirm_time | orderdata }}</li>
             </ul>
-            <footer class="orderAction_footer">
+            
+            <toast v-model="toast" type="success">{{confrim}}</toast>
+                        <actionsheet v-model="payShow"  show-cancel :menus="menus" @on-click-menu="browserPay" show-cancel></actionsheet>
+        </div>
+        <footer class="orderAction_footer">
                 <!-- 待付款 订单关闭 评价完成 退款完成 退货完成 -->
                 <button @click.stop="deletOrder(infoData.orderId)" class="order_single_btn--confirm" v-if="infoData.orderType==1 || infoData.orderType==7 || infoData.orderType==8 || infoData.orderType==9 || infoData.orderType==10">删除订单</button>
                 <!-- 代付款状态 -->
@@ -415,9 +422,6 @@
                 <!-- 退货结算待确认 结算待确认 -->
                 <button @click.stop="confrimSettlement(infoData.orderId)" v-if="infoData.orderType==14 || infoData.orderType==12">确认结算</button>
             </footer>
-            <toast v-model="toast" type="success">{{confrim}}</toast>
-                        <actionsheet v-model="payShow"  show-cancel :menus="menus" @on-click-menu="browserPay" show-cancel></actionsheet>
-        </div>
     </div>
 </template>
 <script>
@@ -451,7 +455,9 @@ export default {
             /* 订单id */
             orderId: 0,
             /* 订单详情数据 */
-            infoData: {},
+            infoData: {
+                shopPic:""
+            },
             /* 时间对照表 */
             timeMap: { 1: "日", 2: "周", 3: "月", 4: "季", 5: "年" },
             /* 提示文字 */

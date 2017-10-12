@@ -144,7 +144,7 @@ body {
                             <template v-for="ite in item.children">
                                 <li class="list_recommend_single" @click="goSearch(ite.id,ite.name)">
                                     <div class="list_recommend_img">
-                                        <img :src="ite.img" alt="img">
+                                        <img :src="imgFormat(ite.img)" alt="img">
                                     </div>
                                     <div class="list_recommend_text">
                                         <h2 class="list_recommend_title">{{ite.name}}</h2>

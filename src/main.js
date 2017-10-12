@@ -39,6 +39,9 @@ router.beforeEach((to, from, next) => {
 
 
 
+
+
+
 window.overscroll = function(el) {
 	el.addEventListener('touchstart', function() {
 		var top = el.scrollTop
@@ -69,6 +72,7 @@ if(isiOS){
 
 
 
+
 /* 取出本地数据，赋值到store的state中 */
 const userInfo=localStorage.getItem("userInfo");
 if(userInfo){
@@ -82,6 +86,24 @@ if(isCertify){
 /* 全局注册md5函数 */
 import { md5 } from 'vux';
 Vue.prototype.md5=md5;
+/* 全局注册图片格式化format函数 */
+let  imgFormat;
+if(navigator.userAgent.indexOf("Safari") > -1){
+	imgFormat=function(url){
+		if(typeof url=='string'){
+			if(url.indexOf("@!")>-1){
+				url+="2";
+			}
+		}
+		return url;
+	}
+}else{
+	imgFormat=function(url){
+		return url;
+	}
+}
+Vue.prototype.imgFormat= imgFormat;
+
 import  { LoadingPlugin } from 'vux'
 Vue.use(LoadingPlugin)
 import { ConfirmPlugin } from 'vux';

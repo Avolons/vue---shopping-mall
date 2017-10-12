@@ -82,9 +82,10 @@
                 display: inline-block;
                 margin-right: 10px;
                 background-color: #fff;
-                padding: 0 5px;
+                padding: 0 10px;
                 font-size: 16px;
                 margin-bottom: 10px;
+                border-radius: 3px;
                 text-align: center;
             }
         }

@@ -260,7 +260,7 @@
                     <span v-if="item.srcOrderType==3" class="order_single_type">退款中</span>
                 </div>
                 <div class="order_single_content">
-                        <x-img :src="item.goods_main_pic" :webp-src="item.goods_main_pic"  default-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507702400938&di=fc233efbd5c433313c2ec5c3fa424b1c&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01cf3655c8d56132f8755e66dcb76d.png%40900w_1l_2o_100sh.jpg"  class="order_single_img"  :offset="-100" container=".order_list"></x-img>
+                        <x-img :src="imgFormat(item.goods_main_pic)"  default-src="http://oss.zujiekeji.cn/img/default.png"  class="order_single_img"  :offset="-100" container=".order_list"></x-img>
                  
                     <div class="order_single_text">
                         <h3 class="order_single_title">
@@ -667,8 +667,10 @@ export default {
                             self.loading = true;
                             self.confrim = "删除成功";
                             self.toast = true;
+                            self.orderList[self.currentType]=[];
                             self.currentPage = 1;
-                            self.getTypeData();
+                            self.haveData=true;
+                            self.getTypeData(self.currentType);
                         }
                     });
                 }
@@ -684,19 +686,25 @@ export default {
                     if (res.err_msg == "get_brand_wcpay_request:fail") {
                         self.confrim = "支付异常";
                         self.toast = true;
+                        self.orderList[self.currentType]=[];
                         self.currentPage = 1;
-                        self.getTypeData();
+                        self.haveData=true;
+                        self.getTypeData(self.currentType);
 
                     }
                     if (res.err_msg == "get_brand_wcpay_request:cancel") {
+                        self.orderList[self.currentType]=[];
                         self.currentPage = 1;
-                        self.getTypeData();
+                        self.haveData=true;
+                        self.getTypeData(self.currentType);
                     }
                     if (res.err_msg == "get_brand_wcpay_request:ok") {
                         self.confrim = "支付成功";
                         self.toast = true;
+                        self.orderList[self.currentType]=[];
                         self.currentPage = 1;
-                        self.getTypeData();
+                        self.haveData=true;
+                        self.getTypeData(self.currentType);
 
                     }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
                 }
@@ -852,8 +860,10 @@ export default {
                     }).then((res) => {
                         if (res.body.code == 200) {
                             self.confrim = "确认收货成功";
+                            self.orderList[this.currentType]=[];
                             self.currentPage = 1;
-                            self.getTypeData();
+                            self.haveData=true;
+                            self.getTypeData(self.currentType);
                             self.toast = true;
                         }
                     });
@@ -904,7 +914,6 @@ export default {
                     } else {
                         self.confrim = "提醒结算成功";
                     }
-                    self.currentPage = 1;
                     self.toast = true;
                 }
             });

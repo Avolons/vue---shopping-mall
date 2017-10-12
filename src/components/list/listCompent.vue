@@ -14,14 +14,21 @@
         padding: 10px;
         background-color: #fff;
         margin-top: 5px;
+        flex-direction: column;
+        flex-wrap: wrap;
+        display: flex;
     }
     &_img {
-        display: block;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         box-sizing: border-box;
         &>img {
             margin: 0 auto;
             width: 100%;
             display: block;
+           
         }
     }
     &_title {
@@ -55,7 +62,8 @@
         <ul class="list_compent_list">
             <li v-for="(item,index) in commonGoodsList" class="main_recommend_single" @click="goInfo(item.goodsId)">
                 <div class="main_recommend_img">
-                    <img :src="item.goodsFace" alt="">
+                    <!-- <x-img :src="item.goodsFace" container=".list_compent_list_box"  class="ximg-demo"  :offset="-100"  default-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507702400938&di=fc233efbd5c433313c2ec5c3fa424b1c&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01cf3655c8d56132f8755e66dcb76d.png%40900w_1l_2o_100sh.jpg" ></x-img> -->
+                    <img :src="imgFormat(item.goodsFace)" alt="">
                 </div>
                 <div class="main_recommend_text">
                     <h2 class="main_recommend_title">{{item.goodsName}}</h2>
@@ -81,6 +89,9 @@
 </template>
  
  <script>
+
+/*  import { XImg} from 'vux' */
+
 export default {
     data() {
         return {
@@ -89,6 +100,7 @@ export default {
         }
     },
     components: {
+       /*  XImg */
     },
     props: {
         commonGoodsList: Array,

@@ -1,5 +1,512 @@
 <style lang="scss">
-@import "./goodsinfo.scss";
+.vux-popup-picker-header-menu-right{
+    color: #2196f3;
+}
+.goodsinfo_content_timeselect{
+    >.goodsinfo_content_close{
+        display: flex;
+        justify-content: space-between;
+        box-sizing: border-box;
+        padding: 0 15px;
+        border-bottom: 1px solid #eee;
+        height: 44px;
+        align-items: center;
+        background-color: #fbf9fe;
+        span{
+            font-size: 15px;
+            color: #828282;
+        }
+        button{
+            font-size: 15px;
+            color: #2196f3;
+        }
+    }
+    box-sizing: border-box;
+    .inline-calendar td.current > span.vux-calendar-each-date{
+        background-color: #2196f3;
+    }
+    .vux-prev-icon, .vux-next-icon{
+        border-color: #2196f3;
+    }
+    .inline-calendar td.is-today, .inline-calendar td.is-today.is-disabled{
+        color: #2196f3
+    }
+}
+.goodsinfo{
+    &_container{
+        -webkit-overflow-scrolling : touch; 
+        .swiper-demo-img{
+            >img{
+                width: 100%;
+                height: auto;
+            }
+        }
+        height: 100%;
+        overflow-y: auto;
+        .vux-divider{
+            background-color: #fff;
+        }
+        .vux-slider > .vux-indicator > a > .vux-icon-dot.active, .vux-slider .vux-indicator-right > a > .vux-icon-dot.active{
+            background-color: #2196f3;
+        }
+       
+    }
+    &_content{
+        background-color: #f3f3f3;
+        overflow: hidden;
+    }
+    /* 头部区域样式 */
+    &_header{
+       
+        background-color: #fff;
+        overflow: hidden;
+        &_back{
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            color: #dadada;
+            z-index: 999;
+            >i{
+                font-size: 30px;
+            }
+        }
+    }
+    &_title{
+        color: #272727;
+        font-size: 15px;
+        line-height: 20px;
+        box-sizing: border-box;
+        padding: 10px 15px;
+        font-weight: 400;
+        background-color: #fff;
+    }
+    &_box{
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        height: 40px;
+        align-items: center;
+        box-sizing: border-box;
+        background-color: #fff;
+        padding: 0 15px;
+    }
+    &_price{
+        flex-grow: 1;
+    }
+    &_newprice{
+        color: #f80000;
+        font-size: 17px;
+    }
+    &_oldprice{
+        color: #272727;
+        font-size: 12px;
+        text-decoration: line-through;
+    }
+    &_datetime{
+        flex-grow: 0;
+        display: flex;
+        align-items: center;
+        &_single{
+            font-size: 17px;
+            height: 30px;
+            width: 30px;
+            border-radius: 5px;
+            margin-left: 10px;
+            color: #272727;
+            background-color: #dedede;
+            text-align: center;
+            line-height: 30px;
+            &--select{
+                color: #fff;
+                background-color: #2196f3;
+            }
+        }
+        
+    }
+    &_allprice{
+        font-size: 14px;
+        color: #272727;
+        >span{
+            font-size: 14px;
+            color: #2196f3;
+        }
+    }
+    &_rentTime{
+        font-size: 12px;
+        color: #272727;
+        display: flex;
+        align-items: center;
+        &_num{
+            margin-left: 15px;
+            height: 35px;
+            width: 125px;
+            border:1px solid #dddddd;
+            display: flex;
+            >span{
+                height: 35px;
+                width: 40px;
+                display: block;
+                font-size: 16px;
+                line-height: 35px;
+                text-align: center;
+            }
+            >input{
+                display: block;
+                width: 45px;
+                height: 35px;
+                line-height: 35px;
+                box-sizing: border-box;
+                border: none;
+                border-left: 1px solid #ddd;
+                border-right: 1px solid #ddd;
+                text-align: center
+            }
+        }
+    }
+    /* 内容主体区域数据 */
+    &_typelist{
+        border-bottom: 1px solid #f3f3f3;
+        background-color: #fff;
+        margin-top: 10px;
+        line-height: 40px;
+        overflow: hidden;
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
+        padding: 0 30px 0 15px;
+        box-sizing: border-box;
+        &_single{
+            line-height: 40px;
+            font-size: 15px;
+            color: #272727;
+            display: flex;
+            margin-right: 10px;
+            >i{
+                margin-right: 3px !important;
+                font-size: 15px !important;
+                color: #2196f3;
+            }
+        }
+        >i{
+            position: absolute;
+            right: 15px;
+            color: #989898;
+        }
+        >label{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            z-index: 100;
+        }
+        &_content{
+                
+            &_time{
+                background-color: #f3f3f3;
+            }
+            background: #fff !important;
+            h3{
+                font-size: 14px;
+                line-height: 40px;
+                text-align: center;
+                font-weight: 400;
+                color: #272727;
+            }
+            ul{
+                box-sizing: border-box;
+                padding: 0 15px;
+                >li{
+                    color: #272727;
+                    font-size: 15px;
+                    >i{
+                        display: inline-block;
+                        font-size: 20px;
+                        color: #2196f3;
+                    }
+                    >p{
+                        line-height: 20px;
+                        box-sizing: border-box;
+                        padding: 0 25px;
+                        font-size: 14px;
+                        margin: 10px 0;
+                    }
+                }
+            }
+        }
+    }
+    &_content{
+        padding-bottom: 50px;
+        &_mainimg{
+          width: 100%;  
+          display: block;
+        }
+        &_alltime{
+            box-sizing: border-box;
+            padding: 0 15px;
+            background-color: #fff;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            height: 50px;
+            align-items: center;
+            font-size: 15px;
+            color: #272727;
+            border-bottom: 1px solid #f3f3f3;
+            >span{
+                flex-grow: 1;
+                text-align: right;
+            }
+            .authorization{
+                margin-right: 12px;
+                color: #f80000;
+            }
+        }
+        &_time{
+            
+        }
+        &_price{
+            height: 60px; 
+            font-size: 15px;
+            color: #272727;
+            line-height: 60px;
+            box-sizing: border-box;
+            padding: 0 15px;
+            background-color: #fff;
+            border-bottom: 1px solid #f3f3f3;
+            display: flex;
+            justify-content: space-between;
+            >span{
+                color: #f80000;
+            }
+        }
+        &_despoite{
+            @extend .goodsinfo_content_price;
+        }
+        &_address{
+            @extend .goodsinfo_content_price;
+            >div{
+                flex: 1;
+                display: flex;
+                align-items: center;
+            }
+            .weui-cells{
+                flex: 1;
+                margin:0;
+                font-size: 15px;
+                &:after{
+                    display: none;
+                }
+                &:before{
+                    display: none;
+                }
+            }
+            .vux-cell-box:before{
+                display: none;
+                
+            }
+            .weui-cell{
+                width: 100%;
+                padding: 0;
+            }
+            .vux-popup-picker-value{
+                text-align: right;
+                float: right;
+                padding-right: 10px;
+            }
+        }
+        &_size{
+            >label{
+                @extend .goodsinfo_content_price;
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                >i{
+                    color: #cbc8cd;
+                    text-align: right;
+                    margin-right: -3px;
+                }
+                >span{
+                    flex-grow: 1;
+                    text-align: right;
+                    padding-right: 10px;
+                    font-size: 14px;
+                    color: #272727;
+                }
+            } 
+            
+        }
+        /* 租赁清单图片组 */
+        &_rentTitle{
+            box-sizing: border-box;
+            padding: 0 15px;
+            line-height: 40px;
+            height: 40px;
+            color: #272727;
+            font-weight: 400;
+            font-size: 15px;
+        }
+        &_rentlist{
+            background-color: #fff; 
+            display: flex;
+            padding-top: 15px;
+        }
+        &_rentsingle{
+            width: 25%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 15px;
+            >img{
+                display: block;
+                width: 80%;
+                margin: 0 auto;
+            }
+            >span{
+                font-size: 15px;
+                margin-top: 10px;
+                text-align: center;
+            }
+        }
+    }
+    /* 选择颜色规格页面 */
+    &_sizeSelect{
+        &_content{
+            padding: 15px;
+            box-sizing: border-box;
+            padding-bottom: 0;
+            background-color: #fff !important;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        &_img{
+            display: block;
+            height: 100px;
+            width: 100px;  
+            margin-right: 20px; 
+        }
+        &_message{
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+        }
+        &_title{
+            font-size: 14px;
+            font-weight: 400;
+            color: #f80000;
+        }
+        &_color{
+            font-size: 14px;
+            color: #272727;
+        }
+        &_number{
+            font-size: 14px;
+            color: #272727;
+            display: flex;
+            align-items: center;
+        }
+        &_typelist{
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            >h3{
+                font-size: 14px;
+                color: #272727;
+                width: 100%;
+                line-height: 35px;
+            }
+            >li{
+                height: 30px;
+                min-width: 35px;
+                line-height: 30px;
+                color: #272727;
+                font-weight: 400;
+                background-color: #f3f3f3;
+                border-radius: 5px;
+                margin: 0 10px 10px 0;
+                text-align: center;
+                padding: 0 15px;
+                position: relative;
+                z-index: 9999;
+            }
+            >.goodsinfo_sizeSelect_typelist--selected{
+                background-color: #2196f3;
+                color: #fff;
+            }
+        }
+        &_btn{
+            width:calc(100% + 30px);
+            height: 50px;
+            text-align: center;
+            font-size: 18px;
+            color: #fff;
+            line-height: 50px;
+            margin: 0 -15px;
+            margin-top: 25px;
+            display: block;
+            background-color: #2196f3;
+        }
+    }
+    /* 底部样式 */
+    &_footer{
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 50px;
+        z-index: 400;
+    }
+    &_funlist{
+        flex-grow: 1;
+        display: flex;
+        &_single{
+            flex: 1;
+            text-align: center;
+            box-sizing: border-box;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            
+            >i{
+                margin: 0 !important;
+            }
+            >span{
+                font-size: 13px;
+                color: #272727;
+            }
+            &:nth-of-type(2){
+                border-left: 1px solid #f3f3f3;
+                border-right: 1px solid #f3f3f3;
+            }
+            &--collect{
+                >i,span{
+                color: #f80000;
+                }
+            }
+        }
+    }
+    &_btnlist{
+        display: flex;
+        &_car{
+            width: 110px;
+            height: 50px;
+            color: #fff;
+            font-size: 17px;
+            line-height: 50px;
+            text-align: center;
+            background-color: #21b5f3;
+        }
+        &_buy{
+            @extend .goodsinfo_btnlist_car;
+            background-color: #2196f3;
+        }
+    }
+}
 </style>
 
 <template>
@@ -249,7 +756,7 @@
                     <img src="../../assets/img//goods/goodsinfo.png" style="height:50px;margin:0 auto;display:block" alt="">
                     <!-- 商品详情图片渲染 -->
                     <template v-for="item in staticdata.goods_details_content">
-                        <img :src="item.image" alt="mainImg" class="goodsinfo_content_mainimg">
+                        <img :src="imgFormat(item.image)" alt="mainImg" class="goodsinfo_content_mainimg">
                     </template>
                     <divider>我是有底线的</divider>
                 </div>
@@ -360,7 +867,7 @@ export default {
             timeValue: '',
             /* 轮播图数据集合 */
             bannerlist: [
-                'https://static.vux.li/demo/1.jpg',
+                {goodsFace:''},
             ],
             /* 具体逻辑数据 */
             /* 现租价和原租价 */
@@ -459,11 +966,11 @@ export default {
             for (let item of this.datalist) {
                 if (item.content_var_attr_id == id) {
                     if (item.img != "") {
-                        return item.img;
+                        return this.imgFormat(item.img);
                     }
                 }
             }
-            return this.bannerlist[0].goodsFace;
+            return this.imgFormat(this.bannerlist[0].goodsFace);
 
         },
         /* 返回当前周期文字 */

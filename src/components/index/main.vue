@@ -10,7 +10,7 @@ body {
 
 .main_typelist_list_fixed{
         -webkit-overflow-scrolling: touch;
-        height: 40.5px;
+        height: 40px;
         padding-left: 15px;
         font-size: 0;
         white-space: nowrap;
@@ -481,9 +481,15 @@ body {
             margin-bottom: 5px;
             box-sizing: border-box;
             padding: 10px;
+            flex-direction: column;
+            flex-wrap: wrap;
+            display: flex;
         }
         &_img {
-            display: block;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             box-sizing: border-box;
             &>img {
                 margin: 0 auto;
@@ -575,14 +581,14 @@ body {
             <!-- 轮播图组件 -->
             <swiper v-show="currentType==0" loop class="main_swiper" dots-position="center" height="auto" :aspect-ratio="300/750" @on-index-change="onSwiperItemIndexChange" v-model="swiperItemIndex">
                 <swiper-item class="swiper-demo-img" v-for="(item, index) in bannerlist" :key="index">
-                    <img @click="bannerClick(item.extras,item.bannerType)" :src="item.imagePath">
+                    <img @click="bannerClick(item.extras,item.bannerType)" :src="imgFormat(item.imagePath)">
                 </swiper-item>
             </swiper>
             <!-- table功能区域 -->
             <!-- 1商品列表 2精选商家 3运营活动 -->
             <ul v-show="currentType==0" class="main_fun_list">
                 <li v-for="item in iconList" class="main_fun_single" @click="funClick(item.name,item.type,item.icon_id)">
-                    <img :src="item.img" alt="icon">
+                    <img :src="imgFormat(item.img)" alt="icon">
                     <h3>{{item.name}}</h3>
                 </li>
             </ul>
@@ -590,11 +596,11 @@ body {
             <!-- 频道列表区域 -->
             <ul v-show="currentType==0" class="main_channel_list">
                 <li v-for="item in channelList" class="main_channel_single" >
-                    <img class="main_channel_img" @click="channelClick(item.title,item.channel_id)"   :src="item.bg_image" alt="channel">
+                    <img class="main_channel_img" @click="channelClick(item.title,item.channel_id)"   :src="imgFormat(item.bg_image)" alt="channel">
                     <ul class="main_channel_goodsList">
                         <li @click="goInfo(ite.goods_id)" v-for="ite in item.goods" class="main_channel_goodsSingle">
                             
-                            <img class="main_channel_goodsImg" :src="ite.goods_main_pic" alt="">
+                            <img class="main_channel_goodsImg" :src="imgFormat(ite.goods_main_pic)" alt="">
                             <h3 class="main_channel_goodsTitle">{{ite.goods_name}}</h3>
                             <p  v-if="!ite.act_price" class="main_channel_goodsText"> ￥{{ite.rent_price}}/{{timeMap[ite.rent_period_type]}}
                             </p>
@@ -612,12 +618,17 @@ body {
             <ul class="main_hot_list" v-show="currentType==0">
                 <li v-for="item in hotGoodsList" class="main_hot_single" @click="goInfo(item.goodsId)">
                     <div class="main_hot_img">
-                        <x-img default-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507702400938&di=fc233efbd5c433313c2ec5c3fa424b1c&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01cf3655c8d56132f8755e66dcb76d.png%40900w_1l_2o_100sh.jpg" :src="item.goodsFace" :webp-src="item.goodsFace"  class="ximg-demo"  :offset="-100" container=".main_listbox"></x-img>
+                        <x-img default-src="http://oss.zujiekeji.cn/img/default.png" :src="imgFormat(item.goodsFace)" :webp-src="item.goodsFace"  class="ximg-demo"  :offset="-100" container=".main_listbox"></x-img>
                     </div>
                     <div class="main_hot_text">
                         <h2 class="main_hot_title twonowarp">{{item.goodsName}}</h2>
                         <div class="main_hot_contentbox">
                             <ul class="main_hot_typeList">
+                                <li class="main_hot_type"  v-for="ite in item.serviceSign">
+                                    {{ite}}
+                                </li>
+                            </ul>
+                           <!--  <ul class="main_hot_typeList">
                                 <li class="main_hot_type" v-show="item.goods_is_free_deposit==1">
                                     免押金
                                 </li>
@@ -636,7 +647,7 @@ body {
                                 <li class="main_hot_type" v-show="item.goods_is_follow_lease==1">
                                     随租随还
                                 </li>
-                            </ul>
+                            </ul> -->
                             <h2 class="main_hot_address">{{item.region}}</h2>
                         </div>
                         <h2 v-if="!item.act_price" class="main_hot_price">￥{{item.rentPrice}}/{{timeMap[item.rent_period_type]}}</h2>
@@ -658,7 +669,7 @@ body {
             <ul class="main_recommend_list" v-show="currentType==0">
                 <li v-for="item in newGoodsList" class="main_recommend_single" @click="goInfo(item.goodsId)">
                     <div class="main_recommend_img">
-                        <x-img default-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507702400938&di=fc233efbd5c433313c2ec5c3fa424b1c&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01cf3655c8d56132f8755e66dcb76d.png%40900w_1l_2o_100sh.jpg" :src="item.goodsFace" :webp-src="item.goodsFace"  class="ximg-demo"  :offset="-100" container=".main_listbox"></x-img>
+                        <x-img default-src="http://oss.zujiekeji.cn/img/default.png" :src="imgFormat(item.goodsFace)" :webp-src="item.goodsFace"  class="ximg-demo"  :offset="-100" container=".main_listbox"></x-img>
                     </div>
                     <div class="main_recommend_text">
                         <h2 class="main_recommend_title">{{item.goodsName}}</h2>
@@ -687,7 +698,7 @@ body {
             <ul class="main_recommend_list" v-show="currentType==0">
                 <li v-for="item in recGoodsList" class="main_recommend_single" @click="goInfo(item.goodsId)">
                     <div class="main_recommend_img">
-                        <x-img default-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507702400938&di=fc233efbd5c433313c2ec5c3fa424b1c&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01cf3655c8d56132f8755e66dcb76d.png%40900w_1l_2o_100sh.jpg" :src="item.goodsFace" :webp-src="item.goodsFace"  class="ximg-demo"  :offset="-100" container=".main_listbox"></x-img>
+                        <x-img default-src="http://oss.zujiekeji.cn/img/default.png" :src="imgFormat(item.goodsFace)" :webp-src="item.goodsFace"  class="ximg-demo"  :offset="-100" container=".main_listbox"></x-img>
                     </div>
                     <div class="main_recommend_text">
                         <h2 class="main_recommend_title">{{item.goodsName}}</h2>
