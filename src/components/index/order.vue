@@ -507,13 +507,21 @@ export default {
                 admit_state:item.admit_state,
             }).then((res)=>{
                 if(res.body.code==200){
-                   
+                    let openId = localStorage.getItem("openId");
+                    API.order.OrderWechat({
+                            userId: this.getUserInfoUserId,
+                            token: this.getUserInfoToken,
+                            orderSn: item.invoke_state.order_sn,
+                            payMethod: 4,
+                            openId: openId,
+                        }).then((resopndy) => {
+                            window.location.href="/#/index/main/order";
+                            const div = document.createElement('div');
+                            div.innerHTML = resopndy.body;
+                            document.body.appendChild(div);
+                            document.forms.alipaysubmit.submit();
+                        })
                 }
-                window.location.href="/#/index/main/order";
-                setTimeout(()=>{
-                    window.location.reload();
-                },100);
-                
             },(err)=>{
             });
         },
