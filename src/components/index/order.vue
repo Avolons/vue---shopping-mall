@@ -410,13 +410,7 @@ export default {
         ]),
     },
     mounted() {
-        /* 获取当前url参数 */
-        let  biz_content= this.$route.query.biz_content;
-        /* 支付宝借还成功后的回调 */
-        if(biz_content){
-            biz_content= JSON.parse(biz_content);
-            this.success(biz_content);
-        }
+        
         overscroll(document.querySelector('.order_list'));
         /* 当前滚动距离为0 */
         localStorage.setItem("orderScroll", 0);
@@ -474,8 +468,13 @@ export default {
         
     },
     activated() {
-        
-
+        /* 获取当前url参数 */
+        let  biz_content= this.$route.query.biz_content;
+        /* 支付宝借还成功后的回调 */
+        if(biz_content){
+            biz_content= JSON.parse(biz_content);
+            this.success(biz_content);
+        }
         overscroll(document.querySelector('.order_list'));
                 /* 当前页面需要重载数据 */
         if (localStorage.getItem("reload")) {
@@ -488,8 +487,6 @@ export default {
             this.getTypeData(this.currentType);
             localStorage.setItem("reload", "");
         }
-
-       
         /* 重置滚动距离 */
         setTimeout(() => {
             if (localStorage.getItem("orderScroll")) {
@@ -509,6 +506,13 @@ export default {
             }).then((res)=>{
                 if(res.body.code==200){
                     let openId = localStorage.getItem("openId");
+                    alert(JSON.stringify({
+                       userId: this.getUserInfoUserId,
+                            token: this.getUserInfoToken,
+                            orderSn: item.invoke_state.order_sn,
+                            payMethod: 4,
+                            openId: openId, 
+                    }));
                     API.order.OrderWechat({
                             userId: this.getUserInfoUserId,
                             token: this.getUserInfoToken,
