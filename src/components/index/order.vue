@@ -506,13 +506,6 @@ export default {
             }).then((res)=>{
                 if(res.body.code==200){
                     let openId = localStorage.getItem("openId");
-                    alert(JSON.stringify({
-                       userId: this.getUserInfoUserId,
-                        token: this.getUserInfoToken,
-                        orderSn: JSON.parse(item.invoke_state).order_sn,
-                        payMethod: 4,
-                        openId: item.user_id, 
-                    }));
                     API.order.OrderWechat({
                             userId: this.getUserInfoUserId,
                             token: this.getUserInfoToken,
