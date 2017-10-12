@@ -511,19 +511,25 @@ export default {
                             token: this.getUserInfoToken,
                             orderSn: item.invoke_state.order_sn,
                             payMethod: 4,
-                            openId: openId, 
+                            openId: item.user_id, 
                     }));
                     API.order.OrderWechat({
                             userId: this.getUserInfoUserId,
                             token: this.getUserInfoToken,
                             orderSn: item.invoke_state.order_sn,
                             payMethod: 4,
-                            openId: openId,
+                            openId: item.user_id,
                         }).then((resopndy) => {
-                            const div = document.createElement('div');
-                            div.innerHTML = resopndy.body;
-                            document.body.appendChild(div);
-                            document.forms.alipaysubmit.submit();
+                            if(resopndy.body.code==200){
+                                const div = document.createElement('div');
+                                div.innerHTML = resopndy.body;
+                                document.body.appendChild(div);
+                                document.forms.alipaysubmit.submit();
+                            }else{
+                                self.confrim = "支付异常";
+                                alert(JSON.stringify(resopndy.body));
+                                 self.toast = true;
+                            }
                         })
                 }
             },(err)=>{

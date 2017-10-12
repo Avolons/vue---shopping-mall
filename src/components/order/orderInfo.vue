@@ -425,7 +425,7 @@ export default {
         /* 计算商品借还押金 */
         goodsalipay(){
             /* 计算后如果押金小于0写原押金，否则写真实押金，原押金也为0则显示0.1 */
-            let goodsDespoit=this.goodsDespoit-this.antDerate;
+            let goodsDespoit=this.infoData.goods_deposit-(this.goodsDespoit-this.antDerate);
             if(goodsDespoit<=0){
                 if(this.infoData.goods_deposit==0){
                     return 0.1;
