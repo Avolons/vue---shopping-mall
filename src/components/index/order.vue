@@ -509,7 +509,7 @@ export default {
                     alert(JSON.stringify({
                        userId: this.getUserInfoUserId,
                             token: this.getUserInfoToken,
-                            orderSn: item.invoke_state.order_sn,
+                            orderSn: item.order_sn,
                             payMethod: 4,
                             openId: item.user_id, 
                     }));
