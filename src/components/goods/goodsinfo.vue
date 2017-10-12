@@ -521,7 +521,7 @@
                 <!-- 商品简介轮播图 -->
                 <swiper class="main_swiper" dots-position="center" :aspect-ratio="400/400" width="100%">
                     <swiper-item class="swiper-demo-img" v-for="(item, index) in bannerlist" :key="index">
-                        <img :src="item.goodsFace">
+                        <img :src="imgFormat(item.goodsFace)">
                     </swiper-item>
                 </swiper>
                 <h2 class="goodsinfo_title twonowarp">{{goodsTitle}}</h2>
@@ -742,13 +742,13 @@
                     </div>
                 </div>
                 <div class="goodsinfo_content_text">
-                    <img :src="use_intro_img" width="100%" alt="">
+                    <img :src="imgFormat(use_intro_img)" width="100%" alt="">
                     <!-- 租赁清单图片 -->
                     <template v-if="staticdata.rentlist[0]">
                         <h3 class="goodsinfo_content_rentTitle">租赁清单</h3>
                         <ul class="goodsinfo_content_rentlist">
                             <li v-for="item in staticdata.rentlist" class="goodsinfo_content_rentsingle">
-                                <img :src="item.goodsFace" alt="goodsFace">
+                                <img :src="imgFormat(item.goodsFace)" alt="goodsFace">
                                 <span class="nowarp">{{item.goods_rentlist_name}}</span>
                             </li>
                         </ul>
