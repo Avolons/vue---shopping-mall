@@ -569,11 +569,11 @@ body {
             <div class="main_typelist_box">
                  <ul>
                 <li >
-                        <ul class="main_typelist_list_fixed">
-                            <li class="main_typelist_item" v-for="(item,index) in typeList" :class="{'main_typelist_item--selected':item.click}" @click="typeselect(index,item.goods_category_id)">
-                                <span>{{item.hot_label_name}}</span>
-                            </li>
-                        </ul> 
+                    <ul class="main_typelist_list_fixed">
+                        <li class="main_typelist_item" v-for="(item,index) in typeList" :class="{'main_typelist_item--selected':item.click}" @click="typeselect(index,item.goods_category_id)">
+                            <span>{{item.hot_label_name}}</span>
+                        </li>
+                    </ul> 
                 </li>
             </ul> 
             </div>
@@ -799,12 +799,12 @@ export default {
                 price:"30",
                 list:[
                     {
-                        price:"10",
+                        amount:"10",
                         title:"全场通用",
                         type:"新人专享",
                     },
                     {
-                        price:"20",
+                        amount:"20",
                         title:"全场通用",
                         type:"新人专享",
                     },

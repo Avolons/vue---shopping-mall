@@ -63,15 +63,26 @@
             white-space: nowrap;
         }
         &_cardListbox{
-            padding: 10px 20px;
+            padding: 10px 0;
             width: 100%;
             overflow-x: auto;
             background-color: #f1f1f1;
             white-space: nowrap;
+            overflow-y: auto;
             flex-shrink: 0;
+            padding-right: 0;
+            height: 87px;
+            box-sizing: border-box;
         }
         &_cardList{
+             /* height: 100%; */
+             display: block;
              height: 100%;
+             box-sizing: border-box;
+             /* padding: 0 20px; */
+             overflow: auto;
+             white-space: nowrap;
+             width: 100%;
         }
         &_box{
             display: flex;
@@ -87,12 +98,15 @@
             font-size: 13px;
         }
         &_cardSingle{
+            &:first-of-type{
+                margin-left: 15px;
+            }
             display: inline-block;
             background-image: url("../../assets/img/common/storeCard.png");
             background-size: cover;
             height: 67.5px;
             width: 135px;
-            margin-right: 50px; 
+            margin-right: 15px; 
         }
         &_price{
             >span{
@@ -266,7 +280,9 @@ export default {
                 this.canBottom=true; 
             }
       }
-  },mounted(){
+  },
+  mounted(){
+      overscroll(document.querySelector('.shop_main_cardList'));
       overscroll(document.querySelector('.shop_main_goodsList'));
       let self = this;
         let mainbox = document.querySelector(".shop_main_goodsList");
@@ -312,6 +328,7 @@ export default {
       this.Initialization();
   },
   activated(){
+      overscroll(document.querySelector('.shop_main_cardList'));
       overscroll(document.querySelector('.shop_main_goodsList'));
       if(localStorage.getItem("store")){
             this.page=1;

@@ -521,16 +521,35 @@ export default {
                         payMethod: this.payMethod,
                         openId: openId,
                     }).then((resopndy) => {
-                        self.payTypeData = resopndy.body;
-                        if (key == 'menu1') {
-                            //微信支付
-                            window.location.href = this.payTypeData;
-                        } else if (key == 'menu2') {
-                            const div = document.createElement('div');
-                            div.innerHTML = this.payTypeData;
-                            document.body.appendChild(div);
-                            document.forms.alipaysubmit.submit();
+                        if(resopndy.body.code==250){
+                            self.confrim = "支付完成";
+                            self.toast = true;
+                            setTimeout(() => {
+                                self.$router.push({
+                                    path: '/index/main/order'
+                                });
+                            }, 1500);
+                        }else if(resopndy.body.code==300){
+                            self.confrim = resopndy.body.msg;
+                            self.toast = true;
+                            setTimeout(() => {
+                                self.$router.push({
+                                    path: '/index/main/order'
+                                });
+                            }, 1500);
+                        }else{
+                             self.payTypeData = resopndy.body;
+                            if (key == 'menu1') {
+                                //微信支付
+                                window.location.href = this.payTypeData;
+                            } else if (key == 'menu2') {
+                                const div = document.createElement('div');
+                                div.innerHTML = this.payTypeData;
+                                document.body.appendChild(div);
+                                document.forms.alipaysubmit.submit();
+                            }
                         }
+                       
                     }, (err) => {
                         self.confrim = "支付异常";
                         self.toast = true;
@@ -710,6 +729,23 @@ export default {
                             openId: openId,
                         }).then((resopndy) => {
                             /* 微信支付 */
+                             if(resopndy.body.code==250){
+                            self.confrim = "支付完成";
+                            self.toast = true;
+                            setTimeout(() => {
+                                self.$router.push({
+                                    path: '/index/main/order'
+                                });
+                            }, 1500);
+                        }else if(resopndy.body.code==300){
+                            self.confrim = resopndy.body.msg;
+                            self.toast = true;
+                            setTimeout(() => {
+                                self.$router.push({
+                                    path: '/index/main/order'
+                                });
+                            }, 1500);
+                        }else{
                             this.paydata = resopndy.body;
                             if (typeof WeixinJSBridge == "undefined") {
                                 if (document.addEventListener) {
@@ -721,6 +757,7 @@ export default {
                             } else {
                                 self.onBridgeReady();
                             }
+                        }
                         }, (err) => {
                             self.confrim = "支付异常";
                             self.toast = true;

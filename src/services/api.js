@@ -718,7 +718,7 @@ export const order = {
     return Vue.http.post("https://api.zujiekeji.cn/pay/jsapi/index" + sourceStr,data);
   },
   /**
-   * 提醒结算
+   * 提醒结     算
    * userId
    * token
    * orderId

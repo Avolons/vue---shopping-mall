@@ -1115,7 +1115,6 @@ export default {
             if(this.couterDespoite == 0 || this.currentTypedata.goods_deposit - this.totalRent < 0){
                 return 0;
             }else{
-                console.log(this.couterDespoite);
                return (this.couterDespoite * this.reliefRate).toFixed(2);
             }
         },

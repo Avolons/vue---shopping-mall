@@ -284,7 +284,7 @@
                 </div>
                 <div class="order_single_allprice">
                     总计{{item.goods_amount}}件商品 &nbsp;&nbsp;合计&nbsp;
-                    <b>￥{{item.order_total_price}}</b>&nbsp;&nbsp;(含运费￥{{item.order_freight}})
+                    <b>￥{{item.actual_price}}</b>&nbsp;&nbsp;(含运费￥{{item.order_freight}})
                 </div>
 
                 <div class="order_single_btncoll" v-show="item.srcOrderType!=3">

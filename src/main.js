@@ -37,11 +37,6 @@ router.beforeEach((to, from, next) => {
 	}
 });
 
-
-
-
-
-
 window.overscroll = function(el) {
 	el.addEventListener('touchstart', function() {
 		var top = el.scrollTop
@@ -62,6 +57,7 @@ window.overscroll = function(el) {
 
 var u = navigator.userAgent;
 var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+/*  */
 if(isiOS){
 	document.body.addEventListener('touchmove', function(evt) {
 		if (!evt._isScroller) {
@@ -69,6 +65,7 @@ if(isiOS){
 		}
 	});
 }
+
 
 
 
