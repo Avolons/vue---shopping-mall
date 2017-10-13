@@ -497,6 +497,7 @@ export default {
     methods: {
         /* 支付宝付款成功后的回调函数 */
         success(item) {
+            let self=this;
             API.alipay.success({
                 out_order_no: item.out_order_no,
                 order_no: item.order_no,
@@ -513,7 +514,6 @@ export default {
                         payMethod: 4,
                         openId: item.user_id,
                     }).then((resopndy) => {
-                        alert(JSON.stringify(resopndy));
                         if (resopndy.body.code == 250) {
                             self.confrim = "支付完成";
                             self.toast = true;
