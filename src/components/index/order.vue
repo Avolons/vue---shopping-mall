@@ -472,7 +472,6 @@ export default {
             biz_content = JSON.parse(biz_content);
             let timetamp = JSON.parse(biz_content.invoke_state).timestamp;
             if (((new Date().getTime() / 1000) - timetamp) <= 30) {
-                alert(JSON.stringify(biz_content));
                 this.success(biz_content);
             }
         }
@@ -514,6 +513,7 @@ export default {
                         payMethod: 4,
                         openId: item.user_id,
                     }).then((resopndy) => {
+                        alert(JSON.stringify(resopndy));
                         if (resopndy.body.code == 250) {
                             self.confrim = "支付完成";
                             self.toast = true;
@@ -539,8 +539,11 @@ export default {
                             document.forms.alipaysubmit.submit();
                         }
                     })
+                }else{
+                    alert(res.body.msg);  
                 }
             }, (err) => {
+                alert(JSON.stringify(err));
             });
         },
         /* 判断当前；浏览器环境  0 微信 1 支付宝 2 其他浏览器*/
