@@ -158,9 +158,23 @@
             flex-grow: 1;
             font-size: 14px;
             color: #272727;
-            >span {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            >div{
+                width: 100%;
+                height: 50%;
+                line-height: 38px;
+            }
+            span {
                 font-size: 18px;
                 color: #f80000;
+            }
+            >p{
+                line-height: 25px;
+                display: block;
+                width: 100%;
+                color: #999;
             }
         }
         &_btn {
@@ -286,9 +300,8 @@
 
             <footer class="orderInfon_footer">
                 <div class="orderInfon_footer_price">
-                    合计：
-                    <!-- <span>{{goodsTotolPrice | currency('￥')}}</span> -->
-                    <span>{{goodsTotolPrice - antDerate | currency('￥')}}</span>
+                    <div>合计：<span>{{goodsTotolPrice - antDerate | currency('￥')}}</span></div>
+                    <p>押金可退：{{goodsDespoit - antDerate | currency('￥')}}</p>
                 </div>
                 <button class="orderInfon_footer_btn" @click="buygoods" type="button">提交订单</button>
             </footer>
