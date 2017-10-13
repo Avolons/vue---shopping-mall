@@ -66,7 +66,7 @@
         height: 100%;
         background-color: #f1f1f1;
         overflow-y: auto;
-        -webkit-overflow-scrolling : touch; 
+        -webkit-overflow-scrolling: touch;
         .weui-cells {
             margin: 0;
         }
@@ -290,9 +290,9 @@
 
 <template>
     <div>
-         <div class="help_common_title">
-                <x-header @on-click-back="routerBack" :left-options="{backText: '',preventGoBack:true}">订单详情</x-header>
-            </div>
+        <div class="help_common_title">
+            <x-header @on-click-back="routerBack" :left-options="{backText: '',preventGoBack:true}">订单详情</x-header>
+        </div>
         <div class="orderAction_main">
             <div class="orderAction_main_type">
                 <!-- 订单完成 评价完成 退款成功 退货成功-->
@@ -392,41 +392,41 @@
                 <li v-show="infoData.order_settlement_bill_generation_time">结算单生成时间：{{infoData.order_settlement_bill_generation_time | orderdata }}</li>
                 <li v-show="infoData.order_settlement_bill_confirm_time">结算单确认时间：{{infoData.order_settlement_bill_confirm_time | orderdata }}</li>
             </ul>
-            
+
             <toast v-model="toast" type="success">{{confrim}}</toast>
-                        <actionsheet v-model="payShow"  show-cancel :menus="menus" @on-click-menu="browserPay" show-cancel></actionsheet>
+            <actionsheet v-model="payShow" show-cancel :menus="menus" @on-click-menu="browserPay" show-cancel></actionsheet>
         </div>
         <footer class="orderAction_footer">
-                <!-- 待付款 订单关闭 评价完成 退款完成 退货完成 -->
-                <button @click.stop="deletOrder(infoData.orderId)" class="order_single_btn--confirm" v-if="infoData.orderType==1 || infoData.orderType==7 || infoData.orderType==8 || infoData.orderType==9 || infoData.orderType==10">删除订单</button>
-                <!-- 代付款状态 -->
-                <button @click.stop="payOrder(infoData.orderId)" v-if="infoData.orderType==1">付款</button>
-                <!-- 待发货状态 -->
-                <button @click.stop="renturnMonery(infoData.orderId,infoData)" class="order_single_btn--confirm" v-if="infoData.orderType==2">申请退款</button>
-                <button @click.stop="remind(infoData.orderId,1)" v-if="infoData.orderType==2">提醒发货</button>
-                <!-- 待收货状态 退货待结算 退货结算待确认 -->
-                <button @click.stop="download()" class="order_single_btn--confirm" v-if="(infoData.orderType==3 || infoData.orderType==5) && infoData.order_express_type!=5">查看物流</button>
-                <!-- 退货待结算 待结算-->
-                <button @click.stop="remind(infoData.orderId,2)" v-if="infoData.orderType==5  || infoData.orderType==11">提醒结算</button>
-                <!-- 待收货状态 -->
-                <button @click.stop="download()" class="order_single_btn--confirm" v-if="infoData.orderType==3">申请退货</button>
-                <button @click.stop="confrimOrder(infoData.orderId)" v-if="infoData.orderType==3">确认收货</button>
-                <!-- 待归还状态   -->
-                <button @click.stop="confirmReturn(infoData)" v-if="infoData.orderType==4">归还</button>
-                <button @click.stop="download()" class="order_single_btn--confirm" v-if="infoData.orderType==4">申请退货</button>
-                <!-- 退货完成 结算完成 评价完成 待评价-->
-                <button @click.stop="seeSettlement(infoData.orderId)" class="order_single_btn--confirm" v-if="infoData.orderType==6 ||infoData.orderType==7 || infoData.orderType==10 || infoData.orderType==12 ||infoData.orderType==14">结算单</button>
-                <!-- 待评价 -->
-                <button @click.stop="download()" v-if="infoData.orderType==6">评价</button>
-                <!-- 评价完成 -->
-                <button @click.stop="download()" v-if="infoData.orderType==7">查看评论</button>
-                <!-- 退货结算待确认 结算待确认 -->
-                <button @click.stop="confrimSettlement(infoData.orderId)" v-if="infoData.orderType==14 || infoData.orderType==12">确认结算</button>
-            </footer>
+            <!-- 待付款 订单关闭 评价完成 退款完成 退货完成 -->
+            <button @click.stop="deletOrder(infoData.orderId)" class="order_single_btn--confirm" v-if="infoData.orderType==1 || infoData.orderType==7 || infoData.orderType==8 || infoData.orderType==9 || infoData.orderType==10">删除订单</button>
+            <!-- 代付款状态 -->
+            <button @click.stop="payOrder(infoData.orderId)" v-if="infoData.orderType==1">付款</button>
+            <!-- 待发货状态 -->
+            <button @click.stop="renturnMonery(infoData.orderId,infoData)" class="order_single_btn--confirm" v-if="infoData.orderType==2">申请退款</button>
+            <button @click.stop="remind(infoData.orderId,1)" v-if="infoData.orderType==2">提醒发货</button>
+            <!-- 待收货状态 退货待结算 退货结算待确认 -->
+            <button @click.stop="download()" class="order_single_btn--confirm" v-if="(infoData.orderType==3 || infoData.orderType==5) && infoData.order_express_type!=5">查看物流</button>
+            <!-- 退货待结算 待结算-->
+            <button @click.stop="remind(infoData.orderId,2)" v-if="infoData.orderType==5  || infoData.orderType==11">提醒结算</button>
+            <!-- 待收货状态 -->
+            <button @click.stop="download()" class="order_single_btn--confirm" v-if="infoData.orderType==3">申请退货</button>
+            <button @click.stop="confrimOrder(infoData.orderId)" v-if="infoData.orderType==3">确认收货</button>
+            <!-- 待归还状态   -->
+            <button @click.stop="confirmReturn(infoData)" v-if="infoData.orderType==4">归还</button>
+            <button @click.stop="download()" class="order_single_btn--confirm" v-if="infoData.orderType==4">申请退货</button>
+            <!-- 退货完成 结算完成 评价完成 待评价-->
+            <button @click.stop="seeSettlement(infoData.orderId)" class="order_single_btn--confirm" v-if="infoData.orderType==6 ||infoData.orderType==7 || infoData.orderType==10 || infoData.orderType==12 ||infoData.orderType==14">结算单</button>
+            <!-- 待评价 -->
+            <button @click.stop="download()" v-if="infoData.orderType==6">评价</button>
+            <!-- 评价完成 -->
+            <button @click.stop="download()" v-if="infoData.orderType==7">查看评论</button>
+            <!-- 退货结算待确认 结算待确认 -->
+            <button @click.stop="confrimSettlement(infoData.orderId)" v-if="infoData.orderType==14 || infoData.orderType==12">确认结算</button>
+        </footer>
     </div>
 </template>
 <script>
-import { XHeader,Actionsheet, Cell, Group, XTextarea, dateFormat, Toast } from 'vux';
+import { XHeader, Actionsheet, Cell, Group, XTextarea, dateFormat, Toast } from 'vux';
 import { mapGetters } from 'vuex'
 import { API, getQuery } from '../../services';
 
@@ -441,7 +441,7 @@ export default {
     },
     data() {
         return {
-            menus:{
+            menus: {
                 menu1: '微信支付',
                 menu2: '支付宝支付'
             },
@@ -457,7 +457,7 @@ export default {
             orderId: 0,
             /* 订单详情数据 */
             infoData: {
-                shopPic:""
+                shopPic: ""
             },
             /* 时间对照表 */
             timeMap: { 1: "日", 2: "周", 3: "月", 4: "季", 5: "年" },
@@ -468,8 +468,8 @@ export default {
             },
             /* 支付方式 */
             payMethod: 4,
-            payShow:false,
-            payTypeData:null,
+            payShow: false,
+            payTypeData: null,
             titleArray: [
                 {
                     title: "等待买家付款",//待付款
@@ -638,7 +638,7 @@ export default {
                 'getBrandWCPayRequest', self.paydata,
                 function(res) {
                     if (res.err_msg == "get_brand_wcpay_request:fail") {
-                        
+
                     }
                     if (res.err_msg == "get_brand_wcpay_request:ok") {
                         self.confrim = "支付成功";
@@ -758,19 +758,19 @@ export default {
             * revertId 归还地址编号
             * company 物流公司名 */
             let self = this;
-                this.$router.push({ path: '/orderReturn?type=' + item.order_express_type + "&orderId=" + self.orderId });
+            this.$router.push({ path: '/orderReturn?type=' + item.order_express_type + "&orderId=" + self.orderId });
 
         },
-         browserPay(key){
-             if(key=='menu1'){
-                    /* 微信支付 */
-                    this.payMethod=5;
-                }else if(key=='menu2'){
-                    this.payMethod=4;
-                }else{
-                    return false;
-                }
-             API.order.orderShipPay({
+        browserPay(key) {
+            if (key == 'menu1') {
+                /* 微信支付 */
+                this.payMethod = 5;
+            } else if (key == 'menu2') {
+                this.payMethod = 4;
+            } else {
+                return false;
+            }
+            API.order.orderShipPay({
                 userId: this.getUserInfoUserId,
                 token: this.getUserInfoToken,
                 orderId: this.orderId,
@@ -785,15 +785,35 @@ export default {
                         payMethod: this.payMethod,
                         openId: openId,
                     }).then((resopndy) => {
-                        self.payTypeData=resopndy.body;
-                        if(key=='menu1'){
-                            /* 微信支付 */
-                            window.location.href=this.payTypeData;
-                        }else  if(key=='menu2'){
-                        const div = document.createElement('div');
-                        div.innerHTML = this.payTypeData;
-                        document.body.appendChild(div);
-                        document.forms.alipaysubmit.submit();
+                        if (resopndy.body.code == 250) {
+                            self.confrim = "支付完成";
+                            self.toast = true;
+                            setTimeout(() => {
+                                self.orderList[self.currentType] = [];
+                                self.currentPage = 1;
+                                self.haveData = true;
+                                self.getTypeData(self.currentType);
+                            }, 1500);
+                        } else if (resopndy.body.code == 300) {
+                            self.confrim = resopndy.body.msg;
+                            self.toast = true;
+                            setTimeout(() => {
+                                self.orderList[self.currentType] = [];
+                                self.currentPage = 1;
+                                self.haveData = true;
+                                self.getTypeData(self.currentType);
+                            }, 1500);
+                        } else {
+                            self.payTypeData = resopndy.body;
+                            if (key == 'menu1') {
+                                /* 微信支付 */
+                                window.location.href = this.payTypeData;
+                            } else if (key == 'menu2') {
+                                const div = document.createElement('div');
+                                div.innerHTML = this.payTypeData;
+                                document.body.appendChild(div);
+                                document.forms.alipaysubmit.submit();
+                            }
                         }
                     }, (err) => {
                         self.confrim = "支付异常";
@@ -804,95 +824,135 @@ export default {
                     });
                 }
             });
-                
+
         },
         /* 订单付款 */
         payOrder(id) {
             /* 待付款订单生成支付订单 */
-           let self=this;
-            if(this.isAlipay()==0){
+            let self = this;
+            if (this.isAlipay() == 0) {
                 API.order.orderShipPay({
-                userId: this.getUserInfoUserId,
-                token: this.getUserInfoToken,
-               orderId: id,
-            }).then((res) => {
-                if (res.body.code == 200) {
-                    let self = this;
-                    let openId = localStorage.getItem("openId");
-                    API.order.OrderWechat({
-                        userId: this.getUserInfoUserId,
-                        token: this.getUserInfoToken,
-                        orderSn: res.body.data.order_big_sn,
-                        payMethod: this.payMethod,
-                        openId: openId,
-                    }).then((resopndy) => {
-                            /* 微信支付 */
-                            this.paydata = resopndy.body;
-                            if (typeof WeixinJSBridge == "undefined") {
-                                if (document.addEventListener) {
-                                    document.addEventListener('WeixinJSBridgeReady', self.onBridgeReady, false);
-                                } else if (document.attachEvent) {
-                                    document.attachEvent('WeixinJSBridgeReady', self.onBridgeReady);
-                                    document.attachEvent('onWeixinJSBridgeReady', self.onBridgeReady);
-                                }
-                            } else {
-                                self.onBridgeReady();
-                            }
-                    }, (err) => {
-                        self.confrim = "支付异常";
-                        self.toast = true;
-                        self.$router.push({
-                            path: '/index/main/order'
-                        })
-                    });
-                }
-            });      
-            /* 当前支付方式为支付宝 */ 
-            }else if(this.isAlipay()==1){
-                 API.order.orderShipPay({
-                userId: this.getUserInfoUserId,
-                token: this.getUserInfoToken,
-                orderId: id,
-            }).then((res) => {
-                if (res.body.code == 200) {
-                    let self = this;
-                    let openId = localStorage.getItem("openId");
-                    /* order_id */
-                    API.order.OrderWechat({
+                    userId: this.getUserInfoUserId,
+                    token: this.getUserInfoToken,
+                    orderId: id,
+                }).then((res) => {
+                    if (res.body.code == 200) {
+                        let self = this;
+                        let openId = localStorage.getItem("openId");
+                        API.order.OrderWechat({
                             userId: this.getUserInfoUserId,
                             token: this.getUserInfoToken,
                             orderSn: res.body.data.order_big_sn,
                             payMethod: this.payMethod,
                             openId: openId,
                         }).then((resopndy) => {
-                            const div = document.createElement('div');
-                            div.innerHTML = resopndy.body;
-                            document.body.appendChild(div);
-                            document.forms.alipaysubmit.submit();
-                        })
-                       /*  API.alipay.orderId({
-                            userId:this.getUserInfoUserId,
-                            Info:{
-                                goods_name:this.infoData.shopeName,
-                                address:this.infoData.order_province+this.infoData.order_city+this.infoData.order_district+this.infoData.order_detailed,    
-                                shop_name:this.infoData.store_name,
-                                rent_amount:this.infoData.totalPrice,
-                                deposit_amount:this.infoData.deposit,
-                                borrow_time:this.infoData.order_goods_rent_time,
-                                expiry_time:this.infoData.order_goods_return_time,
-                                order_id:id,
-                            }
-                        }).then((res)=>{
-                                if(res.body.code == 200){
-                                    window.location.href=res.body.data.link_url;
+                            if (resopndy.body.code == 250) {
+                                self.confrim = "支付完成";
+                                self.toast = true;
+                                setTimeout(() => {
+                                    self.orderList[self.currentType] = [];
+                                    self.currentPage = 1;
+                                    self.haveData = true;
+                                    self.getTypeData(self.currentType);
+                                }, 1500);
+                            } else if (resopndy.body.code == 300) {
+                                self.confrim = resopndy.body.msg;
+                                self.toast = true;
+                                setTimeout(() => {
+                                    self.orderList[self.currentType] = [];
+                                    self.currentPage = 1;
+                                    self.haveData = true;
+                                    self.getTypeData(self.currentType);
+                                }, 1500);
+                            } else {
+                                /* 微信支付 */
+                                this.paydata = resopndy.body;
+                                if (typeof WeixinJSBridge == "undefined") {
+                                    if (document.addEventListener) {
+                                        document.addEventListener('WeixinJSBridgeReady', self.onBridgeReady, false);
+                                    } else if (document.attachEvent) {
+                                        document.attachEvent('WeixinJSBridgeReady', self.onBridgeReady);
+                                        document.attachEvent('onWeixinJSBridgeReady', self.onBridgeReady);
+                                    }
+                                } else {
+                                    self.onBridgeReady();
                                 }
-                        },(err)=>{
-                        }); */
-                  
-                }
-            });    
-            }else{
-               this.payShow=true;
+                            }
+                        }, (err) => {
+                            self.confrim = "支付异常";
+                            self.toast = true;
+                            self.$router.push({
+                                path: '/index/main/order'
+                            })
+                        });
+                    }
+                });
+                /* 当前支付方式为支付宝 */
+            } else if (this.isAlipay() == 1) {
+                API.order.orderShipPay({
+                    userId: this.getUserInfoUserId,
+                    token: this.getUserInfoToken,
+                    orderId: id,
+                }).then((res) => {
+                    if (res.body.code == 200) {
+                        let self = this;
+                        let openId = localStorage.getItem("openId");
+                        /* order_id */
+                        API.order.OrderWechat({
+                            userId: this.getUserInfoUserId,
+                            token: this.getUserInfoToken,
+                            orderSn: res.body.data.order_big_sn,
+                            payMethod: this.payMethod,
+                            openId: openId,
+                        }).then((resopndy) => {
+                            if (resopndy.body.code == 250) {
+                                self.confrim = "支付完成";
+                                self.toast = true;
+                                setTimeout(() => {
+                                    self.orderList[self.currentType] = [];
+                                    self.currentPage = 1;
+                                    self.haveData = true;
+                                    self.getTypeData(self.currentType);
+                                }, 1500);
+                            } else if (resopndy.body.code == 300) {
+                                self.confrim = resopndy.body.msg;
+                                self.toast = true;
+                                setTimeout(() => {
+                                    self.orderList[self.currentType] = [];
+                                    self.currentPage = 1;
+                                    self.haveData = true;
+                                    self.getTypeData(self.currentType);
+                                }, 1500);
+                            } else {
+                                const div = document.createElement('div');
+                                div.innerHTML = resopndy.body;
+                                document.body.appendChild(div);
+                                document.forms.alipaysubmit.submit();
+                            }
+                        })
+                        /*  API.alipay.orderId({
+                             userId:this.getUserInfoUserId,
+                             Info:{
+                                 goods_name:this.infoData.shopeName,
+                                 address:this.infoData.order_province+this.infoData.order_city+this.infoData.order_district+this.infoData.order_detailed,    
+                                 shop_name:this.infoData.store_name,
+                                 rent_amount:this.infoData.totalPrice,
+                                 deposit_amount:this.infoData.deposit,
+                                 borrow_time:this.infoData.order_goods_rent_time,
+                                 expiry_time:this.infoData.order_goods_return_time,
+                                 order_id:id,
+                             }
+                         }).then((res)=>{
+                                 if(res.body.code == 200){
+                                     window.location.href=res.body.data.link_url;
+                                 }
+                         },(err)=>{
+                         }); */
+
+                    }
+                });
+            } else {
+                this.payShow = true;
             }
 
         },
@@ -945,11 +1005,11 @@ export default {
         /* 查看结算单 */
         seeSettlement(id) {
             this.$router.push({
-                path:'/settlement?id='+ id
-              })
+                path: '/settlement?id=' + id
+            })
         },
         /* 退款 */
-        renturnMonery(id,item){
+        renturnMonery(id, item) {
             /* if(this.isAlipay()==1 && item.is_jiehuan==1){
                 let self = this;
                 this.$vux.confirm.show({

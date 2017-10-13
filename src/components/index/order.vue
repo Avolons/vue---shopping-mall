@@ -67,8 +67,8 @@
         }
     }
     &_list {
-        .weui-loadmore_line .weui-loadmore__tips{
-            background:#f1f1f1 !important;
+        .weui-loadmore_line .weui-loadmore__tips {
+            background: #f1f1f1 !important;
         }
         position: fixed;
         width: 100%;
@@ -241,7 +241,7 @@
         </scroller>
         <ul class="order_list">
             <!-- 此处进行显示判断，当前选中类型等于当前item类型时候才显示 -->
-            <li @click="getInfo(item.order_id)" class="order_single" v-for="item in orderList[this.currentType]" >
+            <li @click="getInfo(item.order_id)" class="order_single" v-for="item in orderList[this.currentType]">
                 <div class="order_single_shop">
                     <h2>{{item.store_name}}</h2>
                     <span v-if="item.orderType==1" class="order_single_type">待付款</span>
@@ -260,8 +260,8 @@
                     <span v-if="item.srcOrderType==3" class="order_single_type">退款中</span>
                 </div>
                 <div class="order_single_content">
-                        <x-img :src="imgFormat(item.goods_main_pic)"  default-src="http://oss.zujiekeji.cn/img/default.png"  class="order_single_img"  :offset="-100" container=".order_list"></x-img>
-                 
+                    <x-img :src="imgFormat(item.goods_main_pic)" default-src="http://oss.zujiekeji.cn/img/default.png" class="order_single_img" :offset="-100" container=".order_list"></x-img>
+
                     <div class="order_single_text">
                         <h3 class="order_single_title">
                             {{item.goods_name}}
@@ -319,7 +319,7 @@
                 </div>
             </masker>
             <toast v-model="toast" type="success">{{confrim}}</toast>
-               <load-more v-show="loadshow" tip="加载更多"></load-more>
+            <load-more v-show="loadshow" tip="加载更多"></load-more>
             <load-more v-show="!loadshow && orderList[this.currentType].length>8" :show-loading="false" tip="到底了" background-color="#fbf9fe"></load-more>
         </ul>
         <div v-show="!orderList[this.currentType][0]" class="order_noAnyList">
@@ -330,7 +330,7 @@
 </template>
 
 <script>
-import { Scroller,XImg, Masker, Actionsheet, Spinner, XButton, Group, Cell, LoadMore, Toast } from 'vux';
+import { Scroller, XImg, Masker, Actionsheet, Spinner, XButton, Group, Cell, LoadMore, Toast } from 'vux';
 import { mapGetters } from 'vuex';
 import { API, getQuery } from '../../services';
 
@@ -386,12 +386,12 @@ export default {
             /* 时间对照表 */
             timeMap: { 1: "日", 2: "周", 3: "月", 4: "季", 5: "年" },
             /* 假数据模拟订单 */
-            orderList: [[],[],[],[],[],[],[]],
+            orderList: [[], [], [], [], [], [], []],
             /* 当前7大列表对应数据 */
-            currentPage:1,
-            canBottom:true,
-            loadshow:false,
-            haveData:false,
+            currentPage: 1,
+            canBottom: true,
+            loadshow: false,
+            haveData: false,
             /* 支付方式 */
             payMethod: 4,
             menus: {
@@ -410,83 +410,80 @@ export default {
         ]),
     },
     mounted() {
-        
         overscroll(document.querySelector('.order_list'));
         /* 当前滚动距离为0 */
         localStorage.setItem("orderScroll", 0);
         this.loading = true;
-            /* 数据重载永远只重新加载当前显示列表数据 */
-             this.orderList[this.currentType]=[];
-            /* 数据重载永远只重新加载当前显示列表数据 */
-            this.currentPage = 1;
-            this.haveData=true;
-            this.getTypeData(this.currentType);
+        /* 数据重载永远只重新加载当前显示列表数据 */
+        this.orderList[this.currentType] = [];
+        /* 数据重载永远只重新加载当前显示列表数据 */
+        this.currentPage = 1;
+        this.haveData = true;
+        this.getTypeData(this.currentType);
         let self = this;
         /* self.getTypeData(this.currentType); */
         function getScrollTop() {
-            　　var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
-            　　if (document.querySelector('.order_list')) {
-                　　　　bodyScrollTop = document.querySelector('.order_list').scrollTop;
-            　　}
-            　　if (document.documentElement) {
-                　　　　documentScrollTop = document.documentElement.scrollTop;
-            　　}
-            　　scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
-            　　return scrollTop;
+            var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
+            if (document.querySelector('.order_list')) {
+                bodyScrollTop = document.querySelector('.order_list').scrollTop;
+            }
+            if (document.documentElement) {
+                documentScrollTop = document.documentElement.scrollTop;
+            }
+            scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
+            return scrollTop;
         }
         //文档的总高度
         function getScrollHeight() {
-            　　var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
-            　　if (document.querySelector('.order_list')) {
-                　　　　bodyScrollHeight = document.querySelector('.order_list').scrollHeight;
-            　　}
-            　　if (document.documentElement) {
-                　　　　documentScrollHeight = document.documentElement.scrollHeight;
-            　　}
-            　　scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
-            　　return scrollHeight;
+            var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
+            if (document.querySelector('.order_list')) {
+                bodyScrollHeight = document.querySelector('.order_list').scrollHeight;
+            }
+            if (document.documentElement) {
+                documentScrollHeight = document.documentElement.scrollHeight;
+            }
+            scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
+            return scrollHeight;
         }
         //浏览器视口的高度
         function getWindowHeight() {
-            　　var windowHeight = 0;
-            　　if (document.compatMode == "CSS1Compat") {
-                　　　　windowHeight = document.documentElement.clientHeight;
-            　　} else {
-                　　　　windowHeight = document.body.clientHeight;
-            　　}
-            　　return windowHeight;
+            var windowHeight = 0;
+            if (document.compatMode == "CSS1Compat") {
+                windowHeight = document.documentElement.clientHeight;
+            } else {
+                windowHeight = document.body.clientHeight;
+            }
+            return windowHeight;
         }
         document.querySelector('.order_list').onscroll = function() {
-        　　if (getScrollTop() + getWindowHeight() >= (getScrollHeight()-10)) {
-                if(self.canBottom==true){
-                    self.canBottom=false;
+            if (getScrollTop() + getWindowHeight() >= (getScrollHeight() - 10)) {
+                if (self.canBottom == true) {
+                    self.canBottom = false;
                     self.getTypeData(self.currentType);
                 }
-        　　}
-        }; 
-       
-        
+            }
+        };
     },
     activated() {
         /* 获取当前url参数 */
-        let  biz_content= this.$route.query.biz_content;
+        let biz_content = this.$route.query.biz_content;
         /* 支付宝借还成功后的回调 */
-        if(biz_content){
-            biz_content= JSON.parse(biz_content);
-            let timetamp=JSON.parse(biz_content.invoke_state).timestamp;
-            if(((new Date().getTime()/1000)-timetamp)<=30){
+        if (biz_content) {
+            biz_content = JSON.parse(biz_content);
+            let timetamp = JSON.parse(biz_content.invoke_state).timestamp;
+            if (((new Date().getTime() / 1000) - timetamp) <= 30) {
                 this.success(biz_content);
             }
         }
         overscroll(document.querySelector('.order_list'));
-                /* 当前页面需要重载数据 */
+        /* 当前页面需要重载数据 */
         if (localStorage.getItem("reload")) {
             this.loading = true;
             /* 数据重载永远只重新加载当前显示列表数据 */
-             this.orderList[this.currentType]=[];
+            this.orderList[this.currentType] = [];
             /* 数据重载永远只重新加载当前显示列表数据 */
             this.currentPage = 1;
-            this.haveData=true;
+            this.haveData = true;
             this.getTypeData(this.currentType);
             localStorage.setItem("reload", "");
         }
@@ -499,30 +496,50 @@ export default {
     },
     methods: {
         /* 支付宝付款成功后的回调函数 */
-        success(item){
+        success(item) {
             API.alipay.success({
-                out_order_no:item.out_order_no,
-                order_no:item.order_no,
-                invoke_state:item.invoke_state,
-                user_id:item.user_id,
-                admit_state:item.admit_state,
-            }).then((res)=>{
-                if(res.body.code==200){
+                out_order_no: item.out_order_no,
+                order_no: item.order_no,
+                invoke_state: item.invoke_state,
+                user_id: item.user_id,
+                admit_state: item.admit_state,
+            }).then((res) => {
+                if (res.body.code == 200) {
                     let openId = localStorage.getItem("openId");
                     API.order.OrderWechat({
-                            userId: this.getUserInfoUserId,
-                            token: this.getUserInfoToken,
-                            orderSn: JSON.parse(item.invoke_state).order_sn,
-                            payMethod: 4,
-                            openId: item.user_id,
-                        }).then((resopndy) => {
-                                const div = document.createElement('div');
-                                div.innerHTML = resopndy.body;
-                                document.body.appendChild(div);
-                                document.forms.alipaysubmit.submit();
-                        })
+                        userId: this.getUserInfoUserId,
+                        token: this.getUserInfoToken,
+                        orderSn: JSON.parse(item.invoke_state).order_sn,
+                        payMethod: 4,
+                        openId: item.user_id,
+                    }).then((resopndy) => {
+                        if (resopndy.body.code == 250) {
+                            self.confrim = "支付完成";
+                            self.toast = true;
+                            setTimeout(() => {
+                                self.orderList[self.currentType] = [];
+                                self.currentPage = 1;
+                                self.haveData = true;
+                                self.getTypeData(self.currentType);
+                            }, 1500);
+                        } else if (resopndy.body.code == 300) {
+                            self.confrim = resopndy.body.msg;
+                            self.toast = true;
+                            setTimeout(() => {
+                                self.orderList[self.currentType] = [];
+                                self.currentPage = 1;
+                                self.haveData = true;
+                                self.getTypeData(self.currentType);
+                            }, 1500);
+                        } else {
+                            const div = document.createElement('div');
+                            div.innerHTML = resopndy.body;
+                            document.body.appendChild(div);
+                            document.forms.alipaysubmit.submit();
+                        }
+                    })
                 }
-            },(err)=>{
+            }, (err) => {
             });
         },
         /* 判断当前；浏览器环境  0 微信 1 支付宝 2 其他浏览器*/
@@ -540,16 +557,16 @@ export default {
         },
         /* typelist点击选中函数 */
         typeselect(index) {
-            if(!this.canBottom){
+            if (!this.canBottom) {
                 return false;
             }
-            if(index==this.currentType){
+            if (index == this.currentType) {
                 return false;
             }
             this.currentType = index;
-            this.orderList[this.currentType]=[];
-            this.currentPage=1;
-            this.haveData=true;
+            this.orderList[this.currentType] = [];
+            this.currentPage = 1;
+            this.haveData = true;
             this.getTypeData(this.currentType);
         },
         /* 进入订单详情 */
@@ -623,40 +640,39 @@ export default {
         /* 使用分页结构数据,使用同一个div，根据类型进行数据替换 */
         /* 使用类型判断是分页数据还是 */
         getTypeData(status) {
-            if(this.haveData){
-                this.loadshow=true;
+            if (this.haveData) {
+                this.loadshow = true;
                 API.order.orderlist({
-                userId: this.getUserInfoUserId,
-                token: this.getUserInfoToken,
-                orderStatus: status,
-                page_number: 10,
-                orderStatus:status,
-                page: this.currentPage,
-            }).then((res) => {
-                if (res.body.code == 200) {
-                    let list = res.body.data.orderList.data
-                    for (let item of list) {
-                        this.confrimType(item);
-                    }
-                    this.orderList[this.currentType]=this.orderList[this.currentType].concat(list);
-                    this.loadshow=false;
-                    this.canBottom=true;
-                      /* 显示当前 */
+                    userId: this.getUserInfoUserId,
+                    token: this.getUserInfoToken,
+                    orderStatus: status,
+                    page_number: 10,
+                    orderStatus: status,
+                    page: this.currentPage,
+                }).then((res) => {
+                    if (res.body.code == 200) {
+                        let list = res.body.data.orderList.data
+                        for (let item of list) {
+                            this.confrimType(item);
+                        }
+                        this.orderList[this.currentType] = this.orderList[this.currentType].concat(list);
+                        this.loadshow = false;
+                        this.canBottom = true;
+                        /* 显示当前 */
                         this.loading = false;
                         overscroll(document.querySelector('.order_list'));
-                    if (res.body.data.hasNext) {
-                        this.currentPage++;
-                        this.haveData=true;
-                    } else {
-                        this.haveData=false;
+                        if (res.body.data.hasNext) {
+                            this.currentPage++;
+                            this.haveData = true;
+                        } else {
+                            this.haveData = false;
+                        }
+                         return false;
                     }
-                    return false;
-                }
-            });
-          }else{
-              this.canBottom=true;
-          }
-            
+                });
+            } else {
+                this.canBottom = true;
+            }
         },
         /* 删除订单 */
         deletOrder(id) {
@@ -675,9 +691,9 @@ export default {
                             self.loading = true;
                             self.confrim = "删除成功";
                             self.toast = true;
-                            self.orderList[self.currentType]=[];
+                            self.orderList[self.currentType] = [];
                             self.currentPage = 1;
-                            self.haveData=true;
+                            self.haveData = true;
                             self.getTypeData(self.currentType);
                         }
                     });
@@ -694,24 +710,23 @@ export default {
                     if (res.err_msg == "get_brand_wcpay_request:fail") {
                         self.confrim = "支付异常";
                         self.toast = true;
-                        self.orderList[self.currentType]=[];
+                        self.orderList[self.currentType] = [];
                         self.currentPage = 1;
-                        self.haveData=true;
+                        self.haveData = true;
                         self.getTypeData(self.currentType);
-
                     }
                     if (res.err_msg == "get_brand_wcpay_request:cancel") {
-                        self.orderList[self.currentType]=[];
+                        self.orderList[self.currentType] = [];
                         self.currentPage = 1;
-                        self.haveData=true;
+                        self.haveData = true;
                         self.getTypeData(self.currentType);
                     }
                     if (res.err_msg == "get_brand_wcpay_request:ok") {
                         self.confrim = "支付成功";
                         self.toast = true;
-                        self.orderList[self.currentType]=[];
+                        self.orderList[self.currentType] = [];
                         self.currentPage = 1;
-                        self.haveData=true;
+                        self.haveData = true;
                         self.getTypeData(self.currentType);
 
                     }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
@@ -742,29 +757,52 @@ export default {
                         payMethod: this.payMethod,
                         openId: openId,
                     }).then((resopndy) => {
-                        self.payTypeData = resopndy.body;
-                        if (key == 'menu1') {
-                            /* 微信支付 */
-                            window.location.href = this.payTypeData;
-                        } else if (key == 'menu2') {
-                            const div = document.createElement('div');
-                            div.innerHTML = this.payTypeData;
-                            document.body.appendChild(div);
-                            document.forms.alipaysubmit.submit();
+                        if (resopndy.body.code == 250) {
+                            self.confrim = "支付完成";
+                            self.toast = true;
+                            setTimeout(() => {
+                                self.orderList[this.currentType] = [];
+                                self.currentPage = 1;
+                                self.haveData = true;
+                                self.getTypeData(self.currentType);
+                            }, 1500);
+                        } else if (resopndy.body.code == 300) {
+                            self.confrim = resopndy.body.msg;
+                            self.toast = true;
+                            setTimeout(() => {
+                                self.orderList[this.currentType] = [];
+                                self.currentPage = 1;
+                                self.haveData = true;
+                                self.getTypeData(self.currentType);
+                            }, 1500);
+                        } else {
+                            self.payTypeData = resopndy.body;
+                            if (key == 'menu1') {
+                                /* 微信支付 */
+                                window.location.href = this.payTypeData;
+                            } else if (key == 'menu2') {
+                                const div = document.createElement('div');
+                                div.innerHTML = this.payTypeData;
+                                document.body.appendChild(div);
+                                document.forms.alipaysubmit.submit();
+                            }
                         }
                     }, (err) => {
                         self.confrim = "支付异常";
                         self.toast = true;
-                        self.$router.push({
-                            path: '/index/main/order'
-                        })
+                        setTimeout(() => {
+                            self.orderList[this.currentType] = [];
+                            self.currentPage = 1;
+                            self.haveData = true;
+                            self.getTypeData(self.currentType);
+                        }, 1500);
                     });
                 }
             });
 
         },
         /* 订单付款 */
-        payOrder(id,item) {
+        payOrder(id, item) {
             this.orderId = id;
             /* 待付款订单生成支付订单 */
             let self = this;
@@ -784,24 +822,47 @@ export default {
                             payMethod: this.payMethod,
                             openId: openId,
                         }).then((resopndy) => {
-                            /* 微信支付 */
-                            this.paydata = resopndy.body;
-                            if (typeof WeixinJSBridge == "undefined") {
-                                if (document.addEventListener) {
-                                    document.addEventListener('WeixinJSBridgeReady', self.onBridgeReady, false);
-                                } else if (document.attachEvent) {
-                                    document.attachEvent('WeixinJSBridgeReady', self.onBridgeReady);
-                                    document.attachEvent('onWeixinJSBridgeReady', self.onBridgeReady);
-                                }
+                            if (resopndy.body.code == 250) {
+                                self.confrim = "支付完成";
+                                self.toast = true;
+                                setTimeout(() => {
+                                    self.orderList[self.currentType] = [];
+                                    self.currentPage = 1;
+                                    self.haveData = true;
+                                    self.getTypeData(self.currentType);
+                                }, 1500);
+                            } else if (resopndy.body.code == 300) {
+                                self.confrim = resopndy.body.msg;
+                                self.toast = true;
+                                setTimeout(() => {
+                                    self.orderList[self.currentType] = [];
+                                    self.currentPage = 1;
+                                    self.haveData = true;
+                                    self.getTypeData(self.currentType);
+                                }, 1500);
                             } else {
-                                self.onBridgeReady();
+                                /* 微信支付 */
+                                this.paydata = resopndy.body;
+                                if (typeof WeixinJSBridge == "undefined") {
+                                    if (document.addEventListener) {
+                                        document.addEventListener('WeixinJSBridgeReady', self.onBridgeReady, false);
+                                    } else if (document.attachEvent) {
+                                        document.attachEvent('WeixinJSBridgeReady', self.onBridgeReady);
+                                        document.attachEvent('onWeixinJSBridgeReady', self.onBridgeReady);
+                                    }
+                                } else {
+                                    self.onBridgeReady();
+                                }
                             }
                         }, (err) => {
                             self.confrim = "支付异常";
                             self.toast = true;
-                            self.$router.push({
-                                path: '/index/main/order'
-                            })
+                            setTimeout(() => {
+                                self.orderList[this.currentType] = [];
+                                self.currentPage = 1;
+                                self.haveData = true;
+                                self.getTypeData(self.currentType);
+                            }, 1500);
                         });
                     }
                 });
@@ -822,30 +883,50 @@ export default {
                             payMethod: this.payMethod,
                             openId: openId,
                         }).then((resopndy) => {
-                            const div = document.createElement('div');
-                            div.innerHTML = resopndy.body;
-                            document.body.appendChild(div);
-                            document.forms.alipaysubmit.submit();
-                        })
-                       /* order_id */
-                       /*  API.alipay.orderId({
-                            userId:this.getUserInfoUserId,
-                            Info:{
-                                goods_name:item.goods_name,
-                                address:item.recevie_address,    
-                                shop_name:item.store_name,
-                                rent_amount:item.actual_price,
-                                deposit_amount:item.order_deposit,
-                                borrow_time:item.order_goods_rent_time,
-                                expiry_time:item.order_goods_return_time,
-                                order_id:id,
+                            if (resopndy.body.code == 250) {
+                                self.confrim = "支付完成";
+                                self.toast = true;
+                                setTimeout(() => {
+                                    self.orderList[this.currentType] = [];
+                                    self.currentPage = 1;
+                                    self.haveData = true;
+                                    self.getTypeData(self.currentType);
+                                }, 1500);
+                            } else if (resopndy.body.code == 300) {
+                                self.confrim = resopndy.body.msg;
+                                self.toast = true;
+                                setTimeout(() => {
+                                    self.orderList[this.currentType] = [];
+                                    self.currentPage = 1;
+                                    self.haveData = true;
+                                    self.getTypeData(self.currentType);
+                                }, 1500);
+                            } else {
+                                const div = document.createElement('div');
+                                div.innerHTML = resopndy.body;
+                                document.body.appendChild(div);
+                                document.forms.alipaysubmit.submit();
                             }
-                        }).then((res)=>{
-                                if(res.body.code == 200){
-                                    window.location.href=res.body.data.link_url;
-                                }
-                        },(err)=>{
-                        }); */
+                        })
+                        /* order_id */
+                        /*  API.alipay.orderId({
+                             userId:this.getUserInfoUserId,
+                             Info:{
+                                 goods_name:item.goods_name,
+                                 address:item.recevie_address,    
+                                 shop_name:item.store_name,
+                                 rent_amount:item.actual_price,
+                                 deposit_amount:item.order_deposit,
+                                 borrow_time:item.order_goods_rent_time,
+                                 expiry_time:item.order_goods_return_time,
+                                 order_id:id,
+                             }
+                         }).then((res)=>{
+                                 if(res.body.code == 200){
+                                     window.location.href=res.body.data.link_url;
+                                 }
+                         },(err)=>{
+                         }); */
                     }
                 });
             } else {
@@ -868,9 +949,9 @@ export default {
                     }).then((res) => {
                         if (res.body.code == 200) {
                             self.confrim = "确认收货成功";
-                            self.orderList[this.currentType]=[];
+                            self.orderList[this.currentType] = [];
                             self.currentPage = 1;
-                            self.haveData=true;
+                            self.haveData = true;
                             self.getTypeData(self.currentType);
                             self.toast = true;
                         }
@@ -931,7 +1012,6 @@ export default {
             this.$router.push({
                 path: '/download'
             });
-
             localStorage.setItem("orderScroll", document.querySelector(".order_list").scrollTop);
         }
     }
