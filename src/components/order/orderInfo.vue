@@ -428,7 +428,7 @@ export default {
             let goodsDespoit=this.infoData.goods_deposit-(this.goodsDespoit-this.antDerate);
             if(goodsDespoit<=0){
                 if(this.infoData.goods_deposit==0){
-                    return 0.1;
+                    return 0.01;
                 }else{
                     return this.infoData.goods_deposit;
                 }

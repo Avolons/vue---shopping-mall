@@ -472,6 +472,7 @@ export default {
             biz_content = JSON.parse(biz_content);
             let timetamp = JSON.parse(biz_content.invoke_state).timestamp;
             if (((new Date().getTime() / 1000) - timetamp) <= 30) {
+                alert(JSON.stringify(biz_content));
                 this.success(biz_content);
             }
         }
