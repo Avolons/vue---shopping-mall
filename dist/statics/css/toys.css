@@ -1,0 +1,260 @@
+@charset "UTF-8";
+/**
+ * 此处写上scss常用mixins//移动端解决方案配置
+ */
+*:not(input) {
+  -webkit-user-select: none;
+}
+
+/**
+ * 配置项目常用变量
+ */
+body {
+  -webkit-overflow-scrolling: touch;
+}
+
+.toys_main {
+  background-color: #fec178;
+}
+
+.toys_main > img {
+  width: 100%;
+  display: block;
+}
+
+.toys_main_goodInfoContent {
+  box-sizing: border-box;
+  padding: 0 0.2rem;
+}
+
+.toys_main_storeSingle > img {
+  display: block;
+  width: 100%;
+}
+
+.toys_main_goodInfo {
+  width: 100%;
+  margin-top: 0.13333rem;
+  margin-bottom: 0.26667rem;
+}
+
+.toys_main_goodVideo {
+  margin-top: 0.13333rem;
+  margin-bottom: 0.26667rem;
+  width: 100%;
+}
+
+.toys_main_title {
+  background-color: #fbd0a0;
+  padding: 0 0.66667rem;
+  height: 2.26667rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+}
+
+.toys_main_tip {
+  border-radius: 0.13333rem;
+  display: block;
+  height: 1.6rem;
+  width: 1.6rem;
+  margin-right: 0.46667rem;
+}
+
+.toys_main_storeTitle {
+  white-space: nowrap;
+  color: #fff;
+  font-size: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -ms-flex-positive: 1;
+      flex-grow: 1;
+  font-weight: 400;
+}
+
+[data-dpr="2"] .toys_main_storeTitle {
+  font-size: 36px;
+}
+
+[data-dpr="3"] .toys_main_storeTitle {
+  font-size: 54px;
+}
+
+.toys_main_cardList {
+  box-sizing: border-box;
+  padding: 0.26667rem 0.2rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: justify;
+      justify-content: space-between;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 100%;
+  background-color: #fbd0a0;
+  padding-bottom: 0.13333rem;
+}
+
+.toys_main_cardSingle {
+  position: relative;
+  margin-bottom: 0.13333rem;
+  width: 32.5%;
+}
+
+.toys_main_cardSingle > img {
+  width: 100%;
+}
+
+.toys_main_cardTtile {
+  position: absolute;
+  width: 18.75%;
+  left: 0;
+  top: 0;
+  writing-mode: vertical-lr;
+  overflow: hidden;
+  text-align: center;
+  height: 100%;
+  display: block;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  line-height: 220%;
+  color: #fff;
+  font-size: 10px;
+}
+
+[data-dpr="2"] .toys_main_cardTtile {
+  font-size: 20px;
+}
+
+[data-dpr="3"] .toys_main_cardTtile {
+  font-size: 30px;
+}
+
+.toys_main_cardNumber {
+  position: absolute;
+  top: 5%;
+  right: 45.83%;
+  color: #fff;
+  font-size: 25px;
+}
+
+[data-dpr="2"] .toys_main_cardNumber {
+  font-size: 50px;
+}
+
+[data-dpr="3"] .toys_main_cardNumber {
+  font-size: 75px;
+}
+
+.toys_main_goodList {
+  box-sizing: border-box;
+  padding: 0 0.2rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: justify;
+      justify-content: space-between;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 100%;
+}
+
+.toys_main_noFun {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  width: 32.5%;
+  height: 0.01333rem;
+}
+
+.toys_main_goodSingle {
+  margin-bottom: 0.13333rem;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  width: 32.5%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-pack: center;
+      justify-content: center;
+}
+
+.toys_main_goodSingle > img {
+  width: 100%;
+}
+
+.toys_main_goodTitle {
+  background-color: #fff;
+  line-height: 0.6rem;
+  font-size: 10px;
+  color: #666;
+  box-sizing: border-box;
+  padding: 0 0.2rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+[data-dpr="2"] .toys_main_goodTitle {
+  font-size: 20px;
+}
+
+[data-dpr="3"] .toys_main_goodTitle {
+  font-size: 30px;
+}
+
+.toys_main_goodText {
+  background-color: #fff;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: justify;
+      justify-content: space-between;
+  box-sizing: border-box;
+  padding: 0 0.2rem;
+  line-height: 45px;
+}
+
+.toys_main_goodPrice {
+  color: #f80000;
+  font-size: 10px;
+}
+
+[data-dpr="2"] .toys_main_goodPrice {
+  font-size: 20px;
+}
+
+[data-dpr="3"] .toys_main_goodPrice {
+  font-size: 30px;
+}
+
+.toys_main_goodPrice > span {
+  font-size: 8px;
+  color: #666;
+}
+
+[data-dpr="2"] .toys_main_goodPrice > span {
+  font-size: 16px;
+}
+
+[data-dpr="3"] .toys_main_goodPrice > span {
+  font-size: 24px;
+}
+
+.toys_main_goodAddress {
+  font-size: 8px;
+}
+
+[data-dpr="2"] .toys_main_goodAddress {
+  font-size: 16px;
+}
+
+[data-dpr="3"] .toys_main_goodAddress {
+  font-size: 24px;
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta name="flexible" content="initial-dpr=2">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>租介网-玩具节</title>  
+    <link rel="stylesheet" href="/statics/css/reset.css" />
+    <link rel="stylesheet" href="/statics/css/toys.css" />
+</head>
+  <body>
+    <div class="toys_main"><img src="/statics/img/activity/toys/top.png" alt="" srcset="">
+      <ul class="toys_main_cardList">
+        <li v-for="item in toys.platom_coupons" @click="getCard(item.coupon_no)" class="toys_main_cardSingle"><img src="/statics/img/activity/toys/zujie.png" alt="" srcset=""><span class="toys_main_cardNumber">{{item.amount.split('.')[0]}}</span></li>
+        <template v-for="item in storeList">
+          <li v-for="ite in item.store_coupons" @click="getStoreCard(item.store_id,ite.coupon_no)" class="toys_main_cardSingle"><img src="/statics/img/activity/toys/store.png" alt="" srcset=""><span class="toys_main_cardTtile">{{item.store_name}}</span><span class="toys_main_cardNumber">{{ite.amount.split('.')[0]}}</span></li>
+        </template>
+        <li class="toys_main_noFun"></li>
+        <li class="toys_main_noFun"></li>
+        <li class="toys_main_noFun"></li>
+      </ul><img src="/statics/img/activity/toys/title.png" alt="" srcset="">
+      <ul class="toys_main_storeList">
+        <li v-for="item in storeList" class="toys_main_storeSingle">
+          <div @click="storeClick(item.store_id)" class="toys_main_title"> <img :src="oss(item.store_face_img)" alt="" class="toys_main_tip">
+            <h3 class="toys_main_storeTitle">{{item.store_name}} </h3>
+          </div><img src="/statics/img/activity/toys/toys.png" alt="">
+          <ul class="toys_main_goodList">
+            <li v-for="ite in item.goods_list" @click="goodClick(ite.goods_id)" class="toys_main_goodSingle"><img :src="oss(ite.goods_main_pic)" alt="" srcset="">
+              <h4 class="toys_main_goodTitle">{{ite.goods_name}}</h4>
+              <div class="toys_main_goodText">
+                <div class="toys_main_goodPrice">￥{{ite.rent_price}}<span>/{{dataList[ite.rent_period_type]}}</span></div><span class="toys_main_goodAddress">{{ite.region}}</span>
+              </div>
+            </li>
+            <li class="toys_main_noFun"></li>
+            <li class="toys_main_noFun"></li>
+            <li class="toys_main_noFun"></li>
+          </ul>
+          <div class="toys_main_goodInfoContent">
+            <template v-if="item.activity_source_type==1"><img :src="oss(item.store_activity_source)" alt="" class="toys_main_goodInfo"></template>
+            <template v-else>
+              <video :src="item.store_activity_source" controls="controls" type="video/mp4" preload="auto" poster="/statics/img/activity/toys/poster.png" class="toys_main_goodVideo"></video>
+            </template>
+          </div>
+        </li>
+      </ul>
+    </div>  
+<script charset="utf-8" src="/lib/lib-flexible/flexible.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.4.4/vue.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/layer/3.0.3/mobile/layer.min.js"></script>
+<script src="/statics/app/toys_d6c3271.js"></script>
+</body>
+</html>

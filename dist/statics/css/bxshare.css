@@ -10,6 +10,10 @@
 /**
  * 配置项目常用变量
  */
+body {
+  -webkit-overflow-scrolling: touch;
+}
+
 .bxshare_img {
   width: 100%;
 }

@@ -202,8 +202,8 @@ export default {
           API.card.receiveStoreCoupon({
              storeId:this.storeId,
              userId:this.getUserInfoUserId,  
-            token:this.getUserInfoToken,
-            couponNo:id
+             token:this.getUserInfoToken,
+             couponNo:id
           }).then((res)=>{
               if(res.body.code==200){
                   this.confrim="领取成功";
@@ -247,6 +247,9 @@ export default {
                 }
             }
         }); 
+        /**
+         * 获取店铺红包
+         */
         API.card.stordCardList({
             storeId:this.storeId
         }).then((res)=>{

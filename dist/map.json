@@ -55,6 +55,14 @@
         "modules/app/share.js": {
             "uri": "/statics/app/share_761bacc.js",
             "type": "js"
+        },
+        "modules/css/toys.scss": {
+            "uri": "/statics/css/toys.css",
+            "type": "css"
+        },
+        "modules/app/toys.js": {
+            "uri": "/statics/app/toys_d6c3271.js",
+            "type": "js"
         }
     },
     "pkg": {}
