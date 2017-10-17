@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta content="yes" name="apple-touch-fullscreen">
     <meta content="telephone=no,email=no" name="format-detection">
     <meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
@@ -44,7 +45,7 @@
           <div class="toys_main_goodInfoContent">
             <template v-if="item.activity_source_type==1"><img :src="oss(item.store_activity_source)" alt="" class="toys_main_goodInfo"></template>
             <template v-if="item.activity_source_type==2">
-              <video src="http://www.w3school.com.cn/i/movie.ogg" controls="controls" preload="auto" poster="/statics/img/activity/toys/poster.png" class="toys_main_goodVideo"></video>
+              <video :src="item.store_activity_source" controls="controls" type="video/mp4" preload="auto" poster="/statics/img/activity/toys/poster.png" class="toys_main_goodVideo"></video>
             </template>
           </div>
         </li>
