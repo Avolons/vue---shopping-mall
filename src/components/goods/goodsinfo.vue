@@ -1472,6 +1472,14 @@ export default {
         },
         /* 加入购物车 */
         addCar() {
+            /* 登录认证 */
+            if (!localStorage.getItem("userInfo")) {
+                this.$router.push({
+                    path: '/login?type=good'
+                });
+
+                return false;
+            }
             let addresslist = (this.getName(this.goodsAddress)).split(" ");
             let perId;
             for (let item of this.currentTypedata.rent_period) {
