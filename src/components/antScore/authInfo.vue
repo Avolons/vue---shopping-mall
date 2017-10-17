@@ -24,7 +24,7 @@
                 <span style="color:#2196f3" @click="getAuth">去授权<i class="iconfont">&#xe6d7;</i></span>
             </p>
             <p v-show="isShow">恭喜您已获取<span>{{relief_limit}}元</span>免押金额度</p>
-            <p style="font-size:14px">芝麻信用高于<span>650</span>的用户，租赁商品将享受部分<span>免押金特权</span></p>
+            <p style="font-size:14px">芝麻信用高于<span>650</span>的用户，租赁商品将享受部分<span>免押金服务</span></p>
         </div>
         <div class="ant_rate">
             <h3>如何获取芝麻信用免押金额度?</h3>
