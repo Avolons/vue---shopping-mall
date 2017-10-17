@@ -290,7 +290,7 @@
                     </div>
                     <cell title="商品押金" :value="goodsDespoit - antDerate | currency('￥')"></cell>
                     <!-- <cell title="商品押金" :value="goodsDespoit | currency('￥')"></cell> -->
-                    <div style="font-size:12px;color:red;margin:-12px 0 0 15px">平台已为您减免{{antDerate}}元租金</div>
+                    <div style="font-size:12px;color:red;margin:-12px 0 0 15px">芝麻信用已为您减免押金{{antDerate}}元</div>
                     <x-textarea :max="20" v-model="option" placeholder="买家留言"></x-textarea>
                 </group>
             </div>
