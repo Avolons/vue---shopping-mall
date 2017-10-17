@@ -158,9 +158,6 @@
             flex-grow: 1;
             font-size: 14px;
             color: #272727;
-            display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
             >div{
                 width: 100%;
                 height: 50%;
@@ -806,6 +803,7 @@ export default {
                     if (res.body.code == 200) {
                         let self = this;
                         let openId = localStorage.getItem("openId");
+                        alert(JSON.stringify(Info));
                         /* order_id */
                         API.alipay.orderId({
                             userId:this.getUserInfoUserId,
@@ -813,7 +811,7 @@ export default {
                                 order_sn: res.body.data.order_big_sn,
                                 goods_name:this.infoData.goodsName,
                                 address:this.getAddress,    
-                                shop_name:this.storeInfo,
+                                shop_name:this.infoData.store_name,
                                 rent_amount:(this.goodsTotolPrice-this.antDerate),/* 总支付价格 */
                                 deposit_amount:this.goodsalipay,//押金
                                 borrow_time:this.infoData.cart_start_time,
