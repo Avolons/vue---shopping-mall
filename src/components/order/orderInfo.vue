@@ -810,7 +810,7 @@ export default {
                                 order_sn: res.body.data.order_big_sn,
                                 goods_name:this.infoData.goodsName,
                                 address:this.getAddress,    
-                                shop_name:"租介网",
+                                shop_name:this.infoData.store_name,
                                 rent_amount:(this.goodsTotolPrice-this.antDerate),/* 总支付价格 */
                                 deposit_amount:this.goodsalipay,//押金
                                 borrow_time:this.infoData.cart_start_time,
@@ -819,6 +819,7 @@ export default {
                             }
                         }).then((res)=>{
                                 if(res.body.code == 200){
+                                    /* console.log(res.body.data.link_url); */
                                     window.location.href=res.body.data.link_url;
                                 }
                         },(err)=>{
