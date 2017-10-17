@@ -654,7 +654,7 @@
                                 <li v-show="staticdata.goods_is_follow_lease==1">
                                     <i class="iconfont">&#xe6c1;</i>
                                     随租随还
-                                    <p>租赁的商品提前归还时，不收取提前归还违约金</p>
+                                    <p>租赁的商品提前归还时，只收取实际租赁时间的租金,退还剩余租金</p>
                                 </li>
                             </ul>
                             <button @click="goodstypelist = false" type="button" class="goodsinfo_sizeSelect_btn">确定</button>
