@@ -803,7 +803,6 @@ export default {
                     if (res.body.code == 200) {
                         let self = this;
                         let openId = localStorage.getItem("openId");
-                        alert(JSON.stringify(Info));
                         /* order_id */
                         API.alipay.orderId({
                             userId:this.getUserInfoUserId,

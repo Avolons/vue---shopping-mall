@@ -200,6 +200,7 @@ body {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  width: 100%;
 }
 
 [data-dpr="2"] .toys_main_goodTitle {
