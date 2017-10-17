@@ -866,7 +866,7 @@ export default {
                                 }, 1500);
                             } else {
                                 /* 微信支付 */
-                                this.paydata = resopndy.body;
+                                self.paydata = resopndy.body;
                                 if (typeof WeixinJSBridge == "undefined") {
                                     if (document.addEventListener) {
                                         document.addEventListener('WeixinJSBridgeReady', self.onBridgeReady, false);

@@ -17,7 +17,9 @@
       <ul class="toys_main_cardList">
         <li v-for="item in toys.platom_coupons" @click="getCard(item.coupon_no)" class="toys_main_cardSingle"><img src="/statics/img/activity/toys/zujie.png" alt="" srcset=""><span class="toys_main_cardNumber">{{item.amount.split('.')[0]}}</span></li>
         <template v-for="item in storeList">
-          <li v-for="ite in item.store_coupons" @click="getStoreCard(item.store_id,ite.coupon_no)" class="toys_main_cardSingle"><img src="/statics/img/activity/toys/store.png" alt="" srcset=""><span class="toys_main_cardTtile">{{item.store_name}}</span><span class="toys_main_cardNumber">{{ite.amount.split('.')[0]}}</span></li>
+          <li v-for="ite in item.store_coupons" @click="getStoreCard(item.store_id,ite.coupon_no)" class="toys_main_cardSingle"><img src="/statics/img/activity/toys/store.png" alt="" srcset="">
+            <div class="toys_main_cardTtileBox"><span class="toys_main_cardTtile">{{item.store_name}}</span></div><span class="toys_main_cardNumber">{{ite.amount.split('.')[0]}}</span>
+          </li>
         </template>
         <li class="toys_main_noFun"></li>
         <li class="toys_main_noFun"></li>
@@ -53,6 +55,6 @@
 <script src="https://cdn.bootcss.com/vue/2.4.4/vue.js"></script>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/layer/3.0.3/mobile/layer.min.js"></script>
-<script src="/statics/app/toys_06ea702.js"></script>
+<script src="/statics/app/toys_42a1438.js"></script>
 </body>
 </html>

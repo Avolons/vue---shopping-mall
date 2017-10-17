@@ -158,7 +158,7 @@
             flex-grow: 1;
             font-size: 14px;
             color: #272727;
-            >div{
+            >div {
                 width: 100%;
                 height: 50%;
                 line-height: 38px;
@@ -167,7 +167,7 @@
                 font-size: 18px;
                 color: #f80000;
             }
-            >p{
+            >p {
                 line-height: 25px;
                 display: block;
                 width: 100%;
@@ -297,7 +297,9 @@
 
             <footer class="orderInfon_footer">
                 <div class="orderInfon_footer_price">
-                    <div>合计：<span>{{goodsTotolPrice - antDerate | currency('￥')}}</span></div>
+                    <div>合计：
+                        <span>{{goodsTotolPrice - antDerate | currency('￥')}}</span>
+                    </div>
                     <p>押金可退：{{goodsDespoit - antDerate | currency('￥')}}</p>
                 </div>
                 <button class="orderInfon_footer_btn" @click="buygoods" type="button">提交订单</button>
@@ -359,7 +361,7 @@ export default {
             cartId: 0,
             /* 订单详情数据 */
             infoData: {
-                goodsFace:""
+                goodsFace: ""
             },
             /* 时间对照表 */
             timeMap: { 1: "日", 2: "周", 3: "月", 4: "季", 5: "年" },
@@ -433,16 +435,16 @@ export default {
             }
         },
         /* 计算商品借还押金 */
-        goodsalipay(){
+        goodsalipay() {
             /* 计算后如果押金小于0写原押金，否则写真实押金，原押金也为0则显示0.1 */
-            let goodsDespoit=this.infoData.goods_deposit-(this.goodsDespoit-this.antDerate);
-            if(goodsDespoit<=0){
-                if(this.infoData.goods_deposit==0){
+            let goodsDespoit = this.infoData.goods_deposit - (this.goodsDespoit - this.antDerate);
+            if (goodsDespoit <= 0) {
+                if (this.infoData.goods_deposit == 0) {
                     return 0.01;
-                }else{
+                } else {
                     return this.infoData.goods_deposit;
                 }
-            }else{
+            } else {
                 return goodsDespoit.toFixed(2);
             }
         },
@@ -468,10 +470,10 @@ export default {
             let num = this.infoData.cart_content_good_amount;
             let second = num - 1;
             if (this.$store.state.tplId == 1) {
-                return this.tplRules.freight_first_price-0 + ((this.tplRules.freight_continued_price-0) * second) ;
-                
+                return this.tplRules.freight_first_price - 0 + ((this.tplRules.freight_continued_price - 0) * second);
+
             } else if (this.$store.state.tplId == 2) {
-                return (this.tplRules.freight_door_cost-0) * num ;
+                return (this.tplRules.freight_door_cost - 0) * num;
             } else if (this.$store.state.tplId == 3) {
                 this.tpl = this.$store.state.sinceData;
                 return 0;
@@ -504,7 +506,7 @@ export default {
                 userId: this.getUserInfoUserId,
                 token: this.getUserInfoToken,
                 info: [{
-                    addressId:this.$store.state.addressData.id ,//地址id 物流或者上门选择该字段
+                    addressId: this.$store.state.addressData.id,//地址id 物流或者上门选择该字段
                     cartId: this.cartId, //购物车id
                     cart_tpl: this.$store.state.tplId,//物流方式
                     freight_continued_price: this.tplRules.freight_continued_price,//快递续件运费
@@ -531,7 +533,7 @@ export default {
                         payMethod: this.payMethod,
                         openId: openId,
                     }).then((resopndy) => {
-                        if(resopndy.body.code==250){
+                        if (resopndy.body.code == 250) {
                             self.confrim = "支付完成";
                             self.toast = true;
                             setTimeout(() => {
@@ -539,7 +541,7 @@ export default {
                                     path: '/index/main/order'
                                 });
                             }, 1500);
-                        }else if(resopndy.body.code==300){
+                        } else if (resopndy.body.code == 300) {
                             self.confrim = resopndy.body.msg;
                             self.toast = true;
                             setTimeout(() => {
@@ -547,8 +549,8 @@ export default {
                                     path: '/index/main/order'
                                 });
                             }, 1500);
-                        }else{
-                             self.payTypeData = resopndy.body;
+                        } else {
+                            self.payTypeData = resopndy.body;
                             if (key == 'menu1') {
                                 //微信支付
                                 window.location.href = this.payTypeData;
@@ -559,7 +561,7 @@ export default {
                                 document.forms.alipaysubmit.submit();
                             }
                         }
-                       
+
                     }, (err) => {
                         self.confrim = "支付异常";
                         self.toast = true;
@@ -711,7 +713,7 @@ export default {
                     userId: this.getUserInfoUserId,
                     token: this.getUserInfoToken,
                     info: [{
-                        addressId:this.$store.state.addressData.id,//地址id 物流或者上门选择该字段
+                        addressId: this.$store.state.addressData.id,//地址id 物流或者上门选择该字段
                         cartId: this.cartId, //购物车id
                         cart_tpl: this.$store.state.tplId,//物流方式
                         freight_continued_price: this.tplRules.freight_continued_price,//快递续件运费
@@ -739,35 +741,35 @@ export default {
                             openId: openId,
                         }).then((resopndy) => {
                             /* 微信支付 */
-                             if(resopndy.body.code==250){
-                            self.confrim = "支付完成";
-                            self.toast = true;
-                            setTimeout(() => {
-                                self.$router.push({
-                                    path: '/index/main/order'
-                                });
-                            }, 1500);
-                        }else if(resopndy.body.code==300){
-                            self.confrim = resopndy.body.msg;
-                            self.toast = true;
-                            setTimeout(() => {
-                                self.$router.push({
-                                    path: '/index/main/order'
-                                });
-                            }, 1500);
-                        }else{
-                            this.paydata = resopndy.body;
-                            if (typeof WeixinJSBridge == "undefined") {
-                                if (document.addEventListener) {
-                                    document.addEventListener('WeixinJSBridgeReady', self.onBridgeReady, false);
-                                } else if (document.attachEvent) {
-                                    document.attachEvent('WeixinJSBridgeReady', self.onBridgeReady);
-                                    document.attachEvent('onWeixinJSBridgeReady', self.onBridgeReady);
-                                }
+                            if (resopndy.body.code == 250) {
+                                self.confrim = "支付完成";
+                                self.toast = true;
+                                setTimeout(() => {
+                                    self.$router.push({
+                                        path: '/index/main/order'
+                                    });
+                                }, 1500);
+                            } else if (resopndy.body.code == 300) {
+                                self.confrim = resopndy.body.msg;
+                                self.toast = true;
+                                setTimeout(() => {
+                                    self.$router.push({
+                                        path: '/index/main/order'
+                                    });
+                                }, 1500);
                             } else {
-                                self.onBridgeReady();
+                                self.paydata = resopndy.body;
+                                if (typeof WeixinJSBridge == "undefined") {
+                                    if (document.addEventListener) {
+                                        document.addEventListener('WeixinJSBridgeReady', self.onBridgeReady, false);
+                                    } else if (document.attachEvent) {
+                                        document.attachEvent('WeixinJSBridgeReady', self.onBridgeReady);
+                                        document.attachEvent('onWeixinJSBridgeReady', self.onBridgeReady);
+                                    }
+                                } else {
+                                    self.onBridgeReady();
+                                }
                             }
-                        }
                         }, (err) => {
                             self.confrim = "支付异常";
                             self.toast = true;
@@ -805,37 +807,37 @@ export default {
                         let openId = localStorage.getItem("openId");
                         /* order_id */
                         API.alipay.orderId({
-                            userId:this.getUserInfoUserId,
-                            Info:{
-                                order_sn: res.body.data.order_big_sn,
-                                goods_name:this.infoData.goodsName,
-                                address:this.getAddress,    
-                                shop_name:this.infoData.store_name,
-                                rent_amount:(this.goodsTotolPrice-this.antDerate),/* 总支付价格 */
-                                deposit_amount:this.goodsalipay,//押金
-                                borrow_time:this.infoData.cart_start_time,
-                                expiry_time:this.infoData.cart_end_time,
-                                order_id:res.body.data.order_id,
-                            }
-                        }).then((res)=>{
-                                if(res.body.code == 200){
-                                    /* console.log(res.body.data.link_url); */
-                                    window.location.href=res.body.data.link_url;
-                                }
-                        },(err)=>{
-                        });
-                       /*  API.order.OrderWechat({
                             userId: this.getUserInfoUserId,
-                            token: this.getUserInfoToken,
-                            orderSn: res.body.data.order_big_sn,
-                            payMethod: this.payMethod,
-                            openId: openId,
-                        }).then((resopndy) => {
-                            const div = document.createElement('div');
-                            div.innerHTML = resopndy.body;
-                            document.body.appendChild(div);
-                            document.forms.alipaysubmit.submit();
-                        }) */
+                            Info: {
+                                order_sn: res.body.data.order_big_sn,
+                                goods_name: this.infoData.goodsName,
+                                address: this.getAddress,
+                                shop_name: this.infoData.store_name,
+                                rent_amount: (this.goodsTotolPrice - this.antDerate),/* 总支付价格 */
+                                deposit_amount: this.goodsalipay,//押金
+                                borrow_time: this.infoData.cart_start_time,
+                                expiry_time: this.infoData.cart_end_time,
+                                order_id: res.body.data.order_id,
+                            }
+                        }).then((res) => {
+                            if (res.body.code == 200) {
+                                /* console.log(res.body.data.link_url); */
+                                window.location.href = res.body.data.link_url;
+                            }
+                        }, (err) => {
+                        });
+                        /*  API.order.OrderWechat({
+                             userId: this.getUserInfoUserId,
+                             token: this.getUserInfoToken,
+                             orderSn: res.body.data.order_big_sn,
+                             payMethod: this.payMethod,
+                             openId: openId,
+                         }).then((resopndy) => {
+                             const div = document.createElement('div');
+                             div.innerHTML = resopndy.body;
+                             document.body.appendChild(div);
+                             document.forms.alipaysubmit.submit();
+                         }) */
                     }
                 });
             } else {
