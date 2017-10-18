@@ -661,23 +661,22 @@
                         </popup>
                     </div>
                     <!-- 商品特性说明 -->
-                    <!-- 市场价 -->
                     <div class="goodsinfo_content_price">
-                        市场价
-                        <span>{{currentTypedata.market_price | currency('￥') }}</span>
-                    </div>
-                    <!-- 押金 -->
-                    <div class="goodsinfo_content_despoite">
-                        押金
-                        <!-- <span>{{couterDespoite | currency('￥') }}</span> -->
-                        <span>{{couterDespoite | currency('￥') }}</span>
+                        总押金
+                        <span>{{couterDespoite| currency('￥') }}</span>
                     </div>
                     <!-- 芝麻信用授权 -->
-                    <div @click="authorization()" class="goodsinfo_content_alltime">
+                    <div @click="authorization()" class="goodsinfo_content_despoite">
                         芝麻信用押金减免额
                         <span class="authorization" v-show="!zmed">去授权</span>
                         <i style="color: #989898;" class="iconfont" v-show="!zmed">&#xe6d7;</i>
-                        <span v-show="zmed" style="color:red">{{antDerate}}元</span>
+                        <span v-show="zmed" style="color:red">-{{antDerate | currency('￥')}}</span>
+                    </div>
+                    <!-- 押金 -->
+                    <div class="goodsinfo_content_alltime">
+                        实际押金
+                        <!-- <span>{{couterDespoite | currency('￥') }}</span> -->
+                        <span>{{couterDespoite - antDerate | currency('￥') }}</span>
                     </div>
                     <!-- 配送地址 -->
                     <div class="goodsinfo_content_address">
@@ -1086,9 +1085,9 @@ export default {
                 return 0;
             }
             let despoite;
-            if (this.currentTypedata.act_price) {
+            if (this.currentGoodsData.act_price) {
                 despoite = this.currentTypedata.goods_deposit * this.currentGoodsData.goodsnum - this.currentGoodsData.act_price * this.currentGoodsData.rentTime * this.currentGoodsData.goodsnum;
-            } else {
+           } else {
                 despoite = this.currentTypedata.goods_deposit * this.currentGoodsData.goodsnum - this.currentGoodsData.rent_period_now_rent_price * this.currentGoodsData.rentTime * this.currentGoodsData.goodsnum;
             }
 
