@@ -129,7 +129,7 @@ body {
   left: 0;
   overflow: hidden;
   top: 0;
-  height: 100%;
+  height: 95%;
   position: absolute;
   display: -ms-flexbox;
   display: flex;
@@ -149,14 +149,14 @@ body {
 
 [data-dpr="2"] .toys_main_cardTtile {
   width: 20px;
-  line-height: 24px;
-  max-height: 120px;
+  line-height: 20px;
+  max-height: 100px;
 }
 
 [data-dpr="3"] .toys_main_cardTtile {
   width: 30px;
-  line-height: 36px;
-  max-height: 180px;
+  line-height: 30px;
+  max-height: 150px;
 }
 
 [data-dpr="2"] .toys_main_cardTtile {
