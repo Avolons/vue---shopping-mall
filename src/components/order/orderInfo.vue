@@ -669,17 +669,17 @@ export default {
                         self.confrim = "支付异常";
                         self.toast = true;
                         setTimeout(() => {
-                            window.location.href="/#/index/main/order"
+                            window.location.href="/#/index/main/order?name=wechat"
                         }, 500);
                     }
                     if (res.err_msg == "get_brand_wcpay_request:cancel") {
-                        window.location.href="/#/index/main/order"
+                        window.location.href="/#/index/main/order?name=wechat"
                     }
                     if (res.err_msg == "get_brand_wcpay_request:ok") {
                         self.confrim = "支付成功";
                         self.toast = true;
                         setTimeout(() => {
-                           window.location.href="/#/index/main/order"
+                           window.location.href="/#/index/main/order?name=wechat"
                         }, 500);
                     }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
                 }
