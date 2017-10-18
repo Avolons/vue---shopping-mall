@@ -215,6 +215,10 @@ export default {
         overscroll(document.querySelector('.morehot_main'));
     },
     mounted() {
+        if(localStorage.getItem('isAPP')==1 || localStorage.getItem('isAPP')==2){
+            document.title=this.title;
+            document.querySelector(".help_common_title").style.display="none";  
+        }
         overscroll(document.querySelector('.morehot_main'));
         /* 收据初始化 */
         this.page = 1;
