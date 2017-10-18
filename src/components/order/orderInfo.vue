@@ -936,6 +936,7 @@ export default {
         /* 新订单时触发更新 */
         if (localStorage.getItem('orderClick')) {
             localStorage.setItem('orderClick', '');
+            window.location.reload();
             this.Initialization();
             this.cardstate = {
                 id: "",
