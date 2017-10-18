@@ -27,6 +27,13 @@ body {
   padding: 0 0.2rem;
 }
 
+.toys_main_storeMore {
+  position: absolute;
+  right: 0.2rem;
+  bottom: 0.2rem;
+  color: #fff;
+}
+
 .toys_main_storeSingle > img {
   display: block;
   width: 100%;
@@ -45,6 +52,7 @@ body {
 }
 
 .toys_main_title {
+  position: relative;
   background-color: #fbd0a0;
   padding: 0 0.66667rem;
   height: 2.26667rem;
@@ -200,7 +208,20 @@ body {
       justify-content: center;
 }
 
-.toys_main_goodSingle > img {
+.toys_main_goodImgBox {
+  width: 100%;
+  -ms-flex-positive: 1;
+      flex-grow: 1;
+  background-color: #fff;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  -ms-flex-pack: center;
+      justify-content: center;
+}
+
+.toys_main_goodImgBox > img {
   width: 100%;
 }
 

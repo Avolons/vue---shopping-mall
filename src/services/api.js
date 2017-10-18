@@ -799,9 +799,20 @@ export const card={
     remindCard(data){
       return Vue.http.post(API_ROOT + 'coupon/couponRemind' + sourceStr,data);
     },
-    
-    
 }
+
+
+
+/*
+ * 活动相关接口
+ */
+ export const activity={
+  getMoreGood(data){
+    return Vue.http.get(API_ROOT + 'store/getActivityStore' + sourceStr,{params:data});
+  },
+ }
+
+
 
 /**
  * 支付宝借还相关接口

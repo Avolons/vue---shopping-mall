@@ -60,6 +60,9 @@ export default {
                     if(this.$route.query.type=="icon"){
                         this.getIcon();
                         return false;
+                    }else if(this.$route.query.type=="act"){
+                        this.getAct();
+                        return false;
                     }
                     this.getChannelGoods();
                 } else if (this.goodstype == 2) {
@@ -71,6 +74,29 @@ export default {
                 this.canBottom = true;
             }
         },
+                /* 获取活动数据 */
+        getAct(){
+            API.activity.getMoreGood({
+                act_id:this.$route.query.id,
+                store_id:this.$route.query.store_id
+            }).then((res) => {
+                if (res.body.code == 200) {
+                    setTimeout(() => {
+                         this.goodsList = this.goodsList.concat(res.body.data.store_list[0].goods_list);
+                        this.canBottom = true;
+                        this.loadshow = false;    
+                    }, 500);
+                    if (res.body.data.store_list[0].goods_list.length == 10) {
+                    this.haveData = true;
+                    this.page++;
+                } else {
+                    this.haveData = false;
+                }
+                }
+               
+            });      
+        },
+
         /* 获取更多热门数据 */
         getMoreHot() {
             API.main.goodsHot({

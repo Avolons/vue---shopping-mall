@@ -27,11 +27,13 @@
       </ul><img src="/statics/img/activity/toys/title.png" alt="" srcset="">
       <ul class="toys_main_storeList">
         <li v-for="item in storeList" class="toys_main_storeSingle">
-          <div @click="storeClick(item.store_id)" class="toys_main_title"> <img :src="oss(item.store_face_img)" alt="" class="toys_main_tip">
-            <h3 class="toys_main_storeTitle">{{item.store_name}} </h3>
+          <div class="toys_main_title"> <img :src="oss(item.store_face_img)" alt="" class="toys_main_tip">
+            <h3 @click="storeClick(item.store_id)" class="toys_main_storeTitle">{{item.store_name}} </h3>
+            <h4 @click.stop="goToMore(act_id,item.store_id,item.store_name)" class="toys_main_storeMore">查看全部活动商品 ></h4>
           </div><img src="/statics/img/activity/toys/toys.png" alt="">
           <ul class="toys_main_goodList">
-            <li v-for="ite in item.goods_list" @click="goodClick(ite.goods_id)" class="toys_main_goodSingle"><img :src="oss(ite.goods_main_pic)" alt="" srcset="">
+            <li v-for="ite in item.goods_list" @click="goodClick(ite.goods_id)" class="toys_main_goodSingle">
+              <div class="toys_main_goodImgBox"><img :src="oss(ite.goods_main_pic)" alt="" srcset=""></div>
               <h4 class="toys_main_goodTitle">{{ite.goods_name}}</h4>
               <div class="toys_main_goodText">
                 <div class="toys_main_goodPrice">￥{{ite.rent_price}}<span>/{{dataList[ite.rent_period_type]}}</span></div><span class="toys_main_goodAddress">{{ite.region}}</span>
@@ -42,9 +44,9 @@
             <li class="toys_main_noFun"></li>
           </ul>
           <div class="toys_main_goodInfoContent">
-            <template v-if="item.activity_source_type==1"><img :src="oss(item.store_activity_source)" alt="" class="toys_main_goodInfo"></template>
-            <template v-if="item.activity_source_type==2">
-              <video :src="item.store_activity_source" controls="controls" type="video/mp4" preload="auto" poster="/statics/img/activity/toys/poster.png" class="toys_main_goodVideo"></video>
+            <template v-if="item.activity_source_image"><img :src="oss(item.activity_source_image)" alt="" class="toys_main_goodInfo"></template>
+            <template v-if="item.activity_source_video">
+              <video :src="item.activity_source_video" controls="controls" type="video/mp4" preload="auto" poster="/statics/img/activity/toys/poster.png" class="toys_main_goodVideo"></video>
             </template>
           </div>
         </li>
@@ -55,6 +57,6 @@
 <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.4.4/vue.js"></script>
 <script src="https://cdn.bootcss.com/layer/3.0.3/mobile/layer.min.js"></script>
-<script src="/statics/app/toys_015fc1a.js"></script>
+<script src="/statics/app/toys_9a72aaa.js"></script>
 </body>
 </html>
