@@ -1025,7 +1025,7 @@ export default {
                     path: '/goodsInfo/' + id
                 });
             } else {
-                window.location.href = "/getCard.html?type=H5";
+                window.location.href = id+'?type=H5';
             }
         },
     },
