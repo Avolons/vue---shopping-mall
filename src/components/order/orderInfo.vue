@@ -132,7 +132,7 @@
             }
             .weui-cell__ft {
                 font-size: 15px;
-                color: #666;
+                color: #f80000;
             }
             .weui-textarea {
                 font-size: 15px;
@@ -288,7 +288,7 @@
                             <button class="orderInfon_main_cardclose" type="button" @click="closeCard">不使用优惠券</button>
                         </popup>
                     </div>
-                    <cell title="商品押金" :value="goodsDespoit - antDerate | currency('￥')"></cell>
+                    <cell title="实际押金" :value="goodsDespoit - antDerate | currency('￥')"></cell>
                     <!-- <cell title="商品押金" :value="goodsDespoit | currency('￥')"></cell> -->
                     <div style="font-size:12px;color:red;margin:-12px 0 0 15px">芝麻信用已为您减免押金{{antDerate}}元</div>
                     <x-textarea :max="20" v-model="option" placeholder="买家留言"></x-textarea>

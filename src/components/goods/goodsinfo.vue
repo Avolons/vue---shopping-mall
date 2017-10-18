@@ -670,7 +670,7 @@
                     <div class="goodsinfo_content_despoite">
                         押金
                         <!-- <span>{{couterDespoite | currency('￥') }}</span> -->
-                        <span>{{couterDespoite - antDerate | currency('￥') }}</span>
+                        <span>{{couterDespoite | currency('￥') }}</span>
                     </div>
                     <!-- 芝麻信用授权 -->
                     <div @click="authorization()" class="goodsinfo_content_alltime">
