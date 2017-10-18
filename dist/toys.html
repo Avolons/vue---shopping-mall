@@ -40,7 +40,7 @@
               <div class="toys_main_goodImgBox"><img :src="oss(ite.goods_main_pic)" alt=""></div>
               <h4 class="toys_main_goodTitle">{{ite.goods_name}}</h4>
               <div class="toys_main_goodText">
-                <div class="toys_main_goodPrice">￥{{ite.rent_price}}<span>/{{dataList[ite.rent_period_type]}}</span></div><span class="toys_main_goodAddress">{{ite.region}}</span>
+                <div class="toys_main_goodPrice">￥{{ite.rent_price}}<span>/{{dataList[ite.rent_period_type-1]}}</span></div><span class="toys_main_goodAddress">{{ite.region}}</span>
               </div>
             </li>
             <li class="toys_main_noFun"></li>
