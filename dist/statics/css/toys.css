@@ -32,6 +32,15 @@ body {
   right: 0.2rem;
   bottom: 0.2rem;
   color: #fff;
+  font-size: 14px;
+}
+
+[data-dpr="2"] .toys_main_storeMore {
+  font-size: 28px;
+}
+
+[data-dpr="3"] .toys_main_storeMore {
+  font-size: 42px;
 }
 
 .toys_main_storeSingle > img {

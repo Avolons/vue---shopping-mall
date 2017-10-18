@@ -29,7 +29,7 @@
         <li v-for="item in storeList" class="toys_main_storeSingle">
           <div class="toys_main_title"> <img :src="oss(item.store_face_img)" alt="" class="toys_main_tip">
             <h3 @click="storeClick(item.store_id)" class="toys_main_storeTitle">{{item.store_name}} </h3>
-            <h4 @click.stop="goToMore(act_id,item.store_id,item.store_name)" class="toys_main_storeMore">查看全部活动商品 ></h4>
+            <h4 @click.stop="goToMore(act_id,item.store_id,item.store_name)" class="toys_main_storeMore">查看全部 ></h4>
           </div><img src="/statics/img/activity/toys/toys.png" alt="">
           <ul class="toys_main_goodList">
             <li v-for="ite in item.goods_list" @click="goodClick(ite.goods_id)" class="toys_main_goodSingle">
