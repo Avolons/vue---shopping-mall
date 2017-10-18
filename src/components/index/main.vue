@@ -1091,7 +1091,7 @@ export default {
         API.main.goodsIndexRecom({
             page_number: 30,
         }).then((Response) => {
-            this.recGoodsList = Response.body.data.shopList;
+            this.recGoodsList = Response.body.data.shopList.data;
         });
         /* 下拉加载更多操作 */
         let self = this;
