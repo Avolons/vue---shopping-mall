@@ -833,6 +833,7 @@ export default {
         }
     },
     activated() {
+        window.location.href="/#/index/main";
         overscroll(document.querySelector('.main_typelist_box'));
         overscroll(document.querySelector('.main_listbox'));
         overscroll(document.querySelector('.list_compent_list_box'));

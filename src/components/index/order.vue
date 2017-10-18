@@ -410,6 +410,7 @@ export default {
         ]),
     },
     mounted() {
+        window.location.href="/?#/index/main/order";
         overscroll(document.querySelector('.order_list'));
         /* 当前滚动距离为0 */
         localStorage.setItem("orderScroll", 0);

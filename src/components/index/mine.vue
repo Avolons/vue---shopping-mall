@@ -155,6 +155,9 @@ import { API, getQuery } from '../../services';
       this.$store.dispatch('IsCertify');
       this.userZMReliefInfo();
     },
+    activated(){
+        window.location.href="/#/index/main/mine";
+    },
     methods :{
       /*获取芝麻信用减免额度*/
       
