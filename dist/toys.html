@@ -37,7 +37,7 @@
           </div><img src="/statics/img/activity/toys/toys.png" alt="">
           <ul class="toys_main_goodList">
             <li v-for="ite in item.goods_list" @click="goodClick(ite.goods_id)" class="toys_main_goodSingle">
-              <div class="toys_main_goodImgBox"><img :src="oss(ite.goods_main_pic)" alt="" srcset=""></div>
+              <div class="toys_main_goodImgBox"><img :src="oss(ite.goods_main_pic)" alt=""></div>
               <h4 class="toys_main_goodTitle">{{ite.goods_name}}</h4>
               <div class="toys_main_goodText">
                 <div class="toys_main_goodPrice">￥{{ite.rent_price}}<span>/{{dataList[ite.rent_period_type]}}</span></div><span class="toys_main_goodAddress">{{ite.region}}</span>

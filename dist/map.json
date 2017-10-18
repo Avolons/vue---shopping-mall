@@ -20,6 +20,10 @@
             "uri": "/lib/normalize-css/normalize.css",
             "type": "css"
         },
+        "modules/app/toys.js": {
+            "uri": "/statics/app/toys_a8177bd.js",
+            "type": "js"
+        },
         "modules/css/reset.scss": {
             "uri": "/statics/css/reset.css",
             "type": "css"
@@ -59,10 +63,6 @@
         "modules/css/toys.scss": {
             "uri": "/statics/css/toys.css",
             "type": "css"
-        },
-        "modules/app/toys.js": {
-            "uri": "/statics/app/toys_a8177bd.js",
-            "type": "js"
         }
     },
     "pkg": {}
