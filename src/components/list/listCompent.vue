@@ -129,10 +129,10 @@ export default {
         },
         /* 进入商品详情 */
         goInfo(id) {
-            if(this.typeCheck()==1){
+            if(localStorage.getItem('isAPP')==1){
                 Android.goodClick(id);  
             }
-            else if(this.typeCheck()==2){
+            else if(localStorage.getItem('isAPP')==2){
                 window.open("goodClick?goods_id="+id);
             }else{
             if(document.querySelector(".list_compent_list_box")){
