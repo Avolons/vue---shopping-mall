@@ -218,7 +218,6 @@ export default {
         if(this.$route.query.shebei){
              window.localStorage.setItem('isAPP',this.$route.query.shebei);
         }
-
         if(localStorage.getItem('isAPP')==1 || localStorage.getItem('isAPP')==2){
             document.title=this.title;
             document.querySelector(".help_common_title").style.display="none";  
