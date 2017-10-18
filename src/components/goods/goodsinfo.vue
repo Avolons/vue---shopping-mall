@@ -1597,7 +1597,7 @@ export default {
                         if (res.body.code == 200) {
                             localStorage.setItem('orderClick', '11');
                             this.$router.push({
-                                path: '/orderInfo/' + cartId + '/?address=' + res.body.data.enterprise_license_location + '&antDerate=' + this.antDerate
+                                path: '/orderInfo/' + cartId + '?address=' + res.body.data.enterprise_license_location + '&antDerate=' + this.antDerate
                             });
                         }
                     });
