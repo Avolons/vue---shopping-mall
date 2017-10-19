@@ -358,7 +358,10 @@
                     <!-- 单价租金 -->
                     <span class="order_single_colorsize">{{infoData.collour}}{{infoData.standard}} </span>
 
-                    <span class="orderAction_main_price">
+                    <span v-if="infoData.act_rent" class="orderAction_main_price">
+                        ￥{{infoData.act_rent}}/{{timeText}}
+                    </span>
+                    <span v-else class="orderAction_main_price">
                         ￥{{infoData.rentPrice}}/{{timeText}}
                     </span>
                     <!-- 数量 -->
@@ -371,7 +374,8 @@
             </div>
             <!-- 收货地址和物流方式 -->
             <group class="orderAction_main_priceColl">
-                <cell title="合计租金" :value="(infoData.rentPrice*infoData.ordertimeNumber*infoData.shopNum)  | currency('￥')"></cell>
+                <cell v-if="infoData.act_rent" title="合计租金" :value="(infoData.act_rent*infoData.ordertimeNumber*infoData.shopNum)  | currency('￥')"></cell>
+                <cell v-else title="合计租金" :value="(infoData.rentPrice*infoData.ordertimeNumber*infoData.shopNum)  | currency('￥')"></cell>
                 <cell title="店铺优惠券" class="orderAction_main_card" :value="-infoData.storeCouponPrice | currency('￥') || '￥-0.00'"></cell>
                 <cell title="平台优惠券" class="orderAction_main_card" :value="-infoData.couponPrice | currency('￥') || '￥-0.00'"></cell>
                 <cell title="合计押金" :value="infoData.deposit | currency('￥')"></cell>
