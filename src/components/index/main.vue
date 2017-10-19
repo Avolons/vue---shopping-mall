@@ -1029,6 +1029,9 @@ export default {
                     path: '/goodsInfo/' + id
                 });
             } else {
+                if(id.indexOf('wap')>-1){
+                    id=id.replace("wap","weixin");
+                }
                 window.location.href = id+'?type=H5';
             }
         },
