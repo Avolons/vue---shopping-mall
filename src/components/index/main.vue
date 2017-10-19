@@ -833,7 +833,10 @@ export default {
         }
     },
     activated() {
-        window.location.href="/#/index/main";
+        if(sessionStorage.getItem("mainReload")){
+            window.location.href="/#/index/main";
+            sessionStorage.setItem("mainReload",'');
+        }
         overscroll(document.querySelector('.main_typelist_box'));
         overscroll(document.querySelector('.main_listbox'));
         overscroll(document.querySelector('.list_compent_list_box'));

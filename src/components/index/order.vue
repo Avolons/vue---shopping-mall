@@ -466,6 +466,7 @@ export default {
         };
     },
     activated() {
+        sessionStorage.setItem("mainReload",'ss');
         /* 获取当前url参数 */
         let biz_content = this.$route.query.biz_content;
         /* 支付宝借还成功后的回调 */
