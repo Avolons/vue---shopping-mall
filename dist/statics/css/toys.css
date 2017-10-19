@@ -263,7 +263,8 @@ body {
       justify-content: space-between;
   box-sizing: border-box;
   padding: 0 0.2rem;
-  line-height: 45px;
+  line-height: 0.33333rem;
+  padding-top: 0.06667rem;
 }
 
 .toys_main_goodPrice {
@@ -293,19 +294,20 @@ body {
 }
 
 .toys_main_goodPrice > i {
+  display: block;
   margin-left: 0.04rem;
-  font-size: 7px;
+  font-size: 8px;
   color: #666;
   text-decoration: line-through;
   font-style: normal;
 }
 
 [data-dpr="2"] .toys_main_goodPrice > i {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 [data-dpr="3"] .toys_main_goodPrice > i {
-  font-size: 21px;
+  font-size: 24px;
 }
 
 .toys_main_goodAddress {

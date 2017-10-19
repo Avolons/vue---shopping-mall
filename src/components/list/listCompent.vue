@@ -79,7 +79,7 @@
                     </h2>
                     <h2 v-else class="main_recommend_price">￥{{item.act_price}}/{{timeMap[item.rent_period_type]}}
                         <span  class="main_recommend_oldprice">
-                            ￥{{item.rentPrice}}/{{timeMap[item.rent_period_type]}}
+                            ￥{{item.rentPrice || item.rent_price}}/{{timeMap[item.rent_period_type]}}
                         </span>
                     </h2>
                      <h2 class="main_recommend_address">{{item.region}}</h2>

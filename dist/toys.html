@@ -40,7 +40,7 @@
               <div class="toys_main_goodImgBox"><img :src="oss(ite.goods_main_pic)" alt=""></div>
               <h4 class="toys_main_goodTitle">{{ite.goods_name}}</h4>
               <div class="toys_main_goodText">
-                <div class="toys_main_goodPrice">￥{{ite.act_price}}<span>/{{dataList[ite.rent_period_type-1]}}</span><i>￥{{ite.rent_price}}</i></div><span class="toys_main_goodAddress">{{ite.region}}</span>
+                <div class="toys_main_goodPrice">￥{{ite.act_price}}<span>/{{dataList[ite.rent_period_type-1]}}</span><i>￥{{ite.rent_price}}/{{dataList[ite.rent_period_type-1]}}</i></div><span class="toys_main_goodAddress">{{ite.region}}</span>
               </div>
             </li>
             <li class="toys_main_noFun"></li>
@@ -58,7 +58,6 @@
     </div>  
 <script charset="utf-8" src="/lib/lib-flexible/flexible.js"></script>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.4.4/vue.js"></script>
 <script src="https://cdn.bootcss.com/layer/3.0.3/mobile/layer.min.js"></script>
 <script src="/statics/app/toys_4bd9455.js"></script>
