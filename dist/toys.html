@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="/statics/css/toys.css" />
 </head>
   <body>
-    <div class="toys_main"><img src="/statics/img/activity/toys/top.png" alt="" srcset="">
+    <div v-cloak class="toys_main"><img src="/statics/img/activity/toys/top.png" alt="" srcset="">
       <ul class="toys_main_cardList">
         <li v-for="item in toys.platom_coupons" @click="getCard(item.coupon_no)" class="toys_main_cardSingle"><img src="/statics/img/activity/toys/zujie.png" alt="" srcset=""><span class="toys_main_cardNumber">{{item.amount.split('.')[0]}}</span></li>
         <template v-for="item in storeList">
@@ -53,13 +53,15 @@
               <video :src="item.activity_source_video" controls="controls" type="video/mp4" preload="auto" poster="/statics/img/activity/toys/super.png" class="toys_main_goodVideo"></video>
             </template>
           </div>
+          <div v-show="confrimShow" class="toys_main_confrim">{{confrimText}}</div>
         </li>
       </ul>
     </div>  
 <script charset="utf-8" src="/lib/lib-flexible/flexible.js"></script>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.4.4/vue.js"></script>
 <script src="https://cdn.bootcss.com/layer/3.0.3/mobile/layer.min.js"></script>
-<script src="/statics/app/toys_4bd9455.js"></script>
+<script src="/statics/app/toys_d6db541.js"></script>
 </body>
 </html>

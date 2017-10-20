@@ -167,6 +167,7 @@ export default {
       },
       /* 选项的切换，切换默认排序和销量优先 */
       typeCheck(index){
+          /* 当前按钮已经处于被选中该状态 */
           if(this.typeList[index].select){
               return false;
           }else{
@@ -176,6 +177,7 @@ export default {
               this.page=1;
               this.canBottom=true; 
           }
+          /* 当前页面拥有categoryId,说明属于分类详情页面 */
           if(this.categoryId){
               API.main.searchGoods({
               goods_category_id:this.categoryId,
@@ -232,6 +234,7 @@ export default {
       }else{
           /* 来自搜索页面 */
         this.goodsVal=this.$route.query.goods_name;
+        this.categoryId="";
         API.main.searchGoods({
               goods_name:this.goodsVal,
               goods_sort:this.searchType,
@@ -252,12 +255,23 @@ export default {
       getMoreData(){
             if(this.haveData){
                 this.loadshow=true;
-                API.main.searchGoods({
-                    goods_name:this.goodsVal,
-                    goods_sort:this.searchType,
-                    page_number:10,
-                    page:this.page,
-                }).then((Response)=>{
+                let ajaxData={};
+                if(this.categoryId){
+                    ajaxData={
+                        goods_category_id:this.$route.query.categoryId,
+                        goods_sort:this.searchType,
+                        page_number:10,
+                        page:this.page,
+                    }
+                }else{
+                    ajaxData={
+                        goods_name:this.goodsVal,
+                        goods_sort:this.searchType,
+                        page_number:10,
+                        page:this.page,
+                    }
+                }
+                API.main.searchGoods(ajaxData).then((Response)=>{
                     setTimeout(()=>{
                     this.goodsList=this.goodsList.concat(Response.body.data.shopList.data);   
                     this.canBottom=true;
@@ -325,7 +339,6 @@ export default {
         };
   }
   ,activated(){
-       this.categoryId="";
          overscroll(document.querySelector('.goodsList_List'));
         if(window.localStorage.getItem("listReload")){
             this.page=1;

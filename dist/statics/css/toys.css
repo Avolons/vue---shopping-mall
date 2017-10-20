@@ -17,6 +17,30 @@ body {
   background-color: #fec178;
 }
 
+.toys_main_confrim {
+  display: inline-block;
+  text-align: center;
+  position: fixed;
+  padding: 0.26667rem;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-size: 12px;
+  border-radius: 0.04rem;
+}
+
+[data-dpr="2"] .toys_main_confrim {
+  font-size: 24px;
+}
+
+[data-dpr="3"] .toys_main_confrim {
+  font-size: 36px;
+}
+
 .toys_main > img {
   width: 100%;
   display: block;
@@ -141,7 +165,7 @@ body {
 
 .toys_main_cardTtile {
   /* width: 18.75%; */
-  font-size: 10px;
+  font-size: 8px;
   text-align: center;
   display: block;
   color: #fff;
@@ -149,22 +173,22 @@ body {
 
 [data-dpr="2"] .toys_main_cardTtile {
   width: 20px;
-  line-height: 20px;
-  max-height: 100px;
+  line-height: 16px;
+  max-height: 80px;
 }
 
 [data-dpr="3"] .toys_main_cardTtile {
   width: 30px;
-  line-height: 30px;
-  max-height: 150px;
+  line-height: 24px;
+  max-height: 120px;
 }
 
 [data-dpr="2"] .toys_main_cardTtile {
-  font-size: 20px;
+  font-size: 16px;
 }
 
 [data-dpr="3"] .toys_main_cardTtile {
-  font-size: 30px;
+  font-size: 24px;
 }
 
 .toys_main_cardNumber {
