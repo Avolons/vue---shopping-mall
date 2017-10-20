@@ -200,6 +200,7 @@ export default {
             }
             this.goodstype = 2;
         } else {
+            /* 频道进入 */
             if (this.icon_id == this.$route.query.id && this.goodstype == 1) {
                 return false;
             }

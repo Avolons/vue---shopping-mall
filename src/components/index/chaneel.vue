@@ -126,7 +126,6 @@ export default {
     mounted() {
         overscroll(document.querySelector('.chaneel_main'));
         /* 收据初始化 */
-        this.getData();
     }
 }
 </script>
