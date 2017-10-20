@@ -1,7 +1,7 @@
 
 import Vue from 'vue';
 
-var sourceStr = '/?source=3';
+var sourceStr = '/?source=4';
 
 /* var API_ROOT = "https://api.zujiekeji.cn/index/"; */
 var API_ROOT = "https://isapi.zujiekeji.cn/index/";
