@@ -1043,7 +1043,6 @@ export default {
         overscroll(document.querySelector('.list_compent_list_box'));
         /* 获取轮播图信息 */
         API.main.getBanner({
-            source: 3
         }).then((Response) => {
             this.bannerlist = Response.body.data.bannerList;
         });
