@@ -1030,7 +1030,7 @@ export default {
                 });
             } else {
                 if(id.indexOf('wap')>-1){
-                    id=id.replace("wap","weixin");
+                    id=id.replace("wap","m");
                 }
                 window.location.href = id+'?type=H5';
             }
