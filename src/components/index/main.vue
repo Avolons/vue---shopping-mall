@@ -293,7 +293,7 @@ body {
         }
     }
     &_listbox {
-        height: calc(100% - 141px);
+        height: calc(100% - 191px);
         box-sizing: border-box;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
@@ -305,9 +305,9 @@ body {
         }
         .list_compent_list_box {
             -webkit-overflow-scrolling: touch;
-            height: calc(100% - 142px);
+            height: calc(100% - 192px);
             position: fixed;
-            top: 91px;
+            top: 141px;
             width: 100%;
             overflow-y: auto;
             padding-bottom: 40px;
@@ -555,6 +555,28 @@ body {
         }
     }
 }
+.main_zjDownload{
+    height: 50px;
+    background-color: #eeeeee;
+    position: relative;
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    >img{
+        position: absolute;
+        display: block;
+        left: 50%;
+        height: 100%;
+        transform: translateX(-50%);
+    }
+    >a{
+        position: absolute;
+        display: block;
+        height: 100%;
+        width: 100%;
+        z-index:999;
+        background-color: transparent;
+    }
+}
 </style>
 <template>
     <div class="main_container">
@@ -577,7 +599,12 @@ body {
                 </li>
             </ul> 
             </div>
+             <div class="main_zjDownload">
+                 <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.zujie"></a>
+                <img src="../../assets/img/common/download.png" alt="">
+            </div>
         <div class="main_listbox">
+           
             <!-- 轮播图组件 -->
             <swiper v-show="currentType==0" loop class="main_swiper" dots-position="center" height="auto" :aspect-ratio="300/750" @on-index-change="onSwiperItemIndexChange" v-model="swiperItemIndex">
                 <swiper-item class="swiper-demo-img" v-for="(item, index) in bannerlist" :key="index">

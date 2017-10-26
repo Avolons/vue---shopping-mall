@@ -1,3 +1,9 @@
+<style lang="scss">
+
+</style>
+
+
+
 <template>
     <transition :name="transitionName" class="router">
         <keep-alive>
