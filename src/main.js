@@ -70,6 +70,13 @@ if(isiOS){
 
 
 
+
+
+
+
+
+
+
 /* 取出本地数据，赋值到store的state中 */
 const userInfo=localStorage.getItem("userInfo");
 if(userInfo){

@@ -600,7 +600,8 @@ body {
             </ul> 
             </div>
              <div class="main_zjDownload">
-                 <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.zujie"></a>
+                 <a  v-if="iswexin" href="http://a.app.qq.com/o/simple.jsp?pkgname=com.zujie"></a>
+                 <a  v-else href="https://www.zujiekeji.cn/download/app-guanwang-release-1.1.9.apk"></a>
                 <img src="../../assets/img/common/download.png" alt="">
             </div>
         <div class="main_listbox">
@@ -873,6 +874,14 @@ export default {
         }, 50);
     },
     computed: {
+         iswexin(){
+      var ua = window.navigator.userAgent.toLowerCase();
+          if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+            return true;
+          } else {
+            return false;
+          }
+      },
         ...mapGetters([
             'getUserInfoUserId',
             'getUserInfoToken',
