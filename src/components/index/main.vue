@@ -75,7 +75,7 @@ body {
            padding: 12.5px 30px 0 30px;
            display: flex;
            justify-content: space-between;
-       } 
+       }
        &_single{
            display: flex;
            flex-direction: column;
@@ -100,12 +100,12 @@ body {
             margin-top: 10px;
         }
         &_goodsList{
-            white-space: nowrap; 
+            white-space: nowrap;
             padding: 10px 15px;
             overflow-x: auto;
             width: 100%;
             box-sizing: border-box;
-            
+
             background-color: #fff;
         }
         &_goodsSingle{
@@ -165,7 +165,7 @@ body {
            }
        }
        &_list{
-            position: absolute;  
+            position: absolute;
             height: 42.37%;
             bottom: 16%;
             left: 13.63%;
@@ -203,7 +203,7 @@ body {
                     color: #ff6000;
                     font-size: 15px;
                     position: relative;
-                    z-index: 1;  
+                    z-index: 1;
                     width: 71.25%;
                     display: flex;
                     align-items: center;
@@ -211,7 +211,7 @@ body {
                 }
                 >span{
                     position: absolute;
-                    z-index: 1; 
+                    z-index: 1;
                     font-size: 10px;
                     right: 0px;
                     bottom: 3px;
@@ -390,7 +390,7 @@ body {
             display: flex;
             margin-bottom: 5px;
             background-color: #fff;
-            
+
         }
         &_img {
             height: 150px;
@@ -595,17 +595,18 @@ body {
                         <li class="main_typelist_item" v-for="(item,index) in typeList" :class="{'main_typelist_item--selected':item.click}" @click="typeselect(index,item.goods_category_id)">
                             <span>{{item.hot_label_name}}</span>
                         </li>
-                    </ul> 
+                    </ul>
                 </li>
-            </ul> 
+            </ul>
             </div>
              <div class="main_zjDownload">
                  <a  v-if="iswexin" href="http://a.app.qq.com/o/simple.jsp?pkgname=com.zujie"></a>
+                  <a v-else-if="isIOS" href="http://a.app.qq.com/o/simple.jsp?pkgname=com.zujie"></a>
                  <a  v-else href="https://www.zujiekeji.cn/download/app-guanwang-release-1.1.9.apk"></a>
                 <img src="../../assets/img/common/download.png" alt="">
             </div>
         <div class="main_listbox">
-           
+
             <!-- 轮播图组件 -->
             <swiper v-show="currentType==0" loop class="main_swiper" dots-position="center" height="auto" :aspect-ratio="300/750" @on-index-change="onSwiperItemIndexChange" v-model="swiperItemIndex">
                 <swiper-item class="swiper-demo-img" v-for="(item, index) in bannerlist" :key="index">
@@ -620,14 +621,14 @@ body {
                     <h3>{{item.name}}</h3>
                 </li>
             </ul>
-           
+
             <!-- 频道列表区域 -->
             <ul v-show="currentType==0" class="main_channel_list">
                 <li v-for="item in channelList" class="main_channel_single" >
                     <img class="main_channel_img" @click="channelClick(item.title,item.channel_id)"   :src="imgFormat(item.bg_image)" alt="channel">
                     <ul class="main_channel_goodsList">
                         <li @click="goInfo(ite.goods_id)" v-for="ite in item.goods" class="main_channel_goodsSingle">
-                            
+
                             <img class="main_channel_goodsImg" :src="imgFormat(ite.goods_main_pic)" alt="">
                             <h3 class="main_channel_goodsTitle">{{ite.goods_name}}</h3>
                             <p  v-if="!ite.act_price" class="main_channel_goodsText"> ￥{{ite.rent_price}}/{{timeMap[ite.rent_period_type]}}
@@ -638,7 +639,7 @@ body {
                         </li>
                     </ul>
                 </li>
-            </ul> 
+            </ul>
             <!-- 热门商品,只能放3个 -->
             <div class="main_hot" v-show="currentType==0" @click="funClick('热门单品',1)">
                 热门单品 <i class="iconfont">&#xe6d7;</i>
@@ -720,7 +721,7 @@ body {
             </ul>
             <!-- 推荐商品 -->
             <div class="main_recommend" v-show="currentType==0">
-                推荐商品 
+                推荐商品
             </div>
             <!-- 推荐商品列表 -->
             <ul class="main_recommend_list" v-show="currentType==0">
@@ -820,7 +821,7 @@ export default {
             bottomCount: 20,
             /* 轮播图数据集合 */
             bannerlist: [
-                
+
             ],
             cardobj:{
                 title:"新人大礼包",
@@ -888,6 +889,15 @@ export default {
             'getIsCertify',
             'getUserInfoUserId'
         ]),
+        isIOS(){
+          var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+          /*  */
+          if(isiOS){
+            return true;
+          }else{
+            return false;
+          }
+        }
     },
     methods: {
         /* 频道点击函数 */
@@ -896,7 +906,7 @@ export default {
             localStorage.setItem("scrolltop", scrollTop);
             this.$router.push({
                 path:'/chaneel?name='+name+"&id="+id,
-            })       
+            })
         },
         /* 功能table点击函数 */
         funClick(name,type,id=1){
@@ -938,7 +948,7 @@ export default {
         gouese(){
             this.cardShow=false;
             this.$router.push({
-                path: '/card' 
+                path: '/card'
             });
         },
         /* 红包点击 */

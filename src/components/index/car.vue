@@ -30,7 +30,7 @@
        border-radius: 5px;
        margin-top: 25px;
        background-color: #2196f3;
-     }  
+     }
   }
 </style>
 
@@ -45,6 +45,7 @@
          下载租介APP才能使用
         </p>
        <a v-if="iswexin" class="shop_nofunction_download" href="http://a.app.qq.com/o/simple.jsp?pkgname=com.zujie">点击下载APP</a>
+        <a v-else-if="isIOS" class="shop_nofunction_download" href="http://a.app.qq.com/o/simple.jsp?pkgname=com.zujie">点击下载APP</a>
        <a v-else class="shop_nofunction_download" href="https://www.zujiekeji.cn/download/app-guanwang-release-1.1.9.apk">点击下载APP</a>
       </div>
     </div>
@@ -65,6 +66,15 @@
           } else {
             return false;
           }
+      },
+      isIOS(){
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        /*  */
+        if(isiOS){
+          return true;
+        }else{
+          return false;
+        }
       }
   },
   }
