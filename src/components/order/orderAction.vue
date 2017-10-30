@@ -35,6 +35,14 @@
 
 .orderAction {
     &_main {
+        &_relet{
+            font-size: 13px;
+            color: #333;
+            >span{
+                color: #f80000;
+                font-size: 13px; 
+            }
+        }
         &_card {
             .weui-cell__ft {
                 color: #f80000 !important;
@@ -160,12 +168,17 @@
             }
             .weui-cell__ft {
                 font-size: 15px;
-                color: #666;
+                color: #f80000;
             }
             .weui-textarea {
                 font-size: 15px;
                 color: #272727;
             }
+        }
+         &_payType{
+           .weui-cell__ft {
+                color: #333;
+            } 
         }
         &_tplType {
             display: flex;
@@ -355,10 +368,10 @@
                     <span class="orderAction_main_goodsTitle twonowarp">
                         {{infoData.shopeName}}
                     </span>
-                    <!-- 单价租金 -->
+                    <!-- 商品规格 -->
                     <span class="order_single_colorsize">{{infoData.collour}}{{infoData.standard}} </span>
-
-                    <span v-if="infoData.act_rent" class="orderAction_main_price">
+                    <!-- 单价租金 -->
+                    <span v-if="infoData.act_rent!=0" class="orderAction_main_price">
                         ￥{{infoData.act_rent}}/{{timeText}}
                     </span>
                     <span v-else class="orderAction_main_price">
@@ -366,6 +379,9 @@
                     </span>
                     <!-- 数量 -->
                     <span class="orderAction_main_num">数量×{{infoData.shopNum}}</span>
+                    <p class="orderAction_main_relet">
+                        续期价：<span>￥{{infoData.relet_price}}/{{timeText}}</span>
+                    </p>
                 </div>
             </div>
             <!-- 租赁时间 -->
@@ -381,7 +397,7 @@
                 <cell title="合计押金" :value="infoData.deposit | currency('￥')"></cell>
                 <cell title="运费" :value="infoData.freight | currency('￥')"></cell>
                 <cell class="orderAction_main_truePrice" title="实付款" :value="infoData.totalPrice | currency('￥')"></cell>
-                <cell title="支付方式" :value="pay_type"></cell>
+                <cell class="orderAction_main_payType" title="支付方式" :value="pay_type"></cell>
                 <x-textarea readonly v-model="infoData.message" placeholder="买家留言"></x-textarea>
             </group>
             <ul class="order_number_collection">

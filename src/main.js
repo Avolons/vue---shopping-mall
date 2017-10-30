@@ -16,7 +16,6 @@ Router.prototype.goBack = function () {
 	}
 };
 
-
 // 登录跳转判断
 router.beforeEach((to, from, next) => {
 	// 判断该路由是否需要登录权限
@@ -37,6 +36,18 @@ router.beforeEach((to, from, next) => {
 	}
 });
 
+
+/* 阻止ios浏览器下的橡皮筋效果 */
+const u = navigator.userAgent;
+const isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+/*  */
+if(isiOS){
+	document.body.addEventListener('touchmove', function(evt) {
+		if (!evt._isScroller) {
+			evt.preventDefault();
+		}
+	});
+}
 window.overscroll = function(el) {
 	el.addEventListener('touchstart', function() {
 		var top = el.scrollTop
@@ -55,29 +66,9 @@ window.overscroll = function(el) {
 	});
 }
 
-var u = navigator.userAgent;
-var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-/*  */
-if(isiOS){
-	document.body.addEventListener('touchmove', function(evt) {
-		if (!evt._isScroller) {
-			evt.preventDefault();
-		}
-	});
-}
-
-
-
-
-
-
-
-
-
-
-
 
 /* 取出本地数据，赋值到store的state中 */
+/* 主要用于赋值登录状态和认证状态 */
 const userInfo=localStorage.getItem("userInfo");
 if(userInfo){
 	store.state.userInfo= JSON.parse(userInfo);
@@ -86,6 +77,7 @@ const isCertify=localStorage.getItem("isCertify");
 if(isCertify){
 	store.state.isCertify= isCertify;
 }
+
 
 /* 全局注册md5函数 */
 import { md5 } from 'vux';
@@ -108,11 +100,31 @@ if(!!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) || navigator.use
 }
 Vue.prototype.imgFormat= imgFormat;
 
-import  { LoadingPlugin } from 'vux'
-Vue.use(LoadingPlugin)
+/* 判断当前是否为微信客户端 */
+Vue.prototype.isWechat=function(){
+	var ua = window.navigator.userAgent.toLowerCase();
+	if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+	  return true;
+	} else {
+	  return false;
+	}
+};
+/* 判断当前是否为ios客户端 */
+Vue.prototype.isiOS=function(){
+	var u = navigator.userAgent;
+	if (!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+		return true;
+	  } else {
+		return false;
+	  }
+};
+
+/* 调用vuex组件相关功能 */
+import  { LoadingPlugin } from 'vux';
+Vue.use(LoadingPlugin);
 import { ConfirmPlugin } from 'vux';
 Vue.use(ConfirmPlugin);
-import { dateFormat } from 'vux'
+import { dateFormat } from 'vux';
 Vue.prototype.dateFormat=dateFormat;
 
 /* 过滤器注册,直接抄的的1.0中的货币过滤器 */
@@ -133,17 +145,60 @@ Vue.filter('currency', function(value, _currency, decimals) {
 Vue.filter('dataform', function(value) {  
 	return dateFormat(value*1000, 'YYYY-MM-DD');
 });
-
 Vue.filter('orderdata', function(value) {  
 	if(value){
 		return dateFormat(value*1000, 'YYYY-MM-DD HH:mm:ss');
 	}
 });
 
+
 //引入css重置文件,基本的样式文件
 require('./assets/css/reset.css')
 
 
+/* 下拉加载更多全局函数 */
+window.resizeScroll=function(dom,self,callBack,offset=0){
+	
+	function getScrollTop() {
+		var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
+		if (dom) {
+			bodyScrollTop = dom.scrollTop;
+		}
+		if (document.documentElement) {
+			documentScrollTop = document.documentElement.scrollTop;
+		}
+		scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
+		return scrollTop;
+	}
+	function getScrollHeight() {
+		var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
+		if (dom) {
+			bodyScrollHeight = dom.scrollHeight;
+		}
+		if (document.documentElement) {
+			documentScrollHeight = document.documentElement.scrollHeight;
+		}
+		scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
+		return scrollHeight;
+	}
+	function getWindowHeight() {
+		var windowHeight = 0;
+		if (document.compatMode == "CSS1Compat") {
+			windowHeight = document.documentElement.clientHeight;
+		} else {
+			windowHeight = document.body.clientHeight;
+		}
+		return windowHeight - offset;
+	}
+	dom.onscroll = function() {
+		if ((getScrollTop() + getWindowHeight()) >= (getScrollHeight() - 10)) {
+			if (self.canBottom == true) {
+				self.canBottom = false;
+				callBack();
+			}
+		}
+	};
+}
 
 // HTTP相关
 Vue.use(VueResource);
@@ -151,7 +206,17 @@ Vue.http.options.emulateJSON = true;// = headers: {'Content-Type': 'application/
 Vue.http.options.emulateHTTP = true;
 Vue.http.options.crossOrigin = true;
 Vue.http.options.xhr = {withCredentials: true};
+/* 拦截器添加全局loading函数 */
+Vue.http.interceptors.push((request, next) => {  
+	　  console.log(2);//此处this为请求所在页面的Vue实例  
+　　	  next((response) => {//在响应之后传给then之前对response进行修改和逻辑判断。对于token时候已过期的判断，就添加在此处，页面中任何一次http请求都会先调用此处方法  
+	　　console.log(1);
+　　　　 return response;  
+	  
+	  });  
+	}); 
 window.Vue = Vue;
+
 
 
 /* eslint-disable no-new */

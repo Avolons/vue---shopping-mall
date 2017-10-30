@@ -32,20 +32,6 @@
     document.head.appendChild(metaEl);
   </script>
   <script type="text/javascript"  src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
- <style>
-   .zj_download{
-    position: fixed;
-    top:50%;
-    left: 50%;
-    z-index: 99999;
-    transform: translate(-50%,-50%);
-    width: 50%;
-    background-color: #fff;
-    padding: 30px;
-    box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.3);
-    border-radius: 15px;
-}
- </style>
 </head>
 
 
@@ -53,7 +39,16 @@
    
     <div v-cloak id="app"></div>
   <!-- built files will be auto injected -->
-  
+  <!-- 百度统计代码 -->
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bcd14b27341d3e5cc8479313caf9a217";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
 </body>
 
 </html>

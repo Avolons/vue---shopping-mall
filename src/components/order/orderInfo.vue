@@ -226,12 +226,12 @@
                             {{infoData.goodsName}}
                         </span>
                         <!-- 单价租金 -->
-                        <span v-if="!act_price" class="orderInfon_main_price">
-                            ￥{{infoData.rent_period_now_rent_price}}/{{timeText}}
-                        </span>
-                        <span v-else class="orderInfon_main_price">
+                        <span v-if="act_price!=0"class="orderInfon_main_price">
                             ￥{{act_price}}/{{timeText}}
                             <span class="orderInfon_main_price_old">￥{{infoData.rent_period_now_rent_price}}/{{timeText}}</span>
+                        </span>
+                         <span v-else  class="orderInfon_main_price">
+                            ￥{{infoData.rent_period_now_rent_price}}/{{timeText}}
                         </span>
                         <!-- 数量 -->
                         <span class="orderInfon_main_num">数量×{{infoData.cart_content_good_amount}}</span>
@@ -385,6 +385,9 @@ export default {
             currentCardType: 0,
             /* 活动价格 */
             act_price: null,
+            relet_price:0,
+            /* 最小租用周期 */
+            rent_period_min_rent:0,
             storeInfo: null,
             antDerate: 0
         }
@@ -458,10 +461,18 @@ export default {
         /* 租期*金额*数量+押金+运费 */
         goodsAllPrice() {
             let Price;
-            if (this.act_price) {
-                Price = this.act_price * this.infoData.cart_time_number * this.infoData.cart_content_good_amount;
+            if (this.act_price!=0) {
+                if(this.relet_price!=0){
+                    Price = this.act_price *this.infoData.cart_content_good_amount  *this.rent_period_min_rent+ this.infoData.cart_content_good_amount*(this.infoData.cart_time_number-this.rent_period_min_rent)*this.relet_price;
+                }else{
+                    Price = this.act_price * this.infoData.cart_time_number * this.infoData.cart_content_good_amount;
+                }
             } else {
-                Price = this.infoData.rent_period_now_rent_price * this.infoData.cart_time_number * this.infoData.cart_content_good_amount;
+                if(this.relet_price!=0){
+                    Price = this.infoData.rent_period_now_rent_price *this.infoData.cart_content_good_amount  *this.rent_period_min_rent+ this.infoData.cart_content_good_amount*(this.infoData.cart_time_number-this.rent_period_min_rent)*this.relet_price;
+                }else{
+                   Price = this.infoData.rent_period_now_rent_price * this.infoData.cart_time_number * this.infoData.cart_content_good_amount;
+                }
             }
             return Price;
         },
@@ -483,14 +494,14 @@ export default {
         }
     },
     methods: {
-        /* 获取当前活动价格 */
+        /* 获取当前活动价格和续期价格 */
         getArtPrice(rentType, dataObj) {
             for (let item of dataObj) {
                 if (item.rent_period_type == rentType) {
-                    return item.act_price;
+                    return [item.act_price,item.relet_price,item.rent_period_min_rent];
                 }
             }
-            return null;
+            return [0,0];
         },
         /* 浏览器支付 */
         browserPay(key) {
@@ -855,8 +866,10 @@ export default {
                 }
                 this.infoData = res.body.data.cart_list[0];
                 /* 获取当前活动价格 */
-                this.act_price = this.getArtPrice(this.infoData.rent_period_type, this.infoData.rent_period);
-                this.orderLogistics = "/orderLogistics/" + this.infoData.cart_content_goods_id;
+                this.act_price = this.getArtPrice(this.infoData.rent_period_type, this.infoData.rent_period)[0];
+                this.relet_price = this.getArtPrice(this.infoData.rent_period_type, this.infoData.rent_period)[1];
+               this.rent_period_min_rent=this.getArtPrice(this.infoData.rent_period_type, this.infoData.rent_period)[2];
+               this.orderLogistics = "/orderLogistics/" + this.infoData.cart_content_goods_id;
                 /* 获取红包 1为平台优惠券 2为店铺优惠券 */
                 API.card.storeCard({
                     userId: this.getUserInfoUserId,

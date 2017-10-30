@@ -82,10 +82,8 @@
         background-color: #fff;
     }
     &_box{
-        margin-bottom: 10px;
         display: flex;
         justify-content: space-between;
-        height: 40px;
         align-items: center;
         box-sizing: border-box;
         background-color: #fff;
@@ -97,6 +95,14 @@
     &_newprice{
         color: #f80000;
         font-size: 17px;
+    }
+    &_relet{
+        margin-top: 10px;
+        color: #333;
+        font-size: 14px;
+        >span{
+           color: #f80000; 
+        }
     }
     &_oldprice{
         color: #272727;
@@ -129,7 +135,7 @@
         color: #272727;
         >span{
             font-size: 14px;
-            color: #2196f3;
+            color: #f80000;
         }
     }
     &_rentTime{
@@ -526,19 +532,23 @@
                 </swiper>
                 <h2 class="goodsinfo_title twonowarp">{{goodsTitle}}</h2>
                 <div class="goodsinfo_box">
-                                        <!-- 原租价和现租价 -->
-                   <div class="goodsinfo_price" v-show="!currentGoodsData.act_price">
-                         <span class="goodsinfo_newprice">￥{{currentGoodsData.rent_period_now_rent_price}}/{{timeText}}</span>
-                     </div>
-                    <!-- 有活动价格时显示活动价格和租价 -->
-
-                   <div class="goodsinfo_price" v-show="currentGoodsData.act_price">
+                     <!-- 有活动价格时显示活动价格和租价 -->
+                   <div v-if="currentGoodsData.act_price!=0" class="goodsinfo_price" >
                        <!-- 活动价 -->
                         <span class="goodsinfo_newprice">￥{{currentGoodsData.act_price}}/{{timeText}}</span>
                         <!-- 租价 -->
                         <span class="goodsinfo_oldprice">￥{{currentGoodsData.rent_period_now_rent_price}}/{{timeText}}</span>
+                        <p class="goodsinfo_relet" v-if="currentGoodsData.relet_price!=0">
+                        续期价： <span>￥{{currentGoodsData.relet_price}}/{{timeText}}</span>
+                        </p>
+                   </div>
+                    <!-- 原租价和现租价 -->
+                   <div v-else class="goodsinfo_price" >
+                         <span class="goodsinfo_newprice">￥{{currentGoodsData.rent_period_now_rent_price}}/{{timeText}}</span>
+                        <p class="goodsinfo_relet" v-if="currentGoodsData.relet_price!=0">
+                        续期价： <span>￥{{currentGoodsData.relet_price}}/{{timeText}}</span>
+                        </p>
                     </div>
-
                     <!-- 日期选择框 -->
                     <ul class="goodsinfo_datetime">
                         <template v-for="(item,index) in currentTypedata.rent_period">
@@ -590,7 +600,6 @@
                     </popup>
                 </div>
                 <div class="goodsinfo_content_time">
-
                     <!-- 商品特性 -->
                     <ul class="goodsinfo_typelist">
                         <li class="goodsinfo_typelist_single" v-show="staticdata.goods_is_free_deposit==1">
@@ -917,7 +926,8 @@ export default {
                 rent_period_now_rent_price: "20.00",//现租价
                 rent_period_min_advance: 6,//最少提前
                 rent_period_max_advance: 1,//最大提前
-
+                act_price:0,
+                relet_price:0
             },
             currentTimeIndex: 0//当前被选中的日渐周期index
         }
@@ -1029,6 +1039,7 @@ export default {
                 month = new Date(self.timeValue).getMonth() + 1,
                 /* 当前天数 */
                 day = new Date(self.timeValue).getDate(),
+                /* 获取当前时间数（毫秒） */
                 time = new Date(self.timeValue).getTime();
             /* 每个月的的当天的前一天， */
             switch (self.currentGoodsData.rent_period_type) {
@@ -1037,7 +1048,7 @@ export default {
                     return dateFormat(new Date(time + (num - 1) * 24 * 3600 * 1000), 'YYYY-MM-DD');
                     break;
                 case 2:
-                    return dateFormat(new Date(time + num * 24 * 3600 * 1000 * 7 - 24 * 3600 * 1000), 'YYYY-MM-DD');
+                    return dateFormat(new Date(time + (num *7-1)* 24 * 3600 * 1000), 'YYYY-MM-DD');
                     break;
                 case 3:
                     /* 月份相加超出一年的情况需要考虑 */
@@ -1047,7 +1058,8 @@ export default {
                         month_3 = 12;
                         year_3--;
                     }
-                    return dateFormat(new Date(year + year_3 + "/" + month_3 + "/" + (day - 1)), 'YYYY-MM-DD');
+                    let monthTime=new Date(year + year_3 + "/" + month_3 + "/" +day).getTime();
+                    return dateFormat(monthTime-24 * 3600 * 1000, 'YYYY-MM-DD');
                     break;
                 case 4:
                     /* 季度相加超出一年 */
@@ -1057,10 +1069,12 @@ export default {
                         month_4 = 12;
                         year_4--;
                     }
-                    return dateFormat(new Date(year + year_4 + "/" + month_4 + "/" + (day - 1)), 'YYYY-MM-DD');
+                    let seasonTime=new Date(year + year_4 + "/" + month_4 + "/" + day ).getTime();
+                    return dateFormat(seasonTime-24 * 3600 * 1000, 'YYYY-MM-DD');
                     break;
                 case 5:
-                    return dateFormat(new Date((year + num) + "/" + month + "/" + (day - 1)), 'YYYY-MM-DD');
+                    let yearTime=new Date((year + num) + "/" + month + "/" + day );
+                    return dateFormat(yearTime-24 * 3600 * 1000, 'YYYY-MM-DD');
                     break;
             }
         },
@@ -1081,15 +1095,13 @@ export default {
          * 
          */
         couterDespoite() {
+            /* 该商品为免押金商品，直接返回0押金 */
             if (this.currentTypedata.goods_deposit == 0) {
                 return 0;
             }
             let despoite;
-            if (this.currentGoodsData.act_price) {
-                despoite = this.currentTypedata.goods_deposit * this.currentGoodsData.goodsnum - this.currentGoodsData.act_price * this.currentGoodsData.rentTime * this.currentGoodsData.goodsnum;
-           } else {
-                despoite = this.currentTypedata.goods_deposit * this.currentGoodsData.goodsnum - this.currentGoodsData.rent_period_now_rent_price * this.currentGoodsData.rentTime * this.currentGoodsData.goodsnum;
-            }
+            
+            despoite= this.currentTypedata.goods_deposit * this.currentGoodsData.goodsnum -this.totalRent;
 
             return despoite>=0?despoite.toFixed(2):0;
 
@@ -1098,14 +1110,19 @@ export default {
          * 计算总租金
          */
         totalRent(){
-            let rentAmount;
-            if (this.currentGoodsData.act_price) {
-                rentAmount = this.currentGoodsData.act_price * this.currentGoodsData.goodsnum  * this.currentGoodsData.rentTime;
-            } else {
-                rentAmount = this.currentGoodsData.rent_period_now_rent_price * this.currentGoodsData.goodsnum  * this.currentGoodsData.rentTime;
+            /* 定义基础价格 */
+            let basicPrice;
+            if(this.currentGoodsData.act_price&&this.currentGoodsData.act_price!=0){
+                basicPrice=this.currentGoodsData.act_price;
+            }else{
+                basicPrice=this.currentGoodsData.rent_period_now_rent_price;
             }
-
-            return rentAmount;
+            
+            if(this.currentGoodsData.relet_price&&this.currentGoodsData.relet_price!=0){
+                return basicPrice*this.currentGoodsData.goodsnum*this.currentGoodsData.rent_period_min_rent+(this.currentGoodsData.rentTime-this.currentGoodsData.rent_period_min_rent)*this.currentGoodsData.goodsnum*this.currentGoodsData.relet_price;
+            }else{
+                return basicPrice*this.currentGoodsData.goodsnum  * this.currentGoodsData.rentTime;
+            }
         },
         /**
          * 计算芝麻信用押金减免额度
@@ -1287,6 +1304,8 @@ export default {
             if(temporary.act_price){
                 this.currentGoodsData.act_price = temporary.act_price;
             }
+            /* 续期价格 */
+            this.currentGoodsData.relet_price=temporary.relet_price;
 
             /* 是否需要认证 */
             this.isCertify = goodsData.goods_is_verify_real_name;
@@ -1411,6 +1430,9 @@ export default {
             this.currentGoodsData.rent_period_max_advance = temporary.rent_period_max_advance;
             if(temporary.act_price){
                 this.currentGoodsData.act_price = temporary.act_price; 
+            }
+            if(temporary.relet_price){
+                this.currentGoodsData.relet_price = temporary.relet_price;  
             }
 
             /* 初始被选中时间 */

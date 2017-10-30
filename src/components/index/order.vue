@@ -149,6 +149,14 @@
             color: #f80000;
             font-size: 15px;
         }
+        &_relet{
+            color: #333;
+            font-size: 13px;
+            >span{
+                color: #f80000;
+                font-size: 13px; 
+            }
+        }
         &_colorsize {
             font-size: 14px;
             color: #272727;
@@ -267,10 +275,16 @@
                             {{item.goods_name}}
                         </h3>
                         <span class="order_single_colorsize">{{item.collour}}{{item.standard}}</span>
+                        <!-- 单价添加类型判断 -->
                         <p class="order_single_box">
-                            <span class="order_single_price">￥{{item.rentPrice}}/{{timeMap[item.rentType]}}
+                            <span v-if="item.act_rent!=0" class="order_single_price">￥{{item.act_rent}}/{{timeMap[item.rentType]}}
+                            </span>
+                            <span v-else class="order_single_price">￥{{item.rentPrice}}/{{timeMap[item.rentType]}}
                             </span>
                             <span class="order_single_num">数量：{{item.goods_amount}}</span>
+                        </p>
+                        <p class="order_single_relet">
+                            续期价：<span>￥{{item.relet_price}}/{{timeMap[item.rentType]}}</span>
                         </p>
                     </div>
                 </div>

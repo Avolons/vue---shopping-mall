@@ -199,243 +199,292 @@ const transaction = resolve => {
     });
 } */
 
-import login from '../components/common/login.vue';//常规登录页
-import logincode from '../components/common/logincode.vue';//验证码登录页
-import register from '../components/common/register.vue';//注册页
-import forget from '../components/common/forget.vue';//忘记密码
-import agreement from '../components/common/agreement.vue';//注册协议
-import index from '../components/index/index.vue';//首页父页面
-import main from '../components/index/main.vue';//首页主页面
-import car from '../components/index/car.vue';//首页购物车
-import order from '../components/index/order.vue';//首页订单页
-import mine from '../components/index/mine.vue';//首页个人中心页面
-import moreHot from '../components/index/moreHot.vue';//首页更多商品跳转
-import chaneel from '../components/index/chaneel.vue';//频道页面
-import list from '../components/list/list.vue';//商品分类列表页面
-import search from '../components/search/search.vue';//商品搜索页面
-import goodsList from '../components/list/goodsList.vue';//商品具体列表页面
-import goodsinfo from '../components/goods/goodsinfo.vue';//商品详情页面
-import goodslease from '../components/goods/goodslease.vue';//商品规则
-import authentication from '../components/mine/authentication.vue';//实名认证
-import collection from '../components/mine/collection.vue';//我的收藏
-import setting from '../components/mine/setting.vue';//我的设置
-import about from '../components/mine/about.vue';//关于我们
-import help from '../components/mine/help.vue';//帮助与客服
-import card from '../components/mine/card.vue';//我的红包
-import opinion from '../components/mine/opinion.vue';//意见与反馈
-import logistics from '../components/help/logistics.vue';//物流服务
-import service from '../components/help/service.vue';//售后服务
-import transaction from '../components/help/transaction.vue';//交易相关
-import addressList from '../components/address/addressList.vue';//新增地址
-import editAddress from '../components/address/editAddress.vue';//地址管理
-import orderInfo from '../components/order/orderInfo.vue';//订单详情
-import orderReturn from '../components/order/orderReturn.vue';//订单归还
-import settlement from '../components/order/settlement.vue';//确认单详情
-import orderSuccess from '../components/order/orderSuccess.vue';//支付成功
-import orderAction from '../components/order/orderAction.vue';//订单列表详情
-import orderLogistics from '../components/order/orderLogistics.vue';//订单物流选择
-import shop from '../components/shop/shop.vue';//店铺主页
-import shopInfo from '../components/shop/shopInfo.vue';//店铺详情
-import selected from '../components/shop/selected.vue';//精选店铺
-import download from '../components/common/download.vue';//下载App
-import authInfo from '../components/antScore/authInfo.vue';//芝麻信用授权
-import authPage from '../components/antScore/authPage.vue';//芝麻信用授权操作
+import login from '../components/common/login.vue'; //常规登录页
+import logincode from '../components/common/logincode.vue'; //验证码登录页
+import register from '../components/common/register.vue'; //注册页
+import forget from '../components/common/forget.vue'; //忘记密码
+import agreement from '../components/common/agreement.vue'; //注册协议
+import index from '../components/index/index.vue'; //首页父页面
+import main from '../components/index/main.vue'; //首页主页面
+import car from '../components/index/car.vue'; //首页购物车
+import order from '../components/index/order.vue'; //首页订单页
+import mine from '../components/index/mine.vue'; //首页个人中心页面
+import moreHot from '../components/index/moreHot.vue'; //首页更多商品跳转
+import chaneel from '../components/index/chaneel.vue'; //频道页面
+import list from '../components/list/list.vue'; //商品分类列表页面
+import search from '../components/search/search.vue'; //商品搜索页面
+import goodsList from '../components/list/goodsList.vue'; //商品具体列表页面
+import goodsinfo from '../components/goods/goodsinfo.vue'; //商品详情页面
+import goodslease from '../components/goods/goodslease.vue'; //商品规则
+import authentication from '../components/mine/authentication.vue'; //实名认证
+import collection from '../components/mine/collection.vue'; //我的收藏
+import setting from '../components/mine/setting.vue'; //我的设置
+import about from '../components/mine/about.vue'; //关于我们
+import help from '../components/mine/help.vue'; //帮助与客服
+import card from '../components/mine/card.vue'; //我的红包
+import opinion from '../components/mine/opinion.vue'; //意见与反馈
+import logistics from '../components/help/logistics.vue'; //物流服务
+import service from '../components/help/service.vue'; //售后服务
+import transaction from '../components/help/transaction.vue'; //交易相关
+import addressList from '../components/address/addressList.vue'; //新增地址
+import editAddress from '../components/address/editAddress.vue'; //地址管理
+import orderInfo from '../components/order/orderInfo.vue'; //订单详情
+import orderReturn from '../components/order/orderReturn.vue'; //订单归还
+import settlement from '../components/order/settlement.vue'; //确认单详情
+import orderSuccess from '../components/order/orderSuccess.vue'; //支付成功
+import orderAction from '../components/order/orderAction.vue'; //订单列表详情
+import orderLogistics from '../components/order/orderLogistics.vue'; //订单物流选择
+import shop from '../components/shop/shop.vue'; //店铺主页
+import shopInfo from '../components/shop/shopInfo.vue'; //店铺详情
+import selected from '../components/shop/selected.vue'; //精选店铺
+import download from '../components/common/download.vue'; //下载App
+import authInfo from '../components/antScore/authInfo.vue'; //芝麻信用授权
+import authPage from '../components/antScore/authPage.vue'; //芝麻信用授权操作
+/* 绘本项目相关路由 */
+import B_index from '../components/book/index.vue'; //绘本首页
+import B_home from '../components/book/home.vue'; //绘本主页面
+import B_mine from '../components/book/mine.vue'; //绘本个人中心页面
+import B_car from '../components/book/car.vue'; //绘本书架页面
+import B_collect from '../components/book/collect.vue'; //绘本收藏页面
 
 
 const routes = [{
-        path: '/index/:id',
-        component: index,
-        children:[
-            {path:"",component:main},
-            {path:"car",component:car},
-            {path:"order", meta: {
-                 requireAuth: true,  
-                }, component:order},
-            {path:"mine", meta: {
-                // 添加该字段，表示进入这个路由是需要登录的
-                 requireAuth: true,  
-                }, component:mine},
-        ]
-    },{
-        path: '/',
-        redirect: '/index/main',
-        name: 'index',
-        component: index
-    },
-    {
-        path: '/chaneel',
-        name: 'chaneel',
-        component: chaneel
-    },
-    {
-        path: '/login',
-        name: 'login',
-        component: login
-    },{
-        path: '/logincode',
-        name: 'logincode',
-        component: logincode
-    },{
-        path: '/register',
-        name: 'register',
-        component: register
-    },{
-        path: '/forget',
-        name: 'forget',
-        component: forget
-    },{
-        path: '/list',
-        name: 'list',
-        component: list
-    },{
-        path: '/search',
-        name: 'search',
-        component: search
-    },{
-        path: '/goodsinfo/:id',
-        name: 'goodsinfo',
-        component: goodsinfo
-    },{
-        path: '/authInfo',
-        name: 'authInfo',
-        component: authInfo
-    },{
-        path: '/authPage',
-        name: 'authPage',
-        component: authPage
-    },{
-        path: '/goodslease/:id',
-        name: 'goodslease',
-        component: goodslease
-    },
-    {
-        path: '/authentication',
-        name: 'authentication',
-        component: authentication
-    },{
-        path: '/help',
-        name: 'help',
-        component: help
-    },
-    {
-        path: '/card',
-        name: 'card',
-        component: card
-    },
-    {
-        path: '/opinion',
-        name: 'opinion',
-        component: opinion
-    },{
-        path: '/logistics',
-        name: 'logistics',
-        component: logistics
-    },
-    {
-        path: '/agreement',
-        name: 'agreement',
-        component: agreement
-    },
-    {
-        path: '/service',
-        name: 'service',
-        component: service
-    },{
-        path: '/transaction',
-        name: 'transaction',
-        component: transaction
-    },{
-        path: '/addressList',
-        name: 'addressList',
+    path: '/index/:id',
+    component: index,
+    children: [{
+        path: "",
+        component: main
+      },
+      {
+        path: "car",
+        component: car
+      },
+      {
+        path: "order",
         meta: {
-            requireAuth: true,  
-           },
-        component: addressList
-    },{
-        path: '/editAddress/:id',
-        name: 'editAddress',
+          requireAuth: true,
+        },
+        component: order
+      },
+      {
+        path: "mine",
         meta: {
-            requireAuth: true,  
-           },
-        component: editAddress
-    },{
-        path:'/editAddress',
+          // 添加该字段，表示进入这个路由是需要登录的
+          requireAuth: true,
+        },
+        component: mine
+      },
+    ]
+  }, {
+    path: '/',
+    redirect: '/index/main',
+    name: 'index',
+    component: index
+  },
+  {
+    path: '/chaneel',
+    name: 'chaneel',
+    component: chaneel
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: login
+  }, {
+    path: '/logincode',
+    name: 'logincode',
+    component: logincode
+  }, {
+    path: '/register',
+    name: 'register',
+    component: register
+  }, {
+    path: '/forget',
+    name: 'forget',
+    component: forget
+  }, {
+    path: '/list',
+    name: 'list',
+    component: list
+  }, {
+    path: '/search',
+    name: 'search',
+    component: search
+  }, {
+    path: '/goodsinfo/:id',
+    name: 'goodsinfo',
+    component: goodsinfo
+  }, {
+    path: '/authInfo',
+    name: 'authInfo',
+    component: authInfo
+  }, {
+    path: '/authPage',
+    name: 'authPage',
+    component: authPage
+  }, {
+    path: '/goodslease/:id',
+    name: 'goodslease',
+    component: goodslease
+  },
+  {
+    path: '/authentication',
+    name: 'authentication',
+    component: authentication
+  }, {
+    path: '/help',
+    name: 'help',
+    component: help
+  },
+  {
+    path: '/card',
+    name: 'card',
+    component: card
+  },
+  {
+    path: '/opinion',
+    name: 'opinion',
+    component: opinion
+  }, {
+    path: '/logistics',
+    name: 'logistics',
+    component: logistics
+  },
+  {
+    path: '/agreement',
+    name: 'agreement',
+    component: agreement
+  },
+  {
+    path: '/service',
+    name: 'service',
+    component: service
+  }, {
+    path: '/transaction',
+    name: 'transaction',
+    component: transaction
+  }, {
+    path: '/addressList',
+    name: 'addressList',
+    meta: {
+      requireAuth: true,
+    },
+    component: addressList
+  }, {
+    path: '/editAddress/:id',
+    name: 'editAddress',
+    meta: {
+      requireAuth: true,
+    },
+    component: editAddress
+  }, {
+    path: '/editAddress',
+    meta: {
+      requireAuth: true,
+    },
+    redirect: '/editAddress/add'
+  }, {
+    path: '/orderInfo/:id',
+    meta: {
+      requireAuth: true,
+    },
+    name: 'orderInfo',
+    component: orderInfo
+  }, {
+    path: '/orderLogistics/:id',
+    name: 'orderLogistics',
+    component: orderLogistics
+  }, {
+    path: '/orderReturn',
+    name: 'orderReturn',
+    component: orderReturn
+  },
+  {
+    path: '/goodsList/',
+    name: 'goodsList',
+    component: goodsList
+  }, {
+    path: '/collection',
+    name: 'collection',
+    component: collection
+  }, {
+    path: '/setting',
+    name: 'setting',
+    component: setting
+  }, {
+    path: '/about',
+    name: 'about',
+    component: about
+  }, {
+    path: '/shop/:id',
+    name: 'shop',
+    component: shop
+  }, {
+    path: '/shopInfo/:id',
+    name: 'shopInfo',
+    component: shopInfo
+  },
+  {
+    path: '/selected',
+    name: 'selected',
+    component: selected
+  },
+  {
+    path: '/download',
+    name: 'download',
+    component: download
+  }, {
+    path: '/orderAction/:id',
+    name: 'orderAction',
+    component: orderAction
+  }, {
+    path: '/orderSuccess',
+    name: 'orderSuccess',
+    component: orderSuccess
+  }, {
+    path: '/settlement',
+    name: 'settlement',
+    component: settlement
+  }, {
+    path: '/moreHot',
+    name: 'moreHot',
+    component: moreHot
+  },
+  /* 绘本相关路由控制器 */
+  {
+    path: '/book/:id',
+    name: 'book',
+    component: B_home,
+    children: [{
+        path: "",
+        component: B_index
+      },
+      {
+        path: "car",
+        component: B_car
+      },
+      {
+        path: "collect",
         meta: {
-            requireAuth: true,  
-           },
-        redirect:'/editAddress/add'
-    },{
-        path:'/orderInfo/:id',
+          requireAuth: true,
+        },
+        component: B_collect
+      },
+      {
+        path: "mine",
         meta: {
-            requireAuth: true,  
-           },
-        name: 'orderInfo',
-        component: orderInfo
-    },{
-        path:'/orderLogistics/:id',
-        name: 'orderLogistics',
-        component: orderLogistics
-    },{
-        path:'/orderReturn',
-        name: 'orderReturn',
-        component: orderReturn
-    },
-    {
-        path:'/goodsList/',
-        name: 'goodsList',
-        component: goodsList
-    },{
-        path:'/collection',
-        name: 'collection',
-        component: collection
-    },{
-        path:'/setting',
-        name: 'setting',
-        component: setting
-    },{
-        path:'/about',
-        name: 'about',
-        component: about
-    },{
-        path:'/shop/:id',
-        name: 'shop',
-        component: shop
-    },{
-        path:'/shopInfo/:id',
-        name: 'shopInfo',
-        component: shopInfo
-    },
-    {
-        path:'/selected',
-        name: 'selected',
-        component: selected
-    },
-    {
-        path:'/download',
-        name: 'download',
-        component: download
-    },{
-        path:'/orderAction/:id',
-        name: 'orderAction',
-        component: orderAction
-    },{
-        path:'/orderSuccess',
-        name: 'orderSuccess',
-        component: orderSuccess
-    },{
-        path:'/settlement',
-        name: 'settlement',
-        component: settlement
-    },{
-        path:'/moreHot',
-        name: 'moreHot',
-        component: moreHot
-    }
+          // 添加该字段，表示进入这个路由是需要登录的
+          requireAuth: true,
+        },
+        component: B_mine
+      },
+    ]
+  }, 
 ];
 
-    
+
 
 export default new Router({
-    mode: 'hash',
-    routes
-}); 
+  mode: 'hash',
+  routes
+});

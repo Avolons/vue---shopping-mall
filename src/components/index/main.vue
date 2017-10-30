@@ -600,8 +600,7 @@ body {
             </ul>
             </div>
              <div class="main_zjDownload">
-                 <a  v-if="iswexin" href="http://a.app.qq.com/o/simple.jsp?pkgname=com.zujie"></a>
-                  <a v-else-if="isIOS" href="http://a.app.qq.com/o/simple.jsp?pkgname=com.zujie"></a>
+                 <a  v-if="isWechat()||isiOS()" href="http://a.app.qq.com/o/simple.jsp?pkgname=com.zujie"></a>
                  <a  v-else href="https://www.zujiekeji.cn/download/app-guanwang-release-1.1.9.apk"></a>
                 <img src="../../assets/img/common/download.png" alt="">
             </div>
@@ -657,26 +656,6 @@ body {
                                     {{ite}}
                                 </li>
                             </ul>
-                           <!--  <ul class="main_hot_typeList">
-                                <li class="main_hot_type" v-show="item.goods_is_free_deposit==1">
-                                    免押金
-                                </li>
-                                <li class="main_hot_type" v-show="item.goods_is_free_shipping==1">
-                                    包邮
-                                </li>
-                                <li class="main_hot_type" v-show="item.goods_is_deductible==1">
-                                    免赔
-                                </li>
-                                <li class="main_hot_type" v-show="item.goods_is_door==1">
-                                    送货上门
-                                </li>
-                                <li class="main_hot_type" v-show="item.goods_is_since==1">
-                                    自提
-                                </li>
-                                <li class="main_hot_type" v-show="item.goods_is_follow_lease==1">
-                                    随租随还
-                                </li>
-                            </ul> -->
                             <h2 class="main_hot_address">{{item.region}}</h2>
                         </div>
                         <h2 v-if="!item.act_price" class="main_hot_price">￥{{item.rentPrice}}/{{timeMap[item.rent_period_type]}}</h2>
@@ -1123,11 +1102,6 @@ export default {
             shopList.splice(0, 0, firstLabel);
             this.goodsList = new Array(shopList.length);
             this.typeList = shopList;
-             /* 防止数据卡死 */
-            /* setTimeout((res) => {
-                document.querySelectorAll(".main_typelist_item")[1].click();
-                document.querySelectorAll(".main_typelist_item")[0].click();
-            }, 500); */
         });
         /* 获取热门商品 */
         API.main.goodsHot({
@@ -1148,46 +1122,7 @@ export default {
         /* 下拉加载更多操作 */
         let self = this;
         let mainbox = document.querySelector(".list_compent_list_box");
-        function getScrollTop() {
-            var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
-            if (mainbox) {
-                bodyScrollTop = mainbox.scrollTop;
-            }
-            if (document.documentElement) {
-                documentScrollTop = document.documentElement.scrollTop;
-            }
-            scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
-            return scrollTop;
-        }
-        function getScrollHeight() {
-            var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
-            if (mainbox) {
-                bodyScrollHeight = mainbox.scrollHeight;
-            }
-            if (document.documentElement) {
-                documentScrollHeight = document.documentElement.scrollHeight;
-            }
-            scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
-            return scrollHeight;
-        }
-        function getWindowHeight() {
-            var windowHeight = 0;
-            if (document.compatMode == "CSS1Compat") {
-                windowHeight = document.documentElement.clientHeight;
-            } else {
-                windowHeight = document.body.clientHeight;
-            }
-            return windowHeight - 104;
-        }
-        document.querySelector(".list_compent_list_box").onscroll = function() {
-            if ((getScrollTop() + getWindowHeight()) >= (getScrollHeight() - 10)) {
-                if (self.canBottom == true) {
-                    self.canBottom = false;
-                    self.getMoreData();
-                }
-            }
-        };
-
+        resizeScroll(mainbox,self,self.getMoreData,104);
 
     }
 }
