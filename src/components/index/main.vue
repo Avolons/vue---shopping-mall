@@ -70,14 +70,17 @@ body {
     &_fun{
        &_list{
            background-color: #fff;
-           height: 80px;
            box-sizing: border-box;
-           padding: 12.5px 30px 0 30px;
+           padding: 15px;
            display: flex;
+           flex-wrap: wrap;
+           padding-bottom: 0;
            justify-content: space-between;
        }
        &_single{
+           margin-bottom: 15px;
            display: flex;
+           width: 25%;
            flex-direction: column;
            align-items: center;
            >img{
@@ -615,7 +618,7 @@ body {
             <!-- table功能区域 -->
             <!-- 1商品列表 2精选商家 3运营活动 -->
             <ul v-show="currentType==0" class="main_fun_list">
-                <li v-for="item in iconList" class="main_fun_single" @click="funClick(item.name,item.type,item.icon_id)">
+                <li v-for="item in iconList" class="main_fun_single" @click="funClick(item.name,item.type,item.icon_id,item.content)">
                     <img :src="imgFormat(item.img)" alt="icon">
                     <h3>{{item.name}}</h3>
                 </li>
@@ -888,7 +891,7 @@ export default {
             })
         },
         /* 功能table点击函数 */
-        funClick(name,type,id=1){
+        funClick(name,type,id=1,url=""){
             let scrollTop = document.querySelector(".main_listbox").scrollTop;
             localStorage.setItem("scrolltop", scrollTop);
             if(type==1){
@@ -900,7 +903,14 @@ export default {
                     path:'/selected/?id='+id
                 })
             }else{
-                window.location.href="/down.html";
+                if(name=="分享有礼"){
+                    window.location.href="/down.html";
+                }else if(name=="绘本"){
+                   this.$router.push({
+                      path:'/book',
+                   })
+                }
+                
             }
         },
         /* 是否显示活动红包 */

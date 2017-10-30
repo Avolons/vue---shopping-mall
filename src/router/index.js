@@ -451,9 +451,9 @@ const routes = [{
     component: moreHot
   },
   /* 绘本相关路由控制器 */
+   
   {
     path: '/book/:id',
-    name: 'book',
     component: B_home,
     children: [{
         path: "",
@@ -479,7 +479,12 @@ const routes = [{
         component: B_mine
       },
     ]
-  }, 
+  }, {
+    path: '/book',
+    redirect: '/book/main',
+    name: 'book',
+    component: B_home
+  },
 ];
 
 

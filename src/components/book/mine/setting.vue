@@ -3,7 +3,6 @@
 
 </style>
 
-
 <template lang="pug">
     .bookMain
         .bookMain_header

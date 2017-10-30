@@ -533,7 +533,7 @@
                 <h2 class="goodsinfo_title twonowarp">{{goodsTitle}}</h2>
                 <div class="goodsinfo_box">
                      <!-- 有活动价格时显示活动价格和租价 -->
-                   <div v-if="currentGoodsData.act_price!=0" class="goodsinfo_price" >
+                   <div v-if="currentGoodsData.act_price&&currentGoodsData.act_price!=0" class="goodsinfo_price" >
                        <!-- 活动价 -->
                         <span class="goodsinfo_newprice">￥{{currentGoodsData.act_price}}/{{timeText}}</span>
                         <!-- 租价 -->

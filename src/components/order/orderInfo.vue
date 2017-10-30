@@ -226,7 +226,7 @@
                             {{infoData.goodsName}}
                         </span>
                         <!-- 单价租金 -->
-                        <span v-if="act_price!=0"class="orderInfon_main_price">
+                        <span v-if="act_price&&act_price!=0"class="orderInfon_main_price">
                             ￥{{act_price}}/{{timeText}}
                             <span class="orderInfon_main_price_old">￥{{infoData.rent_period_now_rent_price}}/{{timeText}}</span>
                         </span>
@@ -461,19 +461,20 @@ export default {
         /* 租期*金额*数量+押金+运费 */
         goodsAllPrice() {
             let Price;
-            if (this.act_price!=0) {
-                if(this.relet_price!=0){
+            if (this.act_price&&this.act_price!=0) {
+                if(this.relet_price&&this.relet_price!=0){
                     Price = this.act_price *this.infoData.cart_content_good_amount  *this.rent_period_min_rent+ this.infoData.cart_content_good_amount*(this.infoData.cart_time_number-this.rent_period_min_rent)*this.relet_price;
                 }else{
                     Price = this.act_price * this.infoData.cart_time_number * this.infoData.cart_content_good_amount;
                 }
             } else {
-                if(this.relet_price!=0){
+                if(this.relet_price&&this.relet_price!=0){
                     Price = this.infoData.rent_period_now_rent_price *this.infoData.cart_content_good_amount  *this.rent_period_min_rent+ this.infoData.cart_content_good_amount*(this.infoData.cart_time_number-this.rent_period_min_rent)*this.relet_price;
                 }else{
                    Price = this.infoData.rent_period_now_rent_price * this.infoData.cart_time_number * this.infoData.cart_content_good_amount;
                 }
             }
+            console.log(Price);
             return Price;
         },
         /* 运费计算 */
@@ -501,7 +502,7 @@ export default {
                     return [item.act_price,item.relet_price,item.rent_period_min_rent];
                 }
             }
-            return [0,0];
+            return [0,0,0];
         },
         /* 浏览器支付 */
         browserPay(key) {
