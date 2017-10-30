@@ -1128,11 +1128,7 @@ export default {
          * 计算芝麻信用押金减免额度
          */
         antDerate(){
-            if(this.couterDespoite == 0 || this.currentTypedata.goods_deposit - this.totalRent < 0){
-                return 0;
-            }else{
                return (this.couterDespoite * this.reliefRate).toFixed(2);
-            }
         },
         /**
          * 返回颜色规格id
