@@ -390,8 +390,7 @@
             </div>
             <!-- 收货地址和物流方式 -->
             <group class="orderAction_main_priceColl">
-                <cell v-if="infoData.act_rent" title="合计租金" :value="(infoData.act_rent*infoData.ordertimeNumber*infoData.shopNum)  | currency('￥')"></cell>
-                <cell v-else title="合计租金" :value="(infoData.rentPrice*infoData.ordertimeNumber*infoData.shopNum)  | currency('￥')"></cell>
+                <cell  title="合计租金" :value="infoData.rent_total_price  | currency('￥')"></cell>
                 <cell title="店铺优惠券" class="orderAction_main_card" :value="-infoData.storeCouponPrice | currency('￥') || '￥-0.00'"></cell>
                 <cell title="平台优惠券" class="orderAction_main_card" :value="-infoData.couponPrice | currency('￥') || '￥-0.00'"></cell>
                 <cell title="合计押金" :value="infoData.deposit | currency('￥')"></cell>

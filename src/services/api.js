@@ -6,7 +6,8 @@ var sourceStr = '/?source=4&version=1.1.9';
 
 /* var API_ROOT = "https://api.zujiekeji.cn/index/"; */
 var API_ROOT = "https://isapi.zujiekeji.cn/index/";
-/* var API_ROOT = "http://106.14.135.243:8082/index/" */; 
+var BASE_ROOT="http://106.14.135.243:8082/book";
+/* var API_ROOT = "http://106.14.135.243:8082/index/";  */
 /* 个人中心相关api */
 
 /**
@@ -844,4 +845,29 @@ export const alipay={
       return Vue.http.post('https://api.zujiekeji.cn/index/Zmjiehuan/chanelSuccessOrder' + sourceStr,data);
     }, 
     
+}
+
+
+/* 绘本相关接口 */
+export const book={
+ /**
+  * 获取首页icon
+  * @param {any} data 
+  * @returns 
+  */
+  getIcon(data){  
+    return Vue.http.get(BASE_ROOT+'index/icon' + sourceStr,{params:data});
+  }, 
+ /**
+  * 获取首页热门推荐
+  * @param {any} data 
+  * page
+  * page_number
+  * @returns 
+  */
+  getRecommd(data){  
+    return Vue.http.get(BASE_ROOT+'index/recommend' + sourceStr,{params:data});
+  }, 
+ 
+  
 }
