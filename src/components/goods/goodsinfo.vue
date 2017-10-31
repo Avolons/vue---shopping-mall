@@ -902,7 +902,7 @@ export default {
             /* 数据列表 */
             datalist: [],
             /* 当前地址 */
-            goodsAddress: ['北京市', '市辖区', '东城区'],
+            goodsAddress: ['浙江省', '杭州市', '余杭区'],
             /* 是否是支持的地址 */
             provideAddress: false,
             /* 颜色规格选择框显示隐藏 */
@@ -1214,6 +1214,7 @@ export default {
                     address[1] = res.city;
                     address[2] = res.district;
                     this.goodsAddress = address;
+                    this.checkAddress();
                 }
             });
         },
