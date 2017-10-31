@@ -1129,7 +1129,7 @@ export default {
          */
         antDerate(){
                 let couter=(this.couterDespoite * this.reliefRate).toFixed(2);
-                if(this.reliefLimit<=couter){
+                if((this.reliefLimit-0)<=couter){
                     return this.reliefLimit;
                 }else{
                     return couter;

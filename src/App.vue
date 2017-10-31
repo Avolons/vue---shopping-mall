@@ -14,7 +14,7 @@
 
 <script>
 import { API, getQuery } from './services/';
-
+import { mapGetters } from 'vuex'
 
 export default {
     data() {
@@ -33,7 +33,23 @@ export default {
             this.$router.isBack = false
         }
     },
+    computed: {
+        ...mapGetters([
+            'getUserInfoUserId',
+            'getUserInfoToken',
+            'getAddress',
+            'getNamePhone'
+        ]),
+    },
     mounted() {
+        API.coust.getCount({
+            self_url:window.location.href,
+            token:this.getUserInfoToken
+        }).then((res) => {
+
+        }, (res) => {
+
+        }); 
         function isWeiXin() {
             var ua = window.navigator.userAgent.toLowerCase();
             if (ua.match(/MicroMessenger/i) == 'micromessenger') {

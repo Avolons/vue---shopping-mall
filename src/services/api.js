@@ -10,6 +10,25 @@ var BASE_ROOT="http://106.14.135.243:8082/book";
 /* var API_ROOT = "http://106.14.135.243:8082/index/";  */
 /* 个人中心相关api */
 
+
+
+/**
+ * 统计代码
+ */
+export const coust={
+  /**
+   * 
+   * 
+   * @param {any} data 
+   * @returns 
+   */
+  getCount(data) {
+    return Vue.http.get(API_ROOT + 'statistic/index' + sourceStr,{params:data});
+  },
+};
+
+
+
 /**
  * 登录注册通用接口部分
  */

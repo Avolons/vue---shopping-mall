@@ -7,7 +7,6 @@
 <template lang="pug">
     .bookMain
         .bookMain_header
-            header-cop(:heder_title="title")
         .bookMain_content
 </template>
 

@@ -371,7 +371,7 @@
                     <!-- 商品规格 -->
                     <span class="order_single_colorsize">{{infoData.collour}}{{infoData.standard}} </span>
                     <!-- 单价租金 -->
-                    <span v-if="infoData.act_rent!=0" class="orderAction_main_price">
+                    <span v-if="infoData.act_rent&&infoData.act_rent!=0" class="orderAction_main_price">
                         ￥{{infoData.act_rent}}/{{timeText}}
                     </span>
                     <span v-else class="orderAction_main_price">

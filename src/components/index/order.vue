@@ -277,7 +277,7 @@
                         <span class="order_single_colorsize">{{item.collour}}{{item.standard}}</span>
                         <!-- 单价添加类型判断 -->
                         <p class="order_single_box">
-                            <span v-if="item.act_rent!=0" class="order_single_price">￥{{item.act_rent}}/{{timeMap[item.rentType]}}
+                            <span v-if="item.act_rent&&item.act_rent!=0" class="order_single_price">￥{{item.act_rent}}/{{timeMap[item.rentType]}}
                             </span>
                             <span v-else class="order_single_price">￥{{item.rentPrice}}/{{timeMap[item.rentType]}}
                             </span>
