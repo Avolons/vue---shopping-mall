@@ -296,7 +296,7 @@ body {
         }
     }
     &_listbox {
-        height: calc(100% - 191px);
+        height: calc(100% - 151px);
         box-sizing: border-box;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
@@ -591,17 +591,7 @@ body {
                 <i class="iconfont">&#xe606;</i>
             </span>
         </header>
-            <div class="main_typelist_box">
-                 <ul>
-                <li >
-                    <ul class="main_typelist_list_fixed">
-                        <li class="main_typelist_item" v-for="(item,index) in typeList" :class="{'main_typelist_item--selected':item.click}" @click="typeselect(index,item.goods_category_id)">
-                            <span>{{item.hot_label_name}}</span>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            </div>
+           
              <div class="main_zjDownload">
                  <a  v-if="isWechat()||isiOS()" href="http://a.app.qq.com/o/simple.jsp?pkgname=com.zujie"></a>
                  <a  v-else href="https://www.zujiekeji.cn/download/app-guanwang-release-1.1.9.apk"></a>
@@ -848,7 +838,6 @@ export default {
             window.location.href="/#/index/main";
             sessionStorage.setItem("mainReload",'');
         }
-        overscroll(document.querySelector('.main_typelist_box'));
         overscroll(document.querySelector('.main_listbox'));
         overscroll(document.querySelector('.list_compent_list_box'));
         setTimeout(() => {
@@ -1073,7 +1062,6 @@ export default {
     },
     mounted() {
        /* 可拖动返回列表滚动初始化 */
-       overscroll(document.querySelector('.main_typelist_box'));
         overscroll(document.querySelector('.main_listbox'));
         overscroll(document.querySelector('.list_compent_list_box'));
         /* 获取轮播图信息 */
