@@ -81,10 +81,11 @@
                     certNo:this.certNo,
                     option:1
                 }).then((res) => {
-                    console.log(res)
                     if (res.body.code == 200) {
                         window.location.href = res.body.data.auth_url;
-                    }
+                        localStorage.setItem("isCertify","4");
+                        this.$store.dispatch('IsCertify');
+                   }
                 })
             },
             check(){

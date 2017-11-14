@@ -55,6 +55,7 @@ window.overscroll = function(el) {
 		var top = el.scrollTop
 			, totalScroll = el.scrollHeight
 			, currentScroll = top + el.offsetHeight;
+			console.log(top);
 		if (top === 0) {
 			el.scrollTop = 1;
 		} else if (currentScroll === totalScroll) {
@@ -126,6 +127,8 @@ import  { LoadingPlugin } from 'vux';
 Vue.use(LoadingPlugin);
 import { ConfirmPlugin } from 'vux';
 Vue.use(ConfirmPlugin);
+import  { ToastPlugin } from 'vux';
+Vue.use(ToastPlugin);
 import { dateFormat } from 'vux';
 Vue.prototype.dateFormat=dateFormat;
 
@@ -145,7 +148,7 @@ Vue.filter('currency', function(value, _currency, decimals) {
     return sign + _currency + head + _int.slice(i).replace(digitsRE, '$1,') + _float;  
 }); 
 Vue.filter('dataform', function(value) {  
-	return dateFormat(value*1000, 'YYYY-MM-DD');
+	return dateFormat(value*1000, 'YYYY.MM.DD');
 });
 Vue.filter('orderdata', function(value) {  
 	if(value){
@@ -210,9 +213,7 @@ Vue.http.options.crossOrigin = true;
 Vue.http.options.xhr = {withCredentials: true};
 /* 拦截器添加全局loading函数 */
 Vue.http.interceptors.push((request, next) => {  
-	　  console.log(2);//此处this为请求所在页面的Vue实例  
 　　	  next((response) => {//在响应之后传给then之前对response进行修改和逻辑判断。对于token时候已过期的判断，就添加在此处，页面中任何一次http请求都会先调用此处方法  
-	　　console.log(1);
 　　　　 return response;  
 	  
 	  });  

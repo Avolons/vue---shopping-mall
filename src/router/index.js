@@ -240,13 +240,46 @@ import selected from '../components/shop/selected.vue'; //精选店铺
 import download from '../components/common/download.vue'; //下载App
 import authInfo from '../components/antScore/authInfo.vue'; //芝麻信用授权
 import authPage from '../components/antScore/authPage.vue'; //芝麻信用授权操作
+import share from '../components/common/share.vue'; //芝麻信用授权操作
 /* 绘本项目相关路由 */
 import B_index from '../components/book/index.vue'; //绘本首页
 import B_home from '../components/book/home.vue'; //绘本主页面
 import B_mine from '../components/book/mine.vue'; //绘本个人中心页面
 import B_car from '../components/book/car.vue'; //绘本书架页面
 import B_collect from '../components/book/collect.vue'; //绘本收藏页面
-
+/* 个人中心相关 */
+import B_mine_plan from '../components/book/mine/plan.vue'; //我的计划
+import B_mine_order from '../components/book/mine/order.vue'; //绘本订单页面
+import B_mine_setting from '../components/book/mine/setting.vue'; //绘本设置页面
+import B_mine_planInfo from '../components/book/mine/planInfo.vue'; //计划说明
+import B_mine_age from '../components/book/mine/age'; //儿童生日
+/* 绘本详情 */
+import B_bookInfo from '../components/book/bookInfo/bookInfo.vue'; //绘本详情
+/* 绘本列表 */
+import B_bookNew from '../components/book/list/new.vue'; //新品推荐
+import B_bookEnglish from '../components/book/list/english.vue'; //英文原本
+import B_bookHot from '../components/book/list/hot.vue'; //热门绘本
+import B_bookSeries from '../components/book/list/series.vue'; //系列图书
+import B_bookSeriesList from '../components/book/list/seriesList.vue'; //系列详情
+/* 订单相关详情 */
+import B_bookCard from '../components/book/order/orderCard'; //购买计划列表
+import B_bookCardInfo from '../components/book/order/orderCardInfo.vue'; //购买计划列表结算
+import B_bookOrderInfo from '../components/book/order/orderInfo.vue'; //图书确认订单页面
+import B_bookOrderMessage from '../components/book/order/orderMessage.vue'; //订单详情页面
+/* 搜索页面 */
+import B_bookSearch from '../components/book/search/search.vue'; //搜索页面
+import B_bookPerSearch from '../components/book/search/perSearch.vue'; //智能搜索页面
+import B_bookSearchRe from '../components/book/search/searchResult.vue'; //搜素详情页面
+import B_bookPerSearchRe from '../components/book/search/perSearchResult.vue'; //智能搜索详情页面
+/* 成功页面 */
+import B_success from "../components/book/common/success.vue"; //操作成功详情页面
+import B_fail from "../components/book/common/fail.vue"; //操作失败页面
+/* 规则 */
+import B_rules from "../components/book/common/rules"; //操作失败页面
+// 精选
+import  featured from "../components/book/Featured/index.vue";
+//更多图书
+import  books from "../components/book/Featured/books.vue";
 
 const routes = [{
     path: '/index/:id',
@@ -449,9 +482,12 @@ const routes = [{
     path: '/moreHot',
     name: 'moreHot',
     component: moreHot
+  },{
+    path: '/share',
+    name: 'share',
+    component: share
   },
   /* 绘本相关路由控制器 */
-   
   {
     path: '/book/:id',
     component: B_home,
@@ -461,6 +497,9 @@ const routes = [{
       },
       {
         path: "car",
+        meta: {
+          requireAuth: true,
+        },
         component: B_car
       },
       {
@@ -484,7 +523,116 @@ const routes = [{
     redirect: '/book/main',
     name: 'book',
     component: B_home
+  },{
+    path: '/mine_plan',
+    name: 'B_mine_plan',
+    component: B_mine_plan  
+  },{
+    path: '/mine_order',
+    name: 'B_mine_order',
+    component: B_mine_order  
+  },{
+    path: '/mine_setting',
+    name: 'B_mine_setting',
+    component: B_mine_setting  
+  },{
+    path: '/mine_age',
+    name: 'B_mine_age',
+    component: B_mine_age  
+  },{
+    path: '/book_bookInfo/:id',
+    name: 'B_bookInfo',
+    component: B_bookInfo  
+  },{
+    path: '/book_planInfo',
+    name: 'B_mine_planInfo',
+    component: B_mine_planInfo  
+  }
+
+  /* 列表页面 */
+  ,{
+    path: '/book_bookNew',
+    name: 'B_bookNew',
+    component: B_bookNew  
+  },{
+    path: '/book_bookEnglish',
+    name: 'B_bookEnglish',
+    component: B_bookEnglish  
+  },{
+    path: '/book_bookHot',
+    name: 'B_bookHot',
+    component: B_bookHot  
+  },{
+    path: '/book_bookSeries',
+    name: 'B_bookSeries',
+    component: B_bookSeries  
+  },{
+    path: '/book_bookSeriesList',
+    name: 'B_bookSeriesList',
+    component: B_bookSeriesList  
   },
+  /* 选书页面 */
+  {
+    path: '/book_bookSearch',
+    name: 'B_bookSearch',
+    component: B_bookSearch  
+  },{
+    path: '/book_bookPerSearch',
+    name: 'B_bookSearch',
+    component: B_bookSearch  
+  },{
+    path: '/book_bookSearchRe',
+    name: 'B_bookSearchRe',
+    component: B_bookSearchRe  
+  },{
+    path: '/book_bookPerSearchRe',
+    name: 'B_bookPerSearchRe',
+    component: B_bookPerSearchRe  
+  },
+  /* 计划和图书租赁订单相关 */
+  {
+    path: '/book_bookCard',
+    name: 'B_bookCard',
+    component: B_bookCard  
+  },{
+    path: '/book_bookCardInfo',
+    name: 'B_bookCardInfo',
+    component: B_bookCardInfo  
+  },{
+    path: '/book_bookOrderInfo',
+    name: 'B_bookOrderInfo',
+    component: B_bookOrderInfo  
+  },{
+    path: '/book_bookOrderMessage/:id',
+    name: 'B_bookOrderMessage',
+    component: B_bookOrderMessage  
+  },{
+    /* 下单成功 */
+    path: '/book_bookSuccess',
+    name: 'B_success',
+    component: B_success  
+  },{
+    /* 下单成功 */
+    path: '/book_bookFail',
+    name: 'B_fail',
+    component: B_fail  
+  },{
+    /* 下单成功 */
+    path: '/book_rule',
+    name: 'B_rules',
+    component: B_rules  
+  },{
+    /* 精选页面 */
+    path: '/featured',
+    component: featured  
+  },{
+    // 更多图书改为HTML
+    path: '/books',
+    component: books  
+  }
+  
+
+  
 ];
 
 

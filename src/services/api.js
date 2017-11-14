@@ -1,15 +1,18 @@
-"use strict";
+
 
 import Vue from 'vue';
 
-var sourceStr = '/?source=4&version=1.1.9';
+var sourceStr = '/?source=4&version=1.2.0';
 
 /* var API_ROOT = "https://api.zujiekeji.cn/index/"; */
 var API_ROOT = "https://isapi.zujiekeji.cn/index/";
-var BASE_ROOT="http://106.14.135.243:8082/book";
-/* var API_ROOT = "http://106.14.135.243:8082/index/";  */
-/* 个人中心相关api */
+var API_ROOTs = "https://isapi.zujiekeji.cn/";
+var BASE_ROOT="https://isapi.zujiekeji.cn/book/";
+/* var API_ROOT = "http://106.14.135.243:8082/index/";  
+var API_ROOTs = "http://106.14.135.243:8082/";  
+var BASE_ROOT="http://106.14.135.243:8082/book/"; */
 
+/* 个人中心相关api */
 
 
 /**
@@ -28,11 +31,9 @@ export const coust={
 };
 
 
-
 /**
  * 登录注册通用接口部分
  */
-
 export const login = {
   /**
    * 密码登录接口
@@ -730,7 +731,7 @@ export const order = {
   myOrderComment(data) {
     return Vue.http.post(API_ROOT + 'order/mycomment' + sourceStr,data);
   },
-  /* 微信支付 */
+  /* 支付 */
   /* userId
   token
   orderSn  生成支付订单接口返回的订单编号
@@ -799,7 +800,7 @@ export const card={
       return Vue.http.post(API_ROOT + 'coupon/receiveNewerCoupon' + sourceStr,data);
     },
     /**
-     * 微信分享接口
+     * 分享接口
      */
     wxShare(data){
       return Vue.http.get('https://www.zujiekeji.cn/index/wechat/getSignature' + sourceStr,{params:data});
@@ -820,20 +821,19 @@ export const card={
     remindCard(data){
       return Vue.http.post(API_ROOT + 'coupon/couponRemind' + sourceStr,data);
     },
+    
+    
 }
 
-
-
-/*
+/**
  * 活动相关接口
  */
+
  export const activity={
   getMoreGood(data){
     return Vue.http.get(API_ROOT + 'store/getActivityStore' + sourceStr,{params:data});
   },
  }
-
-
 
 /**
  * 支付宝借还相关接口
@@ -845,7 +845,7 @@ export const alipay={
      * @returns 
      */
     orderId(data){  
-      return Vue.http.post('https://api.zujiekeji.cn/index/Zmjiehuan/createRentOrder' + sourceStr,data);
+      return Vue.http.post('https://isapi.zujiekeji.cn/index/Zmjiehuan/createRentOrder' + sourceStr,data);
     }, 
     /**
      * 撤销订单
@@ -853,7 +853,7 @@ export const alipay={
      * @returns 
      */
     return(data){  
-      return Vue.http.post('https://api.zujiekeji.cn/index/Zmjiehuan/deleteRentOrder' + sourceStr,data);
+      return Vue.http.post('https://isapi.zujiekeji.cn/index/Zmjiehuan/deleteRentOrder' + sourceStr,data);
     }, 
     /**
      * 成功订单
@@ -861,32 +861,508 @@ export const alipay={
      * @returns 
      */
     success(data){  
-      return Vue.http.post('https://api.zujiekeji.cn/index/Zmjiehuan/chanelSuccessOrder' + sourceStr,data);
+      return Vue.http.post('https://isapi.zujiekeji.cn/index/Zmjiehuan/chanelSuccessOrder' + sourceStr,data);
     }, 
     
 }
 
-
 /* 绘本相关接口 */
 export const book={
- /**
-  * 获取首页icon
-  * @param {any} data 
-  * @returns 
-  */
-  getIcon(data){  
-    return Vue.http.get(BASE_ROOT+'index/icon' + sourceStr,{params:data});
-  }, 
- /**
-  * 获取首页热门推荐
-  * @param {any} data 
-  * page
-  * page_number
-  * @returns 
-  */
-  getRecommd(data){  
-    return Vue.http.get(BASE_ROOT+'index/recommend' + sourceStr,{params:data});
-  }, 
- 
+  /**
+   * 获取首页icon
+   * @param {any} data 
+   * @returns 
+   */
+   getIcon(data){  
+     return Vue.http.get(BASE_ROOT+'index/icon' + sourceStr,{params:data});
+   }, 
+  /**
+   * 获取首页热门推荐
+   * @param {any} data 
+   * page
+   * page_number
+   * @returns 
+   */
+   getRecommd(data){  
+     return Vue.http.get(BASE_ROOT+'index/recommend' + sourceStr,{params:data});
+   }, 
   
-}
+   
+ 
+   /**
+    * 获取绘本详情
+    * book_id
+    * @param {any} data 
+    * @returns 
+    */
+   getBookDetail(data){  
+     return Vue.http.get(BASE_ROOT+'index/detail' + sourceStr,{params:data});
+   }, 
+   /**
+    * 获取绘本详情-评论
+    * book_id
+    * @param {any} data 
+    * @returns 
+    */
+   getBookComment(data){  
+     return Vue.http.get(BASE_ROOT+'index/comment' + sourceStr,{params:data});
+   }, 
+   /**
+    * 获取英文列表数据
+    * page
+    * page_number
+    * @param {any} data 
+    * @returns 
+    */
+   getBookEng(data){  
+     return Vue.http.get(BASE_ROOT+'index/englishEdition' + sourceStr,{params:data});
+   }, 
+   /**
+    * 获取热门列表数据
+    * page
+    * page_number
+    * @param {any} data 
+    * @returns 
+    */
+   getBookHot(data){  
+     return Vue.http.get(BASE_ROOT+'index/hot' + sourceStr,{params:data});
+   }, 
+   /**
+    * 获取新书上架列表数据
+    * page
+    * page_number
+    * @param {any} data 
+    * @returns 
+    */
+   getBookNew(data){  
+     return Vue.http.get(BASE_ROOT+'index/latestBook' + sourceStr,{params:data});
+   }, 
+   /**
+    * 获取系列列表
+    * page
+    * page_number
+    * @param {any} data 
+    * @returns 
+    */
+   getBookSer(data){  
+     return Vue.http.get(BASE_ROOT+'index/series' + sourceStr,{params:data});
+   }, 
+   /**
+    * 获取系列列表详情
+    * page
+    * page_number
+    * series
+    * @param {any} data 
+    * @returns 
+    */
+   getBookSerList(data){  
+     return Vue.http.get(BASE_ROOT+'index/seriesDetails' + sourceStr,{params:data});
+   }, 
+   
+ 
+   /* 添加收藏和添加到书架相关 */
+   /**
+    * 添加到收藏
+    * user_id
+    * token
+    * book_id
+    * @param {any} data 
+    * @returns 
+    */
+   addColl(data){  
+     return Vue.http.post(BASE_ROOT+'user/addCollection' + sourceStr,data);
+   }, 
+   /**
+    * 添加到购书架
+    * user_id
+    * token
+    * book_id
+    * @param {any} data 
+    * @returns 
+    */
+   addCar(data){  
+     return Vue.http.post(BASE_ROOT+'user/addBookshelf' + sourceStr,data);
+   }, 
+   /**
+    * 取消收藏
+    * user_id
+    * token
+    * book_id
+    * @param {any} data 
+    * @returns 
+    */
+   cancelColl(data){  
+     return Vue.http.post(BASE_ROOT+'user/delCollection' + sourceStr,data);
+   }, 
+   /**
+    * 取消购书架
+    * user_id
+    * token
+    * book_id
+    * @param {any} data 
+    * @returns 
+    */
+   cancelCar(data){  
+     return Vue.http.post(BASE_ROOT+'user/delBookshelf' + sourceStr,data);
+   }, 
+ 
+ 
+ 
+   /* 个人中心相关api */
+ 
+
+   /**
+    * 获取书本列表
+    icon_id
+    start_date
+    * @param {any} data 
+    * @returns 
+    */
+   bookList(data){  
+    return Vue.http.get(BASE_ROOT+'index/bookList' + sourceStr,{params:data});
+  }, 
+   /**
+    * 我的书架
+    * user_id
+    * token
+    * page
+    * page_number
+    * @param {any} data 
+    * @returns 
+    */
+   getCar(data){  
+     return Vue.http.get(BASE_ROOT+'user/bookshelf' + sourceStr,{params:data});
+   }, 
+   /**
+    * 当前最多可借数量
+    * @param {any} data 
+    * @returns 
+    */
+   maxCar(data){  
+     return Vue.http.get(BASE_ROOT+'user/getMaxBookNum' + sourceStr,{params:data});
+   }, 
+   /**
+    * 我的收藏
+    * user_id
+    * token
+    * page
+    * page_number
+    * @param {any} data 
+    * @returns 
+    */
+   getColl(data){  
+     return Vue.http.get(BASE_ROOT+'user/myCollection' + sourceStr,{params:data});
+   }, 
+   /**
+    * 我的计划列表
+    * user_id
+    * token
+    * @param {any} data 
+    * @returns 
+    */
+   getPlan(data){  
+     return Vue.http.get(BASE_ROOT+'user/myPlan' + sourceStr,{params:data});
+   }, 
+   /**
+    * 我的计划详情
+    * user_id
+    * token
+    * plan_id
+    * @param {any} data 
+    * @returns 
+    */
+   getPlanInfo(data){  
+     return Vue.http.get(BASE_ROOT+'user/planDetail' + sourceStr,{params:data});
+   },
+ 
+ 
+   /* 支付相关api */
+   /**
+    * 我的会员卡
+    * user_id
+    * token
+    * @param {any} data 
+    * @returns 
+    */
+   getCardList(data){  
+     return Vue.http.get(BASE_ROOT+'card/index' + sourceStr,{params:data});
+   },
+   /**
+    * 借阅订单生成
+    * user_id
+    * token
+    * address_id
+    * card_id
+    * start_date
+    * end_date
+    * books
+    * message
+    * 订单生成
+    * @param {any} data 
+    * @returns 
+    */
+   createOrder(data){  
+    return Vue.http.post(BASE_ROOT+'order/createOrder' + sourceStr,data);
+  },
+  /**
+    * 会员卡订单生成
+    * user_id
+    * token
+    * cards
+    * address_id
+    * message
+    * 订单生成
+    * @param {any} data 
+    * @returns 
+    */
+  cardOrder(data){  
+    return Vue.http.post(BASE_ROOT+'card/cardOrder' + sourceStr,data);
+  },
+  /**
+   * 绘本借还
+   * @param {any} data 
+   * @returns 
+   */
+  Zmjiehuan(data){  
+    return Vue.http.post(API_ROOT+'Zmjiehuan/createVIPCardRentOrder' + sourceStr,data);
+  },
+  /**
+   * H5支付
+   * @param {any} data 
+   * @returns 
+   */
+  H5Pay(data){  
+    return Vue.http.post('https://api.zujiekeji.cn/pay/jsapi/cardPay' + sourceStr,data);
+  },
+/*   H5Pay(data){  
+    return Vue.http.post('http://106.14.135.243:8082/pay/jsapi/cardPay' + sourceStr,data);
+  }, */
+  /**
+   * 判断地区是否支持
+   * user_id
+   * token
+   * address_id
+   * @param {any} data 
+   * @returns 
+   */
+  checkAddress(data){  
+    return Vue.http.post(BASE_ROOT+'card/checkAddress' + sourceStr,data);
+  },
+  
+  
+  
+
+
+  /**选书相关 */
+  /**
+   * 公共参数列表
+   * @param {any} data 
+   * @returns 
+   */
+  searchCondition(data){  
+    return Vue.http.get(BASE_ROOT+'index/searchCondition' + sourceStr,{params:data});
+  },
+  /**
+   * 获取搜索数据
+   * common_params
+   * title
+   * age_min
+   * age_max
+   * order_method
+   * page_number
+   * user_id
+   * token
+   * page
+   * @param {any} data 
+   * @returns 
+   */
+  search(data){  
+    return Vue.http.get(BASE_ROOT+'index/search' + sourceStr,{params:data});
+  },
+  /**
+   * 智能替换
+   * common_params
+   * title
+   * age_min
+   * age_max
+   * order_method
+   * user_id
+   * token
+   * book_ids
+   * type
+   * @param {any} data 
+   * @returns 
+   */
+  intelligentChange(data){  
+    return Vue.http.post(BASE_ROOT+'index/intelligentChange' + sourceStr,data);
+  },
+  
+
+
+  /* 订单相关 */
+  /**
+   * 订单提醒
+   * user_id
+   * token
+   * order_id
+   * type 消息类型1提醒发货2提醒结算
+   * @param {any} data 
+   * @returns 
+   */
+  subOrderMsg(data){  
+    return Vue.http.post(BASE_ROOT+'message/subOrderMsg' + sourceStr,data);
+  },
+  /**
+   * 确认收货
+   * user_id
+   * token
+   * order_id
+   * @param {any} data 
+   * @returns 
+   */
+  orderreceipt(data){  
+    return Vue.http.post(BASE_ROOT+'order/orderreceipt' + sourceStr,data);
+  },
+  /**
+   * 确认归还
+   * user_id
+   * token
+   * order_id
+   * company
+   * express_id
+   * logistics_name
+   * revert_id
+   * @param {any} data 
+   * @returns 
+   */
+  orderreturn(data){  
+    return Vue.http.post(BASE_ROOT+'order/orderreturn' + sourceStr,data);
+  },
+  /**
+   * 提交订单评论
+   * user_id
+   * token
+   * order_id
+   * content
+   * @param {any} data 
+   * @returns 
+   */
+  orderComment(data){  
+    return Vue.http.post(BASE_ROOT+'order/orderComment' + sourceStr,data);
+  },
+  /**
+   * 删除订单
+   * user_id
+   * token
+   * order_id
+   * @param {any} data 
+   * @returns 
+   */
+  orderDel(data){  
+    return Vue.http.post(BASE_ROOT+'order/orderDel' + sourceStr,data);
+  },
+  /**
+   * 取消订单
+   * user_id
+   * token
+   * order_id
+   * @param {any} data 
+   * @returns 
+   */
+  orderCancel(data){  
+    return Vue.http.post(BASE_ROOT+'order/orderCancel' + sourceStr,data);
+  },
+  /**
+   * 获取订单列表
+   * user_id
+   * token
+   * order_status
+   * page
+   * page_number
+   * @param {any} data 
+   * @returns 
+   */
+  orderList(data){  
+    return Vue.http.get(BASE_ROOT+'order/orderList' + sourceStr,{params:data});
+  },
+  /**
+   * 订单详情
+   * user_id
+   * token
+   * order_id
+   * @param {any} data 
+   * @returns 
+   */
+  orderDetail(data){  
+    return Vue.http.get(BASE_ROOT+'order/orderDetail' + sourceStr,{params:data});
+  },
+  /**
+   * 获取订单结算单信息
+   * user_id
+   * token
+   * order_id
+   * @param {any} data 
+   * @returns 
+   */
+  setbill(data){  
+    return Vue.http.post(BASE_ROOT+'order/setbill' + sourceStr,data);
+  },
+  /**
+   * 获取订单评论
+   * user_id
+   * token
+   * order_id
+   * page
+   * page_number
+   * @param {any} data 
+   * @returns 
+   */
+  mycomment(data){  
+    return Vue.http.post(BASE_ROOT+'order/mycomment' + sourceStr,data);
+  },
+  /**
+   * 获取商品归还地址信息
+   * user_id
+   * token
+   * book_id
+   * page
+   * page_number
+   * @param {any} data 
+   * @returns 
+   */
+  revert_sel(data){  
+    return Vue.http.get(BASE_ROOT+'order/revert_sel' + sourceStr,{params:data});
+  },
+  /**
+   * 获取用户默认地址
+   * user_id
+   * token
+   * @param {any} data 
+   * @returns 
+   */
+  defaultAddress(data){  
+    return Vue.http.post(BASE_ROOT+'card/defaultAddress' + sourceStr,data);
+  },
+  
+  /*
+  *获取绘本精选
+   */
+  getFeatured(data){
+  return Vue.http.get(BASE_ROOT+'index/bookSelected' + sourceStr,{params:data});
+  },
+
+  /*可用计划  */
+  myValidCards(data){
+    return Vue.http.get(BASE_ROOT+'user/myValidCards' + sourceStr,{params:data});
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ }

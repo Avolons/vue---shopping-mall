@@ -109,9 +109,12 @@
                 })
             }
         },
+        activated () {
+           this.userZMScore();
+           this.userZMReliefInfo(); 
+        },
         mounted(){
-            this.userZMScore();
-            this.userZMReliefInfo();
+            
         }
     }
     

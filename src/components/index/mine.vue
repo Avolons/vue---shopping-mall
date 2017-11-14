@@ -71,10 +71,12 @@ body{
       <cell  title="我的地址" is-link link="/addressList">
           <i slot="icon" class="iconfont">&#xe71d;</i>
       </cell>
-       <cell  title="卡券包" is-link link="/card">
+       <cell  title="优惠券" is-link link="/card">
           <i slot="icon" style="width:20px" class="iconfont">&#xe610;</i>
       </cell>
-      
+      <cell  title="我的绘本" is-link link="/book/main/mine">
+          <i slot="icon" style="width:20px" class="iconfont">&#xe65a;</i>
+      </cell>
     </group>
     <group style="margin-top:0.6rem;margin-bottom:100px">
       <!-- 两种状态，已经认证和未认证状态 -->
@@ -150,13 +152,13 @@ import { API, getQuery } from '../../services';
       'getUserInfoUserId',
     ])
   },
+  activated () {
+        this.userZMReliefInfo(); 
+  },
     mounted(){
       /* 获取当前的认证状态 */ 
       this.$store.dispatch('IsCertify');
-      this.userZMReliefInfo();
-    },
-    activated(){
-        window.location.href="/#/index/main/mine";
+      
     },
     methods :{
       /*获取芝麻信用减免额度*/

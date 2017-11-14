@@ -4,14 +4,10 @@
 </style>
 
 <template lang="pug">
-    .bookMain
-        .bookMain_header
-            header-cop(:heder_title="title")
-        .bookMain_content
+    
 </template>
 
 <script>
-import HeaderCop from './common/header.vue';
 import { XHeader, Actionsheet, TransferDom, ButtonTab, ButtonTabItem } from 'vux';
 export default {
     directives: {
@@ -22,7 +18,6 @@ export default {
     Actionsheet,
     ButtonTab,
     ButtonTabItem,
-    HeaderCop
   },
   data () {
     return {

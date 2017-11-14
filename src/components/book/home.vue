@@ -1,10 +1,12 @@
 <style  lang="scss">
-.index_container {
-    background-color: #f3f3f3;
-}
+
 
 .book_router{
-    height: calc(100% - 100px);
+    position: fixed;
+    height: calc(100% - 101px);
+    top:50px;
+    background-color: #f1f1f1;
+    overflow-y: auto;
 }
 
 .index_tabbar {
@@ -98,10 +100,43 @@ export default {
 
     },
     mounted: function() {
+        setInterval(()=>{
+             switch (this.$route.fullPath) {
+                case '/book/main':
+                    this.title="绘本";
+                    break;
+                case '/book/main/collect':
+                    this.title="我的收藏";
+                    break;
+                case '/book/main/car':
+                    this.title="借书架";
+                    break;
+                default:
+                    this.title="我的";
+                    break;
+            }
+        },100)
+    },
+    activated(){
+       
     },
     methods: {
         /* 路由切换函数 */
         routerchange(index) {
+            switch (index) {
+                case 0:
+                    this.title="绘本";
+                    break;
+                case 1:
+                    this.title="我的收藏";
+                    break;
+                case 2:
+                    this.title="借书架";
+                    break;
+                default:
+                    this.title="我的";
+                    break;
+            }
             if (index < this.currentindex) {
                 this.transitionName = 'slide-right'
             } else {
