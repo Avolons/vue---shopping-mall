@@ -90,8 +90,9 @@ export default {
             }
 
             window.link = window.location.href;
-            window.imgurl = "https://s.zujiekeji.cn/img/zuling.png";
-            window.desc = "租介：让共享成为一种新的生活方式，让社会资源不再无序浪费";
+            window.title="租介-上租介，租你所有！";
+            window.imgurl = "http://oss.zujiekeji.cn/img/logo_120.png";
+            window.desc = "租介：一款专注于儿童用品领域的专业共享租赁APP，致力让共享成为一种的新的生活方式。";
             API.card.wxShare({
                 url: link,
             }).then((data) => {
