@@ -463,9 +463,7 @@ export default {
                 return false;
             }
             localStorage.setItem('resultList',JSON.stringify(resultList));
-            this.$router.push({
-                path:'/book_bookCardInfo'
-            })
+            window.location.href="/?#/book_bookCardInfo";
         },
         /**@argument
          * 数据格式化
