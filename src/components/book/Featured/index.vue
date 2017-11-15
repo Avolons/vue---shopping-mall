@@ -51,7 +51,7 @@
 <script>
 
 import { XImg, XHeader } from 'vux';
-import BScroll from '../common/scrollView.vue';
+import BScroll from 'vue-betterscroll';
 import { mapGetters } from 'vuex';
 import { API, getQuery } from '../../../services';
 export default {

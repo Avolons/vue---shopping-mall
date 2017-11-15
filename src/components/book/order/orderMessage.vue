@@ -262,7 +262,7 @@
 
 <script>
 import HeaderCop from '../common/header.vue';
-import BScroll from '../common/scrollView.vue';
+import BScroll from 'vue-betterscroll';
 import { Scroller, XImg, Masker, XTextarea,Actionsheet, Spinner, XButton, Group, Cell, LoadMore, Toast } from 'vux';
 import { mapGetters } from 'vuex';
 import { API, getQuery } from '../../../services';

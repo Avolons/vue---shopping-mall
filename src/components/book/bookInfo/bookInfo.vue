@@ -281,7 +281,7 @@ div
 </template>
 
 <script>
-import BScroll from '../common/scrollView.vue';
+import BScroll from 'vue-betterscroll';
 import { mapGetters } from 'vuex';
 import { API, getQuery } from '../../../services';
 import { Cell, CellBox,Swiper,SwiperItem, CellFormPreview, Group } from 'vux';

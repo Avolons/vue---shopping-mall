@@ -28,7 +28,7 @@
 <script>
 import HeaderCop from '../common/header.vue';
 import BookList from '../common/bookList.vue';
-import BScroll from '../common/scrollView.vue';
+import BScroll from 'vue-betterscroll';
 import { mapGetters } from 'vuex';
 import { API, getQuery } from '../../../services';
 import { XHeader, Actionsheet, TransferDom, ButtonTab, ButtonTabItem } from 'vux';

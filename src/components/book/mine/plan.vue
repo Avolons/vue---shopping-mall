@@ -201,7 +201,7 @@
 
 <script>
 import HeaderCop from '../common/header.vue';
-import BScroll from '../common/scrollView.vue';
+import BScroll from 'vue-betterscroll';
 import { API, getQuery } from '../../../services';
 import { mapGetters } from 'vuex';
 import { XHeader, Actionsheet, TransferDom, ButtonTab, ButtonTabItem,Toast } from 'vux';

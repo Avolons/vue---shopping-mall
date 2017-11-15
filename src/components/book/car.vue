@@ -420,7 +420,7 @@ body {
 
 <script>
 import BookList from './common/bookList.vue';
-import BScroll from './common/scrollView.vue';
+import BScroll from 'vue-betterscroll';
 import { mapGetters } from 'vuex';
 import { API, getQuery } from '../../services';
 import { Toast, Icon, XHeader, Actionsheet, TransferDom, ButtonTab, ButtonTabItem, Group, Calendar } from 'vux';

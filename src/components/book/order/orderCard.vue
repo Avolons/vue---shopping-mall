@@ -305,7 +305,7 @@ import { XHeader, Cell, Group, XTextarea, dateFormat, Toast, CellBox } from 'vux
 import { mapGetters } from 'vuex'
 import { API, getQuery } from '../../../services';
 import HeaderCop from '../common/header.vue';
-import BScroll from '../common/scrollView.vue';
+import BScroll from 'vue-betterscroll';
 export default {
     components: {
         XHeader,

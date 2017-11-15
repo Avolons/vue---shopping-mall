@@ -54,7 +54,7 @@ body .dp-header .dp-item.dp-right{
 
 <script>
 import HeaderCop from '../common/header.vue';
-import BScroll from '../common/scrollView.vue';
+import BScroll from 'vue-betterscroll';
 import { API, getQuery } from '../../../services';
 import { XHeader,Msg,XButton } from 'vux';
 export default {
