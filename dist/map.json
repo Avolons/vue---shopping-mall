@@ -20,6 +20,10 @@
             "uri": "/lib/normalize-css/normalize.css",
             "type": "css"
         },
+        "modules/app/book.js": {
+            "uri": "/statics/app/book_f7395ea.js",
+            "type": "js"
+        },
         "modules/css/reset.scss": {
             "uri": "/statics/css/reset.css",
             "type": "css"
@@ -27,10 +31,6 @@
         "modules/css/book.scss": {
             "uri": "/statics/css/book.css",
             "type": "css"
-        },
-        "modules/app/book.js": {
-            "uri": "/statics/app/book_4bc8e2d.js",
-            "type": "js"
         },
         "modules/css/bxgoodsshare.scss": {
             "uri": "/statics/css/bxgoodsshare.css",
