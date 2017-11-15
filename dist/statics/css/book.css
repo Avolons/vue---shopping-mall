@@ -17,6 +17,18 @@ body {
   position: relative;
 }
 
+.book_main_share {
+  position: fixed;
+  top: 0.66667rem;
+  right: 0.66667rem;
+}
+
+.book_main_share > svg {
+  fill: #fff;
+  height: 1.06667rem;
+  width: 1.06667rem;
+}
+
 .book_main_confrim {
   display: inline-block;
   text-align: center;
