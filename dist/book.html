@@ -19,13 +19,14 @@
   <body>
     <div v-cloak class="book_main"><img src="/statics/img/activity/book/book.png" alt="">
       <button type="button" @click="getCard" class="book_getCard"><i>{{amount.split('.')[0]}}</i></button>
-      <button type="button" @click="openCard" class="book_openCard"> </button>
+      <button type="button" @click="openCard" class="book_openCard"></button>
+      <div v-show="confrimShow" class="book_main_confrim">{{confrimText}} </div>
     </div>  
 <script charset="utf-8" src="/lib/lib-flexible/flexible.js"></script>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.4.4/vue.js"></script>
 <script src="https://cdn.bootcss.com/layer/3.0.3/mobile/layer.min.js"></script>
-<script src="/statics/app/book_f7395ea.js"></script>
+<script src="/statics/app/book_18d46cc.js"></script>
 </body>
 </html>

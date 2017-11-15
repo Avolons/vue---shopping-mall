@@ -17,6 +17,30 @@ body {
   position: relative;
 }
 
+.book_main_confrim {
+  display: inline-block;
+  text-align: center;
+  position: fixed;
+  padding: 0.26667rem;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-size: 12px;
+  border-radius: 0.04rem;
+}
+
+[data-dpr="2"] .book_main_confrim {
+  font-size: 24px;
+}
+
+[data-dpr="3"] .book_main_confrim {
+  font-size: 36px;
+}
+
 .book_main > img {
   width: 100%;
 }
