@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="x5-page-mode" content="app">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="screen-orientation" content="portrait">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta name="flexible" content="initial-dpr=2">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>绘本借阅特惠</title>  
+    <link rel="stylesheet" href="/statics/css/reset.css" />
+    <link rel="stylesheet" href="/statics/css/book.css" />
+</head>
+  <body>
+    <div v-cloak class="book_main"><img src="/statics/img/activity/book/book.png" alt="">
+      <button type="button" @click="getCard" class="book_getCard"><i>{{amount.split('.')[0]}}</i></button>
+      <button type="button" @click="openCard" class="book_openCard"> </button>
+    </div>  
+<script charset="utf-8" src="/lib/lib-flexible/flexible.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.4.4/vue.js"></script>
+<script src="https://cdn.bootcss.com/layer/3.0.3/mobile/layer.min.js"></script>
+<script src="/statics/app/book_4bc8e2d.js"></script>
+</body>
+</html>

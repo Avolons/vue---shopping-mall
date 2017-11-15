@@ -1,0 +1,54 @@
+@charset "UTF-8";
+/**
+ * 此处写上scss常用mixins//移动端解决方案配置
+ */
+*:not(input) {
+  -webkit-user-select: none;
+}
+
+/**
+ * 配置项目常用变量
+ */
+body {
+  -webkit-overflow-scrolling: touch;
+}
+
+.book_main {
+  position: relative;
+}
+
+.book_main > img {
+  width: 100%;
+}
+
+.book_main button {
+  position: absolute;
+  display: block;
+  background-color: transparent;
+  border: none;
+}
+
+.book_getCard {
+  width: 63.61%;
+  height: 8.17%;
+  top: 52.1%;
+  left: 18.33%;
+  box-sizing: border-box;
+}
+
+.book_getCard > i {
+  color: #fff;
+  font-size: 90px;
+  font-style: normal;
+  position: absolute;
+  left: 25.31%;
+  top: 11.74%;
+  font-weight: 700;
+}
+
+.book_openCard {
+  width: 60.28%;
+  height: 3.82%;
+  left: 20.42%;
+  bottom: 2.92%;
+}
